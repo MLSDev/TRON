@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Plugin {
+public protocol Plugin {
     func willSendRequest(request: NSURLRequest?)
     
     func requestDidReceiveResponse(response: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?))

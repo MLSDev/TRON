@@ -11,7 +11,6 @@
 		9AEE0B6F1C5A4D3B003222A8 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */; };
 		9AEE0B711C5A4D3B003222A8 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */; };
 		9AEE0B771C5A4D4A003222A8 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */; };
-		9AEE0B781C5A4D4A003222A8 /* APIRequestConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B731C5A4D4A003222A8 /* APIRequestConfigurator.swift */; };
 		9AEE0B791C5A4D4A003222A8 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
 		9AEE0B7A1C5A4D4A003222A8 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
 		9AEE0B7B1C5A4D4A003222A8 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
@@ -25,6 +24,10 @@
 		9AEE0BAD1C5A4E15003222A8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA01C5A4E0A003222A8 /* Alamofire.framework */; };
 		9AEE0BC61C5A4E33003222A8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BB91C5A4E2D003222A8 /* SwiftyJSON.framework */; };
 		9AEE0BDC1C5A4FBF003222A8 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD11C5A4FB5003222A8 /* Nimble.framework */; };
+		9AEE0BDE1C5A5101003222A8 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BDD1C5A5101003222A8 /* TRON.swift */; };
+		9AEE0BE01C5A536F003222A8 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */; };
+		9AEE0BE31C5A5453003222A8 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE21C5A5453003222A8 /* TronError.swift */; };
+		9AEE0BE51C5A640D003222A8 /* URLBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,7 +188,6 @@
 		9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiStubbingTestCase.swift; sourceTree = "<group>"; };
 		9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDecodableTestCase.swift; sourceTree = "<group>"; };
 		9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
-		9AEE0B731C5A4D4A003222A8 /* APIRequestConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestConfigurator.swift; sourceTree = "<group>"; };
 		9AEE0B741C5A4D4A003222A8 /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIStub.swift; sourceTree = "<group>"; };
 		9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartAPIRequest.swift; sourceTree = "<group>"; };
 		9AEE0B761C5A4D4A003222A8 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
@@ -199,6 +201,10 @@
 		9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Carthage/Checkouts/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = Carthage/Checkouts/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = Carthage/Checkouts/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
+		9AEE0BDD1C5A5101003222A8 /* TRON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TRON.swift; sourceTree = "<group>"; };
+		9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TronTestCase.swift; sourceTree = "<group>"; };
+		9AEE0BE21C5A5453003222A8 /* TronError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TronError.swift; path = Fixtures/TronError.swift; sourceTree = "<group>"; };
+		9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLBuilderTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,11 +254,11 @@
 		9A722F4C1C5A49AE0087908D /* TRON */ = {
 			isa = PBXGroup;
 			children = (
+				9AEE0BDD1C5A5101003222A8 /* TRON.swift */,
 				9AEE0B8E1C5A4D7B003222A8 /* JSONDecodable */,
 				9AEE0B851C5A4D5C003222A8 /* Builders */,
 				9AEE0B7C1C5A4D4D003222A8 /* Plugins */,
 				9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */,
-				9AEE0B731C5A4D4A003222A8 /* APIRequestConfigurator.swift */,
 				9AEE0B741C5A4D4A003222A8 /* APIStub.swift */,
 				9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */,
 				9AEE0B761C5A4D4A003222A8 /* Plugin.swift */,
@@ -263,8 +269,11 @@
 		9A722F581C5A49AE0087908D /* TRONTests */ = {
 			isa = PBXGroup;
 			children = (
+				9AEE0BE11C5A5445003222A8 /* Fixtures */,
 				9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */,
 				9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */,
+				9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */,
+				9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */,
 			);
 			path = TRONTests;
 			sourceTree = "<group>";
@@ -345,6 +354,14 @@
 				9AEE0BDB1C5A4FB5003222A8 /* NimbleTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9AEE0BE11C5A5445003222A8 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				9AEE0BE21C5A5453003222A8 /* TronError.swift */,
+			);
+			name = Fixtures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -617,8 +634,8 @@
 				9AEE0B8C1C5A4D64003222A8 /* RequestBuilder.swift in Sources */,
 				9AEE0B821C5A4D56003222A8 /* NetworkActivityPlugin.swift in Sources */,
 				9AEE0B7A1C5A4D4A003222A8 /* MultipartAPIRequest.swift in Sources */,
-				9AEE0B781C5A4D4A003222A8 /* APIRequestConfigurator.swift in Sources */,
 				9AEE0B901C5A4D9E003222A8 /* JSONDecodable.swift in Sources */,
+				9AEE0BDE1C5A5101003222A8 /* TRON.swift in Sources */,
 				9AEE0B8A1C5A4D64003222A8 /* ErrorBuilder.swift in Sources */,
 				9AEE0B831C5A4D56003222A8 /* NetworkLoggerPlugin.swift in Sources */,
 				9AEE0B7B1C5A4D4A003222A8 /* Plugin.swift in Sources */,
@@ -630,8 +647,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AEE0BE01C5A536F003222A8 /* TronTestCase.swift in Sources */,
+				9AEE0BE51C5A640D003222A8 /* URLBuilderTestCase.swift in Sources */,
 				9AEE0B6F1C5A4D3B003222A8 /* ApiStubbingTestCase.swift in Sources */,
 				9AEE0B711C5A4D3B003222A8 /* JSONDecodableTestCase.swift in Sources */,
+				9AEE0BE31C5A5453003222A8 /* TronError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,21 +9,21 @@
 import Foundation
 import SwiftyJSON
 
-class ErrorBuilder<U:JSONDecodable>
+public class ErrorBuilder<U:JSONDecodable>
 {
     func buildErrorFromRequest(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> APIError<U> {
         return APIError<U>(request: request, response: response, data: data, error: error)
     }
 }
 
-struct APIError<T:JSONDecodable> {
-    let request : NSURLRequest?
-    let response : NSHTTPURLResponse?
-    let data : NSData?
-    let error : NSError?
-    var errorModel : T?
+public struct APIError<T:JSONDecodable> {
+    public let request : NSURLRequest?
+    public let response : NSHTTPURLResponse?
+    public let data : NSData?
+    public let error : NSError?
+    public var errorModel : T?
     
-    init(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?)
+    public init(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?)
     {
         self.request = request
         self.response = response
@@ -32,7 +32,7 @@ struct APIError<T:JSONDecodable> {
         self.errorModel = data != nil ? T(json: JSON(data: data!)) : nil
     }
     
-    init(errorModel: T) {
+    public init(errorModel: T) {
         self.init(request: nil, response: nil, data: nil, error: nil)
         self.errorModel = errorModel
     }

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-class ResponseBuilder<T:JSONDecodable>
+public class ResponseBuilder<T:JSONDecodable>
 {
     func buildResponseFromJSON(json : JSON) -> T {
         return T(json: json)

@@ -12,20 +12,22 @@ import Nimble
 
 class ApiStubbingTestCase: XCTestCase {
     
+    let tron = TRON(baseURL: "https://github.com")
+    
     func testStubsSuccessWork() {
-//        let request = APIRequest<Int,HintError>(path: "f00")
-//        request.stubbingEnabled = true
-//        request.apiStub.model = 5
-//        
-//        request.performWithSuccess({ response in
-//            expect(response) == 5
-//            }) { _ in
-//                XCTFail()
-//        }
+        let request: APIRequest<Int,TronError> = tron.request(path: "f00")
+        request.stubbingEnabled = true
+        request.apiStub.model = 5
+        
+        request.performWithSuccess({ response in
+            expect(response) == 5
+            }) { _ in
+                XCTFail()
+        }
     }
     
     func testStubsFailureWorks() {
-        let request = APIRequest<Int,Int>(path: "f00")
+        let request :APIRequest<Int,Int> = tron.request(path: "f00")
         request.stubbingEnabled = true
         request.apiStub.error = APIError<Int>(errorModel: 5)
         

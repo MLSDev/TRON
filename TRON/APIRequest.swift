@@ -9,51 +9,54 @@
 import Alamofire
 import SwiftyJSON
 
-protocol Cancellable {
+public protocol Cancellable {
     func cancel()
 }
 
 extension Alamofire.Request : Cancellable {}
 
-protocol NSURLBuildable {
+public protocol NSURLBuildable {
     func urlForPath(path: String) -> NSURL
 }
 
-protocol HeaderBuildable {
+public protocol HeaderBuildable {
     func headersForAuthorization(requirement: AuthorizationRequirement, headers: [String:String]) -> [String: String]
 }
 
-class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
+public enum AuthorizationRequirement {
+    case None, Allowed, Required
+}
+
+public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
     
-    var path: String
-    var method: Alamofire.Method = .GET
-    var parameters: [String: AnyObject] = [:]
-    var headers : [String:String] = [:]
-    var encoding: Alamofire.ParameterEncoding = .URL
-    var authorizationRequirement = AuthorizationRequirement.Required
+    public let path: String
+    public var method: Alamofire.Method = .GET
+    public var parameters: [String: AnyObject] = [:]
+    public var headers : [String:String] = [:]
+    public var encoding: Alamofire.ParameterEncoding = .URL
+    public var authorizationRequirement = AuthorizationRequirement.Required
     
-    var headerBuilder = APIRequestConfigurator.headerBuilder
-    var urlBuilder = APIRequestConfigurator.urlBuilder
-    var responseBuilder = ResponseBuilder<Model>()
-    var errorBuilder = ErrorBuilder<ErrorModel>()
+    public var headerBuilder: HeaderBuildable
+    public var urlBuilder: NSURLBuildable
+    public var responseBuilder = ResponseBuilder<Model>()
+    public var errorBuilder = ErrorBuilder<ErrorModel>()
     
-    var stubbingEnabled = APIRequestConfigurator.stubbingEnabled
-    var apiStub = APIStub<Model, ErrorModel>()
+    public var stubbingEnabled = false
+    public var apiStub = APIStub<Model, ErrorModel>()
     
-    var plugins : [Plugin] = []
-    private var globalPlugins : [Plugin] {
-        return APIRequestConfigurator.plugins
-    }
+    weak var tron : TRON?
     
-    var allPlugins: [Plugin] {
-        return globalPlugins + plugins
-    }
+    public var plugins : [Plugin] = []
     
-    init(path: String) {
+    public init(path: String, tron: TRON) {
         self.path = path
+        self.tron = tron
+        self.stubbingEnabled = tron.stubbingEnabled
+        self.headerBuilder = tron.headerBuilder
+        self.urlBuilder = tron.urlBuilder
     }
     
-    func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Cancellable
+    public func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Cancellable
     {
         if stubbingEnabled {
             return apiStub.performStubWithSuccess(success, failure: failure)
@@ -65,9 +68,13 @@ class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
     {
         let alamofireRequest = Alamofire.request(method, urlBuilder.urlForPath(path), parameters: parameters, encoding: encoding, headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
         // Notify plugins about new network request
-        allPlugins.forEach {
+        tron?.plugins.forEach {
             $0.willSendRequest(alamofireRequest.request)
         }
+        plugins.forEach {
+            $0.willSendRequest(alamofireRequest.request)
+        }
+        let allPlugins = plugins + (tron?.plugins ?? [])
         alamofireRequest.validate().handleResponse(success,
             failure: failure,
             responseBuilder: responseBuilder,
@@ -101,8 +108,4 @@ extension Alamofire.Request {
             })
         }
     }
-}
-
-enum AuthorizationRequirement {
-    case None, Allowed, Required
 }

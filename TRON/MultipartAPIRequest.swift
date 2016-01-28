@@ -15,8 +15,8 @@ class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIR
     
     private var multipartParameters: [MultipartFormData -> Void] = []
     
-    override init(path: String) {
-        super.init(path: path)
+    override init(path: String, tron: TRON) {
+        super.init(path: path, tron: tron)
     }
     
     @available(*, unavailable, message="MultipartAPIRequest should use performWithSuccess(_:failure:progress:cancellableCallback:)")
@@ -50,12 +50,13 @@ class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIR
             self.multipartParameters.forEach { $0(formData) }
         }
         
-        let encodingCompletion: Manager.MultipartFormDataEncodingResult -> Void = { completion in
+        let encodingCompletion: Manager.MultipartFormDataEncodingResult -> Void = { [unowned self] completion in
             if case .Failure(let error) = completion {
                 let apiError = APIError<ErrorModel>(request: nil, response: nil, data: nil, error: error as NSError)
                 failure(apiError)
             } else if case .Success(let request, _, _) = completion {
-                request.progress(progress).validate().handleResponse(success, failure: failure, responseBuilder: self.responseBuilder, errorBuilder: self.errorBuilder, plugins: self.allPlugins)
+                let allPlugins = self.plugins + (self.tron?.plugins ?? [])
+                request.progress(progress).validate().handleResponse(success, failure: failure, responseBuilder: self.responseBuilder, errorBuilder: self.errorBuilder, plugins: allPlugins)
                 cancellableCallback(request)
             }
         }

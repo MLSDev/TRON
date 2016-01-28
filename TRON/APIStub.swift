@@ -33,13 +33,13 @@ extension APIStub {
     }
 }
 
-class APIStub<Model: JSONDecodable, ErrorModel: JSONDecodable> : Cancellable {
-    var successful = true
-    var model : Model?
-    var error: APIError<ErrorModel>?
-    var stubDelay = 0.1
+public class APIStub<Model: JSONDecodable, ErrorModel: JSONDecodable> : Cancellable {
+    public var successful = true
+    public var model : Model?
+    public var error: APIError<ErrorModel>?
+    public var stubDelay = 0.1
     
-    func cancel() {
+    public func cancel() {
         
     }
     
