@@ -34,7 +34,7 @@ public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
     public var parameters: [String: AnyObject] = [:]
     public var headers : [String:String] = [:]
     public var encoding: Alamofire.ParameterEncoding = .URL
-    public var authorizationRequirement = AuthorizationRequirement.Required
+    public var authorizationRequirement = AuthorizationRequirement.None
     
     public var headerBuilder: HeaderBuildable
     public var urlBuilder: NSURLBuildable
@@ -66,7 +66,10 @@ public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
     
     private func performAlamofireRequest(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Cancellable
     {
-        let alamofireRequest = Alamofire.request(method, urlBuilder.urlForPath(path), parameters: parameters, encoding: encoding, headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
+        guard let manager = tron?.manager else {
+            fatalError("Manager cannot be nil while performing APIRequest")
+        }
+        let alamofireRequest = manager.request(method, urlBuilder.urlForPath(path), parameters: parameters, encoding: encoding, headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
         // Notify plugins about new network request
         tron?.plugins.forEach {
             $0.willSendRequest(alamofireRequest.request)

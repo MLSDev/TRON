@@ -38,6 +38,10 @@ class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIR
     
     func performWithSuccess(success: Model -> Void, failure: APIError<ErrorModel> -> Void, progress: ProgressClosure, cancellableCallback: Cancellable -> Void)
     {
+        guard let manager = tron?.manager else {
+            fatalError("Manager cannot be nil while performing APIRequest")
+        }
+        
         if stubbingEnabled {
             apiStub.performStubWithSuccess(success, failure: failure)
             return
@@ -61,7 +65,7 @@ class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIR
             }
         }
         
-        Alamofire.upload(method, urlBuilder.urlForPath(path),
+        manager.upload(method, urlBuilder.urlForPath(path),
             headers:  headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
             multipartFormData:  multipartConstructionBlock,
             encodingMemoryThreshold: Manager.MultipartFormDataEncodingMemoryThreshold,
