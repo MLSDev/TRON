@@ -31,5 +31,13 @@ class JSONDecodableTestCase: XCTestCase {
 //        
 //        expect(parsedResponse) == [1,2,3,4]
 //    }
-    
+ 
+    func testVariousJSONDecodableTypes()
+    {
+        let json = JSON(data: NSData())
+        expect(Float.init(json: json)) == 0
+        expect(Double.init(json: json)) == 0
+        expect(Bool.init(json: json)) == false
+        expect(JSON.init(json: json)) == json
+    }
 }

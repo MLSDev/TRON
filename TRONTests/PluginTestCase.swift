@@ -26,7 +26,7 @@ class PluginTestCase: XCTestCase {
     func testLocalPluginsAreCalledCorrectly() {
         let pluginTester = PluginTester()
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<Int,Int> = tron.request(path: "status/200")
+        let request: APIRequest<String,Int> = tron.request(path: "status/200")
         request.plugins.append(pluginTester)
         request.performWithSuccess({ _ in })
         

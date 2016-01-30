@@ -26,22 +26,22 @@
 import UIKit
 import Alamofire
 
-typealias ProgressClosure = (bytesSent: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) -> Void
+public typealias ProgressClosure = (bytesSent: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) -> Void
 
-class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIRequest<Model, ErrorModel> {
+public class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIRequest<Model, ErrorModel> {
     
-    private var multipartParameters: [MultipartFormData -> Void] = []
+    internal var multipartParameters: [MultipartFormData -> Void] = []
     
     override init(path: String, tron: TRON) {
         super.init(path: path, tron: tron)
     }
     
     @available(*, unavailable, message="MultipartAPIRequest should use performWithSuccess(_:failure:progress:cancellableCallback:)")
-    override func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)?) -> RequestToken {
+    public override func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)?) -> RequestToken {
         fatalError()
     }
     
-    func appendMultipartData(data: NSData, name: String, filename: String? = nil, mimeType: String? = nil) {
+    public func appendMultipartData(data: NSData, name: String, filename: String? = nil, mimeType: String? = nil) {
         multipartParameters.append { formData in
             if let filename = filename, let mimeType = mimeType {
                 formData.appendBodyPart(data: data, name: name, fileName: filename, mimeType: mimeType)
@@ -53,7 +53,7 @@ class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIR
         }
     }
     
-    func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, progress: ProgressClosure, cancellableCallback: RequestToken -> Void)
+    public func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, progress: ProgressClosure, cancellableCallback: RequestToken -> Void)
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
