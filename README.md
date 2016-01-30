@@ -7,9 +7,9 @@ TRON is a network abstraction layer, built on top of [Alamofire](https://github.
 - [x] Support for multipart requests
 - [x] Robust plugin system
 - [x] Stubbing of network requests
-- [] Complete unit-test coverage
-- [] Support for iOS/Mac OS X/tvOS/watchOS/Linux
-- [] Support for CocoaPods/ Carthage/ Swift Package Manager
+- [ ] Complete unit-test coverage
+- [ ] Support for iOS/Mac OS X/tvOS/watchOS/Linux
+- [ ] Support for CocoaPods/ Carthage/ Swift Package Manager
 
 ## Overview
 
@@ -40,6 +40,10 @@ github "MLSDev/TRON", ~> 0.1
 
 `TRON` object serves as initial configurator for APIRequest, setting all base values and configuring to use with baseURL.
 
+```swift
+let tron = TRON(baseURL: "https://api.myapp.com")
+```
+
 ### NSURLBuildable
 
 `NSURLBuildable` protocol is used to convert relative path to NSURL, that will be used by request.
@@ -50,7 +54,7 @@ public protocol NSURLBuildable {
 }
 ```
 
-By default, `TRON` uses `URLBuilder` class, that simply appends relative path to base URL, which is sufficient most of the time. You can customize url building process globally by changing `urlBuilder` property on `Tron` or locally, for a single request by modifying `urlBuilder` property on `APIRequest`.
+By default, `TRON` uses `URLBuilder` class, that simply appends relative path to base URL, which is sufficient in most cases. You can customize url building process globally by changing `urlBuilder` property on `Tron` or locally, for a single request by modifying `urlBuilder` property on `APIRequest`.
 
 ### HeaderBuildable
 
@@ -90,7 +94,7 @@ public protocol RequestToken : CustomStringConvertible, CustomDebugStringConvert
 }
 ```
 
-This is done to prevent leaking implementation detail to client of the framework. This can be an instance of Alamofire.Request, or TRON.APIStub. Also notice, that this protocol inherits from `CustomStringConvertible` and `CustomDebugStringConvertible` protocols, allowing us to use awesome `Alamofire` framework features like printing cURL representation of request into console:
+This is done to prevent leaking implementation detail to client of the framework. This can be an instance of `Alamofire.Request`, or `TRON.APIStub`. Also notice, that this protocol inherits from `CustomStringConvertible` and `CustomDebugStringConvertible` protocols, allowing us to use awesome `Alamofire` framework features like printing cURL representation of request into console:
 
 ```swift
 let token = request.performWithSuccess({ _ in }, failure: { _ in })
@@ -291,7 +295,7 @@ Multipart requests are implemented using `APIRequest` subclass - `MultipartAPIRe
 request.appendMultipartData(data, name: "avatar", filename: "avatar.jpg", mimeType: "image/jpg")
 ```
 
-Then, instead of usual `performWithSuccess(_:,failure:)` method, use `performWithSuccess(_:, failure:, progress:,cancellableCallback)` method:
+Then, instead of usual `performWithSuccess(_:,failure:)` method, use `performWithSuccess(_:, failure:, progress:,cancellableCallback:)` method:
 
 ```
 request.performWithSuccess({ user in
