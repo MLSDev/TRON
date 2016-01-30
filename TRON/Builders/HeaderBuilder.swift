@@ -10,6 +10,8 @@ import Foundation
 
 class JSONHeaderBuilder : HeaderBuildable {
     func headersForAuthorization(requirement: AuthorizationRequirement, headers: [String : String]) -> [String : String] {
-        return ["Accept":"application/json"]
+        var allHeaders = headers
+        allHeaders["Accept"] = "application/json"
+        return allHeaders
     }
 }

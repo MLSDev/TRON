@@ -38,7 +38,7 @@ class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIR
     
     func performWithSuccess(success: Model -> Void, failure: APIError<ErrorModel> -> Void, progress: ProgressClosure, cancellableCallback: Cancellable -> Void)
     {
-        guard let manager = tron?.manager else {
+        guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
         
@@ -59,7 +59,7 @@ class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIR
                 let apiError = APIError<ErrorModel>(request: nil, response: nil, data: nil, error: error as NSError)
                 failure(apiError)
             } else if case .Success(let request, _, _) = completion {
-                let allPlugins = self.plugins + (self.tron?.plugins ?? [])
+                let allPlugins = self.plugins + (self.tronDelegate?.plugins ?? [])
                 request.progress(progress).validate().handleResponse(success, failure: failure, responseBuilder: self.responseBuilder, errorBuilder: self.errorBuilder, plugins: allPlugins)
                 cancellableCallback(request)
             }

@@ -27,6 +27,11 @@ public enum AuthorizationRequirement {
     case None, Allowed, Required
 }
 
+public protocol TronDelegate: class {
+    var manager: Alamofire.Manager { get }
+    var plugins : [Plugin] { get }
+}
+
 public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
     
     public let path: String
@@ -44,13 +49,13 @@ public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
     public var stubbingEnabled = false
     public var apiStub = APIStub<Model, ErrorModel>()
     
-    weak var tron : TRON?
+    weak var tronDelegate : TronDelegate?
     
     public var plugins : [Plugin] = []
     
     public init(path: String, tron: TRON) {
         self.path = path
-        self.tron = tron
+        self.tronDelegate = tron
         self.stubbingEnabled = tron.stubbingEnabled
         self.headerBuilder = tron.headerBuilder
         self.urlBuilder = tron.urlBuilder
@@ -66,22 +71,27 @@ public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
     
     private func performAlamofireRequest(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Cancellable
     {
-        guard let manager = tron?.manager else {
+        guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
-        let alamofireRequest = manager.request(method, urlBuilder.urlForPath(path), parameters: parameters, encoding: encoding, headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
+        let alamofireRequest = manager.request(method, urlBuilder.urlForPath(path),
+            parameters: parameters,
+            encoding: encoding,
+            headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
+        
         // Notify plugins about new network request
-        tron?.plugins.forEach {
+        tronDelegate?.plugins.forEach {
             $0.willSendRequest(alamofireRequest.request)
         }
         plugins.forEach {
             $0.willSendRequest(alamofireRequest.request)
         }
-        let allPlugins = plugins + (tron?.plugins ?? [])
+        let allPlugins = plugins + (tronDelegate?.plugins ?? [])
         alamofireRequest.validate().handleResponse(success,
             failure: failure,
             responseBuilder: responseBuilder,
-            errorBuilder: errorBuilder, plugins: allPlugins)
+            errorBuilder: errorBuilder,
+            plugins: allPlugins)
         return alamofireRequest
     }
 }

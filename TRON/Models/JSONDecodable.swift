@@ -19,6 +19,7 @@ extension JSON : JSONDecodable {
         else { self.init(json.rawValue) }
     }
 }
+
 extension Array : JSONDecodable {
     public init(json: JSON) {
         self.init(json.arrayValue.flatMap {
@@ -35,21 +36,25 @@ extension String : JSONDecodable  {
         self.init(json.stringValue)
     }
 }
+
 extension Int : JSONDecodable  {
     public init(json: JSON) {
         self.init(json.intValue)
     }
 }
+
 extension Float : JSONDecodable {
     public init(json: JSON) {
         self.init(json.floatValue)
     }
 }
+
 extension Double : JSONDecodable {
     public init(json: JSON) {
         self.init(json.doubleValue)
     }
 }
+
 extension Bool : JSONDecodable {
     public init(json: JSON) {
         self.init(json.boolValue)

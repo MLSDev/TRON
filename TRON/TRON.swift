@@ -9,11 +9,11 @@
 import Foundation
 import Alamofire
 
-public class TRON {
+public class TRON : TronDelegate {
     public var headerBuilder : HeaderBuildable = JSONHeaderBuilder()
     public var urlBuilder : NSURLBuildable
     public var stubbingEnabled = false
-    internal var plugins : [Plugin] = []
+    public var plugins : [Plugin] = []
     public let manager : Alamofire.Manager
     
     public init(baseURL: String,
