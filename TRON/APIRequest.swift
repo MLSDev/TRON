@@ -3,17 +3,34 @@
 //  Hint
 //
 //  Created by Anton Golikov on 08.12.15.
-//  Copyright © 2015 MLSDev. All rights reserved.
+//  Copyright © 2015 - present MLSDev. All rights reserved.
 //
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 import Alamofire
 import SwiftyJSON
 
-public protocol Cancellable {
+public protocol RequestToken : CustomStringConvertible, CustomDebugStringConvertible {
     func cancel()
 }
 
-extension Alamofire.Request : Cancellable {}
+extension Alamofire.Request : RequestToken {}
 
 public protocol NSURLBuildable {
     func urlForPath(path: String) -> NSURL
@@ -61,7 +78,7 @@ public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
         self.urlBuilder = tron.urlBuilder
     }
     
-    public func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Cancellable
+    public func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken
     {
         if stubbingEnabled {
             return apiStub.performStubWithSuccess(success, failure: failure)
@@ -69,7 +86,7 @@ public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
         return performAlamofireRequest(success, failure: failure)
     }
     
-    private func performAlamofireRequest(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Cancellable
+    private func performAlamofireRequest(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)?) -> RequestToken
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")

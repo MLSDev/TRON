@@ -12,6 +12,5 @@ import SwiftyJSON
 
 class TronError : JSONDecodable {
     required init(json: JSON) {
-        
     }
 }
