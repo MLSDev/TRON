@@ -2,11 +2,12 @@ TRON is a network abstraction layer, built on top of [Alamofire](https://github.
 
 ## Features
 
-- [x] Generic and protocol-based implementation
-- [x] Built-in background response and error parsing
+- [x] Generic, protocol-based implementation
+- [x] Built-in response and error parsing
 - [x] Support for multipart requests
 - [x] Robust plugin system
 - [x] Stubbing of network requests
+- [x] Modular architecture
 - [ ] Complete unit-test coverage
 - [ ] Support for iOS/Mac OS X/tvOS/watchOS/Linux
 - [ ] Support for CocoaPods/ Carthage/ Swift Package Manager
@@ -23,6 +24,12 @@ request.performWithSuccess( { user in
   print("User request failed, parsed error: \(error)")
 })
 ```
+
+## Requirements
+
+- XCode 7
+- Swift 2.1+
+- iOS 8
 
 ## Installation
 
@@ -112,7 +119,7 @@ $ curl -i \
 	"https://github.com/foobar"
 ```
 
-## Response building
+## Response parsing
 
 Generic APIRequest implementation allows us to define expected response type before request is even sent. It also allows us to setup basic parsing rules, which is where `SwiftyJSON` comes in. We define a simple `JSONDecodable` protocol, that allows us to create models of specific type:
 
@@ -122,7 +129,7 @@ public protocol JSONDecodable {
 }
 ```
 
-To parse your response from the server, all you need to do is to create `JSONDecodable` instance, for example:
+To parse your response from the server, all you need to do is to create `JSONDecodable` conforming type, for example:
 
 ```
 class User: JSONDecodable {
@@ -145,7 +152,7 @@ request.performWithSuccess({ user in
 })
 ```
 
-There are also default implementations of `JSONDecodable` protocol for Swift built-in types like Array, Dictionary, String, Int, Float, Double and Bool, so you can easily do something like this:
+There are also default implementations of `JSONDecodable` protocol for Swift built-in types like Array, String, Int, Float, Double and Bool, so you can easily do something like this:
 
 ```swift
   let request : APIRequest<[User],MyAppError> = tron.request(path: "friends")
@@ -237,10 +244,9 @@ UserRequestFactory.read(56).performWithSuccess({ user in
 })
 ```
 
-It can be also nice to introduce namespacing to your API like so
+It can be also nice to introduce namespacing to your API:
 
 ```swift
-
 struct API {}
 extension API {
   class User {
@@ -249,7 +255,7 @@ extension API {
 }
 ```
 
-This way you can call you API methods like so:
+This way you can call your API methods like so:
 
 ```swift
 API.User.delete(56).performWithSuccess({ user in
@@ -291,7 +297,7 @@ request.apiStub.successful = false
 
 ## Multipart requests
 
-Multipart requests are implemented using `APIRequest` subclass - `MultipartAPIRequest`. It uses the same set of API's, used by APIRequest with several additions. First of all, you need to append multipart data to request, for example:
+Multipart requests are implemented using `APIRequest` subclass - `MultipartAPIRequest`. It uses the same set of API's with several additions. First of all, you need to append multipart data to request, for example:
 
 ```
 request.appendMultipartData(data, name: "avatar", filename: "avatar.jpg", mimeType: "image/jpg")
