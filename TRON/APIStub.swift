@@ -36,8 +36,7 @@ private func delay(delay:Double, closure:()->()) {
 }
 
 extension APIStub {
-    func buildModelFromFile(fileName: String) {
-        let bundle = NSBundle(forClass: self.dynamicType)
+    func buildModelFromFile(fileName: String, inBundle bundle: NSBundle = NSBundle.mainBundle()) {
         if let filePath = bundle.pathForResource(fileName as String, ofType: nil)
         {
             guard let data = NSData(contentsOfFile: filePath),
