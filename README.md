@@ -199,6 +199,7 @@ request.performWithSuccess({ response in }, failure: { error in
 
 ## CRUD
 
+```swift
 class UserRequestFactory
 {
     static let tron = TRON(baseURL: "https://api.myapp.com")
@@ -226,6 +227,7 @@ class UserRequestFactory
         return request
     }
 }
+```
 
 Using these requests is really simple:
 
