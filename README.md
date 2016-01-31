@@ -1,4 +1,6 @@
-![TRON](TRON.png)
+<p align="center">
+  <img src="TRON.png" />
+</p>
 
 TRON is a network abstraction layer, built on top of [Alamofire](https://github.com/Alamofire/Alamofire) and [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON).
 
