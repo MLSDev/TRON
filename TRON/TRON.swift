@@ -27,7 +27,7 @@ import Foundation
 import Alamofire
 
 public class TRON : TronDelegate {
-    public var headerBuilder : HeaderBuildable = JSONHeaderBuilder()
+    public var headerBuilder : HeaderBuildable = HeaderBuilder(defaultHeaders: ["Accept":"application/json"])
     public var urlBuilder : NSURLBuildable
     public var stubbingEnabled = false
     public var plugins : [Plugin] = []
@@ -44,6 +44,10 @@ public class TRON : TronDelegate {
     
     public func request<Model:JSONDecodable, ErrorModel:JSONDecodable>(path path: String) -> APIRequest<Model,ErrorModel> {
         return APIRequest(path: path, tron: self)
+    }
+    
+    public func multipartRequest<Model:JSONDecodable, ErrorModel:JSONDecodable>(path path: String) -> MultipartAPIRequest<Model,ErrorModel> {
+        return MultipartAPIRequest(path: path, tron: self)
     }
     
     public final class func defaultAlamofireManager() -> Manager {

@@ -19,10 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let loggerPlugin = NetworkLoggerPlugin()
         loggerPlugin.logSuccess = true
-        let tron = TRON(baseURL: "http://httpbin.org", plugins: [loggerPlugin])
-        let request : APIRequest<Int,Int> = tron.request(path: "headers")
-        request.performWithSuccess({ _ in
+        tron = TRON(baseURL: "https://api.github.com", plugins: [loggerPlugin])
+        tron.headerBuilder = EmptyHeaderBuilder()
+        let request : APIRequest<String,Int> = tron.request(path: "zen")
+        let token = request.performWithSuccess({ zen in
+            print(zen)
+            }, failure: { error in
         })
+        debugPrint(token)
         // Override point for customization after application launch.
         return true
     }

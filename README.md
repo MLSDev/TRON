@@ -301,16 +301,24 @@ request.apiStub.successful = false
 
 ## Multipart requests
 
-Multipart requests are implemented using `APIRequest` subclass - `MultipartAPIRequest`. It uses the same set of API's with several additions. First of all, you need to append multipart data to request, for example:
+Multipart requests are implemented using `APIRequest` subclass - `MultipartAPIRequest`. It uses the same set of API's with several additions.
+
+Create multipart request using tron:
+
+```swift
+let multipartRequest = tron.multipartRequest(path: "profile")
+```
+
+Append multipart-form data:
 
 ```
-request.appendMultipartData(data, name: "avatar", filename: "avatar.jpg", mimeType: "image/jpg")
+multipartRequest.appendMultipartData(data, name: "avatar", filename: "avatar.jpg", mimeType: "image/jpg")
 ```
 
 Then, instead of usual `performWithSuccess(_:,failure:)` method, use `performWithSuccess(_:, failure:, progress:,cancellableCallback:)` method:
 
 ```
-request.performWithSuccess({ user in
+multipartRequest.performWithSuccess({ user in
     print("user avatar updated!")
   },
   failure: { error in

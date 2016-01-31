@@ -77,4 +77,18 @@ class ApiStubbingTestCase: XCTestCase {
         
         token.cancel()
     }
+    
+    func testMultipartStubbingSuccessWorks() {
+        let request: MultipartAPIRequest<Int,TronError> = tron.multipartRequest(path: "f00")
+        request.stubbingEnabled = true
+        request.apiStub.model = 5
+        
+        request.performWithSuccess({ model in
+            expect(model) == 5
+            }, progress: { (bytesSent, totalBytesWritten, totalBytesExpectedToWrite) -> Void in
+                
+            }) { (token) -> Void in
+                
+        }
+    }
 }

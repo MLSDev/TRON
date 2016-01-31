@@ -32,7 +32,7 @@ public class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable
     
     internal var multipartParameters: [MultipartFormData -> Void] = []
     
-    override init(path: String, tron: TRON) {
+    public override init(path: String, tron: TRON) {
         super.init(path: path, tron: tron)
     }
     
