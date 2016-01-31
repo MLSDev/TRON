@@ -26,20 +26,58 @@
 import Foundation
 import SwiftyJSON
 
+/**
+ `ErrorBuilder` class is used to build error object from unsuccessful API requests.
+ */
 public class ErrorBuilder<U:JSONDecodable>
 {
+    /**
+     Build concrete APIError instance.
+     
+     - parameter request: NSURLRequest that was unsuccessful
+     
+     - parameter response: response received from web service
+     
+     - parameter data: data, contained in response
+     
+     - error: Error instance, created by Foundation Loading System or Alamofire.
+     
+     - returns APIError instance
+     */
     func buildErrorFromRequest(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> APIError<U> {
         return APIError<U>(request: request, response: response, data: data, error: error)
     }
 }
 
+/// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
 public struct APIError<T:JSONDecodable> {
+    
+    /// NSURLRequest that was unsuccessful
     public let request : NSURLRequest?
+    
+    /// Response received from web service
     public let response : NSHTTPURLResponse?
+    
+    /// Data, contained in response
     public let data : NSData?
+    
+    /// Error instance, created by Foundation Loading System or Alamofire.
     public let error : NSError?
+    
+    /// Parsed Error model
     public var errorModel : T?
     
+    /**
+     Initialize `APIError` with unsuccessful request info.
+     
+     - parameter request: NSURLRequest that was unsuccessful
+     
+     - parameter response: response received from web service
+     
+     - parameter data: data, contained in response
+     
+     - error: Error instance, created by Foundation Loading System or Alamofire.
+     */
     public init(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?)
     {
         self.request = request
@@ -49,6 +87,9 @@ public struct APIError<T:JSONDecodable> {
         self.errorModel = data != nil ? T(json: JSON(data: data!)) : nil
     }
     
+    /**
+     Convenience initializer, that can be used to create fixtured `APIError`.
+     */
     public init(errorModel: T) {
         self.init(request: nil, response: nil, data: nil, error: nil)
         self.errorModel = errorModel

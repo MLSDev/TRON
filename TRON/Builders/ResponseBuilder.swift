@@ -26,8 +26,18 @@
 import Foundation
 import SwiftyJSON
 
+/**
+ Default ResponseBuilder.
+ */
 public class ResponseBuilder<T:JSONDecodable>
 {
+    /**
+     Create model from json response.
+     
+     - parameter json: SwiftyJSON.json instance
+     
+     - returns parsed model.
+     */
     func buildResponseFromJSON(json : JSON) -> T {
         return T(json: json)
     }

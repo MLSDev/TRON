@@ -25,7 +25,12 @@
 
 import SwiftyJSON
 
+/**
+ Protocol for parsing JSON response. It is used as a generic constraint for `APIRequest` instance.
+ */
 public protocol JSONDecodable {
+    
+    /// Create model object from SwiftyJSON.JSON struct.
     init(json: JSON)
 }
 

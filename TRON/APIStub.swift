@@ -35,8 +35,8 @@ private func delay(delay:Double, closure:()->()) {
         dispatch_get_main_queue(), closure)
 }
 
-extension APIStub {
-    func buildModelFromFile(fileName: String, inBundle bundle: NSBundle = NSBundle.mainBundle()) {
+public extension APIStub {
+    public func buildModelFromFile(fileName: String, inBundle bundle: NSBundle = NSBundle.mainBundle()) {
         if let filePath = bundle.pathForResource(fileName as String, ofType: nil)
         {
             guard let data = NSData(contentsOfFile: filePath),
@@ -49,10 +49,21 @@ extension APIStub {
     }
 }
 
+/**
+ `APIStub` instance that is used to represent stubbed successful or unsuccessful response value.
+ */
 public class APIStub<Model: JSONDecodable, ErrorModel: JSONDecodable> : RequestToken {
+    
+    /// Should the stub be successful. By default - true
     public var successful = true
+    
+    /// Response model for successful API stub
     public var model : Model?
+    
+    /// Error model for unsuccessful API stub
     public var error: APIError<ErrorModel>?
+    
+    /// Delay before stub is executed
     public var stubDelay = 0.1
     
     public var description: String {
@@ -67,6 +78,15 @@ public class APIStub<Model: JSONDecodable, ErrorModel: JSONDecodable> : RequestT
         
     }
     
+    /**
+     Stub current request.
+     
+     - parameter success: Success block to be executed when request finished
+     
+     - parameter failure: Failure block to be executed if request fails. Nil by default.
+     
+     - returns: Request token. Can not be cancelled.
+     */
     func performStubWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken {
         if let model = model where successful {
             delay(stubDelay) {

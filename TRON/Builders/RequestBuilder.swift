@@ -25,13 +25,30 @@
 
 import Foundation
 
+/**
+ `URLBuilder` constructs resulting NSURL by calling `URLByAppendingPathComponent` method on baseURL.
+ */
 public  class URLBuilder : NSURLBuildable {
+    
+    /// Base URL string
     public let baseURLString : String
     
-    public init(baseURLString: String) {
-        self.baseURLString = baseURLString
+    /**
+     Initialize URL builder with Base URL String
+     
+     - parameter baseURL: base URL string
+     */
+    public init(baseURL: String) {
+        self.baseURLString = baseURL
     }
     
+    /**
+     Construct NSURL with given path
+     
+     - parameter path: relative path
+     
+     - returns constructed NSURL
+     */
     public func urlForPath(path: String) -> NSURL {
         return NSURL(string: baseURLString)?.URLByAppendingPathComponent(path) ?? NSURL()
     }

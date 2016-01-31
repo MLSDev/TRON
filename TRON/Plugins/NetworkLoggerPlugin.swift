@@ -25,8 +25,15 @@
 
 import Foundation
 
+/**
+ Plugin, that can be used to log network success and failure responses.
+ */
 public class NetworkLoggerPlugin : Plugin {
+    
+    /// Log successful requests
     public var logSuccess = false
+    
+    /// Log unsuccessful requests
     public var logFailures = true
     
     public init() {}

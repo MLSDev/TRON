@@ -8,6 +8,7 @@
 
 import UIKit
 import TRON
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loggerPlugin = NetworkLoggerPlugin()
         loggerPlugin.logSuccess = true
         tron = TRON(baseURL: "https://api.github.com", plugins: [loggerPlugin])
-        tron.headerBuilder = EmptyHeaderBuilder()
+        tron.headerBuilder = HeaderBuilder(defaultHeaders: [:])
         let request : APIRequest<String,Int> = tron.request(path: "zen")
         let token = request.performWithSuccess({ zen in
             print(zen)

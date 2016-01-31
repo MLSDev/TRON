@@ -2,7 +2,7 @@
   <img src="TRON.png" />
 </p>
 
-TRON is a network abstraction layer, built on top of [Alamofire](https://github.com/Alamofire/Alamofire) and [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON).
+TRON is a lightweight network abstraction layer, built on top of [Alamofire](https://github.com/Alamofire/Alamofire) and [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON). It can be used to dramatically simplify interacting with RESTful JSON web-services.
 
 ## Features
 
@@ -47,6 +47,10 @@ pod 'TRON', '~> 0.1.0'
 
 github "MLSDev/TRON", ~> 0.1
 
+## Project status
+
+`TRON` is under active development by MLSDev Inc. Pull requests and issues are welcome!
+
 ## Request building
 
 `TRON` object serves as initial configurator for APIRequest, setting all base values and configuring to use with baseURL.
@@ -54,6 +58,8 @@ github "MLSDev/TRON", ~> 0.1
 ```swift
 let tron = TRON(baseURL: "https://api.myapp.com")
 ```
+
+You need to keep strong reference to `TRON` object, because it holds Alamofire.Manager, that is running all requests.
 
 ### NSURLBuildable
 
@@ -87,7 +93,7 @@ public enum AuthorizationRequirement {
 
 It represents scenarios where user is not authorized, user is authorized, but authentication is not required, and a case, where request requires authentication.
 
-By default, `TRON` uses `JSONHeaderBuilder` class, which adds "Accept":"application/json" header to your requests.
+By default, `TRON` uses `HeaderBuilder` class, which adds "Accept":"application/json" header to your requests.
 
 ## Sending requests
 
@@ -363,3 +369,14 @@ There are some very cool concepts for local plugins, some of them are described 
 ## License
 
 `TRON` is released under the MIT license. See LICENSE for details.
+
+## About MLSDev
+
+[<img src="/mlsdev-logo.png" alt="MLSDev.com">][mlsdev]
+
+`TRON` is maintained by MLSDev, Inc. We specialize in providing all-in-one solution in mobile and web development. Our team follows Lean principles and works according to agile methodologies to deliver the best results reducing the budget for development and its timeline.
+
+Find out more [here][mlsdev] and don't hesitate to [contact us][contact]!
+
+[mlsdev]: http://mlsdev.com
+[contact]: http://mlsdev.com/contact_us

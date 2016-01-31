@@ -26,7 +26,16 @@
 import Foundation
 import UIKit
 
+/**
+ Plugin, that monitors sent api requests, and automatically sets UIApplication networkActivityIndicatorVisible property.
+ 
+ - Note: this plugin should be used globally by `TRON` instance. It also assumes, that you have only one `TRON` in your application.
+ */
 public class NetworkActivityPlugin : Plugin {
+    
+    /**
+     Network activity count, based on sent `APIRequests`.
+     */
     static var networkActivityCount = 0 {
         didSet {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = networkActivityCount > 0

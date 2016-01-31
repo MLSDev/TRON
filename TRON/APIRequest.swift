@@ -26,50 +26,129 @@
 import Alamofire
 import SwiftyJSON
 
+/**
+ `RequestToken` instance is returned by APIRequest instance, when request is sent. Based on whether stubbing is enabled or not, it can be an `Alamofire.Request` instance or `TRON.APIStub` instance.
+ */
 public protocol RequestToken : CustomStringConvertible, CustomDebugStringConvertible {
+    
+    /// Cancel current request
     func cancel()
 }
 
 extension Alamofire.Request : RequestToken {}
 
+/**
+ Protocol, that defines how NSURL is constructed by consumer.
+ */
 public protocol NSURLBuildable {
+    
+    /**
+     Construct NSURL with given path
+     
+     - parameter path: relative path
+     
+     - returns constructed NSURL
+     */
     func urlForPath(path: String) -> NSURL
 }
 
+/**
+ Protocol, that defines how headers should be constructed by consumer.
+ */
 public protocol HeaderBuildable {
+    
+    /**
+     Construct headers for specific request.
+     
+     - parameter requirement: Authorization requirement of current request
+     
+     - parameter headers : headers to be included in this specific request
+     
+     - returns: HTTP headers for current request
+     */
     func headersForAuthorization(requirement: AuthorizationRequirement, headers: [String:String]) -> [String: String]
 }
 
+/**
+    Authorization requirement for current request.
+ */
 public enum AuthorizationRequirement {
-    case None, Allowed, Required
+    
+    /// Request does not need authorization
+    case None
+    
+    /// Request can have authorization, and may receive additional fields in response
+    case Allowed
+    
+    /// Request requires authorization
+    case Required
 }
 
+/// Protocol used to allow `APIRequest` to communicate with `TRON` instance.
 public protocol TronDelegate: class {
+    
+    /// Alamofire.Manager used to send requests
     var manager: Alamofire.Manager { get }
+    
+    /// Global array of plugins on `TRON` instance
     var plugins : [Plugin] { get }
 }
 
+/**
+ `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. It is reusable and configurable for any needs.
+ */
 public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
     
+    /// Relative path of current request
     public let path: String
+    
+    /// HTTP method
     public var method: Alamofire.Method = .GET
+    
+    /// Parameters of current request
     public var parameters: [String: AnyObject] = [:]
-    public var headers : [String:String] = [:]
+    
+    /// Parameter encoding option.
     public var encoding: Alamofire.ParameterEncoding = .URL
+    
+    /// Headers, that should be used for current request.
+    /// - Note: Resulting headers may include global headers from `TRON` instance and `Alamofire.Manager` defaultHTTPHeaders.
+    public var headers : [String:String] = [:]
+    
+    /// Authorization requirement for current request
     public var authorizationRequirement = AuthorizationRequirement.None
     
+    /// Header builder for current request
     public var headerBuilder: HeaderBuildable
+    
+    /// URL builder for current request
     public var urlBuilder: NSURLBuildable
+    
+    /// Response builder for current request
     public var responseBuilder = ResponseBuilder<Model>()
+    
+    /// Error builder for current request
     public var errorBuilder = ErrorBuilder<ErrorModel>()
     
+    /// Is stubbing enabled for current request?
     public var stubbingEnabled = false
+    
+    /// API stub to be used when stubbing this request
     public var apiStub = APIStub<Model, ErrorModel>()
     
+    /// Delegate property that is used to communicate with `TRON` instance.
     weak var tronDelegate : TronDelegate?
     
+    /// Array of plugins for current `APIRequest`.
     public var plugins : [Plugin] = []
     
+    /**
+    Initialize request with relative path and `TRON` instance.
+     
+     - parameter path: relative path to resource.
+     
+     - parameter tron: `TRON` instance to be used to configure current request.
+     */
     public init(path: String, tron: TRON) {
         self.path = path
         self.tronDelegate = tron
@@ -78,6 +157,15 @@ public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
         self.urlBuilder = tron.urlBuilder
     }
     
+    /**
+     Send current request.
+     
+     - parameter success: Success block to be executed when request finished
+     
+     - parameter failure: Failure block to be executed if request fails. Nil by default.
+     
+     - returns: Request token, that can be used to cancel request, or print debug information.
+     */
     public func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken
     {
         if stubbingEnabled {

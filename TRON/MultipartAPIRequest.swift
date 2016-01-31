@@ -26,10 +26,15 @@
 import UIKit
 import Alamofire
 
+/// Typealias for typical progress closure
 public typealias ProgressClosure = (bytesSent: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) -> Void
 
+/**
+ `MultipartAPIRequest` serves to send multipart requests.
+ */
 public class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIRequest<Model, ErrorModel> {
     
+    /// Array of multipart data parts to be appended on current request.
     internal var multipartParameters: [MultipartFormData -> Void] = []
     
     public override init(path: String, tron: TRON) {
@@ -41,6 +46,17 @@ public class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable
         fatalError()
     }
     
+    /**
+     Append multipart data to current request
+     
+     - parameter data: NSData for this part
+     
+     - parameter name: Name of this part
+     
+     - parameter filename: Name of file for this part. Optional field, nil by default.
+     
+     - parameter mimeType: mimeType for this part. Optional field, nil by default.
+     */
     public func appendMultipartData(data: NSData, name: String, filename: String? = nil, mimeType: String? = nil) {
         multipartParameters.append { formData in
             if let filename = filename, let mimeType = mimeType {
@@ -53,6 +69,17 @@ public class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable
         }
     }
     
+    /**
+     Perform multipart request.
+     
+     - parameter success: success block to be called when request completes.
+     
+     - parameter failure: failure block to be called when request completes. Optional field, nil by default.
+     
+     - parameter progress: Closure, that will be executed multiple times when request uploads data.
+     
+     - parameter cancellableCallback: closure, that can be used to cancel current request. Use it to store `RequestToken` and cancel it whenever you need. Keep in mind, that cancellableCallback will be executed only when multipart encoding finished successfully.
+     */
     public func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, progress: ProgressClosure, cancellableCallback: RequestToken -> Void)
     {
         guard let manager = tronDelegate?.manager else {

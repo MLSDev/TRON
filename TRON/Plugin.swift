@@ -25,8 +25,22 @@
 
 import Foundation
 
+/**
+ Protocol that serves to provide plugin functionality to `TRON`.
+ */
 public protocol Plugin {
+    
+    /**
+     Method to be called when request is about to be sent.
+     
+     - parameter request: NSURLRequest instance to be sent.
+     */
     func willSendRequest(request: NSURLRequest?)
     
+    /**
+     Method to be called when request receives response.
+     
+     - parameter response: Tuple with (NSURLRequest, NSHTTPURLResponse, NSData, NSError) values from Alamofire.
+     */
     func requestDidReceiveResponse(response: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?))
 }
