@@ -366,6 +366,14 @@ let tron = TRON(baseURL: "https://api.myapp.com", plugins: [NetworkActivityPlugi
 
 There are some very cool concepts for local plugins, some of them are described in dedicated [PluginConcepts](Docs/PluginConcepts.md) page.
 
+## Alternatives
+
+We are dedicated to building best possible tool for interacting with RESTful web-services. However, we understand, that every tool has it's purpose, and therefore it's always useful to know, what other tools can be used to achieve the same goal.
+
+`TRON` was heavily inspired by [Moya framework](https://github.com/Moya/Moya) and [LevelUPSDK](https://github.com/TheLevelUp/levelup-sdk-ios/blob/master/Source/API/Client/LUAPIClient.h)
+
+There are also alternative JSON mappers available, such as [Argo](https://github.com/thoughtbot/Argo)
+
 ## License
 
 `TRON` is released under the MIT license. See LICENSE for details.
