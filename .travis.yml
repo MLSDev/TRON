@@ -21,6 +21,7 @@ env:
 
 script:
     - set -o pipefail
+    - git submodule foreach --recursive git submodule update --init
     - xcodebuild -version
     - xcodebuild -scheme "$SCHEME" -configuration Debug -sdk "$SDK" -destination "$DESTINATION" test -enableCodeCoverage YES  "IDEBuildOperationMaxNumberOfConcurrentCompileTasks=`sysctl -n hw.ncpu`" | xcpretty
 
