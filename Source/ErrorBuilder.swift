@@ -47,7 +47,7 @@ public class ErrorBuilder<U:JSONDecodable>
      
      - returns APIError instance
      */
-    func buildErrorFromRequest(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> APIError<U> {
+    public func buildErrorFromRequest(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> APIError<U> {
         return APIError<U>(request: request, response: response, data: data, error: error)
     }
 }

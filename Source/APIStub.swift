@@ -87,7 +87,7 @@ public class APIStub<Model: JSONDecodable, ErrorModel: JSONDecodable> : RequestT
      
      - returns: Request token. Can not be cancelled.
      */
-    func performStubWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken {
+    public func performStubWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken {
         if let model = model where successful {
             delay(stubDelay) {
                 success(model)

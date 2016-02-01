@@ -41,7 +41,7 @@ public class ResponseBuilder<T:JSONDecodable>
      
      - returns parsed model.
      */
-    func buildResponseFromJSON(json : JSON) -> T {
+    public func buildResponseFromJSON(json : JSON) -> T {
         return T(json: json)
     }
 }
