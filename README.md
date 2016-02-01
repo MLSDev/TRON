@@ -44,7 +44,9 @@ pod 'TRON', '~> 0.1.0'
 
 ### Carthage
 
+```ruby
 github "MLSDev/TRON", ~> 0.1
+```
 
 ## Project status
 
