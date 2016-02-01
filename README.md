@@ -1,3 +1,10 @@
+![Build Status](https://travis-ci.org/MLSDev/TRON.svg?branch=master) &nbsp;
+[![codecov.io](http://codecov.io/github/MLSDev/TRON/coverage.svg?branch=master)](http://codecov.io/github/MLSDev/TRON?branch=master)
+![CocoaPod platform](https://cocoapod-badges.herokuapp.com/p/TRON/badge.png) &nbsp;
+![CocoaPod version](https://cocoapod-badges.herokuapp.com/v/TRON/badge.png) &nbsp;
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
+
 <p align="center">
   <img src="TRON.png" />
 </p>
@@ -381,7 +388,7 @@ There are also alternative JSON mappers available, such as [Argo](https://github
 
 ## About MLSDev
 
-[<img src="/mlsdev-logo.png" alt="MLSDev.com">][mlsdev]
+[<img src="https://github.com/MLSDev/development-standards/raw/master/mlsdev-logo.png" alt="MLSDev.com">][mlsdev]
 
 `TRON` is maintained by MLSDev, Inc. We specialize in providing all-in-one solution in mobile and web development. Our team follows Lean principles and works according to agile methodologies to deliver the best results reducing the budget for development and its timeline.
 
