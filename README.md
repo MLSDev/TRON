@@ -1,13 +1,15 @@
+
+
+<p align="center">
+  <img src="TRON.png" />
+</p>
+
 ![Build Status](https://travis-ci.org/MLSDev/TRON.svg?branch=master) &nbsp;
 [![codecov.io](http://codecov.io/github/MLSDev/TRON/coverage.svg?branch=master)](http://codecov.io/github/MLSDev/TRON?branch=master)
 ![CocoaPod platform](https://cocoapod-badges.herokuapp.com/p/TRON/badge.png) &nbsp;
 ![CocoaPod version](https://cocoapod-badges.herokuapp.com/v/TRON/badge.png) &nbsp;
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
-
-<p align="center">
-  <img src="TRON.png" />
-</p>
 
 TRON is a lightweight network abstraction layer, built on top of [Alamofire](https://github.com/Alamofire/Alamofire) and [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON). It can be used to dramatically simplify interacting with RESTful JSON web-services.
 
