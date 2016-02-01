@@ -15,14 +15,15 @@ class APIRequestTestCase: XCTestCase {
     func testErrorBuilding() {
         let tron = TRON(baseURL: "http://httpbin.org")
         let request: APIRequest<Int,TronError> = tron.request(path: "status/418")
-        var statusCode : Int?
+        let expectation = expectationWithDescription("Teapot")
         request.performWithSuccess({ _ in
             XCTFail()
         }) { error in
-            statusCode = error.response?.statusCode
+            if error.response?.statusCode == 418 {
+                expectation.fulfill()
+            }
         }
-        
-        expect(statusCode).toEventually(equal(418))
+        waitForExpectationsWithTimeout(5, handler: nil)
     }
     
 }

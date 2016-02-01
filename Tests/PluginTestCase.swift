@@ -27,11 +27,19 @@ class PluginTestCase: XCTestCase {
         let pluginTester = PluginTester()
         let tron = TRON(baseURL: "http://httpbin.org")
         let request: APIRequest<String,Int> = tron.request(path: "status/200")
+        let expectation = expectationWithDescription("PluginTester expectation")
         request.plugins.append(pluginTester)
-        request.performWithSuccess({ _ in })
+        request.performWithSuccess({ _ in
+            if pluginTester.didReceiveResponseCalled && pluginTester.willSendCalled {
+                expectation.fulfill()
+            }
+        }, failure: { error in
+            if pluginTester.didReceiveResponseCalled && pluginTester.willSendCalled {
+                expectation.fulfill()
+            }
+        })
         
-        expect(pluginTester.didReceiveResponseCalled).toEventually(equal(true))
-        expect(pluginTester.willSendCalled).toEventually(equal(true))
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
 }
