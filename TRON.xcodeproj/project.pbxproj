@@ -7,6 +7,82 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A10249C1C5F806A006E0163 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1024921C5F806A006E0163 /* TRON.framework */; };
+		9A1024A91C5F80A8006E0163 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE21C5A5453003222A8 /* TronError.swift */; };
+		9A1024AA1C5F80A8006E0163 /* PluginTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E881C5D1ABF00392DE5 /* PluginTester.swift */; };
+		9A1024AD1C5F80A8006E0163 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */; };
+		9A1024AE1C5F80A8006E0163 /* APIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E8C1C5D1C8400392DE5 /* APIRequestTestCase.swift */; };
+		9A1024AF1C5F80A8006E0163 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */; };
+		9A1024B01C5F80A8006E0163 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */; };
+		9A1024B11C5F80A8006E0163 /* URLBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */; };
+		9A1024B21C5F80A8006E0163 /* PluginTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E8A1C5D1B0200392DE5 /* PluginTestCase.swift */; };
+		9A1024B31C5F80A8006E0163 /* HeaderBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E921C5E87D800392DE5 /* HeaderBuilderTestCase.swift */; };
+		9A1024BB1C5F80BF006E0163 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */; };
+		9A1024BC1C5F80BF006E0163 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
+		9A1024BD1C5F80BF006E0163 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
+		9A1024BE1C5F80BF006E0163 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
+		9A1024BF1C5F80CC006E0163 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA41C5A4E0A003222A8 /* Alamofire.framework */; };
+		9A1024C11C5F80D6006E0163 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BBD1C5A4E2D003222A8 /* SwiftyJSON.framework */; };
+		9A1024C21C5F80DD006E0163 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD51C5A4FB5003222A8 /* Nimble.framework */; };
+		9A1024C31C5F8136006E0163 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E8E1C5D1DBE00392DE5 /* user.json */; };
+		9A1024C41C5F8136006E0163 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E901C5D1EF700392DE5 /* invalid.json */; };
+		9A1024D41C5F8169006E0163 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1024CA1C5F8169006E0163 /* TRON.framework */; };
+		9A1024E81C5F8173006E0163 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */; };
+		9A1024E91C5F8173006E0163 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
+		9A1024EA1C5F8173006E0163 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
+		9A1024EB1C5F8173006E0163 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
+		9A1024EC1C5F817B006E0163 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA81C5A4E0A003222A8 /* Alamofire.framework */; };
+		9A1024ED1C5F817F006E0163 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BC31C5A4E2D003222A8 /* SwiftyJSON.framework */; };
+		9A1024EE1C5F8187006E0163 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD91C5A4FB5003222A8 /* Nimble.framework */; };
+		9A1024EF1C5F81A8006E0163 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE21C5A5453003222A8 /* TronError.swift */; };
+		9A1024F01C5F81A8006E0163 /* PluginTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E881C5D1ABF00392DE5 /* PluginTester.swift */; };
+		9A1024F11C5F81A8006E0163 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */; };
+		9A1024F21C5F81A8006E0163 /* APIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E8C1C5D1C8400392DE5 /* APIRequestTestCase.swift */; };
+		9A1024F31C5F81A8006E0163 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */; };
+		9A1024F41C5F81A8006E0163 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */; };
+		9A1024F51C5F81A8006E0163 /* URLBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */; };
+		9A1024F61C5F81A8006E0163 /* PluginTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E8A1C5D1B0200392DE5 /* PluginTestCase.swift */; };
+		9A1024F71C5F81A8006E0163 /* HeaderBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E921C5E87D800392DE5 /* HeaderBuilderTestCase.swift */; };
+		9A1024F81C5F81AD006E0163 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E8E1C5D1DBE00392DE5 /* user.json */; };
+		9A1024F91C5F81AD006E0163 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E901C5D1EF700392DE5 /* invalid.json */; };
+		9A1025121C5F8263006E0163 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BAC1C5A4E0A003222A8 /* Alamofire.framework */; };
+		9A1025131C5F8267006E0163 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BC11C5A4E2D003222A8 /* SwiftyJSON.framework */; };
+		9A10251C1C5F84C3006E0163 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */; };
+		9A10251D1C5F84C3006E0163 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
+		9A10251E1C5F84C3006E0163 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
+		9A10251F1C5F84C3006E0163 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
+		9A1025281C5F8524006E0163 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */; };
+		9A1025291C5F8524006E0163 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
+		9A10252A1C5F8524006E0163 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
+		9A10252B1C5F8524006E0163 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
+		9A1025341C5F855D006E0163 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025331C5F855D006E0163 /* TRON.swift */; };
+		9A1025351C5F855D006E0163 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025331C5F855D006E0163 /* TRON.swift */; };
+		9A1025361C5F855D006E0163 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025331C5F855D006E0163 /* TRON.swift */; };
+		9A1025371C5F855D006E0163 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025331C5F855D006E0163 /* TRON.swift */; };
+		9A1025391C5F8568006E0163 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025381C5F8568006E0163 /* JSONDecodable.swift */; };
+		9A10253A1C5F8568006E0163 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025381C5F8568006E0163 /* JSONDecodable.swift */; };
+		9A10253B1C5F8568006E0163 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025381C5F8568006E0163 /* JSONDecodable.swift */; };
+		9A10253C1C5F8568006E0163 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025381C5F8568006E0163 /* JSONDecodable.swift */; };
+		9A1025411C5F8579006E0163 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */; };
+		9A1025421C5F8579006E0163 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */; };
+		9A1025431C5F8579006E0163 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */; };
+		9A1025441C5F8579006E0163 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */; };
+		9A1025451C5F8579006E0163 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */; };
+		9A1025461C5F8579006E0163 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */; };
+		9A1025471C5F8579006E0163 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */; };
+		9A1025481C5F8579006E0163 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */; };
+		9A1025491C5F8579006E0163 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253F1C5F8579006E0163 /* RequestBuilder.swift */; };
+		9A10254A1C5F8579006E0163 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253F1C5F8579006E0163 /* RequestBuilder.swift */; };
+		9A10254B1C5F8579006E0163 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253F1C5F8579006E0163 /* RequestBuilder.swift */; };
+		9A10254C1C5F8579006E0163 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253F1C5F8579006E0163 /* RequestBuilder.swift */; };
+		9A10254D1C5F8579006E0163 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025401C5F8579006E0163 /* ResponseBuilder.swift */; };
+		9A10254E1C5F8579006E0163 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025401C5F8579006E0163 /* ResponseBuilder.swift */; };
+		9A10254F1C5F8579006E0163 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025401C5F8579006E0163 /* ResponseBuilder.swift */; };
+		9A1025501C5F8579006E0163 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025401C5F8579006E0163 /* ResponseBuilder.swift */; };
+		9A1025531C5F8595006E0163 /* NetworkActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025511C5F8595006E0163 /* NetworkActivityPlugin.swift */; };
+		9A1025561C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */; };
+		9A1025571C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */; };
+		9A1025581C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */; };
 		9A704E521C5D01B300392DE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E511C5D01B300392DE5 /* AppDelegate.swift */; };
 		9A704E541C5D01B300392DE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E531C5D01B300392DE5 /* ViewController.swift */; };
 		9A704E571C5D01B300392DE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E551C5D01B300392DE5 /* Main.storyboard */; };
@@ -28,27 +104,29 @@
 		9A722F551C5A49AE0087908D /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; };
 		9AEE0B6F1C5A4D3B003222A8 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */; };
 		9AEE0B711C5A4D3B003222A8 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */; };
-		9AEE0B771C5A4D4A003222A8 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */; };
-		9AEE0B791C5A4D4A003222A8 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
-		9AEE0B7A1C5A4D4A003222A8 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
-		9AEE0B7B1C5A4D4A003222A8 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
-		9AEE0B821C5A4D56003222A8 /* NetworkActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B7E1C5A4D56003222A8 /* NetworkActivityPlugin.swift */; };
-		9AEE0B831C5A4D56003222A8 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B7F1C5A4D56003222A8 /* NetworkLoggerPlugin.swift */; };
-		9AEE0B8A1C5A4D64003222A8 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B861C5A4D64003222A8 /* ErrorBuilder.swift */; };
-		9AEE0B8B1C5A4D64003222A8 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B871C5A4D64003222A8 /* HeaderBuilder.swift */; };
-		9AEE0B8C1C5A4D64003222A8 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B881C5A4D64003222A8 /* RequestBuilder.swift */; };
-		9AEE0B8D1C5A4D64003222A8 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B891C5A4D64003222A8 /* ResponseBuilder.swift */; };
-		9AEE0B901C5A4D9E003222A8 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B8F1C5A4D9E003222A8 /* JSONDecodable.swift */; };
 		9AEE0BAD1C5A4E15003222A8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA01C5A4E0A003222A8 /* Alamofire.framework */; };
 		9AEE0BC61C5A4E33003222A8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BB91C5A4E2D003222A8 /* SwiftyJSON.framework */; };
 		9AEE0BDC1C5A4FBF003222A8 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD11C5A4FB5003222A8 /* Nimble.framework */; };
-		9AEE0BDE1C5A5101003222A8 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BDD1C5A5101003222A8 /* TRON.swift */; };
 		9AEE0BE01C5A536F003222A8 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */; };
 		9AEE0BE31C5A5453003222A8 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE21C5A5453003222A8 /* TronError.swift */; };
 		9AEE0BE51C5A640D003222A8 /* URLBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9A10249D1C5F806A006E0163 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A722F411C5A49AE0087908D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A1024911C5F806A006E0163;
+			remoteInfo = "TRON OSX";
+		};
+		9A1024D51C5F8169006E0163 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A722F411C5A49AE0087908D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A1024C91C5F8169006E0163;
+			remoteInfo = "TRON tvOS";
+		};
 		9A704E791C5D01DF00392DE5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */;
@@ -236,6 +314,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9A1024921C5F806A006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A10249B1C5F806A006E0163 /* TRON OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A1024CA1C5F8169006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A1024D31C5F8169006E0163 /* TRON tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A1024FF1C5F8240006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A1025331C5F855D006E0163 /* TRON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRON.swift; path = Source/TRON.swift; sourceTree = SOURCE_ROOT; };
+		9A1025381C5F8568006E0163 /* JSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONDecodable.swift; path = Source/JSONDecodable.swift; sourceTree = SOURCE_ROOT; };
+		9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorBuilder.swift; path = Source/ErrorBuilder.swift; sourceTree = SOURCE_ROOT; };
+		9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilder.swift; path = Source/HeaderBuilder.swift; sourceTree = SOURCE_ROOT; };
+		9A10253F1C5F8579006E0163 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestBuilder.swift; path = Source/RequestBuilder.swift; sourceTree = SOURCE_ROOT; };
+		9A1025401C5F8579006E0163 /* ResponseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResponseBuilder.swift; path = Source/ResponseBuilder.swift; sourceTree = SOURCE_ROOT; };
+		9A1025511C5F8595006E0163 /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkActivityPlugin.swift; path = Source/NetworkActivityPlugin.swift; sourceTree = SOURCE_ROOT; };
+		9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPlugin.swift; path = Source/NetworkLoggerPlugin.swift; sourceTree = SOURCE_ROOT; };
 		9A704E4F1C5D01B300392DE5 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A704E511C5D01B300392DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A704E531C5D01B300392DE5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -244,39 +335,76 @@
 		9A704E5B1C5D01B300392DE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9A704E5D1C5D01B300392DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A704E751C5D01D300392DE5 /* CRUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CRUD.swift; sourceTree = "<group>"; };
-		9A704E881C5D1ABF00392DE5 /* PluginTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginTester.swift; sourceTree = "<group>"; };
-		9A704E8A1C5D1B0200392DE5 /* PluginTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginTestCase.swift; sourceTree = "<group>"; };
-		9A704E8C1C5D1C8400392DE5 /* APIRequestTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestTestCase.swift; sourceTree = "<group>"; };
-		9A704E8E1C5D1DBE00392DE5 /* user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user.json; path = Fixtures/user.json; sourceTree = "<group>"; };
-		9A704E901C5D1EF700392DE5 /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalid.json; path = Fixtures/invalid.json; sourceTree = "<group>"; };
-		9A704E921C5E87D800392DE5 /* HeaderBuilderTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderBuilderTestCase.swift; sourceTree = "<group>"; };
+		9A704E881C5D1ABF00392DE5 /* PluginTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PluginTester.swift; path = ../Tests/PluginTester.swift; sourceTree = "<group>"; };
+		9A704E8A1C5D1B0200392DE5 /* PluginTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PluginTestCase.swift; path = ../Tests/PluginTestCase.swift; sourceTree = "<group>"; };
+		9A704E8C1C5D1C8400392DE5 /* APIRequestTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequestTestCase.swift; path = ../Tests/APIRequestTestCase.swift; sourceTree = "<group>"; };
+		9A704E8E1C5D1DBE00392DE5 /* user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user.json; path = ../Tests/Fixtures/user.json; sourceTree = "<group>"; };
+		9A704E901C5D1EF700392DE5 /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalid.json; path = ../Tests/Fixtures/invalid.json; sourceTree = "<group>"; };
+		9A704E921C5E87D800392DE5 /* HeaderBuilderTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilderTestCase.swift; path = ../Tests/HeaderBuilderTestCase.swift; sourceTree = "<group>"; };
 		9A722F4A1C5A49AE0087908D /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A722F541C5A49AE0087908D /* TRONTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TRONTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A722F651C5A4A610087908D /* iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = iOS.plist; path = "Supporting files/Plists/iOS.plist"; sourceTree = "<group>"; };
-		9A722F661C5A4A610087908D /* Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Tests.plist; path = "Supporting files/Plists/Tests.plist"; sourceTree = "<group>"; };
-		9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiStubbingTestCase.swift; sourceTree = "<group>"; };
-		9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDecodableTestCase.swift; sourceTree = "<group>"; };
-		9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
-		9AEE0B741C5A4D4A003222A8 /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIStub.swift; sourceTree = "<group>"; };
-		9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartAPIRequest.swift; sourceTree = "<group>"; };
-		9AEE0B761C5A4D4A003222A8 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
-		9AEE0B7E1C5A4D56003222A8 /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkActivityPlugin.swift; path = Plugins/NetworkActivityPlugin.swift; sourceTree = "<group>"; };
-		9AEE0B7F1C5A4D56003222A8 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPlugin.swift; path = Plugins/NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
-		9AEE0B861C5A4D64003222A8 /* ErrorBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorBuilder.swift; path = Builders/ErrorBuilder.swift; sourceTree = "<group>"; };
-		9AEE0B871C5A4D64003222A8 /* HeaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilder.swift; path = Builders/HeaderBuilder.swift; sourceTree = "<group>"; };
-		9AEE0B881C5A4D64003222A8 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestBuilder.swift; path = Builders/RequestBuilder.swift; sourceTree = "<group>"; };
-		9AEE0B891C5A4D64003222A8 /* ResponseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResponseBuilder.swift; path = Builders/ResponseBuilder.swift; sourceTree = "<group>"; };
-		9AEE0B8F1C5A4D9E003222A8 /* JSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONDecodable.swift; path = Models/JSONDecodable.swift; sourceTree = "<group>"; };
+		9A722F541C5A49AE0087908D /* TRON iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A722F651C5A4A610087908D /* Framework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Framework.plist; path = "Supporting files/Framework.plist"; sourceTree = "<group>"; };
+		9A722F661C5A4A610087908D /* Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Tests.plist; path = "Supporting files/Tests.plist"; sourceTree = "<group>"; };
+		9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiStubbingTestCase.swift; path = ../Tests/ApiStubbingTestCase.swift; sourceTree = "<group>"; };
+		9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONDecodableTestCase.swift; path = ../Tests/JSONDecodableTestCase.swift; sourceTree = "<group>"; };
+		9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = ../Source/APIRequest.swift; sourceTree = "<group>"; };
+		9AEE0B741C5A4D4A003222A8 /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIStub.swift; path = ../Source/APIStub.swift; sourceTree = "<group>"; };
+		9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipartAPIRequest.swift; path = ../Source/MultipartAPIRequest.swift; sourceTree = "<group>"; };
+		9AEE0B761C5A4D4A003222A8 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plugin.swift; path = ../Source/Plugin.swift; sourceTree = "<group>"; };
 		9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Carthage/Checkouts/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = Carthage/Checkouts/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = Carthage/Checkouts/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
-		9AEE0BDD1C5A5101003222A8 /* TRON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TRON.swift; sourceTree = "<group>"; };
-		9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TronTestCase.swift; sourceTree = "<group>"; };
-		9AEE0BE21C5A5453003222A8 /* TronError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TronError.swift; path = Fixtures/TronError.swift; sourceTree = "<group>"; };
-		9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLBuilderTestCase.swift; sourceTree = "<group>"; };
+		9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TronTestCase.swift; path = ../Tests/TronTestCase.swift; sourceTree = "<group>"; };
+		9AEE0BE21C5A5453003222A8 /* TronError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TronError.swift; path = ../Tests/Fixtures/TronError.swift; sourceTree = "<group>"; };
+		9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLBuilderTestCase.swift; path = ../Tests/URLBuilderTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9A10248E1C5F806A006E0163 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A1024C11C5F80D6006E0163 /* SwiftyJSON.framework in Frameworks */,
+				9A1024BF1C5F80CC006E0163 /* Alamofire.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024981C5F806A006E0163 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A1024C21C5F80DD006E0163 /* Nimble.framework in Frameworks */,
+				9A10249C1C5F806A006E0163 /* TRON.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024C61C5F8169006E0163 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A1024ED1C5F817F006E0163 /* SwiftyJSON.framework in Frameworks */,
+				9A1024EC1C5F817B006E0163 /* Alamofire.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024D01C5F8169006E0163 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A1024EE1C5F8187006E0163 /* Nimble.framework in Frameworks */,
+				9A1024D41C5F8169006E0163 /* TRON.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024FB1C5F8240006E0163 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A1025131C5F8267006E0163 /* SwiftyJSON.framework in Frameworks */,
+				9A1025121C5F8263006E0163 /* Alamofire.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9A704E4C1C5D01B300392DE5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -308,6 +436,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A1025141C5F82F8006E0163 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Supporting files";
+			sourceTree = "<group>";
+		};
 		9A704E501C5D01B300392DE5 /* Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,8 +464,8 @@
 				9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */,
 				9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */,
 				9A722F641C5A49C70087908D /* Plists */,
-				9A722F4C1C5A49AE0087908D /* TRON */,
-				9A722F581C5A49AE0087908D /* TRONTests */,
+				9A722F4C1C5A49AE0087908D /* Source */,
+				9A722F581C5A49AE0087908D /* Tests */,
 				9A704E501C5D01B300392DE5 /* Example */,
 				9A722F4B1C5A49AE0087908D /* Products */,
 			);
@@ -340,16 +475,21 @@
 			isa = PBXGroup;
 			children = (
 				9A722F4A1C5A49AE0087908D /* TRON.framework */,
-				9A722F541C5A49AE0087908D /* TRONTests.xctest */,
+				9A722F541C5A49AE0087908D /* TRON iOS Tests.xctest */,
 				9A704E4F1C5D01B300392DE5 /* Example.app */,
+				9A1024921C5F806A006E0163 /* TRON.framework */,
+				9A10249B1C5F806A006E0163 /* TRON OSXTests.xctest */,
+				9A1024CA1C5F8169006E0163 /* TRON.framework */,
+				9A1024D31C5F8169006E0163 /* TRON tvOSTests.xctest */,
+				9A1024FF1C5F8240006E0163 /* TRON.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9A722F4C1C5A49AE0087908D /* TRON */ = {
+		9A722F4C1C5A49AE0087908D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				9AEE0BDD1C5A5101003222A8 /* TRON.swift */,
+				9A1025331C5F855D006E0163 /* TRON.swift */,
 				9AEE0B8E1C5A4D7B003222A8 /* JSONDecodable */,
 				9AEE0B851C5A4D5C003222A8 /* Builders */,
 				9AEE0B7C1C5A4D4D003222A8 /* Plugins */,
@@ -358,12 +498,14 @@
 				9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */,
 				9AEE0B761C5A4D4A003222A8 /* Plugin.swift */,
 			);
+			name = Source;
 			path = TRON;
 			sourceTree = "<group>";
 		};
-		9A722F581C5A49AE0087908D /* TRONTests */ = {
+		9A722F581C5A49AE0087908D /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				9A1025141C5F82F8006E0163 /* Supporting files */,
 				9AEE0BE11C5A5445003222A8 /* Fixtures */,
 				9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */,
 				9A704E8C1C5D1C8400392DE5 /* APIRequestTestCase.swift */,
@@ -373,13 +515,14 @@
 				9A704E8A1C5D1B0200392DE5 /* PluginTestCase.swift */,
 				9A704E921C5E87D800392DE5 /* HeaderBuilderTestCase.swift */,
 			);
+			name = Tests;
 			path = TRONTests;
 			sourceTree = "<group>";
 		};
 		9A722F641C5A49C70087908D /* Plists */ = {
 			isa = PBXGroup;
 			children = (
-				9A722F651C5A4A610087908D /* iOS.plist */,
+				9A722F651C5A4A610087908D /* Framework.plist */,
 				9A722F661C5A4A610087908D /* Tests.plist */,
 			);
 			name = Plists;
@@ -388,29 +531,32 @@
 		9AEE0B7C1C5A4D4D003222A8 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
-				9AEE0B7E1C5A4D56003222A8 /* NetworkActivityPlugin.swift */,
-				9AEE0B7F1C5A4D56003222A8 /* NetworkLoggerPlugin.swift */,
+				9A1025511C5F8595006E0163 /* NetworkActivityPlugin.swift */,
+				9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */,
 			);
 			name = Plugins;
+			path = ../Source/Plugins;
 			sourceTree = "<group>";
 		};
 		9AEE0B851C5A4D5C003222A8 /* Builders */ = {
 			isa = PBXGroup;
 			children = (
-				9AEE0B861C5A4D64003222A8 /* ErrorBuilder.swift */,
-				9AEE0B871C5A4D64003222A8 /* HeaderBuilder.swift */,
-				9AEE0B881C5A4D64003222A8 /* RequestBuilder.swift */,
-				9AEE0B891C5A4D64003222A8 /* ResponseBuilder.swift */,
+				9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */,
+				9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */,
+				9A10253F1C5F8579006E0163 /* RequestBuilder.swift */,
+				9A1025401C5F8579006E0163 /* ResponseBuilder.swift */,
 			);
 			name = Builders;
+			path = ../Source/Builders;
 			sourceTree = "<group>";
 		};
 		9AEE0B8E1C5A4D7B003222A8 /* JSONDecodable */ = {
 			isa = PBXGroup;
 			children = (
-				9AEE0B8F1C5A4D9E003222A8 /* JSONDecodable.swift */,
+				9A1025381C5F8568006E0163 /* JSONDecodable.swift */,
 			);
 			name = JSONDecodable;
+			path = ../Source/JSONDecodable;
 			sourceTree = "<group>";
 		};
 		9AEE0B961C5A4E09003222A8 /* Products */ = {
@@ -468,6 +614,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		9A10248F1C5F806A006E0163 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024C71C5F8169006E0163 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024FC1C5F8240006E0163 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9A722F471C5A49AE0087908D /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -478,6 +645,96 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		9A1024911C5F806A006E0163 /* TRON OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A1024A31C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON OSX" */;
+			buildPhases = (
+				9A10248D1C5F806A006E0163 /* Sources */,
+				9A10248E1C5F806A006E0163 /* Frameworks */,
+				9A10248F1C5F806A006E0163 /* Headers */,
+				9A1024901C5F806A006E0163 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TRON OSX";
+			productName = "TRON OSX";
+			productReference = 9A1024921C5F806A006E0163 /* TRON.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		9A10249A1C5F806A006E0163 /* TRON OSXTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A1024A61C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON OSXTests" */;
+			buildPhases = (
+				9A1024971C5F806A006E0163 /* Sources */,
+				9A1024981C5F806A006E0163 /* Frameworks */,
+				9A1024991C5F806A006E0163 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9A10249E1C5F806A006E0163 /* PBXTargetDependency */,
+			);
+			name = "TRON OSXTests";
+			productName = "TRON OSXTests";
+			productReference = 9A10249B1C5F806A006E0163 /* TRON OSXTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9A1024C91C5F8169006E0163 /* TRON tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A1024DB1C5F8169006E0163 /* Build configuration list for PBXNativeTarget "TRON tvOS" */;
+			buildPhases = (
+				9A1024C51C5F8169006E0163 /* Sources */,
+				9A1024C61C5F8169006E0163 /* Frameworks */,
+				9A1024C71C5F8169006E0163 /* Headers */,
+				9A1024C81C5F8169006E0163 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TRON tvOS";
+			productName = "TRON tvOS";
+			productReference = 9A1024CA1C5F8169006E0163 /* TRON.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		9A1024D21C5F8169006E0163 /* TRON tvOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A1024DE1C5F8169006E0163 /* Build configuration list for PBXNativeTarget "TRON tvOSTests" */;
+			buildPhases = (
+				9A1024CF1C5F8169006E0163 /* Sources */,
+				9A1024D01C5F8169006E0163 /* Frameworks */,
+				9A1024D11C5F8169006E0163 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9A1024D61C5F8169006E0163 /* PBXTargetDependency */,
+			);
+			name = "TRON tvOSTests";
+			productName = "TRON tvOSTests";
+			productReference = 9A1024D31C5F8169006E0163 /* TRON tvOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9A1024FE1C5F8240006E0163 /* TRON watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A1025041C5F8240006E0163 /* Build configuration list for PBXNativeTarget "TRON watchOS" */;
+			buildPhases = (
+				9A1024FA1C5F8240006E0163 /* Sources */,
+				9A1024FB1C5F8240006E0163 /* Frameworks */,
+				9A1024FC1C5F8240006E0163 /* Headers */,
+				9A1024FD1C5F8240006E0163 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TRON watchOS";
+			productName = "TRON watchOS";
+			productReference = 9A1024FF1C5F8240006E0163 /* TRON.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		9A704E4E1C5D01B300392DE5 /* Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A704E741C5D01B300392DE5 /* Build configuration list for PBXNativeTarget "Example" */;
@@ -499,9 +756,9 @@
 			productReference = 9A704E4F1C5D01B300392DE5 /* Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9A722F491C5A49AE0087908D /* TRON */ = {
+		9A722F491C5A49AE0087908D /* TRON iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A722F5E1C5A49AE0087908D /* Build configuration list for PBXNativeTarget "TRON" */;
+			buildConfigurationList = 9A722F5E1C5A49AE0087908D /* Build configuration list for PBXNativeTarget "TRON iOS" */;
 			buildPhases = (
 				9A722F451C5A49AE0087908D /* Sources */,
 				9A722F461C5A49AE0087908D /* Frameworks */,
@@ -512,14 +769,14 @@
 			);
 			dependencies = (
 			);
-			name = TRON;
+			name = "TRON iOS";
 			productName = TRON;
 			productReference = 9A722F4A1C5A49AE0087908D /* TRON.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		9A722F531C5A49AE0087908D /* TRONTests */ = {
+		9A722F531C5A49AE0087908D /* TRON iOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A722F611C5A49AE0087908D /* Build configuration list for PBXNativeTarget "TRONTests" */;
+			buildConfigurationList = 9A722F611C5A49AE0087908D /* Build configuration list for PBXNativeTarget "TRON iOS Tests" */;
 			buildPhases = (
 				9A722F501C5A49AE0087908D /* Sources */,
 				9A722F511C5A49AE0087908D /* Frameworks */,
@@ -530,9 +787,9 @@
 			dependencies = (
 				9A722F571C5A49AE0087908D /* PBXTargetDependency */,
 			);
-			name = TRONTests;
+			name = "TRON iOS Tests";
 			productName = TRONTests;
-			productReference = 9A722F541C5A49AE0087908D /* TRONTests.xctest */;
+			productReference = 9A722F541C5A49AE0087908D /* TRON iOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -545,6 +802,21 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Denys Telezhkin";
 				TargetAttributes = {
+					9A1024911C5F806A006E0163 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					9A10249A1C5F806A006E0163 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					9A1024C91C5F8169006E0163 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					9A1024D21C5F8169006E0163 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					9A1024FE1C5F8240006E0163 = {
+						CreatedOnToolsVersion = 7.2;
+					};
 					9A704E4E1C5D01B300392DE5 = {
 						CreatedOnToolsVersion = 7.2;
 					};
@@ -583,9 +855,14 @@
 			);
 			projectRoot = "";
 			targets = (
-				9A722F491C5A49AE0087908D /* TRON */,
-				9A722F531C5A49AE0087908D /* TRONTests */,
+				9A722F491C5A49AE0087908D /* TRON iOS */,
+				9A722F531C5A49AE0087908D /* TRON iOS Tests */,
 				9A704E4E1C5D01B300392DE5 /* Example */,
+				9A1024911C5F806A006E0163 /* TRON OSX */,
+				9A10249A1C5F806A006E0163 /* TRON OSXTests */,
+				9A1024C91C5F8169006E0163 /* TRON tvOS */,
+				9A1024D21C5F8169006E0163 /* TRON tvOSTests */,
+				9A1024FE1C5F8240006E0163 /* TRON watchOS */,
 			);
 		};
 /* End PBXProject section */
@@ -734,6 +1011,45 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9A1024901C5F806A006E0163 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024991C5F806A006E0163 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A1024C31C5F8136006E0163 /* user.json in Resources */,
+				9A1024C41C5F8136006E0163 /* invalid.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024C81C5F8169006E0163 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024D11C5F8169006E0163 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A1024F81C5F81AD006E0163 /* user.json in Resources */,
+				9A1024F91C5F81AD006E0163 /* invalid.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024FD1C5F8240006E0163 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9A704E4D1C5D01B300392DE5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -763,6 +1079,91 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9A10248D1C5F806A006E0163 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A10253A1C5F8568006E0163 /* JSONDecodable.swift in Sources */,
+				9A1025351C5F855D006E0163 /* TRON.swift in Sources */,
+				9A10254E1C5F8579006E0163 /* ResponseBuilder.swift in Sources */,
+				9A1024BB1C5F80BF006E0163 /* APIRequest.swift in Sources */,
+				9A1025461C5F8579006E0163 /* HeaderBuilder.swift in Sources */,
+				9A10254A1C5F8579006E0163 /* RequestBuilder.swift in Sources */,
+				9A1024BC1C5F80BF006E0163 /* APIStub.swift in Sources */,
+				9A1024BD1C5F80BF006E0163 /* MultipartAPIRequest.swift in Sources */,
+				9A1025421C5F8579006E0163 /* ErrorBuilder.swift in Sources */,
+				9A1024BE1C5F80BF006E0163 /* Plugin.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024971C5F806A006E0163 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A1024A91C5F80A8006E0163 /* TronError.swift in Sources */,
+				9A1024AA1C5F80A8006E0163 /* PluginTester.swift in Sources */,
+				9A1024AD1C5F80A8006E0163 /* ApiStubbingTestCase.swift in Sources */,
+				9A1024AE1C5F80A8006E0163 /* APIRequestTestCase.swift in Sources */,
+				9A1024AF1C5F80A8006E0163 /* JSONDecodableTestCase.swift in Sources */,
+				9A1024B01C5F80A8006E0163 /* TronTestCase.swift in Sources */,
+				9A1024B11C5F80A8006E0163 /* URLBuilderTestCase.swift in Sources */,
+				9A1024B21C5F80A8006E0163 /* PluginTestCase.swift in Sources */,
+				9A1024B31C5F80A8006E0163 /* HeaderBuilderTestCase.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024C51C5F8169006E0163 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A10253B1C5F8568006E0163 /* JSONDecodable.swift in Sources */,
+				9A1025571C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */,
+				9A1025361C5F855D006E0163 /* TRON.swift in Sources */,
+				9A10254F1C5F8579006E0163 /* ResponseBuilder.swift in Sources */,
+				9A1024E81C5F8173006E0163 /* APIRequest.swift in Sources */,
+				9A1025471C5F8579006E0163 /* HeaderBuilder.swift in Sources */,
+				9A10254B1C5F8579006E0163 /* RequestBuilder.swift in Sources */,
+				9A1024E91C5F8173006E0163 /* APIStub.swift in Sources */,
+				9A1024EA1C5F8173006E0163 /* MultipartAPIRequest.swift in Sources */,
+				9A1025431C5F8579006E0163 /* ErrorBuilder.swift in Sources */,
+				9A1024EB1C5F8173006E0163 /* Plugin.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024CF1C5F8169006E0163 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A1024EF1C5F81A8006E0163 /* TronError.swift in Sources */,
+				9A1024F01C5F81A8006E0163 /* PluginTester.swift in Sources */,
+				9A1024F11C5F81A8006E0163 /* ApiStubbingTestCase.swift in Sources */,
+				9A1024F21C5F81A8006E0163 /* APIRequestTestCase.swift in Sources */,
+				9A1024F31C5F81A8006E0163 /* JSONDecodableTestCase.swift in Sources */,
+				9A1024F41C5F81A8006E0163 /* TronTestCase.swift in Sources */,
+				9A1024F51C5F81A8006E0163 /* URLBuilderTestCase.swift in Sources */,
+				9A1024F61C5F81A8006E0163 /* PluginTestCase.swift in Sources */,
+				9A1024F71C5F81A8006E0163 /* HeaderBuilderTestCase.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1024FA1C5F8240006E0163 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A10253C1C5F8568006E0163 /* JSONDecodable.swift in Sources */,
+				9A1025581C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */,
+				9A1025371C5F855D006E0163 /* TRON.swift in Sources */,
+				9A1025501C5F8579006E0163 /* ResponseBuilder.swift in Sources */,
+				9A10251C1C5F84C3006E0163 /* APIRequest.swift in Sources */,
+				9A1025481C5F8579006E0163 /* HeaderBuilder.swift in Sources */,
+				9A10254C1C5F8579006E0163 /* RequestBuilder.swift in Sources */,
+				9A10251D1C5F84C3006E0163 /* APIStub.swift in Sources */,
+				9A10251E1C5F84C3006E0163 /* MultipartAPIRequest.swift in Sources */,
+				9A1025441C5F8579006E0163 /* ErrorBuilder.swift in Sources */,
+				9A10251F1C5F84C3006E0163 /* Plugin.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9A704E4B1C5D01B300392DE5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -777,18 +1178,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AEE0B771C5A4D4A003222A8 /* APIRequest.swift in Sources */,
-				9AEE0B8D1C5A4D64003222A8 /* ResponseBuilder.swift in Sources */,
-				9AEE0B8B1C5A4D64003222A8 /* HeaderBuilder.swift in Sources */,
-				9AEE0B8C1C5A4D64003222A8 /* RequestBuilder.swift in Sources */,
-				9AEE0B821C5A4D56003222A8 /* NetworkActivityPlugin.swift in Sources */,
-				9AEE0B7A1C5A4D4A003222A8 /* MultipartAPIRequest.swift in Sources */,
-				9AEE0B901C5A4D9E003222A8 /* JSONDecodable.swift in Sources */,
-				9AEE0BDE1C5A5101003222A8 /* TRON.swift in Sources */,
-				9AEE0B8A1C5A4D64003222A8 /* ErrorBuilder.swift in Sources */,
-				9AEE0B831C5A4D56003222A8 /* NetworkLoggerPlugin.swift in Sources */,
-				9AEE0B7B1C5A4D4A003222A8 /* Plugin.swift in Sources */,
-				9AEE0B791C5A4D4A003222A8 /* APIStub.swift in Sources */,
+				9A1025341C5F855D006E0163 /* TRON.swift in Sources */,
+				9A1025561C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */,
+				9A1025411C5F8579006E0163 /* ErrorBuilder.swift in Sources */,
+				9A1025391C5F8568006E0163 /* JSONDecodable.swift in Sources */,
+				9A1025451C5F8579006E0163 /* HeaderBuilder.swift in Sources */,
+				9A1025281C5F8524006E0163 /* APIRequest.swift in Sources */,
+				9A1025491C5F8579006E0163 /* RequestBuilder.swift in Sources */,
+				9A1025531C5F8595006E0163 /* NetworkActivityPlugin.swift in Sources */,
+				9A1025291C5F8524006E0163 /* APIStub.swift in Sources */,
+				9A10252A1C5F8524006E0163 /* MultipartAPIRequest.swift in Sources */,
+				9A10254D1C5F8579006E0163 /* ResponseBuilder.swift in Sources */,
+				9A10252B1C5F8524006E0163 /* Plugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -811,6 +1212,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9A10249E1C5F806A006E0163 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9A1024911C5F806A006E0163 /* TRON OSX */;
+			targetProxy = 9A10249D1C5F806A006E0163 /* PBXContainerItemProxy */;
+		};
+		9A1024D61C5F8169006E0163 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9A1024C91C5F8169006E0163 /* TRON tvOS */;
+			targetProxy = 9A1024D51C5F8169006E0163 /* PBXContainerItemProxy */;
+		};
 		9A704E7A1C5D01DF00392DE5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "SwiftyJSON iOS";
@@ -823,12 +1234,12 @@
 		};
 		9A704E831C5D01EC00392DE5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9A722F491C5A49AE0087908D /* TRON */;
+			target = 9A722F491C5A49AE0087908D /* TRON iOS */;
 			targetProxy = 9A704E821C5D01EC00392DE5 /* PBXContainerItemProxy */;
 		};
 		9A722F571C5A49AE0087908D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9A722F491C5A49AE0087908D /* TRON */;
+			target = 9A722F491C5A49AE0087908D /* TRON iOS */;
 			targetProxy = 9A722F561C5A49AE0087908D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -853,6 +1264,174 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		9A1024A41C5F806A006E0163 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-OSX";
+				PRODUCT_NAME = TRON;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		9A1024A51C5F806A006E0163 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-OSX";
+				PRODUCT_NAME = TRON;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		9A1024A71C5F806A006E0163 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-OSXTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9A1024A81C5F806A006E0163 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-OSXTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9A1024DC1C5F8169006E0163 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-tvOS";
+				PRODUCT_NAME = TRON;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		9A1024DD1C5F8169006E0163 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-tvOS";
+				PRODUCT_NAME = TRON;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Release;
+		};
+		9A1024DF1C5F8169006E0163 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		9A1024E01C5F8169006E0163 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Release;
+		};
+		9A1025051C5F8240006E0163 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-watchOS";
+				PRODUCT_NAME = TRON;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		9A1025061C5F8240006E0163 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-watchOS";
+				PRODUCT_NAME = TRON;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Release;
+		};
 		9A704E5E1C5D01B300392DE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -914,14 +1493,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -956,13 +1538,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -974,11 +1559,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Plists/iOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRON;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TRON;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -992,11 +1577,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Plists/iOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRON;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TRON;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1005,7 +1590,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				INFOPLIST_FILE = "Supporting files/Plists/Tests.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1017,7 +1602,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				INFOPLIST_FILE = "Supporting files/Plists/Tests.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1027,6 +1612,46 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9A1024A31C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A1024A41C5F806A006E0163 /* Debug */,
+				9A1024A51C5F806A006E0163 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		9A1024A61C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON OSXTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A1024A71C5F806A006E0163 /* Debug */,
+				9A1024A81C5F806A006E0163 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		9A1024DB1C5F8169006E0163 /* Build configuration list for PBXNativeTarget "TRON tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A1024DC1C5F8169006E0163 /* Debug */,
+				9A1024DD1C5F8169006E0163 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		9A1024DE1C5F8169006E0163 /* Build configuration list for PBXNativeTarget "TRON tvOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A1024DF1C5F8169006E0163 /* Debug */,
+				9A1024E01C5F8169006E0163 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		9A1025041C5F8240006E0163 /* Build configuration list for PBXNativeTarget "TRON watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A1025051C5F8240006E0163 /* Debug */,
+				9A1025061C5F8240006E0163 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		9A704E741C5D01B300392DE5 /* Build configuration list for PBXNativeTarget "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1034,6 +1659,7 @@
 				9A704E5F1C5D01B300392DE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9A722F441C5A49AE0087908D /* Build configuration list for PBXProject "TRON" */ = {
 			isa = XCConfigurationList;
@@ -1044,7 +1670,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A722F5E1C5A49AE0087908D /* Build configuration list for PBXNativeTarget "TRON" */ = {
+		9A722F5E1C5A49AE0087908D /* Build configuration list for PBXNativeTarget "TRON iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A722F5F1C5A49AE0087908D /* Debug */,
@@ -1053,7 +1679,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A722F611C5A49AE0087908D /* Build configuration list for PBXNativeTarget "TRONTests" */ = {
+		9A722F611C5A49AE0087908D /* Build configuration list for PBXNativeTarget "TRON iOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A722F621C5A49AE0087908D /* Debug */,

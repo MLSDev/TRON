@@ -12,9 +12,8 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 - [x] Robust plugin system
 - [x] Stubbing of network requests
 - [x] Modular architecture
-- [ ] Complete unit-test coverage
-- [ ] Support for iOS/Mac OS X/tvOS/watchOS/Linux
-- [ ] Support for CocoaPods/ Carthage/ Swift Package Manager
+- [x] Support for iOS/Mac OS X/tvOS/watchOS/Linux
+- [x] Support for CocoaPods/Carthage/Swift Package Manager
 
 ## Overview
 

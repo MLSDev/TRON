@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A722F491C5A49AE0087908D"
+               BlueprintIdentifier = "9A1024C91C5F8169006E0163"
                BuildableName = "TRON.framework"
-               BlueprintName = "TRON"
+               BlueprintName = "TRON tvOS"
                ReferencedContainer = "container:TRON.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,16 +26,15 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9A722F531C5A49AE0087908D"
-               BuildableName = "TRONTests.xctest"
-               BlueprintName = "TRONTests"
+               BlueprintIdentifier = "9A1024D21C5F8169006E0163"
+               BuildableName = "TRON tvOSTests.xctest"
+               BlueprintName = "TRON tvOSTests"
                ReferencedContainer = "container:TRON.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -43,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A722F491C5A49AE0087908D"
+            BlueprintIdentifier = "9A1024C91C5F8169006E0163"
             BuildableName = "TRON.framework"
-            BlueprintName = "TRON"
+            BlueprintName = "TRON tvOS"
             ReferencedContainer = "container:TRON.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A722F491C5A49AE0087908D"
+            BlueprintIdentifier = "9A1024C91C5F8169006E0163"
             BuildableName = "TRON.framework"
-            BlueprintName = "TRON"
+            BlueprintName = "TRON tvOS"
             ReferencedContainer = "container:TRON.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -83,9 +82,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9A722F491C5A49AE0087908D"
+            BlueprintIdentifier = "9A1024C91C5F8169006E0163"
             BuildableName = "TRON.framework"
-            BlueprintName = "TRON"
+            BlueprintName = "TRON tvOS"
             ReferencedContainer = "container:TRON.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
