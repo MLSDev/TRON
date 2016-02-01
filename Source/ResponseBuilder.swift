@@ -31,6 +31,9 @@ import SwiftyJSON
  */
 public class ResponseBuilder<T:JSONDecodable>
 {
+    /// Initialize default response builder
+    public init() {}
+    
     /**
      Create model from json response.
      

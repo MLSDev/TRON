@@ -31,6 +31,9 @@ import SwiftyJSON
  */
 public class ErrorBuilder<U:JSONDecodable>
 {
+    /// initialize default error builder
+    public init() {}
+    
     /**
      Build concrete APIError instance.
      

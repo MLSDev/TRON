@@ -7,79 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9A1024A91C5F80A8006E0163 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE21C5A5453003222A8 /* TronError.swift */; };
-		9A1024AA1C5F80A8006E0163 /* PluginTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E881C5D1ABF00392DE5 /* PluginTester.swift */; };
-		9A1024AD1C5F80A8006E0163 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */; };
-		9A1024AE1C5F80A8006E0163 /* APIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E8C1C5D1C8400392DE5 /* APIRequestTestCase.swift */; };
-		9A1024AF1C5F80A8006E0163 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */; };
-		9A1024B01C5F80A8006E0163 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */; };
-		9A1024B11C5F80A8006E0163 /* URLBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */; };
-		9A1024B21C5F80A8006E0163 /* PluginTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E8A1C5D1B0200392DE5 /* PluginTestCase.swift */; };
-		9A1024B31C5F80A8006E0163 /* HeaderBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E921C5E87D800392DE5 /* HeaderBuilderTestCase.swift */; };
-		9A1024BB1C5F80BF006E0163 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */; };
-		9A1024BC1C5F80BF006E0163 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
-		9A1024BD1C5F80BF006E0163 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
-		9A1024BE1C5F80BF006E0163 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
 		9A1024C21C5F80DD006E0163 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD51C5A4FB5003222A8 /* Nimble.framework */; };
-		9A1024C31C5F8136006E0163 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E8E1C5D1DBE00392DE5 /* user.json */; };
-		9A1024C41C5F8136006E0163 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E901C5D1EF700392DE5 /* invalid.json */; };
 		9A1024D41C5F8169006E0163 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1024CA1C5F8169006E0163 /* TRON.framework */; };
-		9A1024E81C5F8173006E0163 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */; };
-		9A1024E91C5F8173006E0163 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
-		9A1024EA1C5F8173006E0163 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
-		9A1024EB1C5F8173006E0163 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
 		9A1024EC1C5F817B006E0163 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA81C5A4E0A003222A8 /* Alamofire.framework */; };
 		9A1024ED1C5F817F006E0163 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BC31C5A4E2D003222A8 /* SwiftyJSON.framework */; };
 		9A1024EE1C5F8187006E0163 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD91C5A4FB5003222A8 /* Nimble.framework */; };
-		9A1024EF1C5F81A8006E0163 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE21C5A5453003222A8 /* TronError.swift */; };
-		9A1024F01C5F81A8006E0163 /* PluginTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E881C5D1ABF00392DE5 /* PluginTester.swift */; };
-		9A1024F11C5F81A8006E0163 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */; };
-		9A1024F21C5F81A8006E0163 /* APIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E8C1C5D1C8400392DE5 /* APIRequestTestCase.swift */; };
-		9A1024F31C5F81A8006E0163 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */; };
-		9A1024F41C5F81A8006E0163 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */; };
-		9A1024F51C5F81A8006E0163 /* URLBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */; };
-		9A1024F61C5F81A8006E0163 /* PluginTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E8A1C5D1B0200392DE5 /* PluginTestCase.swift */; };
-		9A1024F71C5F81A8006E0163 /* HeaderBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E921C5E87D800392DE5 /* HeaderBuilderTestCase.swift */; };
-		9A1024F81C5F81AD006E0163 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E8E1C5D1DBE00392DE5 /* user.json */; };
-		9A1024F91C5F81AD006E0163 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E901C5D1EF700392DE5 /* invalid.json */; };
 		9A1025121C5F8263006E0163 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BAC1C5A4E0A003222A8 /* Alamofire.framework */; };
 		9A1025131C5F8267006E0163 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BC11C5A4E2D003222A8 /* SwiftyJSON.framework */; };
-		9A10251C1C5F84C3006E0163 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */; };
-		9A10251D1C5F84C3006E0163 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
-		9A10251E1C5F84C3006E0163 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
-		9A10251F1C5F84C3006E0163 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
-		9A1025281C5F8524006E0163 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */; };
-		9A1025291C5F8524006E0163 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
-		9A10252A1C5F8524006E0163 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
-		9A10252B1C5F8524006E0163 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
-		9A1025341C5F855D006E0163 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025331C5F855D006E0163 /* TRON.swift */; };
-		9A1025351C5F855D006E0163 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025331C5F855D006E0163 /* TRON.swift */; };
-		9A1025361C5F855D006E0163 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025331C5F855D006E0163 /* TRON.swift */; };
-		9A1025371C5F855D006E0163 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025331C5F855D006E0163 /* TRON.swift */; };
-		9A1025391C5F8568006E0163 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025381C5F8568006E0163 /* JSONDecodable.swift */; };
-		9A10253A1C5F8568006E0163 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025381C5F8568006E0163 /* JSONDecodable.swift */; };
-		9A10253B1C5F8568006E0163 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025381C5F8568006E0163 /* JSONDecodable.swift */; };
-		9A10253C1C5F8568006E0163 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025381C5F8568006E0163 /* JSONDecodable.swift */; };
-		9A1025411C5F8579006E0163 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */; };
-		9A1025421C5F8579006E0163 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */; };
-		9A1025431C5F8579006E0163 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */; };
-		9A1025441C5F8579006E0163 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */; };
-		9A1025451C5F8579006E0163 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */; };
-		9A1025461C5F8579006E0163 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */; };
-		9A1025471C5F8579006E0163 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */; };
-		9A1025481C5F8579006E0163 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */; };
-		9A1025491C5F8579006E0163 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253F1C5F8579006E0163 /* RequestBuilder.swift */; };
-		9A10254A1C5F8579006E0163 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253F1C5F8579006E0163 /* RequestBuilder.swift */; };
-		9A10254B1C5F8579006E0163 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253F1C5F8579006E0163 /* RequestBuilder.swift */; };
-		9A10254C1C5F8579006E0163 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A10253F1C5F8579006E0163 /* RequestBuilder.swift */; };
-		9A10254D1C5F8579006E0163 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025401C5F8579006E0163 /* ResponseBuilder.swift */; };
-		9A10254E1C5F8579006E0163 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025401C5F8579006E0163 /* ResponseBuilder.swift */; };
-		9A10254F1C5F8579006E0163 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025401C5F8579006E0163 /* ResponseBuilder.swift */; };
-		9A1025501C5F8579006E0163 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025401C5F8579006E0163 /* ResponseBuilder.swift */; };
-		9A1025531C5F8595006E0163 /* NetworkActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025511C5F8595006E0163 /* NetworkActivityPlugin.swift */; };
-		9A1025561C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */; };
-		9A1025571C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */; };
-		9A1025581C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */; };
 		9A1025591C5F97FA006E0163 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BBD1C5A4E2D003222A8 /* SwiftyJSON.framework */; };
 		9A10255A1C5F97FD006E0163 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA41C5A4E0A003222A8 /* Alamofire.framework */; };
 		9A10255B1C5F9804006E0163 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1024921C5F806A006E0163 /* TRON.framework */; };
@@ -95,21 +29,88 @@
 		9A704E7D1C5D01E500392DE5 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA01C5A4E0A003222A8 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9A704E801C5D01EC00392DE5 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; };
 		9A704E811C5D01EC00392DE5 /* TRON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9A704E891C5D1ABF00392DE5 /* PluginTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E881C5D1ABF00392DE5 /* PluginTester.swift */; };
-		9A704E8B1C5D1B0200392DE5 /* PluginTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E8A1C5D1B0200392DE5 /* PluginTestCase.swift */; };
-		9A704E8D1C5D1C8400392DE5 /* APIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E8C1C5D1C8400392DE5 /* APIRequestTestCase.swift */; };
-		9A704E8F1C5D1DBE00392DE5 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E8E1C5D1DBE00392DE5 /* user.json */; };
-		9A704E911C5D1EF700392DE5 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E901C5D1EF700392DE5 /* invalid.json */; };
-		9A704E931C5E87D800392DE5 /* HeaderBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E921C5E87D800392DE5 /* HeaderBuilderTestCase.swift */; };
 		9A722F551C5A49AE0087908D /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; };
-		9AEE0B6F1C5A4D3B003222A8 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */; };
-		9AEE0B711C5A4D3B003222A8 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */; };
+		9A90CC271C5FAB5600472DB8 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC241C5FAB5600472DB8 /* APIRequest.swift */; };
+		9A90CC281C5FAB5600472DB8 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC241C5FAB5600472DB8 /* APIRequest.swift */; };
+		9A90CC291C5FAB5600472DB8 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC241C5FAB5600472DB8 /* APIRequest.swift */; };
+		9A90CC2A1C5FAB5600472DB8 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC241C5FAB5600472DB8 /* APIRequest.swift */; };
+		9A90CC2B1C5FAB5600472DB8 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC251C5FAB5600472DB8 /* APIStub.swift */; };
+		9A90CC2C1C5FAB5600472DB8 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC251C5FAB5600472DB8 /* APIStub.swift */; };
+		9A90CC2D1C5FAB5600472DB8 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC251C5FAB5600472DB8 /* APIStub.swift */; };
+		9A90CC2E1C5FAB5600472DB8 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC251C5FAB5600472DB8 /* APIStub.swift */; };
+		9A90CC2F1C5FAB5600472DB8 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC261C5FAB5600472DB8 /* TRON.swift */; };
+		9A90CC301C5FAB5600472DB8 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC261C5FAB5600472DB8 /* TRON.swift */; };
+		9A90CC311C5FAB5600472DB8 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC261C5FAB5600472DB8 /* TRON.swift */; };
+		9A90CC321C5FAB5600472DB8 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC261C5FAB5600472DB8 /* TRON.swift */; };
+		9A90CC381C5FAB6F00472DB8 /* NetworkActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC351C5FAB6F00472DB8 /* NetworkActivityPlugin.swift */; };
+		9A90CC3C1C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC361C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift */; };
+		9A90CC3D1C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC361C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift */; };
+		9A90CC3E1C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC361C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift */; };
+		9A90CC3F1C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC361C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift */; };
+		9A90CC401C5FAB6F00472DB8 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC371C5FAB6F00472DB8 /* Plugin.swift */; };
+		9A90CC411C5FAB6F00472DB8 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC371C5FAB6F00472DB8 /* Plugin.swift */; };
+		9A90CC421C5FAB6F00472DB8 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC371C5FAB6F00472DB8 /* Plugin.swift */; };
+		9A90CC431C5FAB6F00472DB8 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC371C5FAB6F00472DB8 /* Plugin.swift */; };
+		9A90CC451C5FAB7F00472DB8 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC441C5FAB7F00472DB8 /* MultipartAPIRequest.swift */; };
+		9A90CC461C5FAB7F00472DB8 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC441C5FAB7F00472DB8 /* MultipartAPIRequest.swift */; };
+		9A90CC471C5FAB7F00472DB8 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC441C5FAB7F00472DB8 /* MultipartAPIRequest.swift */; };
+		9A90CC481C5FAB7F00472DB8 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC441C5FAB7F00472DB8 /* MultipartAPIRequest.swift */; };
+		9A90CC4E1C5FAB8800472DB8 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC491C5FAB8800472DB8 /* ErrorBuilder.swift */; };
+		9A90CC4F1C5FAB8800472DB8 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC491C5FAB8800472DB8 /* ErrorBuilder.swift */; };
+		9A90CC501C5FAB8800472DB8 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC491C5FAB8800472DB8 /* ErrorBuilder.swift */; };
+		9A90CC511C5FAB8800472DB8 /* ErrorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC491C5FAB8800472DB8 /* ErrorBuilder.swift */; };
+		9A90CC521C5FAB8800472DB8 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4A1C5FAB8800472DB8 /* HeaderBuilder.swift */; };
+		9A90CC531C5FAB8800472DB8 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4A1C5FAB8800472DB8 /* HeaderBuilder.swift */; };
+		9A90CC541C5FAB8800472DB8 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4A1C5FAB8800472DB8 /* HeaderBuilder.swift */; };
+		9A90CC551C5FAB8800472DB8 /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4A1C5FAB8800472DB8 /* HeaderBuilder.swift */; };
+		9A90CC561C5FAB8800472DB8 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4B1C5FAB8800472DB8 /* JSONDecodable.swift */; };
+		9A90CC571C5FAB8800472DB8 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4B1C5FAB8800472DB8 /* JSONDecodable.swift */; };
+		9A90CC581C5FAB8800472DB8 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4B1C5FAB8800472DB8 /* JSONDecodable.swift */; };
+		9A90CC591C5FAB8800472DB8 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4B1C5FAB8800472DB8 /* JSONDecodable.swift */; };
+		9A90CC5A1C5FAB8800472DB8 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4C1C5FAB8800472DB8 /* RequestBuilder.swift */; };
+		9A90CC5B1C5FAB8800472DB8 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4C1C5FAB8800472DB8 /* RequestBuilder.swift */; };
+		9A90CC5C1C5FAB8800472DB8 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4C1C5FAB8800472DB8 /* RequestBuilder.swift */; };
+		9A90CC5D1C5FAB8800472DB8 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4C1C5FAB8800472DB8 /* RequestBuilder.swift */; };
+		9A90CC5E1C5FAB8800472DB8 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4D1C5FAB8800472DB8 /* ResponseBuilder.swift */; };
+		9A90CC5F1C5FAB8800472DB8 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4D1C5FAB8800472DB8 /* ResponseBuilder.swift */; };
+		9A90CC601C5FAB8800472DB8 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4D1C5FAB8800472DB8 /* ResponseBuilder.swift */; };
+		9A90CC611C5FAB8800472DB8 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC4D1C5FAB8800472DB8 /* ResponseBuilder.swift */; };
+		9A90CC6B1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC621C5FABA100472DB8 /* APIRequestTestCase.swift */; };
+		9A90CC6C1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC621C5FABA100472DB8 /* APIRequestTestCase.swift */; };
+		9A90CC6D1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC621C5FABA100472DB8 /* APIRequestTestCase.swift */; };
+		9A90CC6E1C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC631C5FABA100472DB8 /* ApiStubbingTestCase.swift */; };
+		9A90CC6F1C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC631C5FABA100472DB8 /* ApiStubbingTestCase.swift */; };
+		9A90CC701C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC631C5FABA100472DB8 /* ApiStubbingTestCase.swift */; };
+		9A90CC741C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC651C5FABA100472DB8 /* HeaderBuilderTestCase.swift */; };
+		9A90CC751C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC651C5FABA100472DB8 /* HeaderBuilderTestCase.swift */; };
+		9A90CC761C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC651C5FABA100472DB8 /* HeaderBuilderTestCase.swift */; };
+		9A90CC771C5FABA100472DB8 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC661C5FABA100472DB8 /* JSONDecodableTestCase.swift */; };
+		9A90CC781C5FABA100472DB8 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC661C5FABA100472DB8 /* JSONDecodableTestCase.swift */; };
+		9A90CC791C5FABA100472DB8 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC661C5FABA100472DB8 /* JSONDecodableTestCase.swift */; };
+		9A90CC7A1C5FABA100472DB8 /* PluginTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC671C5FABA100472DB8 /* PluginTestCase.swift */; };
+		9A90CC7B1C5FABA100472DB8 /* PluginTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC671C5FABA100472DB8 /* PluginTestCase.swift */; };
+		9A90CC7C1C5FABA100472DB8 /* PluginTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC671C5FABA100472DB8 /* PluginTestCase.swift */; };
+		9A90CC7D1C5FABA100472DB8 /* PluginTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC681C5FABA100472DB8 /* PluginTester.swift */; };
+		9A90CC7E1C5FABA100472DB8 /* PluginTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC681C5FABA100472DB8 /* PluginTester.swift */; };
+		9A90CC7F1C5FABA100472DB8 /* PluginTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC681C5FABA100472DB8 /* PluginTester.swift */; };
+		9A90CC801C5FABA100472DB8 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC691C5FABA100472DB8 /* TronTestCase.swift */; };
+		9A90CC811C5FABA100472DB8 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC691C5FABA100472DB8 /* TronTestCase.swift */; };
+		9A90CC821C5FABA100472DB8 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC691C5FABA100472DB8 /* TronTestCase.swift */; };
+		9A90CC831C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC6A1C5FABA100472DB8 /* URLBuilderTestCase.swift */; };
+		9A90CC841C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC6A1C5FABA100472DB8 /* URLBuilderTestCase.swift */; };
+		9A90CC851C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC6A1C5FABA100472DB8 /* URLBuilderTestCase.swift */; };
+		9A90CC871C5FABA800472DB8 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC861C5FABA800472DB8 /* TronError.swift */; };
+		9A90CC881C5FABA800472DB8 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC861C5FABA800472DB8 /* TronError.swift */; };
+		9A90CC891C5FABA800472DB8 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A90CC861C5FABA800472DB8 /* TronError.swift */; };
+		9A90CC8D1C5FABBD00472DB8 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8B1C5FABBD00472DB8 /* invalid.json */; };
+		9A90CC8E1C5FABBD00472DB8 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8B1C5FABBD00472DB8 /* invalid.json */; };
+		9A90CC8F1C5FABBD00472DB8 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8B1C5FABBD00472DB8 /* invalid.json */; };
+		9A90CC901C5FABBD00472DB8 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8C1C5FABBD00472DB8 /* user.json */; };
+		9A90CC911C5FABBD00472DB8 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8C1C5FABBD00472DB8 /* user.json */; };
+		9A90CC921C5FABBD00472DB8 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8C1C5FABBD00472DB8 /* user.json */; };
 		9AEE0BAD1C5A4E15003222A8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA01C5A4E0A003222A8 /* Alamofire.framework */; };
 		9AEE0BC61C5A4E33003222A8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BB91C5A4E2D003222A8 /* SwiftyJSON.framework */; };
 		9AEE0BDC1C5A4FBF003222A8 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD11C5A4FB5003222A8 /* Nimble.framework */; };
-		9AEE0BE01C5A536F003222A8 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */; };
-		9AEE0BE31C5A5453003222A8 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE21C5A5453003222A8 /* TronError.swift */; };
-		9AEE0BE51C5A640D003222A8 /* URLBuilderTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -319,14 +320,6 @@
 		9A1024CA1C5F8169006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1024D31C5F8169006E0163 /* TRON tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1024FF1C5F8240006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A1025331C5F855D006E0163 /* TRON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRON.swift; path = Source/TRON.swift; sourceTree = SOURCE_ROOT; };
-		9A1025381C5F8568006E0163 /* JSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONDecodable.swift; path = Source/JSONDecodable.swift; sourceTree = SOURCE_ROOT; };
-		9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorBuilder.swift; path = Source/ErrorBuilder.swift; sourceTree = SOURCE_ROOT; };
-		9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilder.swift; path = Source/HeaderBuilder.swift; sourceTree = SOURCE_ROOT; };
-		9A10253F1C5F8579006E0163 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestBuilder.swift; path = Source/RequestBuilder.swift; sourceTree = SOURCE_ROOT; };
-		9A1025401C5F8579006E0163 /* ResponseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResponseBuilder.swift; path = Source/ResponseBuilder.swift; sourceTree = SOURCE_ROOT; };
-		9A1025511C5F8595006E0163 /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkActivityPlugin.swift; path = Source/NetworkActivityPlugin.swift; sourceTree = SOURCE_ROOT; };
-		9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPlugin.swift; path = Source/NetworkLoggerPlugin.swift; sourceTree = SOURCE_ROOT; };
 		9A704E4F1C5D01B300392DE5 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A704E511C5D01B300392DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A704E531C5D01B300392DE5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -335,28 +328,36 @@
 		9A704E5B1C5D01B300392DE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9A704E5D1C5D01B300392DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A704E751C5D01D300392DE5 /* CRUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CRUD.swift; sourceTree = "<group>"; };
-		9A704E881C5D1ABF00392DE5 /* PluginTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PluginTester.swift; path = ../Tests/PluginTester.swift; sourceTree = "<group>"; };
-		9A704E8A1C5D1B0200392DE5 /* PluginTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PluginTestCase.swift; path = ../Tests/PluginTestCase.swift; sourceTree = "<group>"; };
-		9A704E8C1C5D1C8400392DE5 /* APIRequestTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequestTestCase.swift; path = ../Tests/APIRequestTestCase.swift; sourceTree = "<group>"; };
-		9A704E8E1C5D1DBE00392DE5 /* user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user.json; path = ../Tests/Fixtures/user.json; sourceTree = "<group>"; };
-		9A704E901C5D1EF700392DE5 /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalid.json; path = ../Tests/Fixtures/invalid.json; sourceTree = "<group>"; };
-		9A704E921C5E87D800392DE5 /* HeaderBuilderTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilderTestCase.swift; path = ../Tests/HeaderBuilderTestCase.swift; sourceTree = "<group>"; };
 		9A722F4A1C5A49AE0087908D /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A722F541C5A49AE0087908D /* TRON iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A722F651C5A4A610087908D /* Framework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Framework.plist; path = "Supporting files/Framework.plist"; sourceTree = "<group>"; };
 		9A722F661C5A4A610087908D /* Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Tests.plist; path = "Supporting files/Tests.plist"; sourceTree = "<group>"; };
-		9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiStubbingTestCase.swift; path = ../Tests/ApiStubbingTestCase.swift; sourceTree = "<group>"; };
-		9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONDecodableTestCase.swift; path = ../Tests/JSONDecodableTestCase.swift; sourceTree = "<group>"; };
-		9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = ../Source/APIRequest.swift; sourceTree = "<group>"; };
-		9AEE0B741C5A4D4A003222A8 /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIStub.swift; path = ../Source/APIStub.swift; sourceTree = "<group>"; };
-		9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipartAPIRequest.swift; path = ../Source/MultipartAPIRequest.swift; sourceTree = "<group>"; };
-		9AEE0B761C5A4D4A003222A8 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plugin.swift; path = ../Source/Plugin.swift; sourceTree = "<group>"; };
+		9A90CC241C5FAB5600472DB8 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = Source/APIRequest.swift; sourceTree = "<group>"; };
+		9A90CC251C5FAB5600472DB8 /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIStub.swift; path = Source/APIStub.swift; sourceTree = "<group>"; };
+		9A90CC261C5FAB5600472DB8 /* TRON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRON.swift; path = Source/TRON.swift; sourceTree = "<group>"; };
+		9A90CC351C5FAB6F00472DB8 /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkActivityPlugin.swift; path = Source/NetworkActivityPlugin.swift; sourceTree = "<group>"; };
+		9A90CC361C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPlugin.swift; path = Source/NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
+		9A90CC371C5FAB6F00472DB8 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plugin.swift; path = Source/Plugin.swift; sourceTree = "<group>"; };
+		9A90CC441C5FAB7F00472DB8 /* MultipartAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipartAPIRequest.swift; path = Source/MultipartAPIRequest.swift; sourceTree = "<group>"; };
+		9A90CC491C5FAB8800472DB8 /* ErrorBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorBuilder.swift; path = Source/ErrorBuilder.swift; sourceTree = "<group>"; };
+		9A90CC4A1C5FAB8800472DB8 /* HeaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilder.swift; path = Source/HeaderBuilder.swift; sourceTree = "<group>"; };
+		9A90CC4B1C5FAB8800472DB8 /* JSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONDecodable.swift; path = Source/JSONDecodable.swift; sourceTree = "<group>"; };
+		9A90CC4C1C5FAB8800472DB8 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestBuilder.swift; path = Source/RequestBuilder.swift; sourceTree = "<group>"; };
+		9A90CC4D1C5FAB8800472DB8 /* ResponseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResponseBuilder.swift; path = Source/ResponseBuilder.swift; sourceTree = "<group>"; };
+		9A90CC621C5FABA100472DB8 /* APIRequestTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequestTestCase.swift; path = Tests/APIRequestTestCase.swift; sourceTree = "<group>"; };
+		9A90CC631C5FABA100472DB8 /* ApiStubbingTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiStubbingTestCase.swift; path = Tests/ApiStubbingTestCase.swift; sourceTree = "<group>"; };
+		9A90CC651C5FABA100472DB8 /* HeaderBuilderTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilderTestCase.swift; path = Tests/HeaderBuilderTestCase.swift; sourceTree = "<group>"; };
+		9A90CC661C5FABA100472DB8 /* JSONDecodableTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONDecodableTestCase.swift; path = Tests/JSONDecodableTestCase.swift; sourceTree = "<group>"; };
+		9A90CC671C5FABA100472DB8 /* PluginTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PluginTestCase.swift; path = Tests/PluginTestCase.swift; sourceTree = "<group>"; };
+		9A90CC681C5FABA100472DB8 /* PluginTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PluginTester.swift; path = Tests/PluginTester.swift; sourceTree = "<group>"; };
+		9A90CC691C5FABA100472DB8 /* TronTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TronTestCase.swift; path = Tests/TronTestCase.swift; sourceTree = "<group>"; };
+		9A90CC6A1C5FABA100472DB8 /* URLBuilderTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLBuilderTestCase.swift; path = Tests/URLBuilderTestCase.swift; sourceTree = "<group>"; };
+		9A90CC861C5FABA800472DB8 /* TronError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TronError.swift; path = Tests/Fixtures/TronError.swift; sourceTree = "<group>"; };
+		9A90CC8B1C5FABBD00472DB8 /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalid.json; path = Tests/Fixtures/invalid.json; sourceTree = "<group>"; };
+		9A90CC8C1C5FABBD00472DB8 /* user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user.json; path = Tests/Fixtures/user.json; sourceTree = "<group>"; };
 		9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Carthage/Checkouts/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = Carthage/Checkouts/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = Carthage/Checkouts/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
-		9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TronTestCase.swift; path = ../Tests/TronTestCase.swift; sourceTree = "<group>"; };
-		9AEE0BE21C5A5453003222A8 /* TronError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TronError.swift; path = ../Tests/Fixtures/TronError.swift; sourceTree = "<group>"; };
-		9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLBuilderTestCase.swift; path = ../Tests/URLBuilderTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -436,13 +437,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9A1025141C5F82F8006E0163 /* Supporting files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Supporting files";
-			sourceTree = "<group>";
-		};
 		9A704E501C5D01B300392DE5 /* Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -463,9 +457,9 @@
 				9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */,
 				9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */,
 				9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */,
+				9A90CC221C5FAB3000472DB8 /* Source */,
+				9A90CC231C5FAB3400472DB8 /* Tests */,
 				9A722F641C5A49C70087908D /* Plists */,
-				9A722F4C1C5A49AE0087908D /* Source */,
-				9A722F581C5A49AE0087908D /* Tests */,
 				9A704E501C5D01B300392DE5 /* Example */,
 				9A722F4B1C5A49AE0087908D /* Products */,
 			);
@@ -486,39 +480,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9A722F4C1C5A49AE0087908D /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				9A1025331C5F855D006E0163 /* TRON.swift */,
-				9AEE0B8E1C5A4D7B003222A8 /* JSONDecodable */,
-				9AEE0B851C5A4D5C003222A8 /* Builders */,
-				9AEE0B7C1C5A4D4D003222A8 /* Plugins */,
-				9AEE0B721C5A4D4A003222A8 /* APIRequest.swift */,
-				9AEE0B741C5A4D4A003222A8 /* APIStub.swift */,
-				9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */,
-				9AEE0B761C5A4D4A003222A8 /* Plugin.swift */,
-			);
-			name = Source;
-			path = TRON;
-			sourceTree = "<group>";
-		};
-		9A722F581C5A49AE0087908D /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				9A1025141C5F82F8006E0163 /* Supporting files */,
-				9AEE0BE11C5A5445003222A8 /* Fixtures */,
-				9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */,
-				9A704E8C1C5D1C8400392DE5 /* APIRequestTestCase.swift */,
-				9AEE0B6E1C5A4D3B003222A8 /* JSONDecodableTestCase.swift */,
-				9AEE0BDF1C5A536F003222A8 /* TronTestCase.swift */,
-				9AEE0BE41C5A640D003222A8 /* URLBuilderTestCase.swift */,
-				9A704E8A1C5D1B0200392DE5 /* PluginTestCase.swift */,
-				9A704E921C5E87D800392DE5 /* HeaderBuilderTestCase.swift */,
-			);
-			name = Tests;
-			path = TRONTests;
-			sourceTree = "<group>";
-		};
 		9A722F641C5A49C70087908D /* Plists */ = {
 			isa = PBXGroup;
 			children = (
@@ -528,35 +489,65 @@
 			name = Plists;
 			sourceTree = "<group>";
 		};
-		9AEE0B7C1C5A4D4D003222A8 /* Plugins */ = {
+		9A90CC221C5FAB3000472DB8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				9A1025511C5F8595006E0163 /* NetworkActivityPlugin.swift */,
-				9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */,
+				9A90CC441C5FAB7F00472DB8 /* MultipartAPIRequest.swift */,
+				9A90CC241C5FAB5600472DB8 /* APIRequest.swift */,
+				9A90CC251C5FAB5600472DB8 /* APIStub.swift */,
+				9A90CC261C5FAB5600472DB8 /* TRON.swift */,
+				9A90CC331C5FAB5A00472DB8 /* Builders */,
+				9A90CC341C5FAB5F00472DB8 /* Plugins */,
 			);
-			name = Plugins;
-			path = ../Source/Plugins;
+			name = Source;
 			sourceTree = "<group>";
 		};
-		9AEE0B851C5A4D5C003222A8 /* Builders */ = {
+		9A90CC231C5FAB3400472DB8 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				9A10253D1C5F8579006E0163 /* ErrorBuilder.swift */,
-				9A10253E1C5F8579006E0163 /* HeaderBuilder.swift */,
-				9A10253F1C5F8579006E0163 /* RequestBuilder.swift */,
-				9A1025401C5F8579006E0163 /* ResponseBuilder.swift */,
+				9A90CC8A1C5FABB200472DB8 /* Fixtures */,
+				9A90CC621C5FABA100472DB8 /* APIRequestTestCase.swift */,
+				9A90CC631C5FABA100472DB8 /* ApiStubbingTestCase.swift */,
+				9A90CC651C5FABA100472DB8 /* HeaderBuilderTestCase.swift */,
+				9A90CC661C5FABA100472DB8 /* JSONDecodableTestCase.swift */,
+				9A90CC671C5FABA100472DB8 /* PluginTestCase.swift */,
+				9A90CC681C5FABA100472DB8 /* PluginTester.swift */,
+				9A90CC691C5FABA100472DB8 /* TronTestCase.swift */,
+				9A90CC6A1C5FABA100472DB8 /* URLBuilderTestCase.swift */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		9A90CC331C5FAB5A00472DB8 /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				9A90CC491C5FAB8800472DB8 /* ErrorBuilder.swift */,
+				9A90CC4A1C5FAB8800472DB8 /* HeaderBuilder.swift */,
+				9A90CC4B1C5FAB8800472DB8 /* JSONDecodable.swift */,
+				9A90CC4C1C5FAB8800472DB8 /* RequestBuilder.swift */,
+				9A90CC4D1C5FAB8800472DB8 /* ResponseBuilder.swift */,
 			);
 			name = Builders;
-			path = ../Source/Builders;
 			sourceTree = "<group>";
 		};
-		9AEE0B8E1C5A4D7B003222A8 /* JSONDecodable */ = {
+		9A90CC341C5FAB5F00472DB8 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
-				9A1025381C5F8568006E0163 /* JSONDecodable.swift */,
+				9A90CC351C5FAB6F00472DB8 /* NetworkActivityPlugin.swift */,
+				9A90CC361C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift */,
+				9A90CC371C5FAB6F00472DB8 /* Plugin.swift */,
 			);
-			name = JSONDecodable;
-			path = ../Source/JSONDecodable;
+			name = Plugins;
+			sourceTree = "<group>";
+		};
+		9A90CC8A1C5FABB200472DB8 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				9A90CC8B1C5FABBD00472DB8 /* invalid.json */,
+				9A90CC8C1C5FABBD00472DB8 /* user.json */,
+				9A90CC861C5FABA800472DB8 /* TronError.swift */,
+			);
+			name = Fixtures;
 			sourceTree = "<group>";
 		};
 		9AEE0B961C5A4E09003222A8 /* Products */ = {
@@ -598,17 +589,6 @@
 				9AEE0BDB1C5A4FB5003222A8 /* NimbleTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9AEE0BE11C5A5445003222A8 /* Fixtures */ = {
-			isa = PBXGroup;
-			children = (
-				9AEE0BE21C5A5453003222A8 /* TronError.swift */,
-				9A704E881C5D1ABF00392DE5 /* PluginTester.swift */,
-				9A704E8E1C5D1DBE00392DE5 /* user.json */,
-				9A704E901C5D1EF700392DE5 /* invalid.json */,
-			);
-			name = Fixtures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1022,8 +1002,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A1024C31C5F8136006E0163 /* user.json in Resources */,
-				9A1024C41C5F8136006E0163 /* invalid.json in Resources */,
+				9A90CC911C5FABBD00472DB8 /* user.json in Resources */,
+				9A90CC8E1C5FABBD00472DB8 /* invalid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1038,8 +1018,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A1024F81C5F81AD006E0163 /* user.json in Resources */,
-				9A1024F91C5F81AD006E0163 /* invalid.json in Resources */,
+				9A90CC921C5FABBD00472DB8 /* user.json in Resources */,
+				9A90CC8F1C5FABBD00472DB8 /* invalid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1071,8 +1051,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A704E8F1C5D1DBE00392DE5 /* user.json in Resources */,
-				9A704E911C5D1EF700392DE5 /* invalid.json in Resources */,
+				9A90CC901C5FABBD00472DB8 /* user.json in Resources */,
+				9A90CC8D1C5FABBD00472DB8 /* invalid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1083,16 +1063,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A10253A1C5F8568006E0163 /* JSONDecodable.swift in Sources */,
-				9A1025351C5F855D006E0163 /* TRON.swift in Sources */,
-				9A10254E1C5F8579006E0163 /* ResponseBuilder.swift in Sources */,
-				9A1024BB1C5F80BF006E0163 /* APIRequest.swift in Sources */,
-				9A1025461C5F8579006E0163 /* HeaderBuilder.swift in Sources */,
-				9A10254A1C5F8579006E0163 /* RequestBuilder.swift in Sources */,
-				9A1024BC1C5F80BF006E0163 /* APIStub.swift in Sources */,
-				9A1024BD1C5F80BF006E0163 /* MultipartAPIRequest.swift in Sources */,
-				9A1025421C5F8579006E0163 /* ErrorBuilder.swift in Sources */,
-				9A1024BE1C5F80BF006E0163 /* Plugin.swift in Sources */,
+				9A90CC571C5FAB8800472DB8 /* JSONDecodable.swift in Sources */,
+				9A90CC411C5FAB6F00472DB8 /* Plugin.swift in Sources */,
+				9A90CC301C5FAB5600472DB8 /* TRON.swift in Sources */,
+				9A90CC5F1C5FAB8800472DB8 /* ResponseBuilder.swift in Sources */,
+				9A90CC4F1C5FAB8800472DB8 /* ErrorBuilder.swift in Sources */,
+				9A90CC3D1C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift in Sources */,
+				9A90CC5B1C5FAB8800472DB8 /* RequestBuilder.swift in Sources */,
+				9A90CC461C5FAB7F00472DB8 /* MultipartAPIRequest.swift in Sources */,
+				9A90CC2C1C5FAB5600472DB8 /* APIStub.swift in Sources */,
+				9A90CC531C5FAB8800472DB8 /* HeaderBuilder.swift in Sources */,
+				9A90CC281C5FAB5600472DB8 /* APIRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1100,15 +1081,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A1024A91C5F80A8006E0163 /* TronError.swift in Sources */,
-				9A1024AA1C5F80A8006E0163 /* PluginTester.swift in Sources */,
-				9A1024AD1C5F80A8006E0163 /* ApiStubbingTestCase.swift in Sources */,
-				9A1024AE1C5F80A8006E0163 /* APIRequestTestCase.swift in Sources */,
-				9A1024AF1C5F80A8006E0163 /* JSONDecodableTestCase.swift in Sources */,
-				9A1024B01C5F80A8006E0163 /* TronTestCase.swift in Sources */,
-				9A1024B11C5F80A8006E0163 /* URLBuilderTestCase.swift in Sources */,
-				9A1024B21C5F80A8006E0163 /* PluginTestCase.swift in Sources */,
-				9A1024B31C5F80A8006E0163 /* HeaderBuilderTestCase.swift in Sources */,
+				9A90CC751C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */,
+				9A90CC841C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */,
+				9A90CC6F1C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */,
+				9A90CC6C1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */,
+				9A90CC881C5FABA800472DB8 /* TronError.swift in Sources */,
+				9A90CC7E1C5FABA100472DB8 /* PluginTester.swift in Sources */,
+				9A90CC781C5FABA100472DB8 /* JSONDecodableTestCase.swift in Sources */,
+				9A90CC811C5FABA100472DB8 /* TronTestCase.swift in Sources */,
+				9A90CC7B1C5FABA100472DB8 /* PluginTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1116,17 +1097,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A10253B1C5F8568006E0163 /* JSONDecodable.swift in Sources */,
-				9A1025571C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */,
-				9A1025361C5F855D006E0163 /* TRON.swift in Sources */,
-				9A10254F1C5F8579006E0163 /* ResponseBuilder.swift in Sources */,
-				9A1024E81C5F8173006E0163 /* APIRequest.swift in Sources */,
-				9A1025471C5F8579006E0163 /* HeaderBuilder.swift in Sources */,
-				9A10254B1C5F8579006E0163 /* RequestBuilder.swift in Sources */,
-				9A1024E91C5F8173006E0163 /* APIStub.swift in Sources */,
-				9A1024EA1C5F8173006E0163 /* MultipartAPIRequest.swift in Sources */,
-				9A1025431C5F8579006E0163 /* ErrorBuilder.swift in Sources */,
-				9A1024EB1C5F8173006E0163 /* Plugin.swift in Sources */,
+				9A90CC581C5FAB8800472DB8 /* JSONDecodable.swift in Sources */,
+				9A90CC421C5FAB6F00472DB8 /* Plugin.swift in Sources */,
+				9A90CC311C5FAB5600472DB8 /* TRON.swift in Sources */,
+				9A90CC601C5FAB8800472DB8 /* ResponseBuilder.swift in Sources */,
+				9A90CC501C5FAB8800472DB8 /* ErrorBuilder.swift in Sources */,
+				9A90CC3E1C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift in Sources */,
+				9A90CC5C1C5FAB8800472DB8 /* RequestBuilder.swift in Sources */,
+				9A90CC471C5FAB7F00472DB8 /* MultipartAPIRequest.swift in Sources */,
+				9A90CC2D1C5FAB5600472DB8 /* APIStub.swift in Sources */,
+				9A90CC541C5FAB8800472DB8 /* HeaderBuilder.swift in Sources */,
+				9A90CC291C5FAB5600472DB8 /* APIRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1134,15 +1115,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A1024EF1C5F81A8006E0163 /* TronError.swift in Sources */,
-				9A1024F01C5F81A8006E0163 /* PluginTester.swift in Sources */,
-				9A1024F11C5F81A8006E0163 /* ApiStubbingTestCase.swift in Sources */,
-				9A1024F21C5F81A8006E0163 /* APIRequestTestCase.swift in Sources */,
-				9A1024F31C5F81A8006E0163 /* JSONDecodableTestCase.swift in Sources */,
-				9A1024F41C5F81A8006E0163 /* TronTestCase.swift in Sources */,
-				9A1024F51C5F81A8006E0163 /* URLBuilderTestCase.swift in Sources */,
-				9A1024F61C5F81A8006E0163 /* PluginTestCase.swift in Sources */,
-				9A1024F71C5F81A8006E0163 /* HeaderBuilderTestCase.swift in Sources */,
+				9A90CC761C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */,
+				9A90CC851C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */,
+				9A90CC701C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */,
+				9A90CC6D1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */,
+				9A90CC891C5FABA800472DB8 /* TronError.swift in Sources */,
+				9A90CC7F1C5FABA100472DB8 /* PluginTester.swift in Sources */,
+				9A90CC791C5FABA100472DB8 /* JSONDecodableTestCase.swift in Sources */,
+				9A90CC821C5FABA100472DB8 /* TronTestCase.swift in Sources */,
+				9A90CC7C1C5FABA100472DB8 /* PluginTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1150,17 +1131,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A10253C1C5F8568006E0163 /* JSONDecodable.swift in Sources */,
-				9A1025581C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */,
-				9A1025371C5F855D006E0163 /* TRON.swift in Sources */,
-				9A1025501C5F8579006E0163 /* ResponseBuilder.swift in Sources */,
-				9A10251C1C5F84C3006E0163 /* APIRequest.swift in Sources */,
-				9A1025481C5F8579006E0163 /* HeaderBuilder.swift in Sources */,
-				9A10254C1C5F8579006E0163 /* RequestBuilder.swift in Sources */,
-				9A10251D1C5F84C3006E0163 /* APIStub.swift in Sources */,
-				9A10251E1C5F84C3006E0163 /* MultipartAPIRequest.swift in Sources */,
-				9A1025441C5F8579006E0163 /* ErrorBuilder.swift in Sources */,
-				9A10251F1C5F84C3006E0163 /* Plugin.swift in Sources */,
+				9A90CC591C5FAB8800472DB8 /* JSONDecodable.swift in Sources */,
+				9A90CC431C5FAB6F00472DB8 /* Plugin.swift in Sources */,
+				9A90CC321C5FAB5600472DB8 /* TRON.swift in Sources */,
+				9A90CC611C5FAB8800472DB8 /* ResponseBuilder.swift in Sources */,
+				9A90CC511C5FAB8800472DB8 /* ErrorBuilder.swift in Sources */,
+				9A90CC3F1C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift in Sources */,
+				9A90CC5D1C5FAB8800472DB8 /* RequestBuilder.swift in Sources */,
+				9A90CC481C5FAB7F00472DB8 /* MultipartAPIRequest.swift in Sources */,
+				9A90CC2E1C5FAB5600472DB8 /* APIStub.swift in Sources */,
+				9A90CC551C5FAB8800472DB8 /* HeaderBuilder.swift in Sources */,
+				9A90CC2A1C5FAB5600472DB8 /* APIRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1178,18 +1159,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A1025341C5F855D006E0163 /* TRON.swift in Sources */,
-				9A1025561C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */,
-				9A1025411C5F8579006E0163 /* ErrorBuilder.swift in Sources */,
-				9A1025391C5F8568006E0163 /* JSONDecodable.swift in Sources */,
-				9A1025451C5F8579006E0163 /* HeaderBuilder.swift in Sources */,
-				9A1025281C5F8524006E0163 /* APIRequest.swift in Sources */,
-				9A1025491C5F8579006E0163 /* RequestBuilder.swift in Sources */,
-				9A1025531C5F8595006E0163 /* NetworkActivityPlugin.swift in Sources */,
-				9A1025291C5F8524006E0163 /* APIStub.swift in Sources */,
-				9A10252A1C5F8524006E0163 /* MultipartAPIRequest.swift in Sources */,
-				9A10254D1C5F8579006E0163 /* ResponseBuilder.swift in Sources */,
-				9A10252B1C5F8524006E0163 /* Plugin.swift in Sources */,
+				9A90CC401C5FAB6F00472DB8 /* Plugin.swift in Sources */,
+				9A90CC561C5FAB8800472DB8 /* JSONDecodable.swift in Sources */,
+				9A90CC381C5FAB6F00472DB8 /* NetworkActivityPlugin.swift in Sources */,
+				9A90CC2F1C5FAB5600472DB8 /* TRON.swift in Sources */,
+				9A90CC3C1C5FAB6F00472DB8 /* NetworkLoggerPlugin.swift in Sources */,
+				9A90CC521C5FAB8800472DB8 /* HeaderBuilder.swift in Sources */,
+				9A90CC2B1C5FAB5600472DB8 /* APIStub.swift in Sources */,
+				9A90CC5A1C5FAB8800472DB8 /* RequestBuilder.swift in Sources */,
+				9A90CC451C5FAB7F00472DB8 /* MultipartAPIRequest.swift in Sources */,
+				9A90CC4E1C5FAB8800472DB8 /* ErrorBuilder.swift in Sources */,
+				9A90CC5E1C5FAB8800472DB8 /* ResponseBuilder.swift in Sources */,
+				9A90CC271C5FAB5600472DB8 /* APIRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1197,15 +1178,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A704E931C5E87D800392DE5 /* HeaderBuilderTestCase.swift in Sources */,
-				9AEE0BE01C5A536F003222A8 /* TronTestCase.swift in Sources */,
-				9AEE0BE51C5A640D003222A8 /* URLBuilderTestCase.swift in Sources */,
-				9A704E8D1C5D1C8400392DE5 /* APIRequestTestCase.swift in Sources */,
-				9AEE0B6F1C5A4D3B003222A8 /* ApiStubbingTestCase.swift in Sources */,
-				9A704E891C5D1ABF00392DE5 /* PluginTester.swift in Sources */,
-				9AEE0B711C5A4D3B003222A8 /* JSONDecodableTestCase.swift in Sources */,
-				9AEE0BE31C5A5453003222A8 /* TronError.swift in Sources */,
-				9A704E8B1C5D1B0200392DE5 /* PluginTestCase.swift in Sources */,
+				9A90CC741C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */,
+				9A90CC831C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */,
+				9A90CC6E1C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */,
+				9A90CC6B1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */,
+				9A90CC871C5FABA800472DB8 /* TronError.swift in Sources */,
+				9A90CC7D1C5FABA100472DB8 /* PluginTester.swift in Sources */,
+				9A90CC771C5FABA100472DB8 /* JSONDecodableTestCase.swift in Sources */,
+				9A90CC801C5FABA100472DB8 /* TronTestCase.swift in Sources */,
+				9A90CC7A1C5FABA100472DB8 /* PluginTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1267,6 +1248,7 @@
 		9A1024A41C5F806A006E0163 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -1282,12 +1264,14 @@
 				PRODUCT_NAME = TRON;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		9A1024A51C5F806A006E0163 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -1309,6 +1293,7 @@
 		9A1024A71C5F806A006E0163 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
@@ -1316,12 +1301,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-OSXTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		9A1024A81C5F806A006E0163 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
@@ -1335,6 +1322,7 @@
 		9A1024DC1C5F8169006E0163 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1346,6 +1334,7 @@
 				PRODUCT_NAME = TRON;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
@@ -1354,6 +1343,7 @@
 		9A1024DD1C5F8169006E0163 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1373,11 +1363,13 @@
 		9A1024DF1C5F8169006E0163 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Debug;
@@ -1385,6 +1377,7 @@
 		9A1024E01C5F8169006E0163 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-tvOSTests";
@@ -1398,6 +1391,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1409,6 +1403,7 @@
 				PRODUCT_NAME = TRON;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.1;
 			};
@@ -1418,6 +1413,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1615,6 +1611,7 @@
 				9A1024A51C5F806A006E0163 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9A1024A61C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON OSXTests" */ = {
 			isa = XCConfigurationList;
@@ -1623,6 +1620,7 @@
 				9A1024A81C5F806A006E0163 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9A1024DB1C5F8169006E0163 /* Build configuration list for PBXNativeTarget "TRON tvOS" */ = {
 			isa = XCConfigurationList;
@@ -1631,6 +1629,7 @@
 				9A1024DD1C5F8169006E0163 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9A1024DE1C5F8169006E0163 /* Build configuration list for PBXNativeTarget "TRON tvOSTests" */ = {
 			isa = XCConfigurationList;
@@ -1639,6 +1638,7 @@
 				9A1024E01C5F8169006E0163 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9A1025041C5F8240006E0163 /* Build configuration list for PBXNativeTarget "TRON watchOS" */ = {
 			isa = XCConfigurationList;
@@ -1647,6 +1647,7 @@
 				9A1025061C5F8240006E0163 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9A704E741C5D01B300392DE5 /* Build configuration list for PBXNativeTarget "Example" */ = {
 			isa = XCConfigurationList;

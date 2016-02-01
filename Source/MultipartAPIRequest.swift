@@ -97,7 +97,7 @@ public class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable
             self.multipartParameters.forEach { $0(formData) }
         }
         
-        let encodingCompletion: Manager.MultipartFormDataEncodingResult -> Void = { [unowned self] completion in
+        let encodingCompletion: Manager.MultipartFormDataEncodingResult -> Void = {  completion in
             if case .Failure(let error) = completion {
                 let apiError = APIError<ErrorModel>(request: nil, response: nil, data: nil, error: error as NSError)
                 failure?(apiError)
