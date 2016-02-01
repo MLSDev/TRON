@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9A10249C1C5F806A006E0163 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1024921C5F806A006E0163 /* TRON.framework */; };
 		9A1024A91C5F80A8006E0163 /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0BE21C5A5453003222A8 /* TronError.swift */; };
 		9A1024AA1C5F80A8006E0163 /* PluginTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E881C5D1ABF00392DE5 /* PluginTester.swift */; };
 		9A1024AD1C5F80A8006E0163 /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B6C1C5A4D3B003222A8 /* ApiStubbingTestCase.swift */; };
@@ -21,8 +20,6 @@
 		9A1024BC1C5F80BF006E0163 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B741C5A4D4A003222A8 /* APIStub.swift */; };
 		9A1024BD1C5F80BF006E0163 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B751C5A4D4A003222A8 /* MultipartAPIRequest.swift */; };
 		9A1024BE1C5F80BF006E0163 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE0B761C5A4D4A003222A8 /* Plugin.swift */; };
-		9A1024BF1C5F80CC006E0163 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA41C5A4E0A003222A8 /* Alamofire.framework */; };
-		9A1024C11C5F80D6006E0163 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BBD1C5A4E2D003222A8 /* SwiftyJSON.framework */; };
 		9A1024C21C5F80DD006E0163 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD51C5A4FB5003222A8 /* Nimble.framework */; };
 		9A1024C31C5F8136006E0163 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E8E1C5D1DBE00392DE5 /* user.json */; };
 		9A1024C41C5F8136006E0163 /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E901C5D1EF700392DE5 /* invalid.json */; };
@@ -83,6 +80,9 @@
 		9A1025561C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */; };
 		9A1025571C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */; };
 		9A1025581C5F8595006E0163 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1025521C5F8595006E0163 /* NetworkLoggerPlugin.swift */; };
+		9A1025591C5F97FA006E0163 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BBD1C5A4E2D003222A8 /* SwiftyJSON.framework */; };
+		9A10255A1C5F97FD006E0163 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA41C5A4E0A003222A8 /* Alamofire.framework */; };
+		9A10255B1C5F9804006E0163 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1024921C5F806A006E0163 /* TRON.framework */; };
 		9A704E521C5D01B300392DE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E511C5D01B300392DE5 /* AppDelegate.swift */; };
 		9A704E541C5D01B300392DE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E531C5D01B300392DE5 /* ViewController.swift */; };
 		9A704E571C5D01B300392DE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E551C5D01B300392DE5 /* Main.storyboard */; };
@@ -364,8 +364,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A1024C11C5F80D6006E0163 /* SwiftyJSON.framework in Frameworks */,
-				9A1024BF1C5F80CC006E0163 /* Alamofire.framework in Frameworks */,
+				9A10255A1C5F97FD006E0163 /* Alamofire.framework in Frameworks */,
+				9A1025591C5F97FA006E0163 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,8 +373,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A10255B1C5F9804006E0163 /* TRON.framework in Frameworks */,
 				9A1024C21C5F80DD006E0163 /* Nimble.framework in Frameworks */,
-				9A10249C1C5F806A006E0163 /* TRON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
