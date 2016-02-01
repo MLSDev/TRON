@@ -156,6 +156,83 @@
 			remoteGlobalIDString = 9A722F491C5A49AE0087908D;
 			remoteInfo = TRON;
 		};
+		9A90CCB01C5FBC1100472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F8111E3219A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS";
+		};
+		9A90CCB21C5FBC1600472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E4FEFDA19575BE100351305;
+			remoteInfo = "SwiftyJSON iOS";
+		};
+		9A90CCB51C5FBC2E00472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 9C7DFC5A1A9102BD005AA3F7;
+			remoteInfo = "SwiftyJSON OSX";
+		};
+		9A90CCB71C5FBC3300472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DD67C0A1A5C55C900ED2280;
+			remoteInfo = "Alamofire OSX";
+		};
+		9A90CCB91C5FBC3A00472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7236B4EC1BAC14150020529B;
+			remoteInfo = "SwiftyJSON tvOS";
+		};
+		9A90CCBB1C5FBC3F00472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4CF626EE1BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS";
+		};
+		9A90CCBD1C5FBC4400472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E4202FCD1B667AA100C997FB;
+			remoteInfo = "Alamofire watchOS";
+		};
+		9A90CCBF1C5FBC4B00472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E4D7CCDE1B9465A700EE7221;
+			remoteInfo = "SwiftyJSON watchOS";
+		};
+		9A90CCC11C5FBC5C00472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F1A74281940169200FFFC47;
+			remoteInfo = "Nimble-iOS";
+		};
+		9A90CCC31C5FBC6200472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F925EAC195C0D6300ED456B;
+			remoteInfo = "Nimble-OSX";
+		};
+		9A90CCC51C5FBC6800472DB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F5DF1541BDCA0CE00C3A531;
+			remoteInfo = "Nimble-tvOS";
+		};
 		9AEE0B9F1C5A4E0A003222A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */;
@@ -330,7 +407,7 @@
 		9A704E751C5D01D300392DE5 /* CRUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CRUD.swift; sourceTree = "<group>"; };
 		9A722F4A1C5A49AE0087908D /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A722F541C5A49AE0087908D /* TRON iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A722F651C5A4A610087908D /* Framework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Framework.plist; path = "Supporting files/Framework.plist"; sourceTree = "<group>"; };
+		9A722F651C5A4A610087908D /* iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = iOS.plist; path = "Supporting files/iOS.plist"; sourceTree = "<group>"; };
 		9A722F661C5A4A610087908D /* Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Tests.plist; path = "Supporting files/Tests.plist"; sourceTree = "<group>"; };
 		9A90CC241C5FAB5600472DB8 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = Source/APIRequest.swift; sourceTree = "<group>"; };
 		9A90CC251C5FAB5600472DB8 /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIStub.swift; path = Source/APIStub.swift; sourceTree = "<group>"; };
@@ -355,6 +432,9 @@
 		9A90CC861C5FABA800472DB8 /* TronError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TronError.swift; path = Tests/Fixtures/TronError.swift; sourceTree = "<group>"; };
 		9A90CC8B1C5FABBD00472DB8 /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = invalid.json; path = Tests/Fixtures/invalid.json; sourceTree = "<group>"; };
 		9A90CC8C1C5FABBD00472DB8 /* user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user.json; path = Tests/Fixtures/user.json; sourceTree = "<group>"; };
+		9A90CCAC1C5FB98E00472DB8 /* OS X.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "OS X.plist"; path = "Supporting files/OS X.plist"; sourceTree = "<group>"; };
+		9A90CCAD1C5FB98E00472DB8 /* tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = tvOS.plist; path = "Supporting files/tvOS.plist"; sourceTree = "<group>"; };
+		9A90CCAE1C5FB98E00472DB8 /* watchOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = watchOS.plist; path = "Supporting files/watchOS.plist"; sourceTree = "<group>"; };
 		9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Carthage/Checkouts/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = Carthage/Checkouts/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = Carthage/Checkouts/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
@@ -483,7 +563,10 @@
 		9A722F641C5A49C70087908D /* Plists */ = {
 			isa = PBXGroup;
 			children = (
-				9A722F651C5A4A610087908D /* Framework.plist */,
+				9A90CCAC1C5FB98E00472DB8 /* OS X.plist */,
+				9A90CCAD1C5FB98E00472DB8 /* tvOS.plist */,
+				9A90CCAE1C5FB98E00472DB8 /* watchOS.plist */,
+				9A722F651C5A4A610087908D /* iOS.plist */,
 				9A722F661C5A4A610087908D /* Tests.plist */,
 			);
 			name = Plists;
@@ -637,6 +720,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A90CCB81C5FBC3300472DB8 /* PBXTargetDependency */,
+				9A90CCB61C5FBC2E00472DB8 /* PBXTargetDependency */,
 			);
 			name = "TRON OSX";
 			productName = "TRON OSX";
@@ -654,6 +739,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A90CCC41C5FBC6200472DB8 /* PBXTargetDependency */,
 				9A10249E1C5F806A006E0163 /* PBXTargetDependency */,
 			);
 			name = "TRON OSXTests";
@@ -673,6 +759,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A90CCBC1C5FBC3F00472DB8 /* PBXTargetDependency */,
+				9A90CCBA1C5FBC3A00472DB8 /* PBXTargetDependency */,
 			);
 			name = "TRON tvOS";
 			productName = "TRON tvOS";
@@ -690,6 +778,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A90CCC61C5FBC6800472DB8 /* PBXTargetDependency */,
 				9A1024D61C5F8169006E0163 /* PBXTargetDependency */,
 			);
 			name = "TRON tvOSTests";
@@ -709,6 +798,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A90CCC01C5FBC4B00472DB8 /* PBXTargetDependency */,
+				9A90CCBE1C5FBC4400472DB8 /* PBXTargetDependency */,
 			);
 			name = "TRON watchOS";
 			productName = "TRON watchOS";
@@ -748,6 +839,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A90CCB31C5FBC1600472DB8 /* PBXTargetDependency */,
+				9A90CCB11C5FBC1100472DB8 /* PBXTargetDependency */,
 			);
 			name = "TRON iOS";
 			productName = TRON;
@@ -765,6 +858,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9A90CCC21C5FBC5C00472DB8 /* PBXTargetDependency */,
 				9A722F571C5A49AE0087908D /* PBXTargetDependency */,
 			);
 			name = "TRON iOS Tests";
@@ -1223,6 +1317,61 @@
 			target = 9A722F491C5A49AE0087908D /* TRON iOS */;
 			targetProxy = 9A722F561C5A49AE0087908D /* PBXContainerItemProxy */;
 		};
+		9A90CCB11C5FBC1100472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Alamofire iOS";
+			targetProxy = 9A90CCB01C5FBC1100472DB8 /* PBXContainerItemProxy */;
+		};
+		9A90CCB31C5FBC1600472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftyJSON iOS";
+			targetProxy = 9A90CCB21C5FBC1600472DB8 /* PBXContainerItemProxy */;
+		};
+		9A90CCB61C5FBC2E00472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftyJSON OSX";
+			targetProxy = 9A90CCB51C5FBC2E00472DB8 /* PBXContainerItemProxy */;
+		};
+		9A90CCB81C5FBC3300472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Alamofire OSX";
+			targetProxy = 9A90CCB71C5FBC3300472DB8 /* PBXContainerItemProxy */;
+		};
+		9A90CCBA1C5FBC3A00472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftyJSON tvOS";
+			targetProxy = 9A90CCB91C5FBC3A00472DB8 /* PBXContainerItemProxy */;
+		};
+		9A90CCBC1C5FBC3F00472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Alamofire tvOS";
+			targetProxy = 9A90CCBB1C5FBC3F00472DB8 /* PBXContainerItemProxy */;
+		};
+		9A90CCBE1C5FBC4400472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Alamofire watchOS";
+			targetProxy = 9A90CCBD1C5FBC4400472DB8 /* PBXContainerItemProxy */;
+		};
+		9A90CCC01C5FBC4B00472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftyJSON watchOS";
+			targetProxy = 9A90CCBF1C5FBC4B00472DB8 /* PBXContainerItemProxy */;
+		};
+		9A90CCC21C5FBC5C00472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Nimble-iOS";
+			targetProxy = 9A90CCC11C5FBC5C00472DB8 /* PBXContainerItemProxy */;
+		};
+		9A90CCC41C5FBC6200472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Nimble-OSX";
+			targetProxy = 9A90CCC31C5FBC6200472DB8 /* PBXContainerItemProxy */;
+		};
+		9A90CCC61C5FBC6800472DB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Nimble-tvOS";
+			targetProxy = 9A90CCC51C5FBC6800472DB8 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1256,7 +1405,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/OS X.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -1279,7 +1428,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/OS X.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -1327,7 +1476,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-tvOS";
@@ -1348,7 +1497,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-tvOS";
@@ -1396,7 +1545,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-watchOS";
@@ -1418,7 +1567,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-watchOS";
@@ -1551,7 +1700,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRON;
@@ -1569,7 +1718,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRON;
