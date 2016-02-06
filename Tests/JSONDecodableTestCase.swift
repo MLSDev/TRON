@@ -16,8 +16,8 @@ class JSONDecodableTestCase: XCTestCase {
     
     func testDecodableArray() {
         let request: APIRequest<[Int],TronError> = tron.request(path: "foo")
-        let json = JSON([1,2,3,4])
-        let parsedResponse = request.responseBuilder.buildResponseFromJSON(json)
+        let json = [1,2,3,4]
+        let parsedResponse = try! request.responseBuilder.buildResponseFromJSON(json)
         
         expect(parsedResponse) == [1,2,3,4]
     }

@@ -29,19 +29,38 @@ import SwiftyJSON
 /**
  Default ResponseBuilder.
  */
-public class ResponseBuilder<T:JSONDecodable>
+public class ResponseBuilder<T:ResponseParseable>
 {
     /// Initialize default response builder
     public init() {}
+//    
+//    /**
+//     Create model from json response.
+//     
+//     - parameter json: SwiftyJSON.json instance
+//     
+//     - returns parsed model.
+//     */
+    public func buildResponseFromJSON(json : AnyObject) throws -> T {
+        return T.from(json)
+    }
+}
+
+public class SwiftyJSONResponseBuilder<T:JSONDecodable where T: ResponseParseable> : ResponseBuilder<T> {
     
-    /**
-     Create model from json response.
-     
-     - parameter json: SwiftyJSON.json instance
-     
-     - returns parsed model.
-     */
-    public func buildResponseFromJSON(json : JSON) -> T {
-        return T(json: json)
+}
+
+/**
+ Protocol for parsing JSON response. It is used as a generic constraint for `APIRequest` instance.
+ */
+public protocol JSONDecodable : ResponseParseable {
+    
+    /// Create model object from SwiftyJSON.JSON struct.
+    init(json: JSON)
+}
+
+extension ResponseParseable where Self: JSONDecodable {
+    public static func from(json: AnyObject) -> Self {
+        return self.init(json: JSON(json))
     }
 }

@@ -219,7 +219,23 @@ extension Alamofire.Request {
                 return
             }
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), {
-                let model = responseBuilder.buildResponseFromJSON(JSON(data: data ?? NSData()))
+                let object : AnyObject
+                do {
+                    object = try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: .AllowFragments)
+                }
+                catch let jsonError as NSError {
+                    failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: jsonError))
+                    return
+                }
+                
+                let model: Model
+                do {
+                    model = try responseBuilder.buildResponseFromJSON(object)
+                }
+                catch let parsingError as NSError {
+                    failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
+                    return
+                }
                 dispatch_async(dispatch_get_main_queue(), {
                     success(model)
                 })
