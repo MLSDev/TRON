@@ -44,7 +44,7 @@ public extension APIStub {
                     print("failed building response model from file: \(filePath)")
                 return
             }
-            model = Model(json: JSON(json))
+            model = try? Model.from(json).response
         }
     }
 }
@@ -52,13 +52,13 @@ public extension APIStub {
 /**
  `APIStub` instance that is used to represent stubbed successful or unsuccessful response value.
  */
-public class APIStub<Model: JSONDecodable, ErrorModel: JSONDecodable> : RequestToken {
+public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> : RequestToken {
     
     /// Should the stub be successful. By default - true
     public var successful = true
     
     /// Response model for successful API stub
-    public var model : Model?
+    public var model : Model.ModelType?
     
     /// Error model for unsuccessful API stub
     public var error: APIError<ErrorModel>?
@@ -87,7 +87,7 @@ public class APIStub<Model: JSONDecodable, ErrorModel: JSONDecodable> : RequestT
      
      - returns: Request token. Can not be cancelled.
      */
-    public func performStubWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken {
+    public func performStubWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken {
         if let model = model where successful {
             delay(stubDelay) {
                 success(model)

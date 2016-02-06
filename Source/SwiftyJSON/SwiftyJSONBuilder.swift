@@ -1,8 +1,8 @@
 //
-//  ResponseBuilder.swift
-//  Hint
+//  SwiftyJSONBuilder.swift
+//  TRON
 //
-//  Created by Denys Telezhkin on 11.12.15.
+//  Created by Denys Telezhkin on 06.02.16.
 //  Copyright © 2015 - present MLSDev. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,34 +24,20 @@
 // THE SOFTWARE.
 
 import Foundation
-
-public struct ResponseBox<T> {
-    let response: T
-}
-
-
-public protocol ResponseParseable {
-    typealias ModelType = Self
-    static func from(json: AnyObject) throws -> ResponseBox<ModelType>
-}
+import SwiftyJSON
 
 /**
- Default ResponseBuilder.
+ Protocol for parsing JSON response. It is used as a generic constraint for `APIRequest` instance.
  */
-public class ResponseBuilder<T:ResponseParseable>
-{
-    /// Initialize default response builder
-    public init() {}
-//    
-//    /**
-//     Create model from json response.
-//     
-//     - parameter json: AnyObject instance
-//     
-//     - returns parsed model.
-//     */
-    public func buildResponseFromJSON(json : AnyObject) throws -> T.ModelType {
-        return try T.from(json).response
+public protocol JSONDecodable : ResponseParseable {
+    
+    /// Create model object from SwiftyJSON.JSON struct.
+    init(json: JSON)
+}
+
+extension ResponseParseable where Self.ModelType: JSONDecodable {
+    public static func from(json: AnyObject) -> ResponseBox<ModelType> {
+        return ResponseBox(response: ModelType.init(json: JSON(json)))
     }
 }
 

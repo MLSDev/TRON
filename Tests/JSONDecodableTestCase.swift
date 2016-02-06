@@ -14,13 +14,15 @@ import SwiftyJSON
 class JSONDecodableTestCase: XCTestCase {
     let tron = TRON(baseURL: "https://github.com")
     
-    func testDecodableArray() {
-        let request: APIRequest<[Int],TronError> = tron.request(path: "foo")
-        let json = [1,2,3,4]
-        let parsedResponse = try! request.responseBuilder.buildResponseFromJSON(json)
-        
-        expect(parsedResponse) == [1,2,3,4]
-    }
+    // TODO - Implement parsing for collection types
+    
+//    func testDecodableArray() {
+//        let request: APIRequest<[Int],TronError> = tron.request(path: "foo")
+//        let json = [1,2,3,4]
+//        let parsedResponse = try! request.responseBuilder.buildResponseFromJSON(json)
+//        
+//        expect(parsedResponse) == [1,2,3,4]
+//    }
 
     // TODO - implement this stuff when Swift 3.0 comes out
     

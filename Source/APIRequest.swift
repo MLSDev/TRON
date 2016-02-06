@@ -97,7 +97,7 @@ public protocol TronDelegate: class {
 /**
  `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. It is reusable and configurable for any needs.
  */
-public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
+public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable> {
     
     /// Relative path of current request
     public let path: String
@@ -166,7 +166,7 @@ public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
      
      - returns: Request token, that can be used to cancel request, or print debug information.
      */
-    public func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken
+    public func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken
     {
         if stubbingEnabled {
             return apiStub.performStubWithSuccess(success, failure: failure)
@@ -174,7 +174,7 @@ public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
         return performAlamofireRequest(success, failure: failure)
     }
     
-    private func performAlamofireRequest(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)?) -> RequestToken
+    private func performAlamofireRequest(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)?) -> RequestToken
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
@@ -201,8 +201,14 @@ public class APIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable> {
     }
 }
 
+extension NSData {
+    func parseToAnyObject() throws -> AnyObject {
+        return try NSJSONSerialization.JSONObjectWithData(self, options: .AllowFragments)
+    }
+}
+
 extension Alamofire.Request {
-    func handleResponse<Model: JSONDecodable, ErrorModel: JSONDecodable>(success: Model -> Void,
+    func handleResponse<Model: ResponseParseable, ErrorModel: ResponseParseable>(success: Model.ModelType -> Void,
         failure: (APIError<ErrorModel> -> Void)?,
         responseBuilder: ResponseBuilder<Model>,
         errorBuilder: ErrorBuilder<ErrorModel>, plugins: [Plugin]) -> Self
@@ -221,14 +227,14 @@ extension Alamofire.Request {
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), {
                 let object : AnyObject
                 do {
-                    object = try NSJSONSerialization.JSONObjectWithData(data ?? NSData(), options: .AllowFragments)
+                    object = try (data ?? NSData()).parseToAnyObject()
                 }
                 catch let jsonError as NSError {
                     failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: jsonError))
                     return
                 }
                 
-                let model: Model
+                let model: Model.ModelType
                 do {
                     model = try responseBuilder.buildResponseFromJSON(object)
                 }

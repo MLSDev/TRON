@@ -1,8 +1,8 @@
 //
-//  JSONDecodable.swift
-//  Hint
+//  SwiftyJSONCommonTypes.swift
+//  TRON
 //
-//  Created by Anton Golikov on 08.12.15.
+//  Created by Denys Telezhkin on 06.02.16.
 //  Copyright © 2015 - present MLSDev. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,11 +23,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import Foundation
 import SwiftyJSON
-
-public protocol ResponseParseable {
-    static func from(json: AnyObject) -> Self
-}
 
 extension JSON : JSONDecodable {
     public init(json: JSON) {
@@ -37,16 +34,16 @@ extension JSON : JSONDecodable {
     }
 }
 
-extension Array : JSONDecodable {
-    public init(json: JSON) {
-        self.init(json.arrayValue.flatMap {
-            if let type = Element.self as? JSONDecodable.Type {
-                return type.init(json: $0) as? Element
-            }
-            return nil
-        })
-    }
-}
+//extension Array : JSONDecodable {
+//    public init(json: JSON) {
+//        self.init(json.arrayValue.flatMap {
+//            if let type = Element.self as? JSONDecodable.Type {
+//                return type.init(json: $0) as? Element
+//            }
+//            return nil
+//        })
+//    }
+//}
 
 extension String : JSONDecodable  {
     public init(json: JSON) {

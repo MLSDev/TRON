@@ -31,7 +31,7 @@ public typealias ProgressClosure = (bytesSent: Int64, totalBytesWritten: Int64, 
 /**
  `MultipartAPIRequest` serves to send multipart requests.
  */
-public class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable>: APIRequest<Model, ErrorModel> {
+public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>: APIRequest<Model, ErrorModel> {
     
     /// Array of multipart data parts to be appended on current request.
     internal var multipartParameters: [MultipartFormData -> Void] = []
@@ -41,7 +41,7 @@ public class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable
     }
     
     @available(*, unavailable, message="MultipartAPIRequest should use performWithSuccess(_:failure:progress:cancellableCallback:)")
-    public override func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)?) -> RequestToken {
+    public override func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)?) -> RequestToken {
         fatalError()
     }
     
@@ -79,7 +79,7 @@ public class MultipartAPIRequest<Model: JSONDecodable, ErrorModel: JSONDecodable
      
      - parameter cancellableCallback: closure, that can be used to cancel current request. Use it to store `RequestToken` and cancel it whenever you need. Keep in mind, that cancellableCallback will be executed only when multipart encoding finished successfully.
      */
-    public func performWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, progress: ProgressClosure, cancellableCallback: RequestToken -> Void)
+    public func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, progress: ProgressClosure, cancellableCallback: RequestToken -> Void)
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")

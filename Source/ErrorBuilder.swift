@@ -29,7 +29,7 @@ import SwiftyJSON
 /**
  `ErrorBuilder` class is used to build error object from unsuccessful API requests.
  */
-public class ErrorBuilder<U:JSONDecodable>
+public class ErrorBuilder<U:ResponseParseable>
 {
     /// initialize default error builder
     public init() {}
@@ -53,7 +53,7 @@ public class ErrorBuilder<U:JSONDecodable>
 }
 
 /// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
-public struct APIError<T:JSONDecodable> {
+public struct APIError<T:ResponseParseable> {
     
     /// NSURLRequest that was unsuccessful
     public let request : NSURLRequest?
@@ -68,7 +68,7 @@ public struct APIError<T:JSONDecodable> {
     public let error : NSError?
     
     /// Parsed Error model
-    public var errorModel : T?
+    public var errorModel : T.ModelType?
     
     /**
      Initialize `APIError` with unsuccessful request info.
@@ -87,13 +87,16 @@ public struct APIError<T:JSONDecodable> {
         self.response = response
         self.data = data
         self.error = error
-        self.errorModel = data != nil ? T(json: JSON(data: data!)) : nil
+        guard let object = try? data?.parseToAnyObject() else {
+            return
+        }
+        self.errorModel = object.flatMap { try? T.from($0).response }
     }
     
     /**
      Convenience initializer, that can be used to create fixtured `APIError`.
      */
-    public init(errorModel: T) {
+    public init(errorModel: T.ModelType) {
         self.init(request: nil, response: nil, data: nil, error: nil)
         self.errorModel = errorModel
     }

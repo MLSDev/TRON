@@ -10,7 +10,7 @@ import Foundation
 import TRON
 import SwiftyJSON
 
-final class TronError : JSONDecodable {
+class TronError : JSONDecodable {
     required init(json: JSON) {
     }
 }

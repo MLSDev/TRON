@@ -73,7 +73,7 @@ public class TRON : TronDelegate {
      
      - returns APIRequest instance.
      */
-    public func request<Model:JSONDecodable, ErrorModel:JSONDecodable>(path path: String) -> APIRequest<Model,ErrorModel> {
+    public func request<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String) -> APIRequest<Model,ErrorModel> {
         return APIRequest(path: path, tron: self)
     }
     
@@ -84,7 +84,7 @@ public class TRON : TronDelegate {
      
      - returns MultipartAPIRequest instance.
      */
-    public func multipartRequest<Model:JSONDecodable, ErrorModel:JSONDecodable>(path path: String) -> MultipartAPIRequest<Model,ErrorModel> {
+    public func multipartRequest<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String) -> MultipartAPIRequest<Model,ErrorModel> {
         return MultipartAPIRequest(path: path, tron: self)
     }
     
