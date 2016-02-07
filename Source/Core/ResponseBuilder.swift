@@ -27,6 +27,10 @@ import Foundation
 
 public struct ResponseBox<T> {
     let response: T
+    
+    public init(_ response: T) {
+        self.response = response
+    }
 }
 
 

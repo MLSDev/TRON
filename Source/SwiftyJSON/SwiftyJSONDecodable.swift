@@ -29,15 +29,23 @@ import SwiftyJSON
 /**
  Protocol for parsing JSON response. It is used as a generic constraint for `APIRequest` instance.
  */
-public protocol JSONDecodable : ResponseParseable {
+public protocol JSONDecodable  : ResponseParseable {
     
     /// Create model object from SwiftyJSON.JSON struct.
     init(json: JSON)
 }
 
-extension ResponseParseable where Self.ModelType: JSONDecodable {
-    public static func from(json: AnyObject) -> ResponseBox<ModelType> {
-        return ResponseBox(response: ModelType.init(json: JSON(json)))
+public struct TypeMismatchViolation: ErrorType {}
+
+extension ResponseParseable where Self.ModelType : JSONDecodable {
+    public static func from(json: AnyObject) throws -> ResponseBox<ModelType> {
+        print(String(Self))
+        
+        print(String(Self.ModelType.self))
+        let json = JSON(json)
+//        guard let parsedModel = Self.ModelType.init(json: json) as? ModelType else {
+//            throw TypeMismatchViolation()
+//        }
+        return ResponseBox(Self.ModelType.init(json: json))
     }
 }
-

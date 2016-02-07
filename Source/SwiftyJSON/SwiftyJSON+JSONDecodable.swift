@@ -45,13 +45,13 @@ extension JSON : JSONDecodable {
 //    }
 //}
 
-extension String : JSONDecodable  {
+extension String : JSONDecodable, ResponseParseable  {
     public init(json: JSON) {
         self.init(json.stringValue)
     }
 }
 
-extension Int : JSONDecodable  {
+extension Int : JSONDecodable, ResponseParseable  {
     public init(json: JSON) {
         self.init(json.intValue)
     }

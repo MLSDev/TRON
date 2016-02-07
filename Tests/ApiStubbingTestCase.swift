@@ -11,7 +11,7 @@ import XCTest
 import Nimble
 import SwiftyJSON
 
-struct TestUser : JSONDecodable {
+struct TestUser : JSONDecodable, ResponseParseable {
     let name: String
     let id: Int
     
