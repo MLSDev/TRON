@@ -90,7 +90,7 @@ public struct APIError<T:ResponseParseable> {
         guard let object = try? data?.parseToAnyObject() else {
             return
         }
-        self.errorModel = object.flatMap { try? T.from($0).response }
+        self.errorModel = object.flatMap { try? T.from($0) }
     }
     
     /**

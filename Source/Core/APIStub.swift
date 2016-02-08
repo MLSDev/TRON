@@ -44,7 +44,7 @@ public extension APIStub {
                     print("failed building response model from file: \(filePath)")
                 return
             }
-            model = try? Model.from(json).response
+            model = try? Model.from(json)
         }
     }
 }

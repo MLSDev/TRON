@@ -25,18 +25,9 @@
 
 import Foundation
 
-public struct ResponseBox<T> {
-    let response: T
-    
-    public init(_ response: T) {
-        self.response = response
-    }
-}
-
-
 public protocol ResponseParseable {
     typealias ModelType = Self
-    static func from(json: AnyObject) throws -> ResponseBox<ModelType>
+    static func from(json: AnyObject) throws -> ModelType
 }
 
 /**
@@ -55,7 +46,7 @@ public class ResponseBuilder<T:ResponseParseable>
 //     - returns parsed model.
 //     */
     public func buildResponseFromJSON(json : AnyObject) throws -> T.ModelType {
-        return try T.from(json).response
+        return try T.from(json)
     }
 }
 

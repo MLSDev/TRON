@@ -34,9 +34,10 @@ public protocol JSONDecodable  : ResponseParseable {
     /// Create model object from SwiftyJSON.JSON struct.
     init(json: JSON)
 }
+
 extension ResponseParseable where Self.ModelType : JSONDecodable, Self == Self.ModelType {
-    public static func from(json: AnyObject) throws -> ResponseBox<ModelType> {
-        return ResponseBox(self.init(json: JSON(json)))
+    public static func from(json: AnyObject) throws -> ModelType {
+        return self.init(json: JSON(json))
     }
 }
 
