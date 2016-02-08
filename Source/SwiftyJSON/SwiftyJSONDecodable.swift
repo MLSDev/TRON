@@ -34,18 +34,57 @@ public protocol JSONDecodable  : ResponseParseable {
     /// Create model object from SwiftyJSON.JSON struct.
     init(json: JSON)
 }
-
-public struct TypeMismatchViolation: ErrorType {}
-
-extension ResponseParseable where Self.ModelType : JSONDecodable {
+extension ResponseParseable where Self.ModelType : JSONDecodable, Self == Self.ModelType {
     public static func from(json: AnyObject) throws -> ResponseBox<ModelType> {
-        print(String(Self))
-        
-        print(String(Self.ModelType.self))
-        let json = JSON(json)
-//        guard let parsedModel = Self.ModelType.init(json: json) as? ModelType else {
-//            throw TypeMismatchViolation()
-//        }
-        return ResponseBox(Self.ModelType.init(json: json))
+        return ResponseBox(self.init(json: JSON(json)))
+    }
+}
+
+extension JSON : JSONDecodable {
+    public init(json: JSON) {
+        if let array = json.array { self.init(array) }
+        else if let dictionary = json.dictionary { self.init(dictionary) }
+        else { self.init(json.rawValue) }
+    }
+}
+
+//extension Array : JSONDecodable {
+//    public init(json: JSON) {
+//        self.init(json.arrayValue.flatMap {
+//            if let type = Element.self as? JSONDecodable.Type {
+//                return type.init(json: $0) as? Element
+//            }
+//            return nil
+//        })
+//    }
+//}
+
+extension String : JSONDecodable  {
+    public init(json: JSON) {
+        self.init(json.stringValue)
+    }
+}
+
+extension Int : JSONDecodable  {
+    public init(json: JSON) {
+        self.init(json.intValue)
+    }
+}
+
+extension Float : JSONDecodable {
+    public init(json: JSON) {
+        self.init(json.floatValue)
+    }
+}
+
+extension Double : JSONDecodable {
+    public init(json: JSON) {
+        self.init(json.doubleValue)
+    }
+}
+
+extension Bool : JSONDecodable {
+    public init(json: JSON) {
+        self.init(json.boolValue)
     }
 }

@@ -21,10 +21,6 @@
 		9A13FA821C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A13FA801C662C2D00A54352 /* SwiftyJSONDecodable.swift */; };
 		9A13FA831C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A13FA801C662C2D00A54352 /* SwiftyJSONDecodable.swift */; };
 		9A13FA841C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A13FA801C662C2D00A54352 /* SwiftyJSONDecodable.swift */; };
-		9A13FA901C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A13FA8F1C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift */; };
-		9A13FA911C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A13FA8F1C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift */; };
-		9A13FA921C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A13FA8F1C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift */; };
-		9A13FA931C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A13FA8F1C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift */; };
 		9A154F951C67A6AB00B33F01 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F911C67A6AB00B33F01 /* APIRequest.swift */; };
 		9A154F961C67A6AB00B33F01 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F911C67A6AB00B33F01 /* APIRequest.swift */; };
 		9A154F971C67A6AB00B33F01 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F911C67A6AB00B33F01 /* APIRequest.swift */; };
@@ -409,7 +405,6 @@
 		9A1024D31C5F8169006E0163 /* TRON tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1024FF1C5F8240006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A13FA801C662C2D00A54352 /* SwiftyJSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSONDecodable.swift; path = Source/SwiftyJSON/SwiftyJSONDecodable.swift; sourceTree = "<group>"; };
-		9A13FA8F1C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SwiftyJSON+JSONDecodable.swift"; path = "Source/SwiftyJSON/SwiftyJSON+JSONDecodable.swift"; sourceTree = "<group>"; };
 		9A154F911C67A6AB00B33F01 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = Source/Core/APIRequest.swift; sourceTree = "<group>"; };
 		9A154F921C67A6AB00B33F01 /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIStub.swift; path = Source/Core/APIStub.swift; sourceTree = "<group>"; };
 		9A154F931C67A6AB00B33F01 /* MultipartAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipartAPIRequest.swift; path = Source/Core/MultipartAPIRequest.swift; sourceTree = "<group>"; };
@@ -537,7 +532,6 @@
 			isa = PBXGroup;
 			children = (
 				9A13FA801C662C2D00A54352 /* SwiftyJSONDecodable.swift */,
-				9A13FA8F1C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift */,
 			);
 			name = SwiftyJSON;
 			sourceTree = "<group>";
@@ -1212,7 +1206,6 @@
 				9A154FE71C67B75000B33F01 /* ArgoDecodable.swift in Sources */,
 				9A154FA21C67A6AB00B33F01 /* TRON.swift in Sources */,
 				9A154F9A1C67A6AB00B33F01 /* APIStub.swift in Sources */,
-				9A13FA911C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift in Sources */,
 				9A154FAE1C67A6BA00B33F01 /* HeaderBuilder.swift in Sources */,
 				9A154FC11C67A6CB00B33F01 /* NetworkLoggerPlugin.swift in Sources */,
 			);
@@ -1249,7 +1242,6 @@
 				9A154FE81C67B75000B33F01 /* ArgoDecodable.swift in Sources */,
 				9A154FA31C67A6AB00B33F01 /* TRON.swift in Sources */,
 				9A154F9B1C67A6AB00B33F01 /* APIStub.swift in Sources */,
-				9A13FA921C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift in Sources */,
 				9A154FAF1C67A6BA00B33F01 /* HeaderBuilder.swift in Sources */,
 				9A154FC21C67A6CB00B33F01 /* NetworkLoggerPlugin.swift in Sources */,
 			);
@@ -1286,7 +1278,6 @@
 				9A154FE91C67B75100B33F01 /* ArgoDecodable.swift in Sources */,
 				9A154FA41C67A6AB00B33F01 /* TRON.swift in Sources */,
 				9A154F9C1C67A6AB00B33F01 /* APIStub.swift in Sources */,
-				9A13FA931C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift in Sources */,
 				9A154FB01C67A6BA00B33F01 /* HeaderBuilder.swift in Sources */,
 				9A154FC31C67A6CB00B33F01 /* NetworkLoggerPlugin.swift in Sources */,
 			);
@@ -1311,7 +1302,6 @@
 				9A154FA91C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
 				9A154FAD1C67A6BA00B33F01 /* HeaderBuilder.swift in Sources */,
 				9A154FC41C67A6CB00B33F01 /* Plugin.swift in Sources */,
-				9A13FA901C662D4900A54352 /* SwiftyJSON+JSONDecodable.swift in Sources */,
 				9A154FE61C67B74F00B33F01 /* ArgoDecodable.swift in Sources */,
 				9A154FC01C67A6CB00B33F01 /* NetworkLoggerPlugin.swift in Sources */,
 				9A154FA11C67A6AB00B33F01 /* TRON.swift in Sources */,

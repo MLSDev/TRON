@@ -82,16 +82,16 @@ class JSONDecodableTestCase: XCTestCase {
         waitForExpectationsWithTimeout(3, handler: nil)
     }
     
-//    func testJSONDecodableWorksWithSiblings() {
-//        let tron = TRON(baseURL: "http://httpbin.org")
-//        let request: APIRequest<Sibling,Int> = tron.request(path: "headers")
-//        let expectation = expectationWithDescription("Parsing headers response")
-//        request.performWithSuccess({ sibling in
-//            if sibling.foo == "4" {
-//                expectation.fulfill()
-//            }
-//        })
-//        
-//        waitForExpectationsWithTimeout(3, handler: nil)
-//    }
+    func testJSONDecodableWorksWithSiblings() {
+        let tron = TRON(baseURL: "http://httpbin.org")
+        let request: APIRequest<Sibling,Int> = tron.request(path: "headers")
+        let expectation = expectationWithDescription("Parsing headers response")
+        request.performWithSuccess({ sibling in
+            if sibling.foo == "4" {
+                expectation.fulfill()
+            }
+        })
+        
+        waitForExpectationsWithTimeout(3, handler: nil)
+    }
 }
