@@ -11,6 +11,8 @@ Examples:
 
 ### Limitations
 
+`ResponseParseable` and `JSONDecodable` are now Self-requirement protocols with all their limitations. Apart from that, there are some other limitations as well:
+
 #### Subclasses
 
 Subclassing ResponseParseable requires explicit typealias in subclassed model:
@@ -29,11 +31,9 @@ class Sibling: Ancestor {
 
 [Discussion in mailing Swift mailing lists](https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20151228/004645.html)
 
-
 #### Multiple custom mappers
 
 Current architecture does not support having more than one mapper in your project, because Swift is unable to differentiate between two ResponseParseable extensions on different types.
-
 
 #### Arrays and CollectionTypes
 

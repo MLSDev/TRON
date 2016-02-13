@@ -186,7 +186,7 @@ There are also default implementations of `JSONDecodable` protocol for Swift bui
 
 Starting with 0.2.0, we are adding support for any custom mapper to be used with TRON. Now, instead of JSONDecodable, all generic constraints on TRON accept `ResponseParseable` protocol, that can be easily implemented for your mapper.
 
-By default, we are using SwiftyJSON, and adding protocol default implementations on it, so existing code should not break.
+By default, we are using SwiftyJSON, and adding protocol default implementations on it.
 
 **Note** Custom mappers are supported only when installing framework from CocoaPods due to inability of Carthage to split framework to subspecs.
 
