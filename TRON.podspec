@@ -15,21 +15,19 @@ Pod::Spec.new do |s|
   s.frameworks = 'Foundation'
   s.dependency 'Alamofire' , '~> 3.1'
 
+
   s.subspec 'Core' do |core|
       core.ios.frameworks = 'UIKit'
       core.source_files = 'Source/Core/*.swift'
-      core.tvos.exclude_files = "Source/NetworkActivityPlugin.swift"
-      core.osx.exclude_files = "Source/NetworkActivityPlugin.swift"
-      core.watchos.exclude_files = "Source/NetworkActivityPlugin.swift"
+      core.tvos.exclude_files = "Source/Core/NetworkActivityPlugin.swift"
+      core.osx.exclude_files = "Source/Core/NetworkActivityPlugin.swift"
+      core.watchos.exclude_files = "Source/Core/NetworkActivityPlugin.swift"
   end
 
   s.subspec 'SwiftyJSON' do |swiftyjson|
       swiftyjson.dependency 'TRON/Core'
       swiftyjson.dependency 'SwiftyJSON', '~> 2.3'
       swiftyjson.source_files = 'Source/SwiftyJSON/*.swift'
-      swiftyjson.tvos.exclude_files = "Source/NetworkActivityPlugin.swift"
-      swiftyjson.osx.exclude_files = "Source/NetworkActivityPlugin.swift"
-      swiftyjson.watchos.exclude_files = "Source/NetworkActivityPlugin.swift"
   end
 
   s.default_subspec = 'SwiftyJSON'
