@@ -188,6 +188,20 @@ Starting with 0.2.0, we are adding support for any custom mapper to be used with
 
 By default, we are using SwiftyJSON, and adding protocol default implementations on it, so existing code should not break.
 
+**Note** Custom mappers are supported only when installing framework from CocoaPods due to inability of Carthage to split framework to subspecs.
+
+To use custom mapper, use Core podspec of Tron:
+
+```ruby
+    pod 'TRON/Core'
+```
+
+Then add your custom mapper protocol extension. We are providing code examples on how to do this with two most popular mappers available in Swift - Argo and ObjectMapper.
+
+[Playground with Argo ResponseParseable implementation](https://github.com/MLSDev/TRON/blob/master/Custom%20mappers/Argo.playground/Contents.swift)
+
+[Playground with ObjectMapper ResponseParseable implementation](https://github.com/MLSDev/TRON/blob/master/Custom%20mappers/ObjectMapper.playground/Contents.swift)
+
 ### Error handling
 
 `TRON` includes built-in parsing for errors by assuming, that error can also be parsed as `ResponseParseable` instance. `APIError` is a generic class, that includes several default properties, that can be fetched from unsuccessful request:
