@@ -24,7 +24,6 @@
 // THE SOFTWARE.
 
 import Foundation
-import SwiftyJSON
 
 /**
  `ErrorBuilder` class is used to build error object from unsuccessful API requests.

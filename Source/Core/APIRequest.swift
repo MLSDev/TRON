@@ -24,7 +24,6 @@
 // THE SOFTWARE.
 
 import Alamofire
-import SwiftyJSON
 
 /**
  `RequestToken` instance is returned by APIRequest instance, when request is sent. Based on whether stubbing is enabled or not, it can be an `Alamofire.Request` instance or `TRON.APIStub` instance.

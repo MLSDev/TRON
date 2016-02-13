@@ -11,6 +11,32 @@ Examples:
 
 ### Limitations
 
+#### Subclasses
+
+Subclassing ResponseParseable requires explicit typealias in subclassed model:
+
+```swift
+class Ancestor: JSONDecodable {
+    required init(json: JSON) {
+
+    }
+}
+
+class Sibling: Ancestor {
+    typealias ModelType = Sibling
+}
+```
+
+[Discussion in mailing Swift mailing lists](https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20151228/004645.html)
+
+
+#### Multiple custom mappers
+
+Current architecture does not support having more than one mapper in your project, because Swift is unable to differentiate between two ResponseParseable extensions on different types.
+
+
+#### Arrays and CollectionTypes
+
 Currently, there's no way to extend CollectionType or Array with `JSONDecodable` or `ResponseParseable` protocol, so creating request with ModelType of array(APIRequest<[Foo],Bar>) is not possible.
 
 Blocking radars:

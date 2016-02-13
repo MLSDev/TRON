@@ -24,7 +24,6 @@
 // THE SOFTWARE.
 
 import Foundation
-import SwiftyJSON
 
 private func delay(delay:Double, closure:()->()) {
     dispatch_after(
