@@ -1,1 +1,4 @@
 github "Quick/Nimble"
+github "thoughtbot/Argo"
+github "thoughtbot/Curry"
+github "Hearst-DD/ObjectMapper"

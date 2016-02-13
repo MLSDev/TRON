@@ -11,12 +11,13 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
 
-TRON is a lightweight network abstraction layer, built on top of [Alamofire](https://github.com/Alamofire/Alamofire) and [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON). It can be used to dramatically simplify interacting with RESTful JSON web-services.
+TRON is a lightweight network abstraction layer, built on top of [Alamofire](https://github.com/Alamofire/Alamofire). It can be used to dramatically simplify interacting with RESTful JSON web-services.
 
 ## Features
 
 - [x] Generic, protocol-based implementation
 - [x] Built-in response and error parsing
+- [x] Support for any custom mapper. Defaults to [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON).
 - [x] Support for multipart requests
 - [x] Robust plugin system
 - [x] Stubbing of network requests
@@ -48,13 +49,13 @@ request.performWithSuccess( { user in
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 0.1.0'
+pod 'TRON', '~> 0.2.0'
 ```
 
 ### Carthage
 
 ```ruby
-github "MLSDev/TRON", ~> 0.1
+github "MLSDev/TRON", ~> 0.2
 ```
 
 ## Project status
@@ -172,21 +173,27 @@ request.performWithSuccess({ user in
 })
 ```
 
-There are also default implementations of `JSONDecodable` protocol for Swift built-in types like Array, String, Int, Float, Double and Bool, so you can easily do something like this:
+There are also default implementations of `JSONDecodable` protocol for Swift built-in types like String, Int, Float, Double and Bool, so you can easily do something like this:
 
 ```swift
-  let request : APIRequest<[User],MyAppError> = tron.request(path: "friends")
-  request.performWithSuccess({ users in
-    print("received \(users.count) friends")
+  let request : APIRequest<String,MyAppError> = tron.request(path: "status")
+  request.performWithSuccess({ status in
+    print("Server status: \(status)") //
   })
 ```
 
+## Custom mappers
+
+Starting with 0.2.0, we are adding support for any custom mapper to be used with TRON. Now, instead of JSONDecodable, all generic constraints on TRON accept `ResponseParseable` protocol, that can be easily implemented for your mapper.
+
+By default, we are using SwiftyJSON, and adding protocol default implementations on it, so existing code should not break.
+
 ### Error handling
 
-`TRON` includes built-in parsing for errors by assuming, that error can also be parsed as `JSONDecodable` instance. `APIError` is a generic class, that includes several default properties, that can be fetched from unsuccessful request:
+`TRON` includes built-in parsing for errors by assuming, that error can also be parsed as `ResponseParseable` instance. `APIError` is a generic class, that includes several default properties, that can be fetched from unsuccessful request:
 
 ```
-struct APIError<T:JSONDecodable> {
+struct APIError<T:ResponseParseable> {
     public let request : NSURLRequest?
     public let response : NSHTTPURLResponse?
     public let data : NSData?
@@ -269,7 +276,7 @@ It can be also nice to introduce namespacing to your API:
 ```swift
 struct API {}
 extension API {
-  class User {
+  class Users {
     // ...
   }
 }
@@ -278,7 +285,7 @@ extension API {
 This way you can call your API methods like so:
 
 ```swift
-API.User.delete(56).performWithSuccess({ user in
+API.Users.delete(56).performWithSuccess({ user in
   print("user \(user) deleted")
 })
 ```
@@ -288,7 +295,7 @@ API.User.delete(56).performWithSuccess({ user in
 Stubbing is built right into APIRequest itself. All you need to stub a successful request is to set apiStub property and turn stubbingEnabled on:
 
 ```swift
-let request = API.User.get(56)
+let request = API.Users.get(56)
 request.stubbingEnabled = true
 request.apiStub.model = User.fixture()
 
@@ -300,7 +307,7 @@ request.performWithSuccess({ stubbedUser in
 Stubbing can be enabled globally on `TRON` object or locally for a single APIRequest. Stubbing unsuccessful requests is easy as well:
 
 ```swift
-let request = API.User.get(56)
+let request = API.Users.get(56)
 request.stubbingEnabled = true
 request.apiStub.error = APIError<MyAppError>.fixtureError()
 request.performWithSuccess({ _ in }, failure: { error in

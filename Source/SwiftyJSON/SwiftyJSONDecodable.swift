@@ -35,7 +35,7 @@ public protocol JSONDecodable  : ResponseParseable {
     init(json: JSON)
 }
 
-extension ResponseParseable where Self.ModelType : JSONDecodable, Self == Self.ModelType {
+public extension ResponseParseable where Self.ModelType : JSONDecodable, Self == Self.ModelType {
     public static func from(json: AnyObject) throws -> ModelType {
         return self.init(json: JSON(json))
     }
@@ -48,11 +48,31 @@ extension JSON : JSONDecodable {
         else { self.init(json.rawValue) }
     }
 }
+//
+//public struct CollectionTypeError : ErrorType {}
+//
+//public extension CollectionType where Generator.Element: ResponseParseable,  Generator.Element == Generator.Element.ModelType {
+//    static func from(json: AnyObject) throws -> [Generator.Element] {
+//        guard let array = json as? [AnyObject] else {
+//            throw CollectionTypeError()
+//        }
+//        return array.flatMap { return try? Generator.Element.from($0) }
+//    }
+//}
+//
+//extension JSONDecodable where Self: CollectionType, Self.Generator.Element : JSONDecodable, Self.Generator.Element == Self.Generator.Element.ModelType {
+//    init(json: JSON) {
+//        let foo = json.arrayValue.flatMap({
+//            return Self.Generator.Element.init(json: $0)
+//        })
+//        
+//    }
+//}
 
 //extension Array : JSONDecodable {
 //    public init(json: JSON) {
 //        self.init(json.arrayValue.flatMap {
-//            if let type = Element.self as? JSONDecodable.Type {
+//            if let type = Element.self as? JSONDecodable.ModelType {
 //                return type.init(json: $0) as? Element
 //            }
 //            return nil

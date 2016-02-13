@@ -3,36 +3,31 @@
 import UIKit
 import Argo
 import TRON
+import Curry
 
-struct ObjectMapperError: ErrorType {}
+public struct ArgoDecodableError : ErrorType {}
 
-public protocol ObjectMapperParseable : ResponseParseable {
-    init(json: JSON)
-}
+public extension Decodable where Self: ResponseParseable {
 
-public extension ResponseParseable where Self.ModelType : ObjectMapperParseable {
-    public static func from(json: AnyObject) throws -> ResponseBox<ModelType> {
-        let json = JSON.parse(json)
-        let decoded = Self.ModelType.decode(json)
-        guard let decodedValue = decoded.value as? ModelType else {
+    public static func from(json: AnyObject) throws -> ModelType {
+        guard let model = decode(JSON.parse(json)) as? ModelType else {
             throw ArgoDecodableError()
         }
-        return ResponseBox(response: decodedValue)
-        return ResponseBox(response: model)
+        return model
     }
 }
-
-struct Headers: ObjectMapperParseable {
+struct ArgoHeaders : Decodable, ResponseParseable {
     
-    var host : String!
+    let host : String
     
-    init(map: Map) {
-        host <- map["host"]
+    static func decode(j: JSON) -> Decoded<ArgoHeaders> {
+        return curry(ArgoHeaders.init)
+            <^> j <| "host"
     }
 }
 
 let tron = TRON(baseURL: "http://httpbin.org")
-let request: APIRequest<Headers,Int> = tron.request(path: "headers")
+let request: APIRequest<ArgoHeaders,Int> = tron.request(path: "headers")
 request.performWithSuccess({ headers in
     print(headers.host)
 })

@@ -10,12 +10,12 @@ public protocol ObjectMapperParseable : ResponseParseable {
 }
 
 public extension ResponseParseable where Self.ModelType : ObjectMapperParseable {
-    public static func from(json: AnyObject) throws -> ResponseBox<ModelType> {
+    public static func from(json: AnyObject) throws -> ModelType {
         let map = Map(mappingType: .FromJSON, JSONDictionary: json as! [String:AnyObject], toObject: true)
         guard let model = ModelType(map: map) else {
             throw ObjectMapperError()
         }
-        return ResponseBox(response: model)
+        return model
     }
 }
 

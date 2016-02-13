@@ -1,13 +1,12 @@
 Pod::Spec.new do |s|
   s.name     = 'TRON'
-  s.version  = '0.1.2'
+  s.version  = '0.2.0'
   s.license  = 'MIT'
   s.summary  = 'Lightweight network abstraction layer, written on top of Alamofire and SwiftyJSON'
   s.homepage = 'https://github.com/MLSDev/TRON'
   s.authors  = { 'Denys Telezhkin' => 'denys.telezhkin@yandex.ru' }
   s.social_media_url = 'https://twitter.com/MLSDevCom'
   s.source   = { :git => 'https://github.com/MLSDev/TRON.git', :tag => s.version.to_s }
-  s.source_files = 'Source/*.swift'
   s.tvos.exclude_files = "Source/NetworkActivityPlugin.swift"
   s.osx.exclude_files = "Source/NetworkActivityPlugin.swift"
   s.watchos.exclude_files = "Source/NetworkActivityPlugin.swift"
@@ -19,5 +18,16 @@ Pod::Spec.new do |s|
   s.frameworks = 'Foundation'
   s.ios.frameworks = 'UIKit'
   s.dependency 'Alamofire' , '~> 3.1'
-  s.dependency 'SwiftyJSON', '~> 2.3'
+
+  s.subspec 'Core' do |core|
+      core.source_files = 'Source/Core/*.swift'
+  end
+
+  s.subspec 'SwiftyJSON' do |swiftyjson|
+      swiftyjson.dependency 'TRON/Core'
+      swiftyjson.dependency 'SwiftyJSON', '~> 2.3'
+      swiftyjson.source_files = 'Source/SwiftyJSON/*.swift'
+  end
+
+  s.default_subspec = 'SwiftyJSON'
 end
