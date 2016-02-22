@@ -1,7 +1,7 @@
 
 
 <p align="center">
-  <img src="TRON.png" />
+  <img src="https://github.com/MLSDev/TRON/blob/master/TRON.png" />
 </p>
 
 ![Build Status](https://travis-ci.org/MLSDev/TRON.svg?branch=master) &nbsp;
