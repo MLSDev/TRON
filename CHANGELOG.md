@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.2.1](https://github.com/MLSDev/TRON/releases/tag/0.2.1)
+
+Added public initializer for NetworkActivityPlugin
+
 ## [0.2.0](https://github.com/MLSDev/TRON/releases/tag/0.2.0)
 
 Add support for any custom mapper to be used with TRON. Defaulting to `SwiftyJSON`.
