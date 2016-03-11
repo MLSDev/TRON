@@ -42,6 +42,8 @@ public class NetworkActivityPlugin : Plugin {
         }
     }
     
+    public init() {}
+    
     public func willSendRequest(request: NSURLRequest?) {
         self.dynamicType.networkActivityCount++
     }
