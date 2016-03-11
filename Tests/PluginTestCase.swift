@@ -42,4 +42,12 @@ class PluginTestCase: XCTestCase {
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
+    func testPluginsAreInitializable() {
+        let _ = NetworkLoggerPlugin()
+        #if os(iOS)
+            let _ = NetworkActivityPlugin()
+        #endif
+        
+    }
+    
 }
