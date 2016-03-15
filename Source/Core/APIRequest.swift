@@ -135,6 +135,9 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
     /// API stub to be used when stubbing this request
     public var apiStub = APIStub<Model, ErrorModel>()
     
+    /// `EventDispatcher` instance, responsible for calling success and failure completion blocks on specified GCD-queues.
+    public var dispatcher : EventDispatcher
+    
     /// Delegate property that is used to communicate with `TRON` instance.
     weak var tronDelegate : TronDelegate?
     
@@ -154,6 +157,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         self.stubbingEnabled = tron.stubbingEnabled
         self.headerBuilder = tron.headerBuilder
         self.urlBuilder = tron.urlBuilder
+        self.dispatcher = tron.dispatcher
     }
     
     /**
@@ -193,6 +197,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         let allPlugins = plugins + (tronDelegate?.plugins ?? [])
         alamofireRequest.validate().handleResponse(success,
             failure: failure,
+            dispatcher : dispatcher,
             responseBuilder: responseBuilder,
             errorBuilder: errorBuilder,
             plugins: allPlugins)
@@ -207,8 +212,10 @@ extension NSData {
 }
 
 extension Alamofire.Request {
-    func handleResponse<Model: ResponseParseable, ErrorModel: ResponseParseable>(success: Model.ModelType -> Void,
+    func handleResponse<Model: ResponseParseable, ErrorModel: ResponseParseable>(
+        success: Model.ModelType -> Void,
         failure: (APIError<ErrorModel> -> Void)?,
+        dispatcher: EventDispatcher,
         responseBuilder: ResponseBuilder<Model>,
         errorBuilder: ErrorBuilder<ErrorModel>, plugins: [Plugin]) -> Self
     {
@@ -219,17 +226,21 @@ extension Alamofire.Request {
                 $0.requestDidReceiveResponse(urlRequest, response,data,error)
             }
             
-            guard error == nil else {
-                failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
-                return
-            }
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), {
+            dispatcher.processResponse { 
+                guard error == nil else {
+                    dispatcher.deliverFailure {
+                        failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
+                    }
+                    return
+                }
                 let object : AnyObject
                 do {
                     object = try (data ?? NSData()).parseToAnyObject()
                 }
                 catch let jsonError as NSError {
-                    failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: jsonError))
+                    dispatcher.deliverFailure {
+                        failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: jsonError))
+                    }
                     return
                 }
                 
@@ -238,13 +249,15 @@ extension Alamofire.Request {
                     model = try responseBuilder.buildResponseFromJSON(object)
                 }
                 catch let parsingError as NSError {
-                    failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
+                    dispatcher.deliverFailure {
+                        failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
+                    }
                     return
                 }
-                dispatch_async(dispatch_get_main_queue(), {
+                dispatcher.deliverSuccess {
                     success(model)
-                })
-            })
+                }
+            }
         }
     }
 }

@@ -48,6 +48,9 @@ public class TRON : TronDelegate {
     /// Alamofire.Manager instance used to send network requests
     public let manager : Alamofire.Manager
     
+    /// Object, responsible for calling success and failure completion blocks on specified GCD queues. When `APIRequest` object is created, it is automatically configured with current dispatcher instance.
+    public var dispatcher = EventDispatcher()
+    
     /**
      Initializes `TRON` with given base URL, Alamofire.Manager instance, and array of global plugins.
      

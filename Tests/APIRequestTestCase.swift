@@ -12,8 +12,14 @@ import Nimble
 
 class APIRequestTestCase: XCTestCase {
     
+    var tron: TRON!
+    
+    override func setUp() {
+        super.setUp()
+        tron = TRON(baseURL: "http://httpbin.org")
+    }
+    
     func testErrorBuilding() {
-        let tron = TRON(baseURL: "http://httpbin.org")
         let request: APIRequest<Int,TronError> = tron.request(path: "status/418")
         let expectation = expectationWithDescription("Teapot")
         request.performWithSuccess({ _ in
@@ -22,6 +28,73 @@ class APIRequestTestCase: XCTestCase {
             if error.response?.statusCode == 418 {
                 expectation.fulfill()
             }
+        }
+        waitForExpectationsWithTimeout(5, handler: nil)
+    }
+    
+    func testSuccessCallBackIsCalledOnMainThread() {
+        let request : APIRequest<String,TronError> = tron.request(path: "get")
+        let expectation = expectationWithDescription("200")
+        request.performWithSuccess({ _ in
+            if NSThread.isMainThread() {
+                expectation.fulfill()
+            }
+            }) { _ in
+            XCTFail()
+        }
+        waitForExpectationsWithTimeout(5, handler: nil)
+    }
+    
+    func testFailureCallbackIsCalledOnMainThread() {
+        let request : APIRequest<Int,TronError> = tron.request(path: "status/418")
+        let expectation = expectationWithDescription("Teapot")
+        request.performWithSuccess({ _ in
+            XCTFail()
+        }) { error in
+            if NSThread.isMainThread() {
+                expectation.fulfill()
+            }
+        }
+        waitForExpectationsWithTimeout(5, handler: nil)
+    }
+    
+    func testParsingFailureCallbackIsCalledOnMainThread() {
+        let request : APIRequest<Int,TronError> = tron.request(path: "html")
+        let expectation = expectationWithDescription("Parsing failure")
+        request.performWithSuccess({ _ in
+            XCTFail()
+        }) { error in
+            if NSThread.isMainThread() {
+                expectation.fulfill()
+            }
+        }
+        waitForExpectationsWithTimeout(5, handler: nil)
+    }
+    
+    func testSuccessBlockCanBeCalledOnBackgroundThread() {
+        tron.dispatcher.successDeliveryQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+        let request : APIRequest<Int,TronError> = tron.request(path: "get")
+        let expectation = expectationWithDescription("200")
+        request.performWithSuccess({ _ in
+            if !NSThread.isMainThread() {
+                expectation.fulfill()
+            }
+            }) { _ in
+                XCTFail()
+        }
+        waitForExpectationsWithTimeout(5, handler: nil)
+    }
+    
+    func testFailureCallbacksCanBeCalledOnBackgroundThread() {
+        tron.dispatcher.failureDeliveryQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+        let request : APIRequest<Int,TronError> = tron.request(path: "html")
+        let expectation = expectationWithDescription("Parsing failure")
+        request.performWithSuccess({ _ in
+            XCTFail()
+            }) { error in
+                if !NSThread.isMainThread() {
+                    expectation.fulfill()
+                }
         }
         waitForExpectationsWithTimeout(5, handler: nil)
     }

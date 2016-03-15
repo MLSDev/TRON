@@ -108,6 +108,10 @@
 		9A90CC901C5FABBD00472DB8 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8C1C5FABBD00472DB8 /* user.json */; };
 		9A90CC911C5FABBD00472DB8 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8C1C5FABBD00472DB8 /* user.json */; };
 		9A90CC921C5FABBD00472DB8 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8C1C5FABBD00472DB8 /* user.json */; };
+		9AE82A701C98102B007A610E /* EventDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE82A6F1C98102B007A610E /* EventDispatcher.swift */; };
+		9AE82A711C98102B007A610E /* EventDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE82A6F1C98102B007A610E /* EventDispatcher.swift */; };
+		9AE82A721C98102B007A610E /* EventDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE82A6F1C98102B007A610E /* EventDispatcher.swift */; };
+		9AE82A731C98102B007A610E /* EventDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE82A6F1C98102B007A610E /* EventDispatcher.swift */; };
 		9AEE0BAD1C5A4E15003222A8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA01C5A4E0A003222A8 /* Alamofire.framework */; };
 		9AEE0BC61C5A4E33003222A8 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BB91C5A4E2D003222A8 /* SwiftyJSON.framework */; };
 		9AEE0BDC1C5A4FBF003222A8 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD11C5A4FB5003222A8 /* Nimble.framework */; };
@@ -561,6 +565,7 @@
 		9A90CCAC1C5FB98E00472DB8 /* OS X.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "OS X.plist"; path = "Supporting files/OS X.plist"; sourceTree = "<group>"; };
 		9A90CCAD1C5FB98E00472DB8 /* tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = tvOS.plist; path = "Supporting files/tvOS.plist"; sourceTree = "<group>"; };
 		9A90CCAE1C5FB98E00472DB8 /* watchOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = watchOS.plist; path = "Supporting files/watchOS.plist"; sourceTree = "<group>"; };
+		9AE82A6F1C98102B007A610E /* EventDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EventDispatcher.swift; path = Source/Core/EventDispatcher.swift; sourceTree = "<group>"; };
 		9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Carthage/Checkouts/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = Carthage/Checkouts/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = Carthage/Checkouts/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
@@ -723,6 +728,7 @@
 				9A154F921C67A6AB00B33F01 /* APIStub.swift */,
 				9A154F931C67A6AB00B33F01 /* MultipartAPIRequest.swift */,
 				9A154F941C67A6AB00B33F01 /* TRON.swift */,
+				9AE82A6F1C98102B007A610E /* EventDispatcher.swift */,
 				9A90CC331C5FAB5A00472DB8 /* Builders */,
 				9A154FC81C67A6DF00B33F01 /* Mappers */,
 				9A90CC341C5FAB5F00472DB8 /* Plugins */,
@@ -1482,6 +1488,7 @@
 				9A154F961C67A6AB00B33F01 /* APIRequest.swift in Sources */,
 				9A154FC51C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAA1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
+				9AE82A711C98102B007A610E /* EventDispatcher.swift in Sources */,
 				9A154F9E1C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */,
 				9A154FB61C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
 				9A13FA821C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
@@ -1516,6 +1523,7 @@
 				9A154F971C67A6AB00B33F01 /* APIRequest.swift in Sources */,
 				9A154FC61C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAB1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
+				9AE82A721C98102B007A610E /* EventDispatcher.swift in Sources */,
 				9A154F9F1C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */,
 				9A154FB71C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
 				9A13FA831C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
@@ -1550,6 +1558,7 @@
 				9A154F981C67A6AB00B33F01 /* APIRequest.swift in Sources */,
 				9A154FC71C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAC1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
+				9AE82A731C98102B007A610E /* EventDispatcher.swift in Sources */,
 				9A154FA01C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */,
 				9A154FB81C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
 				9A13FA841C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
@@ -1581,6 +1590,7 @@
 				9A154FC41C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FC01C67A6CB00B33F01 /* NetworkLoggerPlugin.swift in Sources */,
 				9A154FA11C67A6AB00B33F01 /* TRON.swift in Sources */,
+				9AE82A701C98102B007A610E /* EventDispatcher.swift in Sources */,
 				9A154F991C67A6AB00B33F01 /* APIStub.swift in Sources */,
 				9A154F9D1C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */,
 				9A154F951C67A6AB00B33F01 /* APIRequest.swift in Sources */,

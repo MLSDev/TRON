@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.3.0](https://github.com/MLSDev/TRON/releases/tag/0.3.0)
+
+Completion blocks are now handled by new `EventDispatcher` class, which is responsible for running completion blocks on predefined GCD-queue.
+
+Default behaviour - all parsing is made on QOS_CLASS_USER_INITIATED queue, success and failure blocks are called on main queue.
+
+You can specify `processingQueue`, `successDeliveryQueue` and `failureDeliveryQueue` on `dispatcher` property of TRON. After request creation you can modify queues using `dispatcher` property on APIRequest, or even replace EventDispatcher with a custom one.
+
 ## [0.2.1](https://github.com/MLSDev/TRON/releases/tag/0.2.1)
 
 Added public initializer for NetworkActivityPlugin
