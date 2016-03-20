@@ -248,28 +248,28 @@ request.performWithSuccess({ response in }, failure: { error in
 ## CRUD
 
 ```swift
-class UserRequestFactory
+struct Users
 {
     static let tron = TRON(baseURL: "https://api.myapp.com")
 
-    class func create() -> APIRequest<User,MyAppError> {
+    static func create() -> APIRequest<User,MyAppError> {
         let request: APIRequest<User,MyAppError> = tron.request(path: "users")
         request.method = .POST
         return request
     }
 
-    class func read(id: Int) -> APIRequest<User, MyAppError> {
+    static func read(id: Int) -> APIRequest<User, MyAppError> {
         return tron.request(path: "users/\(id)")
     }
 
-    class func update(id: Int, parameters: [String:AnyObject]) -> APIRequest<User, MyAppError> {
+    static func update(id: Int, parameters: [String:AnyObject]) -> APIRequest<User, MyAppError> {
         let request: APIRequest<User,MyAppError> = tron.request(path: "users/\(id)")
         request.method = .PUT
         request.parameters = parameters
         return request
     }
 
-    class func delete(id: Int) -> APIRequest<User,MyAppError> {
+    static func delete(id: Int) -> APIRequest<User,MyAppError> {
         let request: APIRequest<User,MyAppError> = tron.request(path: "users/\(id)")
         request.method = .DELETE
         return request
@@ -280,7 +280,7 @@ class UserRequestFactory
 Using these requests is really simple:
 
 ```swift
-UserRequestFactory.read(56).performWithSuccess({ user in
+Users.read(56).performWithSuccess({ user in
   print("received user id 56 with name: \(user.name)")
 })
 ```
@@ -290,7 +290,7 @@ It can be also nice to introduce namespacing to your API:
 ```swift
 struct API {}
 extension API {
-  class Users {
+  struct Users {
     // ...
   }
 }
