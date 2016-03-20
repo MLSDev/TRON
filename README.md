@@ -49,13 +49,13 @@ request.performWithSuccess( { user in
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 0.2.0'
+pod 'TRON', '~> 0.3.0'
 ```
 
 ### Carthage
 
 ```ruby
-github "MLSDev/TRON", ~> 0.2
+github "MLSDev/TRON", ~> 0.3
 ```
 
 ## Project status
