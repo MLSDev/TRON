@@ -26,7 +26,7 @@
 import Foundation
 
 public protocol ResponseParseable {
-    typealias ModelType = Self
+    associatedtype ModelType = Self
     static func from(json: AnyObject) throws -> ModelType
 }
 

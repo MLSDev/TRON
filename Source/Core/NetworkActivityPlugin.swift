@@ -45,10 +45,10 @@ public class NetworkActivityPlugin : Plugin {
     public init() {}
     
     public func willSendRequest(request: NSURLRequest?) {
-        self.dynamicType.networkActivityCount++
+        self.dynamicType.networkActivityCount += 1
     }
     
     public func requestDidReceiveResponse(response: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?)) {
-        self.dynamicType.networkActivityCount--
+        self.dynamicType.networkActivityCount -= 1
     }
 }

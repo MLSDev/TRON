@@ -18,7 +18,7 @@ class TronTestCase: XCTestCase {
         
         let tronBuilder = tron.urlBuilder as? URLBuilder
         let requestBuilder = request.urlBuilder as? URLBuilder
-        expect(requestBuilder === tronBuilder)
+        expect(requestBuilder === tronBuilder).to(beTruthy())
     }
     
 }

@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Master
+
+* Update to Swift 2.2. This release is not backwards compatible with Swift 2.1.
+
 ## [0.3.0](https://github.com/MLSDev/TRON/releases/tag/0.3.0)
 
 Completion blocks are now handled by new `EventDispatcher` class, which is responsible for running completion blocks on predefined GCD-queue.
