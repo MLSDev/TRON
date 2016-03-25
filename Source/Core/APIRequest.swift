@@ -233,6 +233,13 @@ extension Alamofire.Request {
                     }
                     return
                 }
+                // This can be used for requests with empty body, which cannot be parsed by NSJSONSerialization
+                if Model.self is EmptyResponse.Type {
+                    dispatcher.deliverSuccess {
+                        success(EmptyResponse() as! Model.ModelType)
+                    }
+                    return
+                }
                 let object : AnyObject
                 do {
                     object = try (data ?? NSData()).parseToAnyObject()

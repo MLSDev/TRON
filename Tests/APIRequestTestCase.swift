@@ -99,4 +99,17 @@ class APIRequestTestCase: XCTestCase {
         waitForExpectationsWithTimeout(5, handler: nil)
     }
     
+    func testEmptyResponseStillCallsSuccessBlock() {
+        let request : APIRequest<EmptyResponse, TronError> = tron.request(path: "headers")
+        request.method = .HEAD
+        let expectation = expectationWithDescription("Empty response")
+        request.performWithSuccess({ _ in
+                expectation.fulfill()
+            }, failure: { _ in
+                XCTFail()
+            }
+        )
+        waitForExpectationsWithTimeout(2, handler: nil)
+    }
+    
 }

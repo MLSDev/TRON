@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 ## Master
 
 * Update to Swift 2.2. This release is not backwards compatible with Swift 2.1.
+* Added `EmptyResponse` class that can be used for requests with empty body. For example:
+
+```
+let request : APIRequest<EmptyResponse, MyError> = tron.request("/empty/response")
+```
 
 ## [0.3.0](https://github.com/MLSDev/TRON/releases/tag/0.3.0)
 
