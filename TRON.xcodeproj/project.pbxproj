@@ -579,6 +579,8 @@
 		9AFAB7A51C6F4BCB008C74D7 /* Argo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Argo.xcodeproj; path = Carthage/Checkouts/Argo/Argo.xcodeproj; sourceTree = "<group>"; };
 		9AFAB7C91C6F536A008C74D7 /* Argo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Argo.playground; path = "Custom mappers/Argo.playground"; sourceTree = "<group>"; };
 		9AFAB7CA1C6F5410008C74D7 /* ObjectMapper.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = ObjectMapper.playground; path = "Custom mappers/ObjectMapper.playground"; sourceTree = "<group>"; };
+		9AFAE4D41CC5210F002739B0 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		9AFAE4D51CC52118002739B0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -683,6 +685,7 @@
 		9A722F401C5A49AE0087908D = {
 			isa = PBXGroup;
 			children = (
+				9AFAE4D31CC520F6002739B0 /* Documentation */,
 				9AFAB7CA1C6F5410008C74D7 /* ObjectMapper.playground */,
 				9AFAB7C91C6F536A008C74D7 /* Argo.playground */,
 				9AFAB7A51C6F4BCB008C74D7 /* Argo.xcodeproj */,
@@ -867,6 +870,15 @@
 				9AFAB7BC1C6F4BCB008C74D7 /* Argo-tvOSTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9AFAE4D31CC520F6002739B0 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				9AFAE4D51CC52118002739B0 /* README.md */,
+				9AFAE4D41CC5210F002739B0 /* CHANGELOG.md */,
+			);
+			name = Documentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

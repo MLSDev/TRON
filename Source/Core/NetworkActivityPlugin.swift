@@ -33,22 +33,25 @@ import UIKit
  */
 public class NetworkActivityPlugin : Plugin {
     
+    private let application : UIApplication
+    
+    required public init(application : UIApplication) {
+        self.application = application
+    }
     /**
      Network activity count, based on sent `APIRequests`.
      */
-    static var networkActivityCount = 0 {
+    var networkActivityCount = 0 {
         didSet {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = networkActivityCount > 0
+            application.networkActivityIndicatorVisible = networkActivityCount > 0
         }
     }
     
-    public init() {}
-    
     public func willSendRequest(request: NSURLRequest?) {
-        self.dynamicType.networkActivityCount += 1
+        networkActivityCount += 1
     }
     
     public func requestDidReceiveResponse(response: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?)) {
-        self.dynamicType.networkActivityCount -= 1
+        networkActivityCount -= 1
     }
 }

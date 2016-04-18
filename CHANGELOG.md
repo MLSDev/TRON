@@ -3,7 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+### Breaking
+
 * Update to Swift 2.2. This release is not backwards compatible with Swift 2.1.
+* `NetworkActivityPlugin` now accepts `UIApplication` in it's initializer to be able to compile in application extensions environments. 
+* `NetworkActivityPlugin` supports only single instance of `TRON`. If you have multiple `TRON`s in your application, consider building another plugin, that uses static variables to track number of requests, similar to old `NetworkActivityPlugin` from `5639b960e968586d1e24a7adcc6a3420e8648d49`.
+
+### Added
+
 * Added `EmptyResponse` class that can be used for requests with empty body. For example:
 
 ```
