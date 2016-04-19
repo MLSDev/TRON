@@ -25,8 +25,9 @@
 
 import Alamofire
 
+public typealias Progress = (bytesSent: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64)
 /// Typealias for typical progress closure
-public typealias ProgressClosure = (bytesSent: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) -> Void
+public typealias ProgressClosure = Progress -> Void
 
 /**
  `MultipartAPIRequest` serves to send multipart requests.

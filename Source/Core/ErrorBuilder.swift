@@ -52,7 +52,7 @@ public class ErrorBuilder<U:ResponseParseable>
 }
 
 /// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
-public struct APIError<T:ResponseParseable> {
+public struct APIError<T:ResponseParseable> : ErrorType {
     
     /// NSURLRequest that was unsuccessful
     public let request : NSURLRequest?

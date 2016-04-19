@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## Master
+## [0.4.0](https://github.com/MLSDev/TRON/releases/tag/0.4.0)
 
 ### Breaking
 
@@ -14,7 +14,30 @@ All notable changes to this project will be documented in this file.
 * Added `EmptyResponse` class that can be used for requests with empty body. For example:
 
 ```
-let request : APIRequest<EmptyResponse, MyError> = tron.request("/empty/response")
+let request : APIRequest<EmptyResponse, MyError> = tron.request("empty/response")
+```
+
+* RxSwift extensions for `APIRequest` and `MultipartAPIRequest`, usage:
+
+```
+let request : APIRequest<Foo, MyError> = tron.request("foo")
+_ = request.rxResult.subscribeNext { result in
+    print(result
+}
+```
+
+```
+let multipartRequest = MultipartAPIRequest<Foo,MyError> = tron.multipartRequest("foo")
+
+let (progress, result) = multipartRequest.rxUpload()
+
+_ = progress.subscribeNext { progress in 
+    print(progress.bytesSent,progress.totalBytesWritten,progress.totalBytesExpectedToWrite)
+}
+
+_ = result.subscribeNext { result in
+    print("Received result: \(result)")
+}
 ```
 
 ## [0.3.0](https://github.com/MLSDev/TRON/releases/tag/0.3.0)
