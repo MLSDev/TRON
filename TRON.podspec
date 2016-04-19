@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
   s.watchos.deployment_target = '2.0'
   s.frameworks = 'Foundation'
-  s.dependency 'Alamofire' , '~> 3.1'
+  s.dependency 'Alamofire' , '~> 3.3'
 
   s.subspec 'Core' do |core|
       core.ios.frameworks = 'UIKit'
@@ -27,6 +27,12 @@ Pod::Spec.new do |s|
       swiftyjson.dependency 'TRON/Core'
       swiftyjson.dependency 'SwiftyJSON', '~> 2.3'
       swiftyjson.source_files = 'Source/SwiftyJSON/*.swift'
+  end
+
+  s.subspec 'RxSwift' do |rxswift|
+      rxswift.dependency 'TRON/Core'
+      rxswift.dependency 'RxSwift'
+      rxswift.source_files = 'Source/RxSwift/*.swift'
   end
 
   s.default_subspec = 'SwiftyJSON'

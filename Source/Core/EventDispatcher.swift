@@ -27,6 +27,8 @@ import Foundation
 
 /// Class, responsible for dispatching events on different GCD queues.
 public class EventDispatcher {
+    
+    public init() {}
 
     /// Queue, used for processing response, received from the server. Defaults to QOS_CLASS_USER_INITIATED queue
     public var processingQueue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)

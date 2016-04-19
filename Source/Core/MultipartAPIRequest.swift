@@ -25,6 +25,7 @@
 
 import Alamofire
 
+/// Typealias for typical Progress definition in networking frameworks
 public typealias Progress = (bytesSent: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64)
 /// Typealias for typical progress closure
 public typealias ProgressClosure = Progress -> Void

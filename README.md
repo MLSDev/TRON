@@ -24,6 +24,7 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 - [x] Modular architecture
 - [x] Support for iOS/Mac OS X/tvOS/watchOS/Linux
 - [x] Support for CocoaPods/Carthage/Swift Package Manager
+- [x] RxSwift extension for `APIRequest` and `MultipartAPIRequest`
 
 ## Overview
 
@@ -49,13 +50,25 @@ request.performWithSuccess( { user in
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 0.3.0'
+pod 'TRON', '~> 0.4.0'
+```
+
+Only Core subspec, without SwiftyJSON dependency:
+
+```ruby
+pod 'TRON/Core', '~> 0.4.0'
+```
+
+RxSwift extension for TRON:
+
+```ruby
+pod 'TRON/RxSwift', '~> 0.4.0'
 ```
 
 ### Carthage
 
 ```ruby
-github "MLSDev/TRON", ~> 0.3
+github "MLSDev/TRON", ~> 0.4
 ```
 
 ## Project status
@@ -182,6 +195,8 @@ There are also default implementations of `JSONDecodable` protocol for Swift bui
   })
 ```
 
+You can also use `EmptyResponse` struct in cases where you don't care about actual response, or response from the server is empty(<>).
+
 ## Custom mappers
 
 Starting with 0.2.0, we are adding support for any custom mapper to be used with TRON. Now, instead of JSONDecodable, all generic constraints on TRON accept `ResponseParseable` protocol, that can be easily implemented for your mapper.
@@ -201,6 +216,31 @@ Then add your custom mapper protocol extension. We are providing code examples o
 [Playground with Argo ResponseParseable implementation](https://github.com/MLSDev/TRON/blob/master/Custom%20mappers/Argo.playground/Contents.swift)
 
 [Playground with ObjectMapper ResponseParseable implementation](https://github.com/MLSDev/TRON/blob/master/Custom%20mappers/ObjectMapper.playground/Contents.swift)
+
+## RxSwift
+
+Starting with 0.4.0 release, you can now make requests using RxSwift extension:
+
+```
+let request : APIRequest<Foo, MyError> = tron.request("foo")
+_ = request.rxResult.subscribeNext { result in
+    print(result
+}
+```
+
+```
+let multipartRequest = MultipartAPIRequest<Foo,MyError> = tron.multipartRequest("foo")
+
+let (progress, result) = multipartRequest.rxUpload()
+
+_ = progress.subscribeNext { progress in
+    print(progress.bytesSent,progress.totalBytesWritten,progress.totalBytesExpectedToWrite)
+}
+
+_ = result.subscribeNext { result in
+    print("Received result: \(result)")
+}
+```
 
 ### Error handling
 

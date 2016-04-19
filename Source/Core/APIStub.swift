@@ -35,6 +35,12 @@ private func delay(delay:Double, closure:()->()) {
 }
 
 public extension APIStub {
+    /**
+     Build stub model from file in specified bundle
+     
+     - parameter fileName: Name of the file to build response from
+     - parameter bundle: bundle to look for file.
+     */
     public func buildModelFromFile(fileName: String, inBundle bundle: NSBundle = NSBundle.mainBundle()) {
         if let filePath = bundle.pathForResource(fileName as String, ofType: nil)
         {
