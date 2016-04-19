@@ -289,6 +289,27 @@
 			remoteGlobalIDString = C88FA5301C25C4CC00CCFEA4;
 			remoteInfo = "RxTests-watchOS";
 		};
+		9AC2A9281CC656B30021D847 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AFAE4D61CC52367002739B0 /* Rx.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C88BB81A1B07E5ED0064D411;
+			remoteInfo = "RxSwift-OSX";
+		};
+		9AC2A9551CC656BB0021D847 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AFAE4D61CC52367002739B0 /* Rx.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EA280B1BB9B5A200880ED3;
+			remoteInfo = "RxSwift-tvOS";
+		};
+		9AC2A9571CC656C10021D847 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AFAE4D61CC52367002739B0 /* Rx.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C8A56AD61AD7424700B4673B;
+			remoteInfo = "RxSwift-iOS";
+		};
 		9AEE0B9F1C5A4E0A003222A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */;
@@ -1187,6 +1208,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9AC2A9291CC656B30021D847 /* PBXTargetDependency */,
 				9A90CCC41C5FBC6200472DB8 /* PBXTargetDependency */,
 				9A10249E1C5F806A006E0163 /* PBXTargetDependency */,
 			);
@@ -1227,6 +1249,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9AC2A9561CC656BB0021D847 /* PBXTargetDependency */,
 				9A90CCC61C5FBC6800472DB8 /* PBXTargetDependency */,
 				9A1024D61C5F8169006E0163 /* PBXTargetDependency */,
 			);
@@ -1309,6 +1332,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9AC2A9581CC656C10021D847 /* PBXTargetDependency */,
 				9A90CCC21C5FBC5C00472DB8 /* PBXTargetDependency */,
 				9A722F571C5A49AE0087908D /* PBXTargetDependency */,
 			);
@@ -2145,6 +2169,21 @@
 			isa = PBXTargetDependency;
 			name = "RxTests-watchOS";
 			targetProxy = 9AC2A8FA1CC649410021D847 /* PBXContainerItemProxy */;
+		};
+		9AC2A9291CC656B30021D847 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "RxSwift-OSX";
+			targetProxy = 9AC2A9281CC656B30021D847 /* PBXContainerItemProxy */;
+		};
+		9AC2A9561CC656BB0021D847 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "RxSwift-tvOS";
+			targetProxy = 9AC2A9551CC656BB0021D847 /* PBXContainerItemProxy */;
+		};
+		9AC2A9581CC656C10021D847 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "RxSwift-iOS";
+			targetProxy = 9AC2A9571CC656C10021D847 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
