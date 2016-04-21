@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name     = 'TRON'
-  s.version  = '0.4.0'
+  s.version  = '0.4.1'
   s.license  = 'MIT'
-  s.summary  = 'Lightweight network abstraction layer, written on top of Alamofire and SwiftyJSON'
+  s.summary  = 'Lightweight network abstraction layer, written on top of Alamofire'
   s.homepage = 'https://github.com/MLSDev/TRON'
   s.authors  = { 'Denys Telezhkin' => 'denys.telezhkin@yandex.ru' }
   s.social_media_url = 'https://twitter.com/MLSDevCom'
