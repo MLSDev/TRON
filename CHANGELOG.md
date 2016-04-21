@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.4.1](https://github.com/MLSDev/TRON/releases/tag/0.4.1)
+
+### Fixed
+
+* Plugins are now correctly notified with "willSendRequest(_:)" method call for multipart requests.
+
 ## [0.4.0](https://github.com/MLSDev/TRON/releases/tag/0.4.0)
 
 ### Breaking

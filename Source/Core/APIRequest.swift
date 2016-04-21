@@ -182,26 +182,23 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
-        let alamofireRequest = manager.request(method, urlBuilder.urlForPath(path),
+        let request = manager.request(method, urlBuilder.urlForPath(path),
             parameters: parameters,
             encoding: encoding,
             headers:  headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
         
         // Notify plugins about new network request
-        tronDelegate?.plugins.forEach {
-            $0.willSendRequest(alamofireRequest.request)
-        }
-        plugins.forEach {
-            $0.willSendRequest(alamofireRequest.request)
-        }
         let allPlugins = plugins + (tronDelegate?.plugins ?? [])
-        alamofireRequest.validate().handleResponse(success,
+        allPlugins.forEach {
+            $0.willSendRequest(request.request)
+        }
+        request.validate().handleResponse(success,
             failure: failure,
             dispatcher : dispatcher,
             responseBuilder: responseBuilder,
             errorBuilder: errorBuilder,
             plugins: allPlugins)
-        return alamofireRequest
+        return request
     }
 }
 

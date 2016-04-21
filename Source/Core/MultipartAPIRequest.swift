@@ -105,6 +105,9 @@ public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseP
                 failure?(apiError)
             } else if case .Success(let request, _, _) = completion {
                 let allPlugins = self.plugins + (self.tronDelegate?.plugins ?? [])
+                allPlugins.forEach {
+                    $0.willSendRequest(request.request)
+                }
                 request.progress(progress).validate().handleResponse(success, failure: failure, dispatcher: self.dispatcher, responseBuilder: self.responseBuilder, errorBuilder: self.errorBuilder, plugins: allPlugins)
                 cancellableCallback(request)
             }

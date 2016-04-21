@@ -50,4 +50,21 @@ class PluginTestCase: XCTestCase {
         
     }
     
+    func testMultipartRequestsCallGlobalAndLocalPlugins() {
+        let globalPluginTester = PluginTester()
+        let localPluginTester = PluginTester()
+        
+        let tron = TRON(baseURL: "http://httpbin.org")
+        let request: MultipartAPIRequest<String,Int> = tron.multipartRequest(path: "status/200")
+        request.plugins.append(localPluginTester)
+        tron.plugins.append(globalPluginTester)
+        
+        request.performWithSuccess( { _ in }, failure: nil, progress: { (_) in }, cancellableCallback: { _ in })
+        
+        expect(localPluginTester.willSendCalled).toEventually(equal(true))
+        expect(globalPluginTester.willSendCalled).toEventually(equal(true))
+        expect(localPluginTester.didReceiveResponseCalled).toEventually(equal(true))
+        expect(globalPluginTester.didReceiveResponseCalled).toEventually(equal(true))
+    }
+    
 }
