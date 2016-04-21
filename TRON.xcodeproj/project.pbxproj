@@ -156,6 +156,13 @@
 			remoteGlobalIDString = 9A1024C91C5F8169006E0163;
 			remoteInfo = "TRON tvOS";
 		};
+		9A15D3391CC9041D009C35C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9AFAE4D61CC52367002739B0 /* Rx.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C8F0BF901BBBFB8B001B112F;
+			remoteInfo = "RxSwift-watchOS";
+		};
 		9A704E791C5D01DF00392DE5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */;
@@ -281,13 +288,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2EA280B1BB9B5A200880ED3;
 			remoteInfo = "RxSwift-tvOS";
-		};
-		9AC2A8FA1CC649410021D847 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9AFAE4D61CC52367002739B0 /* Rx.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C88FA5301C25C4CC00CCFEA4;
-			remoteInfo = "RxTests-watchOS";
 		};
 		9AC2A9281CC656B30021D847 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1270,7 +1270,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				9AC2A8FB1CC649410021D847 /* PBXTargetDependency */,
+				9A15D33A1CC9041D009C35C3 /* PBXTargetDependency */,
 				9A90CCC01C5FBC4B00472DB8 /* PBXTargetDependency */,
 				9A90CCBE1C5FBC4400472DB8 /* PBXTargetDependency */,
 			);
@@ -2075,6 +2075,11 @@
 			target = 9A1024C91C5F8169006E0163 /* TRON tvOS */;
 			targetProxy = 9A1024D51C5F8169006E0163 /* PBXContainerItemProxy */;
 		};
+		9A15D33A1CC9041D009C35C3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "RxSwift-watchOS";
+			targetProxy = 9A15D3391CC9041D009C35C3 /* PBXContainerItemProxy */;
+		};
 		9A704E7A1C5D01DF00392DE5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "SwiftyJSON iOS";
@@ -2164,11 +2169,6 @@
 			isa = PBXTargetDependency;
 			name = "RxSwift-tvOS";
 			targetProxy = 9AC2A8F81CC649330021D847 /* PBXContainerItemProxy */;
-		};
-		9AC2A8FB1CC649410021D847 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "RxTests-watchOS";
-			targetProxy = 9AC2A8FA1CC649410021D847 /* PBXContainerItemProxy */;
 		};
 		9AC2A9291CC656B30021D847 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2301,7 +2301,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.1;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -2322,7 +2322,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.1;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -2371,7 +2371,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Debug;
 		};
@@ -2392,7 +2392,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
 			name = Release;
 		};
