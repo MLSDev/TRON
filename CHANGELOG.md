@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.4.2](https://github.com/MLSDev/TRON/releases/tag/0.4.2)
+
+### Fixed
+
+* Prevent `APIRequest` from being deallocated if rxResult Observable is passed elsewhere without keeping strong reference to `APIRequest` itself.
+
 ## [0.4.1](https://github.com/MLSDev/TRON/releases/tag/0.4.1)
 
 ### Fixed

@@ -34,15 +34,15 @@ extension APIRequest {
      - returns: Observable<ModelType>
      */
     public func rxResult() -> Observable<Model.ModelType> {
-        return Observable.create({ [weak self] observer in
-            let token = self?.performWithSuccess({ result in
+        return Observable.create({ observer in
+            let token = self.performWithSuccess({ result in
                 observer.onNext(result)
                 observer.onCompleted()
             }, failure: { error in
                 observer.onError(error)
             })
             return AnonymousDisposable {
-                token?.cancel()
+                token.cancel()
             }
         })
     }
