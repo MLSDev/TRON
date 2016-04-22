@@ -92,6 +92,6 @@ class JSONDecodableTestCase: XCTestCase {
             }
         })
         
-        waitForExpectationsWithTimeout(3, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
 }

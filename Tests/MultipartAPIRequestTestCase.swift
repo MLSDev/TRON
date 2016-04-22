@@ -46,7 +46,7 @@ class MultipartAPIRequestTestCase: XCTestCase {
 //                print(progress)
             }, cancellableCallback: { token in })
         
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testMultipartUploadIsAbleToUploadFile() {
@@ -71,6 +71,6 @@ class MultipartAPIRequestTestCase: XCTestCase {
 //                print(progress)
             }, cancellableCallback: { token in })
         
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
 }

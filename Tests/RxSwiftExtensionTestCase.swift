@@ -25,7 +25,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
         _ = request.rxResult().subscribeNext { _ in
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testRxResultIsClosedAfterSuccessfulResponse() {
@@ -34,7 +34,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
         _ = request.rxResult().subscribeCompleted { _ in
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testRxResultCanBeFailed() {
@@ -43,7 +43,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
         _ = request.rxResult().subscribeError { _ in
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testMultipartRxCanBeSuccessful() {
@@ -62,7 +62,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
                 }
             }
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testMultipartRxSendsProgress() {
@@ -79,6 +79,6 @@ class RxSwiftExtensionTestCase: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
 }

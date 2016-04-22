@@ -29,7 +29,7 @@ class APIRequestTestCase: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testSuccessCallBackIsCalledOnMainThread() {
@@ -42,7 +42,7 @@ class APIRequestTestCase: XCTestCase {
             }) { _ in
             XCTFail()
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testFailureCallbackIsCalledOnMainThread() {
@@ -55,7 +55,7 @@ class APIRequestTestCase: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testParsingFailureCallbackIsCalledOnMainThread() {
@@ -68,7 +68,7 @@ class APIRequestTestCase: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testSuccessBlockCanBeCalledOnBackgroundThread() {
@@ -82,7 +82,7 @@ class APIRequestTestCase: XCTestCase {
             }) { _ in
                 XCTFail()
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testFailureCallbacksCanBeCalledOnBackgroundThread() {
@@ -96,7 +96,7 @@ class APIRequestTestCase: XCTestCase {
                     expectation.fulfill()
                 }
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
     func testEmptyResponseStillCallsSuccessBlock() {
@@ -109,7 +109,7 @@ class APIRequestTestCase: XCTestCase {
                 XCTFail()
             }
         )
-        waitForExpectationsWithTimeout(2, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
     }
     
 }
