@@ -73,4 +73,36 @@ class MultipartAPIRequestTestCase: XCTestCase {
         
         waitForExpectationsWithTimeout(10, handler: nil)
     }
+    
+    func testIntParametersAreAcceptedAsMultipartParameters() {
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.multipartRequest(path: "post")
+        request.method = .POST
+        request.parameters = ["foo":1]
+        
+        let expectation = expectationWithDescription("Int expectation")
+        _ = request.rxUpload().result.subscribeNext { result in
+            if let dictionary = result.response["form"] as? [String:String] {
+                if dictionary["foo"] == "1" {
+                    expectation.fulfill()
+                }
+            }
+        }
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testBoolParametersAreAcceptedAsMultipartParameters() {
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.multipartRequest(path: "post")
+        request.method = .POST
+        request.parameters = ["foo":true]
+        
+        let expectation = expectationWithDescription("Int expectation")
+        _ = request.rxUpload().result.subscribeNext { result in
+            if let dictionary = result.response["form"] as? [String:String] {
+                if dictionary["foo"] == "1" {
+                    expectation.fulfill()
+                }
+            }
+        }
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
 }

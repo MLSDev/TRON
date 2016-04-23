@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.4.3](https://github.com/MLSDev/TRON/releases/tag/0.4.3)
+
+### Fixed
+
+* Allow `MultipartAPIRequest` to use any StringLiteralConvertible value in parameters (for example Int, or Bool e.t.c).
+
 ## [0.4.2](https://github.com/MLSDev/TRON/releases/tag/0.4.2)
 
 ### Fixed

@@ -94,7 +94,7 @@ public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseP
         
         let multipartConstructionBlock: MultipartFormData -> Void = { formData in
             self.parameters.forEach { (key,value) in
-                formData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: key)
+                formData.appendBodyPart(data: String(value).dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: key)
             }
             self.multipartParameters.forEach { $0(formData) }
         }
