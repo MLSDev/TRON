@@ -109,7 +109,7 @@ public protocol HeaderBuildable {
 
 `AuthorizationRequirement` is an enum with three values:
 
-```
+```swift
 public enum AuthorizationRequirement {
     case None, Allowed, Required
 }
@@ -165,7 +165,7 @@ public protocol JSONDecodable {
 
 To parse your response from the server, all you need to do is to create `JSONDecodable` conforming type, for example:
 
-```
+```swift
 class User: JSONDecodable {
   let name : String
   let id: Int
@@ -221,14 +221,14 @@ Then add your custom mapper protocol extension. We are providing code examples o
 
 Starting with 0.4.0 release, you can now make requests using RxSwift extension:
 
-```
+```swift
 let request : APIRequest<Foo, MyError> = tron.request("foo")
 _ = request.rxResult.subscribeNext { result in
-    print(result
+    print(result)
 }
 ```
 
-```
+```swift
 let multipartRequest = MultipartAPIRequest<Foo,MyError> = tron.multipartRequest("foo")
 
 let (progress, result) = multipartRequest.rxUpload()
@@ -246,7 +246,7 @@ _ = result.subscribeNext { result in
 
 `TRON` includes built-in parsing for errors by assuming, that error can also be parsed as `ResponseParseable` instance. `APIError` is a generic class, that includes several default properties, that can be fetched from unsuccessful request:
 
-```
+```swift
 struct APIError<T:ResponseParseable> {
     public let request : NSURLRequest?
     public let response : NSHTTPURLResponse?
@@ -388,13 +388,13 @@ let multipartRequest = tron.multipartRequest(path: "profile")
 
 Append multipart-form data:
 
-```
+```swift
 multipartRequest.appendMultipartData(data, name: "avatar", filename: "avatar.jpg", mimeType: "image/jpg")
 ```
 
 Then, instead of usual `performWithSuccess(_:,failure:)` method, use `performWithSuccess(_:, failure:, progress:,cancellableCallback:)` method:
 
-```
+```swift
 multipartRequest.performWithSuccess({ user in
     print("user avatar updated!")
   },
