@@ -224,7 +224,7 @@ Starting with 0.4.0 release, you can now make requests using RxSwift extension:
 ```
 let request : APIRequest<Foo, MyError> = tron.request("foo")
 _ = request.rxResult.subscribeNext { result in
-    print(result
+    print(result)
 }
 ```
 
