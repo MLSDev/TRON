@@ -9,6 +9,7 @@
 import XCTest
 import TRON
 import RxSwift
+import Alamofire
 
 class RxSwiftExtensionTestCase: XCTestCase {
     
@@ -47,36 +48,18 @@ class RxSwiftExtensionTestCase: XCTestCase {
     }
     
     func testMultipartRxCanBeSuccessful() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.multipartRequest(path: "post")
+        let request: APIRequest<TestResponse,TronError> = tron.upload(path: "post") { formData in
+            formData.appendBodyPart(data: "bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
+        }
         request.method = .POST
-        request.appendMultipartData("bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
         
         let expectation = expectationWithDescription("foo")
         
-        let (_,result) = request.rxUpload()
-        
-        _ = result.subscribeNext { result in
+        _ = request.rxUpload().subscribeNext { result in
             if let dictionary = result.response["form"] as? [String:String] {
                 if dictionary["foo"] == "bar" {
                     expectation.fulfill()
                 }
-            }
-        }
-        waitForExpectationsWithTimeout(10, handler: nil)
-    }
-    
-    func testMultipartRxSendsProgress() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.multipartRequest(path: "post")
-        request.method = .POST
-        request.appendMultipartData("bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
-        
-        let expectation = expectationWithDescription("foo")
-        
-        let (progress,_) = request.rxUpload()
-        
-        _ = progress.subscribeNext { result in
-            if result.totalBytesWritten > 0 {
-                expectation.fulfill()
             }
         }
         waitForExpectationsWithTimeout(10, handler: nil)

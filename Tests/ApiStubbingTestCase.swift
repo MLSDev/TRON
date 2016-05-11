@@ -30,7 +30,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.stubbingEnabled = true
         request.apiStub.model = 5
         
-        request.performWithSuccess({ response in
+        request.perform(success: { response in
             expect(response) == 5
             }) { _ in
                 XCTFail()
@@ -42,7 +42,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.stubbingEnabled = true
         request.apiStub.error = APIError<Int>(errorModel: 5)
         
-        request.performWithSuccess({ response in
+        request.perform(success: { response in
             XCTFail()
             }) { error in
              expect(error.errorModel) == 5
@@ -67,16 +67,16 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testMultipartStubbingSuccessWorks() {
-        let request: MultipartAPIRequest<Int,TronError> = tron.multipartRequest(path: "f00")
+        let request: APIRequest<Int,TronError> = tron.upload(path: "f00") { formData in
+            
+        }
         request.stubbingEnabled = true
         request.apiStub.model = 5
         
-        request.performWithSuccess({ model in
+        request.performMultipartUpload(success: { model in
             expect(model) == 5
-            }, progress: { (bytesSent, totalBytesWritten, totalBytesExpectedToWrite) -> Void in
-                
-            }) { (token) -> Void in
-                
-        }
+            }, failure: { _ in
+                XCTFail()
+        })
     }
 }

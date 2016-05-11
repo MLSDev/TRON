@@ -36,7 +36,7 @@ extension APIRequest {
      */
     public func rxResult() -> Observable<Model.ModelType> {
         return Observable.create({ observer in
-            let token = self.performWithSuccess({ result in
+            let token = self.perform(success: { result in
                 observer.onNext(result)
                 observer.onCompleted()
             }, failure: { error in
@@ -47,45 +47,33 @@ extension APIRequest {
             }
         })
     }
-}
-
-extension MultipartAPIRequest {
     
     /**
      Creates a tuple of observables, first for progress reporting, second for parsed result reporting
      
      - returns - tuple of Observable<Progress> and Observable<ModelType>
      */
-    public func rxUpload() -> (progress: Observable<Progress>, result: Observable<Model.ModelType>) {
+    public func rxUpload(threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model.ModelType> {
         var requestToken : Alamofire.Request?
-        
-        var progressObserver : AnyObserver<Progress>?
-        let progressObservable = Observable<Progress>.create { observer in
-            progressObserver = observer
-            return NopDisposable.instance
-        }.startWith((0,0,0))
-        
-        var resultObserver : AnyObserver<Model.ModelType>?
-        let resultObservable = Observable<Model.ModelType>.create { observer in
-            resultObserver = observer
+        var observer : AnyObserver<Model.ModelType>!
+        let resultObservable = Observable<Model.ModelType>.create {
+            observer = $0
             return AnonymousDisposable {
                 requestToken?.cancel()
             }
         }
-        performWithSuccess({ result in
-            resultObserver?.onNext(result)
-            resultObserver?.onCompleted()
-            }, failure: { error in
-                resultObserver?.onError(error)
-            }, progress: { progress in
-                progressObserver?.onNext(progress)
-                if progress.totalBytesWritten >= progress.totalBytesExpectedToWrite {
-                    progressObserver?.onCompleted()
-                }
-        }) { token in
-            requestToken = token
-        }
+        performMultipartUpload(success: { result in
+            observer.onNext(result)
+            observer.onCompleted()
+        }, failure: { error in
+            observer.onError(error)
+            }, encodingMemoryThreshold: threshold,
+               encodingCompletion : { completion in
+            if case let Manager.MultipartFormDataEncodingResult.Success(request, _, _) = completion {
+                requestToken = request
+            }
+        })
         
-        return (progressObservable, resultObservable)
+        return resultObservable
     }
 }

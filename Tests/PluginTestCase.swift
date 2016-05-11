@@ -17,7 +17,7 @@ class PluginTestCase: XCTestCase {
         let tron = TRON(baseURL: "http://httpbin.org", plugins: [pluginTester])
         let request : APIRequest<Int,Int> = tron.request(path: "status/200")
         
-        request.performWithSuccess({_ in })
+        request.perform(success: {_ in })
         
         expect(pluginTester.didReceiveResponseCalled).toEventually(equal(true))
         expect(pluginTester.willSendCalled).toEventually(equal(true))
@@ -29,7 +29,7 @@ class PluginTestCase: XCTestCase {
         let request: APIRequest<String,Int> = tron.request(path: "status/200")
         let expectation = expectationWithDescription("PluginTester expectation")
         request.plugins.append(pluginTester)
-        request.performWithSuccess({ _ in
+        request.perform(success: { _ in
             if pluginTester.didReceiveResponseCalled && pluginTester.willSendCalled {
                 expectation.fulfill()
             }
@@ -55,11 +55,13 @@ class PluginTestCase: XCTestCase {
         let localPluginTester = PluginTester()
         
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: MultipartAPIRequest<String,Int> = tron.multipartRequest(path: "status/200")
+        let request: APIRequest<String,Int> = tron.upload(path: "status/200") { formData in
+            
+        }
         request.plugins.append(localPluginTester)
         tron.plugins.append(globalPluginTester)
         
-        request.performWithSuccess( { _ in }, failure: nil, progress: { (_) in }, cancellableCallback: { _ in })
+        request.performMultipartUpload(success: { $0 })
         
         expect(localPluginTester.willSendCalled).toEventually(equal(true))
         expect(globalPluginTester.willSendCalled).toEventually(equal(true))

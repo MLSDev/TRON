@@ -29,10 +29,6 @@
 		9A154F9A1C67A6AB00B33F01 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F921C67A6AB00B33F01 /* APIStub.swift */; };
 		9A154F9B1C67A6AB00B33F01 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F921C67A6AB00B33F01 /* APIStub.swift */; };
 		9A154F9C1C67A6AB00B33F01 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F921C67A6AB00B33F01 /* APIStub.swift */; };
-		9A154F9D1C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F931C67A6AB00B33F01 /* MultipartAPIRequest.swift */; };
-		9A154F9E1C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F931C67A6AB00B33F01 /* MultipartAPIRequest.swift */; };
-		9A154F9F1C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F931C67A6AB00B33F01 /* MultipartAPIRequest.swift */; };
-		9A154FA01C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F931C67A6AB00B33F01 /* MultipartAPIRequest.swift */; };
 		9A154FA11C67A6AB00B33F01 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F941C67A6AB00B33F01 /* TRON.swift */; };
 		9A154FA21C67A6AB00B33F01 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F941C67A6AB00B33F01 /* TRON.swift */; };
 		9A154FA31C67A6AB00B33F01 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154F941C67A6AB00B33F01 /* TRON.swift */; };
@@ -617,7 +613,6 @@
 		9A13FA801C662C2D00A54352 /* SwiftyJSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSONDecodable.swift; path = Source/SwiftyJSON/SwiftyJSONDecodable.swift; sourceTree = "<group>"; };
 		9A154F911C67A6AB00B33F01 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = Source/Core/APIRequest.swift; sourceTree = "<group>"; };
 		9A154F921C67A6AB00B33F01 /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIStub.swift; path = Source/Core/APIStub.swift; sourceTree = "<group>"; };
-		9A154F931C67A6AB00B33F01 /* MultipartAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipartAPIRequest.swift; path = Source/Core/MultipartAPIRequest.swift; sourceTree = "<group>"; };
 		9A154F941C67A6AB00B33F01 /* TRON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRON.swift; path = Source/Core/TRON.swift; sourceTree = "<group>"; };
 		9A154FA51C67A6BA00B33F01 /* ErrorBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorBuilder.swift; path = Source/Core/ErrorBuilder.swift; sourceTree = "<group>"; };
 		9A154FA61C67A6BA00B33F01 /* HeaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilder.swift; path = Source/Core/HeaderBuilder.swift; sourceTree = "<group>"; };
@@ -832,7 +827,6 @@
 			children = (
 				9A154F911C67A6AB00B33F01 /* APIRequest.swift */,
 				9A154F921C67A6AB00B33F01 /* APIStub.swift */,
-				9A154F931C67A6AB00B33F01 /* MultipartAPIRequest.swift */,
 				9A154F941C67A6AB00B33F01 /* TRON.swift */,
 				9AE82A6F1C98102B007A610E /* EventDispatcher.swift */,
 				9AB7F5DF1CA578BA0078BE59 /* EmptyResponse.swift */,
@@ -1614,7 +1608,6 @@
 				9A154FC51C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAA1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
 				9AE82A711C98102B007A610E /* EventDispatcher.swift in Sources */,
-				9A154F9E1C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */,
 				9A154FB61C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
 				9A13FA821C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
 				9AB7F5E11CA578BA0078BE59 /* EmptyResponse.swift in Sources */,
@@ -1653,7 +1646,6 @@
 				9A154FC61C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAB1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
 				9AE82A721C98102B007A610E /* EventDispatcher.swift in Sources */,
-				9A154F9F1C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */,
 				9A154FB71C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
 				9A13FA831C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
 				9AB7F5E21CA578BA0078BE59 /* EmptyResponse.swift in Sources */,
@@ -1692,7 +1684,6 @@
 				9A154FC71C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAC1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
 				9AE82A731C98102B007A610E /* EventDispatcher.swift in Sources */,
-				9A154FA01C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */,
 				9A154FB81C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
 				9A13FA841C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
 				9AB7F5E31CA578BA0078BE59 /* EmptyResponse.swift in Sources */,
@@ -1728,7 +1719,6 @@
 				9AE82A701C98102B007A610E /* EventDispatcher.swift in Sources */,
 				9AB7F5E01CA578BA0078BE59 /* EmptyResponse.swift in Sources */,
 				9A154F991C67A6AB00B33F01 /* APIStub.swift in Sources */,
-				9A154F9D1C67A6AB00B33F01 /* MultipartAPIRequest.swift in Sources */,
 				9A154F951C67A6AB00B33F01 /* APIRequest.swift in Sources */,
 				9A154FB51C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
 				9A154FB11C67A6BA00B33F01 /* RequestBuilder.swift in Sources */,

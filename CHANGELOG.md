@@ -1,6 +1,34 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Develop
+
+### Breaking changes
+
+* `MultipartAPIRequest` and `tron.multipartRequest(path:)` removed, use `tron.upload(path:formData:)` method instead
+* `MultipartAPIRequest` `performWithSuccess(_:failure:progress:cancellableCallback:)` method is replaced by `APIRequest` `performMultipartUpload(success:failure:encodingMemoryThreshold:encodingCompletion:)` method
+* `appendMultipartData(_:name:filename:mimeType:)` is removed. Please use `Alamofire.Manager.MultipartFormData` built-in methods to append multipart data
+* RxSwift extension on former `MultipartAPIRequest` reworked to be extension on `APIRequest` and return single Observable<Model.ModelType>
+
+### Added
+
+Several methods on `TRON`, that allow uploads and downloads
+
+* `upload(path:file:)` - upload from file
+* `upload(path:data:)` - upload data
+* `upload(path:stream:)` - upload from stream
+* `upload(path:formData:)` - multipart form data upload
+* `download(path:destination:)` - download file to destination
+* `download(path:destination:resumingFromData:)` - download file to destination, resuming from data
+
+### Changed
+
+* `RequestToken` protocol removed, perform methods now return `Alamofire.Request?` to allow customization. When request is stubbed, nil is returned.
+
+### Deprecations
+
+* `APIRequest` `performWithSuccess(_:failure:)` method is deprecated, new name - `perform(success:failure:)`
+
 ## [0.4.3](https://github.com/MLSDev/TRON/releases/tag/0.4.3)
 
 ### Fixed

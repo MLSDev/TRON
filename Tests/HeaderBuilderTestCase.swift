@@ -18,7 +18,7 @@ class HeaderBuilderTestCase: XCTestCase {
         let request: APIRequest<Int,TronError> = tron.request(path: "status/200")
         request.headers = ["If-Modified-Since":"Sat, 29 Oct 1994 19:43:31 GMT"]
         
-        let alamofireRequest = request.performWithSuccess({ _ in })
+        let alamofireRequest = request.perform(success: { _ in })
         
         let headers = alamofireRequest?.request?.allHTTPHeaderFields
         

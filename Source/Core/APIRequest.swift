@@ -25,6 +25,11 @@
 
 import Alamofire
 
+/// Typealias for typical Progress definition in networking frameworks
+public typealias Progress = (bytesSent: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64)
+/// Typealias for typical progress closure
+public typealias ProgressClosure = Progress -> Void
+
 /**
  Protocol, that defines how NSURL is constructed by consumer.
  */
@@ -82,6 +87,18 @@ public protocol TronDelegate: class {
     var plugins : [Plugin] { get }
 }
 
+public enum RequestType {
+    case Default
+    
+    case UploadFromFile(NSURL)
+    case UploadData(NSData)
+    case UploadStream(NSInputStream)
+    case UploadMultipart(MultipartFormData -> Void)
+    
+    case Download(Request.DownloadFileDestination)
+    case DownloadResuming(data: NSData, destination: Request.DownloadFileDestination)
+}
+
 /**
  `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. It is reusable and configurable for any needs.
  */
@@ -133,6 +150,46 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
     /// Array of plugins for current `APIRequest`.
     public var plugins : [Plugin] = []
     
+    internal let requestType: RequestType
+    
+    internal func alamofireRequest(from manager: Alamofire.Manager) -> Alamofire.Request {
+        switch requestType {
+        case .Default:
+            return manager.request(method, urlBuilder.urlForPath(path),
+                                   parameters: parameters,
+                                   encoding: encoding,
+                                   headers:  headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
+            
+        case .UploadFromFile(let url):
+            return manager.upload(method, urlBuilder.urlForPath(path),
+                                  headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
+                                  file: url)
+        
+        case .UploadData(let data):
+            return manager.upload(method, urlBuilder.urlForPath(path),
+                                  headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
+                                  data: data)
+            
+        case .UploadStream(let stream):
+            return manager.upload(method, urlBuilder.urlForPath(path),
+                                  headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
+                                  stream: stream)
+            
+        case .UploadMultipart(_):
+            fatalError("Cannot create Alamofire.Request synchronously for UploadMultipart request type")
+            
+        case .Download(let destination):
+            return manager.download(method, urlBuilder.urlForPath(path),
+                                    parameters: parameters,
+                                    encoding: encoding,
+                                    headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
+                                    destination: destination)
+        
+        case .DownloadResuming(let data, let destination):
+            return manager.download(data, destination: destination)
+        }
+    }
+    
     /**
     Initialize request with relative path and `TRON` instance.
      
@@ -140,13 +197,20 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
      
      - parameter tron: `TRON` instance to be used to configure current request.
      */
-    public init(path: String, tron: TRON) {
+    public init(type: RequestType, path: String, tron: TRON) {
         self.path = path
         self.tronDelegate = tron
         self.stubbingEnabled = tron.stubbingEnabled
         self.headerBuilder = tron.headerBuilder
         self.urlBuilder = tron.urlBuilder
         self.dispatcher = tron.dispatcher
+        self.requestType = type
+    }
+    
+    @available(*, deprecated, renamed="perform")
+    public func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Alamofire.Request?
+    {
+        return perform(success: success, failure: failure)
     }
     
     /**
@@ -158,13 +222,59 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
      
      - returns: Request token, that can be used to cancel request, or print debug information.
      */
-    public func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Alamofire.Request?
+    public func perform(success success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Alamofire.Request?
     {
         if stubbingEnabled {
             apiStub.performStubWithSuccess(success, failure: failure)
             return nil
         }
+        if case RequestType.UploadMultipart(_) = requestType {
+            fatalError("Usage of performWithSuccess:failure: method is forbidden with RequestType.UploadMultipart, please use performMultipartUpload: method")
+        }
         return performAlamofireRequest(success, failure: failure)
+    }
+    
+    public func performMultipartUpload(success success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold, encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)? = nil)
+    {
+        guard let manager = tronDelegate?.manager else {
+            fatalError("Manager cannot be nil while performing APIRequest")
+        }
+        
+        if stubbingEnabled {
+            apiStub.performStubWithSuccess(success, failure: failure)
+            return
+        }
+        
+        guard case let RequestType.UploadMultipart(formData) = requestType else {
+            fatalError("Unable to call performMultipartUpload for request of type: \(requestType)")
+        }
+        
+        let multipartConstructionBlock: MultipartFormData -> Void = { requestFormData in
+            self.parameters.forEach { (key,value) in
+                requestFormData.appendBodyPart(data: String(value).dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: key)
+            }
+            formData(requestFormData)
+        }
+        
+        let encodingCompletion: Manager.MultipartFormDataEncodingResult -> Void = { completion in
+            if case .Failure(let error) = completion {
+                let apiError = APIError<ErrorModel>(request: nil, response: nil, data: nil, error: error as NSError)
+                failure?(apiError)
+            } else if case .Success(let request, _, _) = completion {
+                let allPlugins = self.plugins + (self.tronDelegate?.plugins ?? [])
+                allPlugins.forEach {
+                    $0.willSendRequest(request.request)
+                }
+                request.validate().handleResponse(success, failure: failure, dispatcher: self.dispatcher, responseBuilder: self.responseBuilder, errorBuilder: self.errorBuilder, plugins: allPlugins)
+                encodingCompletion?(completion)
+            }
+        }
+        
+        manager.upload(method, urlBuilder.urlForPath(path),
+                       headers:  headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
+                       multipartFormData:  multipartConstructionBlock,
+                       encodingMemoryThreshold: encodingMemoryThreshold,
+                       encodingCompletion:  encodingCompletion)
     }
     
     private func performAlamofireRequest(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Alamofire.Request
@@ -172,10 +282,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
-        let request = manager.request(method, urlBuilder.urlForPath(path),
-            parameters: parameters,
-            encoding: encoding,
-            headers:  headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
+        let request = alamofireRequest(from: manager)
         
         // Notify plugins about new network request
         let allPlugins = plugins + (tronDelegate?.plugins ?? [])
