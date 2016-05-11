@@ -26,17 +26,6 @@
 import Alamofire
 
 /**
- `RequestToken` instance is returned by APIRequest instance, when request is sent. Based on whether stubbing is enabled or not, it can be an `Alamofire.Request` instance or `TRON.APIStub` instance.
- */
-public protocol RequestToken : CustomStringConvertible, CustomDebugStringConvertible {
-    
-    /// Cancel current request
-    func cancel()
-}
-
-extension Alamofire.Request : RequestToken {}
-
-/**
  Protocol, that defines how NSURL is constructed by consumer.
  */
 public protocol NSURLBuildable {
@@ -169,15 +158,16 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
      
      - returns: Request token, that can be used to cancel request, or print debug information.
      */
-    public func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken
+    public func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Alamofire.Request?
     {
         if stubbingEnabled {
-            return apiStub.performStubWithSuccess(success, failure: failure)
+            apiStub.performStubWithSuccess(success, failure: failure)
+            return nil
         }
         return performAlamofireRequest(success, failure: failure)
     }
     
-    private func performAlamofireRequest(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)?) -> RequestToken
+    private func performAlamofireRequest(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Alamofire.Request
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")

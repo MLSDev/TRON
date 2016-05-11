@@ -25,6 +25,7 @@
 
 import Foundation
 import RxSwift
+import Alamofire
 
 extension APIRequest {
     
@@ -42,7 +43,7 @@ extension APIRequest {
                 observer.onError(error)
             })
             return AnonymousDisposable {
-                token.cancel()
+                token?.cancel()
             }
         })
     }
@@ -56,7 +57,7 @@ extension MultipartAPIRequest {
      - returns - tuple of Observable<Progress> and Observable<ModelType>
      */
     public func rxUpload() -> (progress: Observable<Progress>, result: Observable<Model.ModelType>) {
-        var requestToken : RequestToken?
+        var requestToken : Alamofire.Request?
         
         var progressObserver : AnyObserver<Progress>?
         let progressObservable = Observable<Progress>.create { observer in

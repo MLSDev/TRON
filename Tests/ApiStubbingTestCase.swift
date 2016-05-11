@@ -66,18 +66,6 @@ class ApiStubbingTestCase: XCTestCase {
         expect(request.apiStub.model).to(beNil())
     }
     
-    func testAPIStubProtocolConformance() {
-        let request : APIRequest<TestUser,TronError> = tron.request(path: "foo")
-        request.stubbingEnabled = true
-        
-        let token = request.performWithSuccess({ _ in })
-        
-        expect(token.description) != nil
-        expect(token.debugDescription) != nil
-        
-        token.cancel()
-    }
-    
     func testMultipartStubbingSuccessWorks() {
         let request: MultipartAPIRequest<Int,TronError> = tron.multipartRequest(path: "f00")
         request.stubbingEnabled = true

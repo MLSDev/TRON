@@ -57,7 +57,7 @@ public extension APIStub {
 /**
  `APIStub` instance that is used to represent stubbed successful or unsuccessful response value.
  */
-public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> : RequestToken {
+public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
     
     /// Should the stub be successful. By default - true
     public var successful = true
@@ -92,7 +92,7 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> : 
      
      - returns: Request token. Can not be cancelled.
      */
-    public func performStubWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> RequestToken {
+    public func performStubWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) {
         if let model = model where successful {
             delay(stubDelay) {
                 success(model)
@@ -102,6 +102,5 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> : 
                 failure?(error)
             }
         }
-        return self
     }
 }

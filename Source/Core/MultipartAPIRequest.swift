@@ -43,7 +43,7 @@ public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseP
     }
     
     @available(*, unavailable, message="MultipartAPIRequest should use performWithSuccess(_:failure:progress:cancellableCallback:)")
-    public override func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)?) -> RequestToken {
+    public override func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Alamofire.Request? {
         fatalError()
     }
     
@@ -81,7 +81,7 @@ public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseP
      
      - parameter cancellableCallback: closure, that can be used to cancel current request. Use it to store `RequestToken` and cancel it whenever you need. Keep in mind, that cancellableCallback will be executed only when multipart encoding finished successfully.
      */
-    public func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, progress: ProgressClosure, cancellableCallback: RequestToken -> Void)
+    public func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, progress: ProgressClosure, cancellableCallback: Alamofire.Request? -> Void)
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
