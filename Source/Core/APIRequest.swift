@@ -141,8 +141,11 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
     /// API stub to be used when stubbing this request
     public var apiStub = APIStub<Model, ErrorModel>()
     
-    /// `EventDispatcher` instance, responsible for calling success and failure completion blocks on specified GCD-queues.
-    public var dispatcher : EventDispatcher
+    /// Queue, used for processing response, received from the server. Defaults to TRON.processingQueue queue.
+    public var processingQueue : dispatch_queue_t
+    
+    /// Queue, used to deliver result completion blocks. Defaults to TRON.resultDeliveryQueue queue.
+    public var resultDeliveryQueue : dispatch_queue_t
     
     /// Delegate property that is used to communicate with `TRON` instance.
     weak var tronDelegate : TronDelegate?
@@ -203,8 +206,9 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         self.stubbingEnabled = tron.stubbingEnabled
         self.headerBuilder = tron.headerBuilder
         self.urlBuilder = tron.urlBuilder
-        self.dispatcher = tron.dispatcher
         self.requestType = type
+        self.processingQueue = tron.processingQueue
+        self.resultDeliveryQueue = tron.resultDeliveryQueue
     }
     
     @available(*, deprecated, renamed="perform")
@@ -265,7 +269,13 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
                 allPlugins.forEach {
                     $0.willSendRequest(request.request)
                 }
-                request.validate().handleResponse(success, failure: failure, dispatcher: self.dispatcher, responseBuilder: self.responseBuilder, errorBuilder: self.errorBuilder, plugins: allPlugins)
+                request.validate().handleResponse(success,
+                                                  failure: failure,
+                                                  processOn: self.processingQueue,
+                                                  deliverResultOn: self.resultDeliveryQueue,
+                                                  responseBuilder: self.responseBuilder,
+                                                  errorBuilder: self.errorBuilder,
+                                                  plugins: allPlugins)
                 encodingCompletion?(completion)
             }
         }
@@ -291,7 +301,8 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         }
         request.validate().handleResponse(success,
             failure: failure,
-            dispatcher : dispatcher,
+            processOn: processingQueue,
+            deliverResultOn: resultDeliveryQueue,
             responseBuilder: responseBuilder,
             errorBuilder: errorBuilder,
             plugins: allPlugins)
@@ -309,55 +320,56 @@ extension Alamofire.Request {
     func handleResponse<Model: ResponseParseable, ErrorModel: ResponseParseable>(
         success: Model.ModelType -> Void,
         failure: (APIError<ErrorModel> -> Void)?,
-        dispatcher: EventDispatcher,
+        processOn : dispatch_queue_t,
+        deliverResultOn: dispatch_queue_t,
         responseBuilder: ResponseBuilder<Model>,
         errorBuilder: ErrorBuilder<ErrorModel>, plugins: [Plugin]) -> Self
     {
-        return response { urlRequest, response, data, error in
+        return response(queue: processOn) { urlRequest, response, data, error in
             
             // Notify plugins that request finished loading
-            plugins.forEach {
-                $0.requestDidReceiveResponse(urlRequest, response,data,error)
+            dispatch_async(dispatch_get_main_queue()) {
+                plugins.forEach {
+                    $0.requestDidReceiveResponse(urlRequest, response,data,error)
+                }
             }
             
-            dispatcher.processResponse { 
-                guard error == nil else {
-                    dispatcher.deliverFailure {
-                        failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
-                    }
-                    return
+            guard error == nil else {
+                dispatch_async(deliverResultOn) {
+                    failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
                 }
-                // This can be used for requests with empty body, which cannot be parsed by NSJSONSerialization
-                if Model.self is EmptyResponse.Type {
-                    dispatcher.deliverSuccess {
-                        success(EmptyResponse() as! Model.ModelType)
-                    }
-                    return
+                return
+            }
+            // This can be used for requests with empty body, which cannot be parsed by NSJSONSerialization
+            if Model.self is EmptyResponse.Type {
+                dispatch_async(deliverResultOn) {
+                    success(EmptyResponse() as! Model.ModelType)
                 }
-                let object : AnyObject
-                do {
-                    object = try (data ?? NSData()).parseToAnyObject()
+                return
+            }
+            let object : AnyObject
+            do {
+                object = try (data ?? NSData()).parseToAnyObject()
+            }
+            catch let jsonError as NSError {
+                dispatch_async(deliverResultOn) {
+                    failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: jsonError))
                 }
-                catch let jsonError as NSError {
-                    dispatcher.deliverFailure {
-                        failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: jsonError))
-                    }
-                    return
+                return
+            }
+            
+            let model: Model.ModelType
+            do {
+                model = try responseBuilder.buildResponseFromJSON(object)
+            }
+            catch let parsingError as NSError {
+                dispatch_async(deliverResultOn) {
+                    failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
                 }
-                
-                let model: Model.ModelType
-                do {
-                    model = try responseBuilder.buildResponseFromJSON(object)
-                }
-                catch let parsingError as NSError {
-                    dispatcher.deliverFailure {
-                        failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
-                    }
-                    return
-                }
-                dispatcher.deliverSuccess {
-                    success(model)
-                }
+                return
+            }
+            dispatch_async(deliverResultOn) {
+                success(model)
             }
         }
     }

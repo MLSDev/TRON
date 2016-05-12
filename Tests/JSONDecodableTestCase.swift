@@ -73,7 +73,7 @@ class JSONDecodableTestCase: XCTestCase {
         let tron = TRON(baseURL: "http://httpbin.org")
         let request: APIRequest<Headers,Int> = tron.request(path: "headers")
         let expectation = expectationWithDescription("Parsing headers response")
-        request.performWithSuccess({ headers in
+        request.perform(success: { headers in
             if headers.host == "httpbin.org" {
                 expectation.fulfill()
             }
@@ -86,7 +86,7 @@ class JSONDecodableTestCase: XCTestCase {
         let tron = TRON(baseURL: "http://httpbin.org")
         let request: APIRequest<Sibling,Int> = tron.request(path: "headers")
         let expectation = expectationWithDescription("Parsing headers response")
-        request.performWithSuccess({ sibling in
+        request.perform(success: { sibling in
             if sibling.foo == "4" {
                 expectation.fulfill()
             }

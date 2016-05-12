@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 * `MultipartAPIRequest` `performWithSuccess(_:failure:progress:cancellableCallback:)` method is replaced by `APIRequest` `performMultipartUpload(success:failure:encodingMemoryThreshold:encodingCompletion:)` method
 * `appendMultipartData(_:name:filename:mimeType:)` is removed. Please use `Alamofire.Manager.MultipartFormData` built-in methods to append multipart data
 * RxSwift extension on former `MultipartAPIRequest` reworked to be extension on `APIRequest` and return single Observable<Model.ModelType>
+* `EventDispatcher` class and corresponding `TRON.dispatcher`, `APIRequest.dispatcher` property are replaced by `TRON` and `APIRequest` properties - `processingQueue` and `resultDeliveryQueue`, which are used to determine on which queue should processing be performed and on which queue results should be delivered.
 
 ### Added
 

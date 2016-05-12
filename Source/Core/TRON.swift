@@ -45,11 +45,14 @@ public class TRON : TronDelegate {
     /// Global plugins, that will receive events from all requests, created from current TRON instance.
     public var plugins : [Plugin] = []
     
+    /// Queue, used for processing response, received from the server. Defaults to QOS_CLASS_USER_INITIATED queue
+    public var processingQueue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+    
+    /// Queue, used to deliver result completion blocks. Defaults to dispatch_get_main_queue().
+    public var resultDeliveryQueue = dispatch_get_main_queue()
+    
     /// Alamofire.Manager instance used to send network requests
     public let manager : Alamofire.Manager
-    
-    /// Object, responsible for calling success and failure completion blocks on specified GCD queues. When `APIRequest` object is created, it is automatically configured with current dispatcher instance.
-    public var dispatcher = EventDispatcher()
     
     /**
      Initializes `TRON` with given base URL, Alamofire.Manager instance, and array of global plugins.
