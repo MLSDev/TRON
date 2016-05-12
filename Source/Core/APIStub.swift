@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 import Foundation
+import Alamofire
 
 private func delay(delay:Double, closure:()->()) {
     dispatch_after(
@@ -71,18 +72,6 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
     /// Delay before stub is executed
     public var stubDelay = 0.1
     
-    public var description: String {
-        return "\(self.dynamicType): \n Successful: \(successful) \n Model: \(model) \n Error: \(error)"
-    }
-    
-    public var debugDescription : String {
-        return description
-    }
-    
-    public func cancel() {
-        
-    }
-    
     /**
      Stub current request.
      
@@ -101,6 +90,22 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
             delay(stubDelay) {
                 failure?(error)
             }
+        }
+    }
+    
+    public func performStubWithCompletion(completion : (Alamofire.Response<Model.ModelType,APIError<ErrorModel>> -> Void)) {
+        delay(stubDelay) {
+            let result : Alamofire.Result<Model.ModelType,APIError<ErrorModel>>
+            if let model = self.model where self.successful {
+                result = Result.Success(model)
+            } else if let error = self.error {
+                result = Result.Failure(error)
+            } else {
+                let error : APIError<ErrorModel> = APIError(request: nil, response: nil, data: nil, error: nil)
+                result = Result.Failure(error)
+            }
+            let response: Alamofire.Response<Model.ModelType, APIError<ErrorModel>> = Alamofire.Response(request: nil, response: nil, data: nil, result: result)
+            completion(response)
         }
     }
 }

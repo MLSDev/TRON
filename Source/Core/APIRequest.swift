@@ -238,6 +238,21 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         return performAlamofireRequest(success, failure: failure)
     }
     
+    public func perform(completion completion: (Alamofire.Response<Model.ModelType,APIError<ErrorModel>> -> Void)) -> Alamofire.Request? {
+        if stubbingEnabled {
+            apiStub.performStubWithCompletion(completion)
+            return nil
+        }
+        if case RequestType.UploadMultipart(_) = requestType {
+            fatalError("Usage of performWithSuccess:failure: method is forbidden with RequestType.UploadMultipart, please use performMultipartUpload: method")
+        }
+        return performAlamofireRequest { response in
+            dispatch_async(self.resultDeliveryQueue) {
+                completion(response)
+            }
+        }
+    }
+    
     public func performMultipartUpload(success success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold, encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)? = nil)
     {
         guard let manager = tronDelegate?.manager else {
@@ -269,13 +284,11 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
                 allPlugins.forEach {
                     $0.willSendRequest(request.request)
                 }
-                request.validate().handleResponse(success,
-                                                  failure: failure,
-                                                  processOn: self.processingQueue,
-                                                  deliverResultOn: self.resultDeliveryQueue,
-                                                  responseBuilder: self.responseBuilder,
-                                                  errorBuilder: self.errorBuilder,
-                                                  plugins: allPlugins)
+                request.validate().response(queue : self.processingQueue,
+                                            responseSerializer: self.responseSerializer(notifyingPlugins:allPlugins))
+                {
+                    self.callSuccessFailureBlocks(success, failure: failure, response: $0)
+                }
                 encodingCompletion?(completion)
             }
         }
@@ -287,7 +300,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
                        encodingCompletion:  encodingCompletion)
     }
     
-    private func performAlamofireRequest(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Alamofire.Request
+    private func performAlamofireRequest(completion : Response<Model.ModelType,APIError<ErrorModel>> -> Void) -> Alamofire.Request
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
@@ -299,78 +312,66 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         allPlugins.forEach {
             $0.willSendRequest(request.request)
         }
-        request.validate().handleResponse(success,
-            failure: failure,
-            processOn: processingQueue,
-            deliverResultOn: resultDeliveryQueue,
-            responseBuilder: responseBuilder,
-            errorBuilder: errorBuilder,
-            plugins: allPlugins)
-        return request
+        return request.validate().response(queue: processingQueue,responseSerializer: responseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
     }
-}
-
-extension NSData {
-    func parseToAnyObject() throws -> AnyObject {
-        return try NSJSONSerialization.JSONObjectWithData(self, options: .AllowFragments)
+    
+    private func callSuccessFailureBlocks(success: Model.ModelType -> Void,
+                                          failure: (APIError<ErrorModel> -> Void)?,
+                                          response: Alamofire.Response<Model.ModelType,APIError<ErrorModel>>) {
+        switch response.result
+        {
+        case .Success(let value):
+            dispatch_async(resultDeliveryQueue) {
+                success(value)
+            }
+        case .Failure(let error):
+            dispatch_async(resultDeliveryQueue) {
+                failure?(error)
+            }
+        }
     }
-}
-
-extension Alamofire.Request {
-    func handleResponse<Model: ResponseParseable, ErrorModel: ResponseParseable>(
-        success: Model.ModelType -> Void,
-        failure: (APIError<ErrorModel> -> Void)?,
-        processOn : dispatch_queue_t,
-        deliverResultOn: dispatch_queue_t,
-        responseBuilder: ResponseBuilder<Model>,
-        errorBuilder: ErrorBuilder<ErrorModel>, plugins: [Plugin]) -> Self
+    
+    private func performAlamofireRequest(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Alamofire.Request
     {
-        return response(queue: processOn) { urlRequest, response, data, error in
-            
-            // Notify plugins that request finished loading
+        return performAlamofireRequest {
+            self.callSuccessFailureBlocks(success, failure: failure, response: $0)
+        }
+    }
+    
+    private func responseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.ResponseSerializer<Model.ModelType,APIError<ErrorModel>> {
+        return ResponseSerializer<Model.ModelType,APIError<ErrorModel>> { urlRequest, response, data, error in
             dispatch_async(dispatch_get_main_queue()) {
                 plugins.forEach {
                     $0.requestDidReceiveResponse(urlRequest, response,data,error)
                 }
             }
-            
             guard error == nil else {
-                dispatch_async(deliverResultOn) {
-                    failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
-                }
-                return
+                return .Failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
             }
-            // This can be used for requests with empty body, which cannot be parsed by NSJSONSerialization
             if Model.self is EmptyResponse.Type {
-                dispatch_async(deliverResultOn) {
-                    success(EmptyResponse() as! Model.ModelType)
-                }
-                return
+                return .Success(EmptyResponse() as! Model.ModelType)
             }
             let object : AnyObject
             do {
                 object = try (data ?? NSData()).parseToAnyObject()
             }
             catch let jsonError as NSError {
-                dispatch_async(deliverResultOn) {
-                    failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: jsonError))
-                }
-                return
+                return .Failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: jsonError))
             }
-            
             let model: Model.ModelType
             do {
-                model = try responseBuilder.buildResponseFromJSON(object)
+                model = try self.responseBuilder.buildResponseFromJSON(object)
             }
             catch let parsingError as NSError {
-                dispatch_async(deliverResultOn) {
-                    failure?(errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
-                }
-                return
+                return .Failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
             }
-            dispatch_async(deliverResultOn) {
-                success(model)
-            }
+            return .Success(model)
         }
+    }
+}
+
+extension NSData {
+    func parseToAnyObject() throws -> AnyObject {
+        return try NSJSONSerialization.JSONObjectWithData(self, options: .AllowFragments)
     }
 }

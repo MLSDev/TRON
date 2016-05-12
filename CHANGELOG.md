@@ -22,6 +22,8 @@ Several methods on `TRON`, that allow uploads and downloads
 * `download(path:destination:)` - download file to destination
 * `download(path:destination:resumingFromData:)` - download file to destination, resuming from data
 
+Added new `perform(completion:)` method, that accepts `Alamofire.Response` -> Void block.
+
 ### Changed
 
 * `RequestToken` protocol removed, perform methods now return `Alamofire.Request?` to allow customization. When request is stubbed, nil is returned.
