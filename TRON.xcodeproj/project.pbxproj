@@ -65,9 +65,6 @@
 		9A51AAC21CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */; };
 		9A51AAC31CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */; };
 		9A51AAC41CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */; };
-		9A51AAC91CC626350053CC48 /* MultipartAPIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC81CC626350053CC48 /* MultipartAPIRequestTestCase.swift */; };
-		9A51AACA1CC626350053CC48 /* MultipartAPIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC81CC626350053CC48 /* MultipartAPIRequestTestCase.swift */; };
-		9A51AACB1CC626350053CC48 /* MultipartAPIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC81CC626350053CC48 /* MultipartAPIRequestTestCase.swift */; };
 		9A6AD3721CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */; };
 		9A6AD3731CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */; };
 		9A6AD3741CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */; };
@@ -625,7 +622,6 @@
 		9A154FBB1C67A6CB00B33F01 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plugin.swift; path = Source/Core/Plugin.swift; sourceTree = "<group>"; };
 		9A51AABC1CC61ED80053CC48 /* Tron+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tron+RxSwift.swift"; path = "Source/RxSwift/Tron+RxSwift.swift"; sourceTree = "<group>"; };
 		9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxSwiftExtensionTestCase.swift; path = Tests/RxSwiftExtensionTestCase.swift; sourceTree = "<group>"; };
-		9A51AAC81CC626350053CC48 /* MultipartAPIRequestTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipartAPIRequestTestCase.swift; path = Tests/MultipartAPIRequestTestCase.swift; sourceTree = "<group>"; };
 		9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadTestCase.swift; path = Tests/UploadTestCase.swift; sourceTree = "<group>"; };
 		9A704E4F1C5D01B300392DE5 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A704E511C5D01B300392DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -853,7 +849,6 @@
 				9A90CC691C5FABA100472DB8 /* TronTestCase.swift */,
 				9A90CC6A1C5FABA100472DB8 /* URLBuilderTestCase.swift */,
 				9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */,
-				9A51AAC81CC626350053CC48 /* MultipartAPIRequestTestCase.swift */,
 				9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */,
 				9ABDA2241CE7626F00E1A2D9 /* DownloadTestCase.swift */,
 			);
@@ -1634,7 +1629,6 @@
 				9A90CC881C5FABA800472DB8 /* TronError.swift in Sources */,
 				9A90CC7E1C5FABA100472DB8 /* PluginTester.swift in Sources */,
 				9A90CC781C5FABA100472DB8 /* JSONDecodableTestCase.swift in Sources */,
-				9A51AACA1CC626350053CC48 /* MultipartAPIRequestTestCase.swift in Sources */,
 				9A90CC811C5FABA100472DB8 /* TronTestCase.swift in Sources */,
 				9ABDA2261CE7626F00E1A2D9 /* DownloadTestCase.swift in Sources */,
 				9A90CC7B1C5FABA100472DB8 /* PluginTestCase.swift in Sources */,
@@ -1673,7 +1667,6 @@
 				9A90CC891C5FABA800472DB8 /* TronError.swift in Sources */,
 				9A90CC7F1C5FABA100472DB8 /* PluginTester.swift in Sources */,
 				9A90CC791C5FABA100472DB8 /* JSONDecodableTestCase.swift in Sources */,
-				9A51AACB1CC626350053CC48 /* MultipartAPIRequestTestCase.swift in Sources */,
 				9A90CC821C5FABA100472DB8 /* TronTestCase.swift in Sources */,
 				9ABDA2271CE7626F00E1A2D9 /* DownloadTestCase.swift in Sources */,
 				9A90CC7C1C5FABA100472DB8 /* PluginTestCase.swift in Sources */,
@@ -1742,7 +1735,6 @@
 				9A90CC871C5FABA800472DB8 /* TronError.swift in Sources */,
 				9A90CC7D1C5FABA100472DB8 /* PluginTester.swift in Sources */,
 				9A90CC771C5FABA100472DB8 /* JSONDecodableTestCase.swift in Sources */,
-				9A51AAC91CC626350053CC48 /* MultipartAPIRequestTestCase.swift in Sources */,
 				9A90CC801C5FABA100472DB8 /* TronTestCase.swift in Sources */,
 				9ABDA2251CE7626F00E1A2D9 /* DownloadTestCase.swift in Sources */,
 				9A90CC7A1C5FABA100472DB8 /* PluginTestCase.swift in Sources */,

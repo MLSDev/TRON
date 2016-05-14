@@ -78,8 +78,6 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
      - parameter success: Success block to be executed when request finished
      
      - parameter failure: Failure block to be executed if request fails. Nil by default.
-     
-     - returns: Request token. Can not be cancelled.
      */
     public func performStubWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) {
         if let model = model where successful {
@@ -93,6 +91,11 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
         }
     }
     
+    /**
+     Stub current request.
+     
+     - parameter completion: Completion block to be executed when request is stubbed.
+     */
     public func performStubWithCompletion(completion : (Alamofire.Response<Model.ModelType,APIError<ErrorModel>> -> Void)) {
         delay(stubDelay) {
             let result : Alamofire.Result<Model.ModelType,APIError<ErrorModel>>

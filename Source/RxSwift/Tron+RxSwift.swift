@@ -51,29 +51,29 @@ extension APIRequest {
     /**
      Creates a tuple of observables, first for progress reporting, second for parsed result reporting
      
-     - returns - tuple of Observable<Progress> and Observable<ModelType>
+     - parameter memoryThreshold: Memory threshold that must not be exceeded when encoding data.
+     
+     - returns: Observable<ModelType>
      */
-    public func rxMultipartUpload(threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model.ModelType> {
-        var requestToken : Alamofire.Request?
-        var observer : AnyObserver<Model.ModelType>!
-        let resultObservable = Observable<Model.ModelType>.create {
-            observer = $0
+    public func rxMultipartUpload(memoryThreshold threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model.ModelType> {
+        return Observable.create { observer in
+            var request : Alamofire.Request?
+            self.performMultipartUpload(success: { result in
+                observer.onNext(result)
+                observer.onCompleted()
+            }, failure: { error in
+                observer.onError(error)
+            },
+                encodingMemoryThreshold : threshold,
+                encodingCompletion : { completion in
+                if case let Manager.MultipartFormDataEncodingResult.Success(originalRequest, _, _) = completion {
+                    request = originalRequest
+                }
+            })
+            
             return AnonymousDisposable {
-                requestToken?.cancel()
+                request?.cancel()
             }
         }
-        performMultipartUpload(success: { result in
-            observer.onNext(result)
-            observer.onCompleted()
-        }, failure: { error in
-            observer.onError(error)
-            }, encodingMemoryThreshold: threshold,
-               encodingCompletion : { completion in
-            if case let Manager.MultipartFormDataEncodingResult.Success(request, _, _) = completion {
-                requestToken = request
-            }
-        })
-        
-        return resultObservable
     }
 }

@@ -73,36 +73,96 @@ public class TRON : TronDelegate {
     }
     
     /**
-     Creates APIRequest with specified relative path.
+     Creates APIRequest with specified relative path and type RequestType.Default.
      
      - parameter path: Path, that will be appended to current `baseURL`.
      
-     - returns APIRequest instance.
+     - returns: APIRequest instance.
      */
     public func request<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String) -> APIRequest<Model,ErrorModel> {
         return APIRequest(type: .Default,path: path, tron: self)
     }
     
+    /**
+     Creates APIRequest with specified relative path and type RequestType.UploadFromFile.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter file: File url to upload from.
+     
+     - returns: APIRequest instance.
+     */
     public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, file: NSURL) -> APIRequest<Model,ErrorModel> {
         return APIRequest(type: RequestType.UploadFromFile(file), path: path, tron: self)
     }
     
+    /**
+     Creates APIRequest with specified relative path and type RequestType.UploadData.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter data: Data to upload.
+     
+     - returns: APIRequest instance.
+     */
     public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, data: NSData) -> APIRequest<Model,ErrorModel> {
         return APIRequest(type: RequestType.UploadData(data), path: path, tron: self)
     }
     
+    /**
+     Creates APIRequest with specified relative path and type RequestType.UploadStream.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter stream: Stream to upload from.
+     
+     - returns: APIRequest instance.
+     */
     public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, stream: NSInputStream) -> APIRequest<Model,ErrorModel> {
         return APIRequest(type: RequestType.UploadStream(stream), path: path, tron: self)
     }
     
+    /**
+     Creates APIRequest with specified relative path and type RequestType.UploadMultipart.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter formData: Multipart form data creation block.
+     
+     - returns: APIRequest instance.
+     */
     public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, formData: MultipartFormData -> Void) -> APIRequest<Model,ErrorModel> {
         return APIRequest(type: RequestType.UploadMultipart(formData), path: path, tron: self)
     }
     
+    /**
+     Creates APIRequest with specified relative path and type RequestType.Download.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter destination: Destination to download to.
+     
+     - returns: APIRequest instance.
+     
+     - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
+     */
     public func download<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, destination: Request.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
         return APIRequest(type: RequestType.Download(destination), path: path, tron: self)
     }
     
+    /**
+     Creates APIRequest with specified relative path and type RequestType.DownloadResuming.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter destination: Destination to download to.
+     
+     - parameter resumingFromData: Resume data for current request.
+     
+     - returns: APIRequest instance.
+     
+     - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
+     */
     public func download<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, destination: Request.DownloadFileDestination, resumingFromData: NSData) -> APIRequest<Model,ErrorModel> {
         return APIRequest(type: RequestType.DownloadResuming(data: resumingFromData, destination: destination), path: path, tron: self)
     }

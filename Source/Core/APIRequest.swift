@@ -82,15 +82,27 @@ public protocol TronDelegate: class {
     var plugins : [Plugin] { get }
 }
 
+/// Enum for various request types.
 public enum RequestType {
+    /// Will create `NSURLSessionDataTask`
     case Default
     
+    /// Will create `NSURLSessionUploadTask` using `uploadTaskWithRequest(_:fromFile:)` method
     case UploadFromFile(NSURL)
+    
+    /// Will create `NSURLSessionUploadTask` using `uploadTaskWithRequest(_:fromData:)` method
     case UploadData(NSData)
+    
+    /// Will create `NSURLSessionUploadTask` using `uploadTaskWithStreamedRequest(_)` method
     case UploadStream(NSInputStream)
+    
+    /// Will create `NSURLSessionUploadTask` that will either upload from memory or from file depending on encodingMemoryThreshold passed to request
     case UploadMultipart(MultipartFormData -> Void)
     
+    /// Will create `NSURLSessionDownloadTask` using `downloadTaskWithRequest(_)` method
     case Download(Request.DownloadFileDestination)
+    
+    /// Will create `NSURLSessionDownloadTask` using `downloadTaskWithResumeData(_)` method
     case DownloadResuming(data: NSData, destination: Request.DownloadFileDestination)
 }
 
@@ -219,7 +231,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
      
      - parameter failure: Failure block to be executed if request fails. Nil by default.
      
-     - returns: Request token, that can be used to cancel request, or print debug information.
+     - returns: Alamofire.Request or nil if request was stubbed.
      */
     public func perform(success success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Alamofire.Request?
     {
@@ -233,6 +245,13 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         return performAlamofireRequest(success, failure: failure)
     }
     
+    /**
+     Perform current request with completion block, that contains Alamofire.Response.
+     
+     - parameter completion: Alamofire.Response completion block.
+     
+     - returns: Alamofire.Request or nil if request was stubbed.
+    */
     public func perform(completion completion: (Alamofire.Response<Model.ModelType,APIError<ErrorModel>> -> Void)) -> Alamofire.Request? {
         if stubbingEnabled {
             apiStub.performStubWithCompletion(completion)
@@ -248,6 +267,17 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         }
     }
     
+    /**
+     Perform multipart form data upload.
+     
+     - parameter success: Success block to be executed when request finished
+     
+     - parameter failure: Failure block to be executed if request fails. Nil by default.
+     
+     - parameter encodingMemoryThreshold: Memory threshold, depending on which request will be streamed from disk or from memory
+     
+     - parameter encodingCompletion: Encoding completion block, that can be used to inspect encoding result. No action is required by default, therefore default value for this block is nil.
+     */
     public func performMultipartUpload(success success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold, encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)? = nil)
     {
         guard let manager = tronDelegate?.manager else {
@@ -284,6 +314,9 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
                 {
                     self.callSuccessFailureBlocks(success, failure: failure, response: $0)
                 }
+                if !(self.tronDelegate?.manager.startRequestsImmediately ?? false){
+                    request.resume()
+                }
                 encodingCompletion?(completion)
             }
         }
@@ -301,7 +334,9 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
             fatalError("Manager cannot be nil while performing APIRequest")
         }
         let request = alamofireRequest(from: manager)
-        
+        if !tronDelegate!.manager.startRequestsImmediately {
+            request.resume()
+        }
         // Notify plugins about new network request
         let allPlugins = plugins + (tronDelegate?.plugins ?? [])
         allPlugins.forEach {
