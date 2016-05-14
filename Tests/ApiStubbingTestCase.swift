@@ -79,4 +79,24 @@ class ApiStubbingTestCase: XCTestCase {
                 XCTFail()
         })
     }
+    
+    func testStubbingSuccessfullyWorksWithCompletionHandler() {
+        let request :APIRequest<Int,Int> = tron.request(path: "f00")
+        request.stubbingEnabled = true
+        request.apiStub.model = 5
+        
+        request.perform(completion: { response in
+            expect(response.result.value) == 5
+        })
+    }
+    
+    func testStubbingFailurefullyWorksWithCompletionHandler() {
+        let request :APIRequest<Int,Int> = tron.request(path: "f00")
+        request.stubbingEnabled = true
+        request.apiStub.error = APIError<Int>(errorModel: 5)
+        
+        request.perform { response in
+            expect(response.result.error?.errorModel) == 5
+        }
+    }
 }

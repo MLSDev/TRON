@@ -64,4 +64,17 @@ class RxSwiftExtensionTestCase: XCTestCase {
         }
         waitForExpectationsWithTimeout(10, handler: nil)
     }
+    
+    func testMultipartRxCanBeFailureful() {
+        let request: APIRequest<TestResponse,TronError> = tron.upload(path: "post") { formData in
+            formData.appendBodyPart(data: "bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
+        }
+        
+        let expectation = expectationWithDescription("foo")
+        
+        _ = request.rxMultipartUpload().subscribeError { error in
+            expectation.fulfill()
+        }
+        waitForExpectationsWithTimeout(10, handler: nil)
+    }
 }

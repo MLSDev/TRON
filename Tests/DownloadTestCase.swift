@@ -134,7 +134,6 @@ class DownloadTestCase: XCTestCase {
             
             let predicate = NSPredicate(format: "lastPathComponent = '\(suggestedFilename)'")
             let filteredContents = (contents as NSArray).filteredArrayUsingPredicate(predicate)
-            
             XCTAssertEqual(filteredContents.count, 1, "should have one file in Documents")
             
             if let file = filteredContents.first as? NSURL {
