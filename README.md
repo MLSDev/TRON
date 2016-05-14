@@ -18,13 +18,14 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 - [x] Generic, protocol-based implementation
 - [x] Built-in response and error parsing
 - [x] Support for any custom mapper. Defaults to [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON).
-- [x] Support for multipart requests
+- [x] Support for upload tasks
+- [x] Support for download task and resuming downloads
 - [x] Robust plugin system
 - [x] Stubbing of network requests
 - [x] Modular architecture
 - [x] Support for iOS/Mac OS X/tvOS/watchOS/Linux
 - [x] Support for CocoaPods/Carthage/Swift Package Manager
-- [x] RxSwift extension for `APIRequest` and `MultipartAPIRequest`
+- [x] RxSwift extension
 
 ## Overview
 
@@ -32,7 +33,7 @@ We designed TRON to be simple to use and also very easy to customize. After init
 
 ```swift
 let request: APIRequest<User,MyAppError> = tron.request(path: "me")
-request.performWithSuccess( { user in
+request.perform(success: { user in
   print("Received User: \(user)")
 }, failure: { error in
   print("User request failed, parsed error: \(error)")
@@ -41,8 +42,8 @@ request.performWithSuccess( { user in
 
 ## Requirements
 
-- XCode 7
-- Swift 2.1+
+- XCode 7.3+
+- Swift 2.2+
 - iOS 8
 
 ## Installation
@@ -50,25 +51,25 @@ request.performWithSuccess( { user in
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 0.4.0'
+pod 'TRON', '~> 1.0.0'
 ```
 
 Only Core subspec, without SwiftyJSON dependency:
 
 ```ruby
-pod 'TRON/Core', '~> 0.4.0'
+pod 'TRON/Core', '~> 1.0.0'
 ```
 
 RxSwift extension for TRON:
 
 ```ruby
-pod 'TRON/RxSwift', '~> 0.4.0'
+pod 'TRON/RxSwift', '~> 1.0.0'
 ```
 
 ### Carthage
 
 ```ruby
-github "MLSDev/TRON", ~> 0.4
+github "MLSDev/TRON", ~> 1.0.0
 ```
 
 ## Project status
@@ -121,41 +122,17 @@ By default, `TRON` uses `HeaderBuilder` class, which adds "Accept":"application/
 
 ## Sending requests
 
-To send APIRequest, call `performWithSuccess(_:, failure:)` method on APIRequest:
+To send `APIRequest`, call `perform(success:failure:)` method on `APIRequest`:
 
 ```swift
-let token = request.performWithSuccess({ result in }, failure: { error in})
+let alamofireRequest = request.perform(success: { result in }, failure: { error in})
 ```
 
-Notice that `token` variable returned from this method is an instance, that conforms to `RequestToken` protocol, that contains only single method:
-
-```swift
-public protocol RequestToken : CustomStringConvertible, CustomDebugStringConvertible {
-  func cancel()
-}
-```
-
-This is done to prevent leaking implementation detail to client of the framework. This can be an instance of `Alamofire.Request`, or `TRON.APIStub`. Also notice, that this protocol inherits from `CustomStringConvertible` and `CustomDebugStringConvertible` protocols, allowing us to use awesome `Alamofire` framework features like printing cURL representation of request into console:
-
-```swift
-let token = request.performWithSuccess({ _ in }, failure: { _ in })
-debugPrint(token)
-```
-
-Output:
-
-```bash
-$ curl -i \
-	-H "Accept: application/json" \
-	-H "Accept-Language: en-US;q=1.0" \
-	-H "Accept-Encoding: gzip;q=1.0, compress;q=0.5" \
-	-H "User-Agent: Unknown/Unknown (Unknown; OS Version 9.2 (Build 13C75))" \
-	"https://github.com/foobar"
-```
+Notice that `alamofireRequest` variable returned from this method is an Alamofire.Request?, that will be nil if request is stubbed.
 
 ## Response parsing
 
-Generic APIRequest implementation allows us to define expected response type before request is even sent. It also allows us to setup basic parsing rules, which is where `SwiftyJSON` comes in. We define a simple `JSONDecodable` protocol, that allows us to create models of specific type:
+Generic `APIRequest` implementation allows us to define expected response type before request is even sent. It also allows us to setup basic parsing rules, which is where `SwiftyJSON` comes in. We define a simple `JSONDecodable` protocol, that allows us to create models of specific type:
 
 ```swift
 public protocol JSONDecodable {
@@ -181,7 +158,7 @@ And send a request:
 
 ```swift
 let request: APIRequest<User,MyAppError> = tron.request(path: "me")
-request.performWithSuccess({ user in
+request.perform(success: { user in
   print("Received user: \(user.name) with id: \(user.id)")
 })
 ```
@@ -190,7 +167,7 @@ There are also default implementations of `JSONDecodable` protocol for Swift bui
 
 ```swift
   let request : APIRequest<String,MyAppError> = tron.request(path: "status")
-  request.performWithSuccess({ status in
+  request.perform(success: { status in
     print("Server status: \(status)") //
   })
 ```
@@ -199,13 +176,13 @@ You can also use `EmptyResponse` struct in cases where you don't care about actu
 
 ## Custom mappers
 
-Starting with 0.2.0, we are adding support for any custom mapper to be used with TRON. Now, instead of JSONDecodable, all generic constraints on TRON accept `ResponseParseable` protocol, that can be easily implemented for your mapper.
+Instead of `JSONDecodable`, all generic constraints on TRON accept `ResponseParseable` protocol, that can be easily implemented for your mapper.
 
 By default, we are using SwiftyJSON, and adding protocol default implementations on it.
 
 **Note** Custom mappers are supported only when installing framework from CocoaPods due to inability of Carthage to split framework to subspecs.
 
-To use custom mapper, use Core podspec of Tron:
+To use custom mapper, use Core podspec of TRON:
 
 ```ruby
     pod 'TRON/Core'
@@ -219,26 +196,18 @@ Then add your custom mapper protocol extension. We are providing code examples o
 
 ## RxSwift
 
-Starting with 0.4.0 release, you can now make requests using RxSwift extension:
 
 ```swift
-let request : APIRequest<Foo, MyError> = tron.request("foo")
+let request : APIRequest<Foo, MyError> = tron.request(path: "foo")
 _ = request.rxResult.subscribeNext { result in
     print(result)
 }
 ```
 
 ```swift
-let multipartRequest = MultipartAPIRequest<Foo,MyError> = tron.multipartRequest("foo")
-
-let (progress, result) = multipartRequest.rxUpload()
-
-_ = progress.subscribeNext { progress in
-    print(progress.bytesSent,progress.totalBytesWritten,progress.totalBytesExpectedToWrite)
-}
-
-_ = result.subscribeNext { result in
-    print("Received result: \(result)")
+let multipartRequest : APIRequest<Foo,MyError> = tron.upload(path: "foo", formData: { _ in })
+multipartRequest.rxMultipartUpload().subscribeNext { result in
+    print(result)
 }
 ```
 
@@ -276,7 +245,7 @@ class MyAppError : JSONDecodable {
 This way, you only need to define how your errors are parsed, and not worry about other failure details like response code, because they are already included:
 
 ```swift
-request.performWithSuccess({ response in }, failure: { error in
+request.perform(success: { response in }, failure: { error in
     print(error.request) // Original NSURLRequest
     print(error.response) // NSHTTPURLResponse
     print(error.data) // NSData of response
@@ -320,7 +289,7 @@ struct Users
 Using these requests is really simple:
 
 ```swift
-Users.read(56).performWithSuccess({ user in
+Users.read(56).perform(success: { user in
   print("received user id 56 with name: \(user.name)")
 })
 ```
@@ -339,7 +308,7 @@ extension API {
 This way you can call your API methods like so:
 
 ```swift
-API.Users.delete(56).performWithSuccess({ user in
+API.Users.delete(56).perform(success: { user in
   print("user \(user) deleted")
 })
 ```
@@ -353,7 +322,7 @@ let request = API.Users.get(56)
 request.stubbingEnabled = true
 request.apiStub.model = User.fixture()
 
-request.performWithSuccess({ stubbedUser in
+request.perform(success: { stubbedUser in
   print("received stubbed User model: \(stubbedUser)")
 })
 ```
@@ -364,7 +333,7 @@ Stubbing can be enabled globally on `TRON` object or locally for a single APIReq
 let request = API.Users.get(56)
 request.stubbingEnabled = true
 request.apiStub.error = APIError<MyAppError>.fixtureError()
-request.performWithSuccess({ _ in }, failure: { error in
+request.perform(success: { _ in }, failure: { error in
   print("received stubbed api error")
 })
 ```
@@ -376,34 +345,49 @@ request.apiStub.stubDelay = 1.5
 request.apiStub.successful = false
 ```
 
-## Multipart requests
+## Upload
 
-Multipart requests are implemented using `APIRequest` subclass - `MultipartAPIRequest`. It uses the same set of API's with several additions.
-
-Create multipart request using tron:
+* From file:
 
 ```swift
-let multipartRequest = tron.multipartRequest(path: "profile")
+let request = tron.upload(path: "photo", file: fileUrl)
 ```
 
-Append multipart-form data:
+* NSData:
 
 ```swift
-multipartRequest.appendMultipartData(data, name: "avatar", filename: "avatar.jpg", mimeType: "image/jpg")
+let request = tron.upload(path: "photo", data: data)
 ```
 
-Then, instead of usual `performWithSuccess(_:,failure:)` method, use `performWithSuccess(_:, failure:, progress:,cancellableCallback:)` method:
+* Stream:
 
 ```swift
-multipartRequest.performWithSuccess({ user in
-    print("user avatar updated!")
-  },
-  failure: { error in
-    print("failed to upload user avatar")
-  },
-  progress: { progress in
-    print("Picture is uploading, progress: \(CGFloat(progress.totalBytesWritten) / CGFloat(progress.totalBytesExpectedToWrite))")
-  })
+let request = tron.upload(path: "photo", stream: stream)
+```
+
+* Multipart-form data:
+
+```swift
+let request = tron.upload(path: "form") { formData in
+    formData.appendBodyPart(data: data,name: "cat", mimeType: "image/jpeg")
+}
+request.performMultipartUpload(success: { result in
+    print("form sent successfully")
+})
+```
+
+**Note** Multipart form data request is the only request using `performMultipartUpload(success:failure:encodingMemoryThreshold:encodingCompletion:)` method. Usage of this method for all other request types is prohibited and will cause a runtime error.
+
+## Download
+
+```swift
+let request = tron.download(path: "file", destination: destination)
+```
+
+Resume downloads:
+
+```swift
+let request = tron.download(path: "file", destination: destination, resumingFromData: data)
 ```
 
 ## Plugins
@@ -443,7 +427,7 @@ We are dedicated to building best possible tool for interacting with RESTful web
 
 `TRON` was heavily inspired by [Moya framework](https://github.com/Moya/Moya) and [LevelUPSDK](https://github.com/TheLevelUp/levelup-sdk-ios/blob/master/Source/API/Client/LUAPIClient.h)
 
-There are also alternative JSON mappers available, such as [Argo](https://github.com/thoughtbot/Argo)
+There are also alternative JSON mappers available, such as [Unbox](https://github.com/JohnSundell/Unbox)
 
 ## License
 
