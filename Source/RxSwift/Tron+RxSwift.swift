@@ -53,7 +53,7 @@ extension APIRequest {
      
      - returns - tuple of Observable<Progress> and Observable<ModelType>
      */
-    public func rxUpload(threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model.ModelType> {
+    public func rxMultipartUpload(threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model.ModelType> {
         var requestToken : Alamofire.Request?
         var observer : AnyObserver<Model.ModelType>!
         let resultObservable = Observable<Model.ModelType>.create {

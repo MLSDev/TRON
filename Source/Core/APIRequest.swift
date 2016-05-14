@@ -25,11 +25,6 @@
 
 import Alamofire
 
-/// Typealias for typical Progress definition in networking frameworks
-public typealias Progress = (bytesSent: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64)
-/// Typealias for typical progress closure
-public typealias ProgressClosure = Progress -> Void
-
 /**
  Protocol, that defines how NSURL is constructed by consumer.
  */
@@ -349,7 +344,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
                 return .Failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
             }
             if Model.self is EmptyResponse.Type {
-                return .Success(EmptyResponse() as! Model.ModelType)
+                return .Success(try! Model.from(NSDictionary()))
             }
             let object : AnyObject
             do {

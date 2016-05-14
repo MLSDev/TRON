@@ -55,7 +55,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
         
         let expectation = expectationWithDescription("foo")
         
-        _ = request.rxUpload().subscribeNext { result in
+        _ = request.rxMultipartUpload().subscribeNext { result in
             if let dictionary = result.response["form"] as? [String:String] {
                 if dictionary["foo"] == "bar" {
                     expectation.fulfill()
