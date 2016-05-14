@@ -19,7 +19,7 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 - [x] Built-in response and error parsing
 - [x] Support for any custom mapper. Defaults to [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON).
 - [x] Support for upload tasks
-- [x] Support for download task and resuming downloads
+- [x] Support for download tasks and resuming downloads
 - [x] Robust plugin system
 - [x] Stubbing of network requests
 - [x] Modular architecture
@@ -66,7 +66,7 @@ RxSwift extension for TRON:
 pod 'TRON/RxSwift', '~> 1.0.0'
 ```
 
-### Carthage
+### Carthages
 
 ```ruby
 github "MLSDev/TRON", ~> 1.0.0
@@ -81,7 +81,7 @@ github "MLSDev/TRON", ~> 1.0.0
 `TRON` object serves as initial configurator for APIRequest, setting all base values and configuring to use with baseURL.
 
 ```swift
-let tron = TRON(baseURL: "https://api.myapp.com")
+let tron = TRON(baseURL: "https://api.myapp.com/")
 ```
 
 You need to keep strong reference to `TRON` object, because it holds Alamofire.Manager, that is running all requests.
@@ -130,6 +130,15 @@ let alamofireRequest = request.perform(success: { result in }, failure: { error 
 
 Notice that `alamofireRequest` variable returned from this method is an Alamofire.Request?, that will be nil if request is stubbed.
 
+Alternatively, you can use `perform(completion:)` method that contains `Alamofire.Response` inside completion closure:
+
+```swift
+request.perform(completion: { response in 
+    print(response.timeline)
+    print(response.result)
+})
+```
+
 ## Response parsing
 
 Generic `APIRequest` implementation allows us to define expected response type before request is even sent. It also allows us to setup basic parsing rules, which is where `SwiftyJSON` comes in. We define a simple `JSONDecodable` protocol, that allows us to create models of specific type:
@@ -166,10 +175,10 @@ request.perform(success: { user in
 There are also default implementations of `JSONDecodable` protocol for Swift built-in types like String, Int, Float, Double and Bool, so you can easily do something like this:
 
 ```swift
-  let request : APIRequest<String,MyAppError> = tron.request(path: "status")
-  request.perform(success: { status in
+let request : APIRequest<String,MyAppError> = tron.request(path: "status")
+request.perform(success: { status in
     print("Server status: \(status)") //
-  })
+})
 ```
 
 You can also use `EmptyResponse` struct in cases where you don't care about actual response, or response from the server is empty(<>).
