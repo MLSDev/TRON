@@ -108,11 +108,11 @@ Example usage:
 
 ```swift
 @IBAction func likesButtonTapped(sender: UIButton) {
-        let request = post.isLiked ? API.Post.unlike(post) : API.Post.like(post)
-        request.blockElement(sender)
-        request.performWithSuccess({ updatedPost in
-            post.isLiked = updatedPost.isLiked
-            post.likesCount = post.likesCount
-        })
-    }
+    let request = post.isLiked ? API.Post.unlike(post) : API.Post.like(post)
+    request.blockElement(sender)
+    request.performWithSuccess({ updatedPost in
+        post.isLiked = updatedPost.isLiked
+        post.likesCount = post.likesCount
+    })
+}
 ```
