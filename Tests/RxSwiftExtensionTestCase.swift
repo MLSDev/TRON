@@ -48,14 +48,14 @@ class RxSwiftExtensionTestCase: XCTestCase {
     }
     
     func testMultipartRxCanBeSuccessful() {
-        let request: APIRequest<TestResponse,TronError> = tron.upload(path: "post") { formData in
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { formData in
             formData.appendBodyPart(data: "bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
         }
         request.method = .POST
         
         let expectation = expectationWithDescription("foo")
         
-        _ = request.rxMultipartUpload().subscribeNext { result in
+        _ = request.rxMultipartResult().subscribeNext { result in
             if let dictionary = result.response["form"] as? [String:String] {
                 if dictionary["foo"] == "bar" {
                     expectation.fulfill()
@@ -66,13 +66,13 @@ class RxSwiftExtensionTestCase: XCTestCase {
     }
     
     func testMultipartRxCanBeFailureful() {
-        let request: APIRequest<TestResponse,TronError> = tron.upload(path: "post") { formData in
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { formData in
             formData.appendBodyPart(data: "bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
         }
         
         let expectation = expectationWithDescription("foo")
         
-        _ = request.rxMultipartUpload().subscribeError { error in
+        _ = request.rxMultipartResult().subscribeError { error in
             expectation.fulfill()
         }
         waitForExpectationsWithTimeout(10, handler: nil)

@@ -5,10 +5,11 @@ All notable changes to this project will be documented in this file.
 
 ### Breaking changes
 
-* `MultipartAPIRequest` and `tron.multipartRequest(path:)` removed, use `tron.upload(path:formData:)` method instead
-* `MultipartAPIRequest` `performWithSuccess(_:failure:progress:cancellableCallback:)` method is replaced by `APIRequest` `performMultipartUpload(success:failure:encodingMemoryThreshold:encodingCompletion:)` method
-* `appendMultipartData(_:name:filename:mimeType:)` is removed. Please use `Alamofire.Manager.MultipartFormData` built-in methods to append multipart data
-* RxSwift extension on former `MultipartAPIRequest` reworked to be extension on `APIRequest` and return single Observable<Model.ModelType>
+* `tron.multipartRequest(path:)` removed, use `tron.uploadMultipart(path:formData:)` method instead
+* `MultipartAPIRequest` `performWithSuccess(_:failure:progress:cancellableCallback:)` method is replaced by `APIRequest` `performMultipart(success:failure:encodingMemoryThreshold:encodingCompletion:)` method
+* `MultipartAPIRequest` no longer subclasses `APIRequest` - they both now subclass `BaseRequest`.
+* `appendMultipartData(_:name:filename:mimeType:)` on `MultipartAPIRequest` is removed. Please use `Alamofire.Manager.MultipartFormData` built-in methods to append multipart data
+* RxSwift extension on `MultipartAPIRequest` reworked to return single Observable<Model.ModelType>
 * `EventDispatcher` class and corresponding `TRON.dispatcher`, `APIRequest.dispatcher` property are replaced by `TRON` and `APIRequest` properties - `processingQueue` and `resultDeliveryQueue`, which are used to determine on which queue should processing be performed and on which queue results should be delivered.
 * `Progress` and `ProgressClosure` typealiases have been removed
 
@@ -19,15 +20,15 @@ Several methods on `TRON`, that allow uploads and downloads
 * `upload(path:file:)` - upload from file
 * `upload(path:data:)` - upload data
 * `upload(path:stream:)` - upload from stream
-* `upload(path:formData:)` - multipart form data upload
 * `download(path:destination:)` - download file to destination
 * `download(path:destination:resumingFromData:)` - download file to destination, resuming from data
+* `uploadMultipart(path:formData:)` - multipart form data upload
 
 Added new `perform(completion:)` method, that accepts `Alamofire.Response` -> Void block.
 
 ### Changed
 
-* `RequestToken` protocol removed, perform methods now return `Alamofire.Request?` to allow customization. When request is stubbed, nil is returned.
+* `RequestToken` protocol removed, perform request methods now return `Alamofire.Request?` to allow customization. When request is stubbed, nil is returned.
 
 ### Deprecations
 

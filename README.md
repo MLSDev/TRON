@@ -133,10 +133,18 @@ Notice that `alamofireRequest` variable returned from this method is an Alamofir
 Alternatively, you can use `perform(completion:)` method that contains `Alamofire.Response` inside completion closure:
 
 ```swift
-request.perform(completion: { response in 
+request.perform(completion: { response in
     print(response.timeline)
     print(response.result)
 })
+```
+
+In both cases, you can additionally chain `Alamofire.Request` methods, if you need:
+
+```swift
+request.perform(success: { result in }, failure: { error in })?.progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
+    print(bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
+}
 ```
 
 ## Response parsing
@@ -205,7 +213,6 @@ Then add your custom mapper protocol extension. We are providing code examples o
 
 ## RxSwift
 
-
 ```swift
 let request : APIRequest<Foo, MyError> = tron.request(path: "foo")
 _ = request.rxResult.subscribeNext { result in
@@ -215,7 +222,7 @@ _ = request.rxResult.subscribeNext { result in
 
 ```swift
 let multipartRequest : APIRequest<Foo,MyError> = tron.upload(path: "foo", formData: { _ in })
-multipartRequest.rxMultipartUpload().subscribeNext { result in
+multipartRequest.rxMultipartResult().subscribeNext { result in
     print(result)
 }
 ```
@@ -336,7 +343,7 @@ request.perform(success: { stubbedUser in
 })
 ```
 
-Stubbing can be enabled globally on `TRON` object or locally for a single APIRequest. Stubbing unsuccessful requests is easy as well:
+Stubbing can be enabled globally on `TRON` object or locally for a single `APIRequest`. Stubbing unsuccessful requests is easy as well:
 
 ```swift
 let request = API.Users.get(56)
@@ -377,15 +384,15 @@ let request = tron.upload(path: "photo", stream: stream)
 * Multipart-form data:
 
 ```swift
-let request = tron.upload(path: "form") { formData in
+let request: MultipartAPIRequest<EmptyResponse,MyAppError> = tron.uploadMultipart(path: "form") { formData in
     formData.appendBodyPart(data: data,name: "cat", mimeType: "image/jpeg")
 }
-request.performMultipartUpload(success: { result in
+request.performMultipart(success: { result in
     print("form sent successfully")
 })
 ```
 
-**Note** Multipart form data request is the only request using `performMultipartUpload(success:failure:encodingMemoryThreshold:encodingCompletion:)` method. Usage of this method for all other request types is prohibited and will cause a runtime error.
+**Note** Multipart form data uploads use `MultipartAPIRequest` class instead of `APIRequest` and have different perform method.
 
 ## Download
 

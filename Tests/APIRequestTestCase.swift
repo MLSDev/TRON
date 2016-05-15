@@ -91,7 +91,7 @@ class APIRequestTestCase: XCTestCase {
             }
             }) { _ in
                 XCTFail()
-        }
+            }
         waitForExpectationsWithTimeout(10, handler: nil)
     }
     
@@ -147,14 +147,14 @@ class APIRequestTestCase: XCTestCase {
         let manager = Manager(configuration: configuration)
         manager.startRequestsImmediately = false
         let tron = TRON(baseURL: "http://httpbin.org", manager: manager)
-        let request: APIRequest<TestResponse,TronError> = tron.upload(path: "post") { formData in
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { formData in
             formData.appendBodyPart(data: "bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
         }
         request.method = .POST
         
         let expectation = expectationWithDescription("foo")
         
-        request.performMultipartUpload(success: {
+        request.performMultipart(success: {
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["foo"] == "bar" {
                     expectation.fulfill()

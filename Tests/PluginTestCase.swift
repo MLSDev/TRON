@@ -55,13 +55,13 @@ class PluginTestCase: XCTestCase {
         let localPluginTester = PluginTester()
         
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<String,Int> = tron.upload(path: "status/200") { formData in
+        let request: MultipartAPIRequest<String,Int> = tron.uploadMultipart(path: "status/200") { formData in
             
         }
         request.plugins.append(localPluginTester)
         tron.plugins.append(globalPluginTester)
         
-        request.performMultipartUpload(success: { $0 })
+        request.performMultipart(success: { $0 })
         
         expect(localPluginTester.willSendCalled).toEventually(equal(true))
         expect(globalPluginTester.willSendCalled).toEventually(equal(true))

@@ -123,16 +123,16 @@ public class TRON : TronDelegate {
     }
     
     /**
-     Creates APIRequest with specified relative path and type RequestType.UploadMultipart.
+     Creates MultipartAPIRequest with specified relative path.
      
      - parameter path: Path, that will be appended to current `baseURL`.
      
      - parameter formData: Multipart form data creation block.
      
-     - returns: APIRequest instance.
+     - returns: MultipartAPIRequest instance.
      */
-    public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, formData: MultipartFormData -> Void) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.UploadMultipart(formData), path: path, tron: self)
+    public func uploadMultipart<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, formData: MultipartFormData -> Void) -> MultipartAPIRequest<Model,ErrorModel> {
+        return MultipartAPIRequest(path: path, tron: self, multipartFormData: formData)
     }
     
     /**

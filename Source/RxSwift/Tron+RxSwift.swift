@@ -47,28 +47,30 @@ extension APIRequest {
             }
         })
     }
-    
+}
+
+extension MultipartAPIRequest {
     /**
-     Creates a tuple of observables, first for progress reporting, second for parsed result reporting
+     Creates an Observable<ModelType> for multipart upload.
      
      - parameter memoryThreshold: Memory threshold that must not be exceeded when encoding data.
      
      - returns: Observable<ModelType>
      */
-    public func rxMultipartUpload(memoryThreshold threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model.ModelType> {
+    public func rxMultipartResult(memoryThreshold threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model.ModelType> {
         return Observable.create { observer in
             var request : Alamofire.Request?
-            self.performMultipartUpload(success: { result in
+            self.performMultipart(success: { result in
                 observer.onNext(result)
                 observer.onCompleted()
-            }, failure: { error in
-                observer.onError(error)
-            },
+                }, failure: { error in
+                    observer.onError(error)
+                },
                 encodingMemoryThreshold : threshold,
                 encodingCompletion : { completion in
-                if case let Manager.MultipartFormDataEncodingResult.Success(originalRequest, _, _) = completion {
-                    request = originalRequest
-                }
+                    if case let Manager.MultipartFormDataEncodingResult.Success(originalRequest, _, _) = completion {
+                        request = originalRequest
+                    }
             })
             
             return AnonymousDisposable {
