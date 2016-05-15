@@ -1,23 +1,22 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## Develop
+## [1.0.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/1.0.0-beta.1)
 
 TRON 1.0 is a major release with a lot of new features and breaking changes. To find out more about philosophy of those and how to adapt to new API's, read [TRON 1.0 Migration Guide](/Docs/1.0 Migration Guide.md)
 
 ### Breaking changes
 
+* `RequestToken` protocol removed, perform request methods now return `Alamofire.Request?` to allow customization. When request is stubbed, nil is returned.
 * `tron.multipartRequest(path:)` removed, use `tron.uploadMultipart(path:formData:)` method instead
-* `MultipartAPIRequest` `performWithSuccess(_:failure:progress:cancellableCallback:)` method is replaced by `APIRequest` `performMultipart(success:failure:encodingMemoryThreshold:encodingCompletion:)` method
+* `MultipartAPIRequest` `performWithSuccess(_:failure:progress:cancellableCallback:)` method is replaced by `performMultipart(success:failure:encodingMemoryThreshold:encodingCompletion:)`
 * `MultipartAPIRequest` no longer subclasses `APIRequest` - they both now subclass `BaseRequest`.
 * `appendMultipartData(_:name:filename:mimeType:)` on `MultipartAPIRequest` is removed. Please use `Alamofire.Manager.MultipartFormData` built-in methods to append multipart data
-* RxSwift extension on `MultipartAPIRequest` reworked to return single Observable<Model.ModelType>
+* RxSwift extension on `MultipartAPIRequest` reworked to return single Observable<ModelType>
 * `EventDispatcher` class and corresponding `TRON.dispatcher`, `APIRequest.dispatcher` property are replaced by `TRON` and `APIRequest` properties - `processingQueue` and `resultDeliveryQueue`, which are used to determine on which queue should processing be performed and on which queue results should be delivered.
 * `Progress` and `ProgressClosure` typealiases have been removed
 
 ### Added
-
-Several methods on `TRON`, that allow uploads and downloads
 
 * `upload(path:file:)` - upload from file
 * `upload(path:data:)` - upload data
@@ -25,12 +24,7 @@ Several methods on `TRON`, that allow uploads and downloads
 * `download(path:destination:)` - download file to destination
 * `download(path:destination:resumingFromData:)` - download file to destination, resuming from data
 * `uploadMultipart(path:formData:)` - multipart form data upload
-
-Added new `perform(completion:)` method, that accepts `Alamofire.Response` -> Void block.
-
-### Changed
-
-* `RequestToken` protocol removed, perform request methods now return `Alamofire.Request?` to allow customization. When request is stubbed, nil is returned.
+* `perform(completion:)` method, that accepts `Alamofire.Response` -> Void block.
 
 ### Deprecations
 
