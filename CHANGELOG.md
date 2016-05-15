@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## Develop
 
+TRON 1.0 is a major release with a lot of new features and breaking changes. To find out more about philosophy of those and how to adapt to new API's, read [TRON 1.0 Migration Guide](/Docs/1.0 Migration Guide.md)
+
 ### Breaking changes
 
 * `tron.multipartRequest(path:)` removed, use `tron.uploadMultipart(path:formData:)` method instead
