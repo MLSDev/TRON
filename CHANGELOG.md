@@ -60,20 +60,20 @@ TRON 1.0 is a major release with a lot of new features and breaking changes. To 
 
 * Added `EmptyResponse` class that can be used for requests with empty body. For example:
 
-```
+```swift
 let request : APIRequest<EmptyResponse, MyError> = tron.request("empty/response")
 ```
 
 * RxSwift extensions for `APIRequest` and `MultipartAPIRequest`, usage:
 
-```
+```swift
 let request : APIRequest<Foo, MyError> = tron.request("foo")
 _ = request.rxResult.subscribeNext { result in
     print(result
 }
 ```
 
-```
+```swift
 let multipartRequest = MultipartAPIRequest<Foo,MyError> = tron.multipartRequest("foo")
 
 let (progress, result) = multipartRequest.rxUpload()
