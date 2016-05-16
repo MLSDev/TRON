@@ -69,7 +69,7 @@ let request : APIRequest<EmptyResponse, MyError> = tron.request("empty/response"
 ```
 let request : APIRequest<Foo, MyError> = tron.request("foo")
 _ = request.rxResult.subscribeNext { result in
-    print(result
+    print(result)
 }
 ```
 
