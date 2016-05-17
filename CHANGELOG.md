@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.0.0-beta.2](https://github.com/MLSDev/TRON/releases/tag/1.0.0-beta.2)
+
+### Breaking changes
+
+* `ResponseParseable` protocol now accepts NSData instead of `AnyObject` in its constructor, allowing any kind of parsing, JSON/XML, you-name-it.
+
 ## [1.0.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/1.0.0-beta.1)
 
 TRON 1.0 is a major release with a lot of new features and breaking changes. To find out more about philosophy of those and how to adapt to new API's, read [TRON 1.0 Migration Guide](/Docs/1.0 Migration Guide.md)
@@ -15,7 +21,6 @@ TRON 1.0 is a major release with a lot of new features and breaking changes. To 
 * RxSwift extension on `MultipartAPIRequest` reworked to return single Observable<ModelType>
 * `EventDispatcher` class and corresponding `TRON.dispatcher`, `APIRequest.dispatcher` property are replaced by `TRON` and `APIRequest` properties - `processingQueue` and `resultDeliveryQueue`, which are used to determine on which queue should processing be performed and on which queue results should be delivered.
 * `Progress` and `ProgressClosure` typealiases have been removed
-* `ResponseParseable` protocol now accepts NSData instead of `AnyObject` in its constructor
 
 ### Added
 
