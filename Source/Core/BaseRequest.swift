@@ -136,19 +136,9 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
             guard error == nil else {
                 return .Failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
             }
-            if Model.self is EmptyResponse.Type {
-                return .Success(try! Model.from(NSDictionary()))
-            }
-            let object : AnyObject
-            do {
-                object = try (data ?? NSData()).parseToAnyObject()
-            }
-            catch let jsonError as NSError {
-                return .Failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: jsonError))
-            }
             let model: Model.ModelType
             do {
-                model = try self.responseBuilder.buildResponseFromJSON(object)
+                model = try self.responseBuilder.buildResponseFromData(data ?? NSData())
             }
             catch let parsingError as NSError {
                 return .Failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))

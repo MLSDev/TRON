@@ -86,10 +86,10 @@ public struct APIError<T:ResponseParseable> : ErrorType {
         self.response = response
         self.data = data
         self.error = error
-        guard let object = try? data?.parseToAnyObject() else {
-            return
-        }
-        self.errorModel = object.flatMap { try? T.from($0) }
+//        guard let object = try? data?.parseToAnyObject() else {
+//            return
+//        }
+        self.errorModel = try? T.from(data: data ?? NSData())
     }
     
     /**

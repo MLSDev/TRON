@@ -58,14 +58,6 @@ class ApiStubbingTestCase: XCTestCase {
         expect(request.apiStub.model?.id) == 1
     }
     
-    func testInvalidJSONIsNotAllowed() {
-        let request :APIRequest<TestUser,TronError> = tron.request(path: "f00")
-        request.stubbingEnabled = true
-        request.apiStub.buildModelFromFile("invalid.json", inBundle: NSBundle(forClass: self.dynamicType))
-        
-        expect(request.apiStub.model).to(beNil())
-    }
-    
     func testMultipartStubbingSuccessWorks() {
         let request: MultipartAPIRequest<Int,TronError> = tron.uploadMultipart(path: "f00") { formData in
         }

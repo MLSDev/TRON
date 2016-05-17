@@ -36,8 +36,8 @@ public protocol JSONDecodable  : ResponseParseable {
 }
 
 public extension ResponseParseable where Self.ModelType : JSONDecodable, Self == Self.ModelType {
-    public static func from(json: AnyObject) throws -> ModelType {
-        return self.init(json: JSON(json))
+    public static func from(data data: NSData) throws -> ModelType {
+        return self.init(json: JSON(data: data))
     }
 }
 

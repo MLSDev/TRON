@@ -45,12 +45,11 @@ public extension APIStub {
     public func buildModelFromFile(fileName: String, inBundle bundle: NSBundle = NSBundle.mainBundle()) {
         if let filePath = bundle.pathForResource(fileName as String, ofType: nil)
         {
-            guard let data = NSData(contentsOfFile: filePath),
-                let json = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) else {
+            guard let data = NSData(contentsOfFile: filePath) else {
                     print("failed building response model from file: \(filePath)")
                 return
             }
-            model = try? Model.from(json)
+            model = try? Model.from(data: data)
         }
     }
 }

@@ -167,9 +167,3 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         }
     }
 }
-
-extension NSData {
-    func parseToAnyObject() throws -> AnyObject {
-        return try NSJSONSerialization.JSONObjectWithData(self, options: .AllowFragments)
-    }
-}

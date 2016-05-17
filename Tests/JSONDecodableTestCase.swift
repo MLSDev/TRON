@@ -10,8 +10,9 @@ import XCTest
 @testable import TRON
 import Nimble
 import SwiftyJSON
+import Alamofire
 
-private struct Headers : JSONDecodable, ResponseParseable {
+private struct Headers : JSONDecodable {
     
     let host : String
     
@@ -93,5 +94,18 @@ class JSONDecodableTestCase: XCTestCase {
         })
         
         waitForExpectationsWithTimeout(10, handler: nil)
+    }
+    
+    func testJSONDecodableParsingEmptyResponse() {
+        let tron = TRON(baseURL: "http://httpbin.org")
+        let request: APIRequest<Headers,Int> = tron.request(path: "headers")
+        let responseSerializer = request.responseSerializer(notifyingPlugins: [])
+        let result = responseSerializer.serializeResponse(nil,nil, nil,nil)
+        
+        if case Alamofire.Result.Success(_) = result {
+            
+        } else {
+            XCTFail()
+        }
     }
 }

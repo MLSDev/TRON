@@ -30,7 +30,7 @@ public struct EmptyResponse : ResponseParseable {
     
     public init() {}
     
-    public static func from(json: AnyObject) throws -> EmptyResponse {
+    public static func from(data data: NSData) throws -> EmptyResponse {
         return EmptyResponse()
     }
 }

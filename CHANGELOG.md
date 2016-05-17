@@ -15,6 +15,7 @@ TRON 1.0 is a major release with a lot of new features and breaking changes. To 
 * RxSwift extension on `MultipartAPIRequest` reworked to return single Observable<ModelType>
 * `EventDispatcher` class and corresponding `TRON.dispatcher`, `APIRequest.dispatcher` property are replaced by `TRON` and `APIRequest` properties - `processingQueue` and `resultDeliveryQueue`, which are used to determine on which queue should processing be performed and on which queue results should be delivered.
 * `Progress` and `ProgressClosure` typealiases have been removed
+* `ResponseParseable` protocol now accepts NSData instead of `AnyObject` in its constructor
 
 ### Added
 

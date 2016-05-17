@@ -38,7 +38,7 @@ public protocol ResponseParseable {
      - returns: parsed model
      - note: Ideally, we would like to return Self here, however Swift 2 understands Self as final class or struct and therefore prohibits subclassing. Which is why we are using workaround with ModelType.
      */
-    static func from(json: AnyObject) throws -> ModelType
+    static func from(data data: NSData) throws -> ModelType
 }
 
 /**
@@ -56,8 +56,8 @@ public class ResponseBuilder<T:ResponseParseable>
 //     
 //     - returns parsed model.
 //     */
-    public func buildResponseFromJSON(json : AnyObject) throws -> T.ModelType {
-        return try T.from(json)
+    public func buildResponseFromData(data : NSData) throws -> T.ModelType {
+        return try T.from(data: data)
     }
 }
 

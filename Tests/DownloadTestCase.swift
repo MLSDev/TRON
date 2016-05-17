@@ -101,7 +101,7 @@ class DownloadTestCase: XCTestCase {
             print("progress ",$0,$1,$2)
             alamofireRequest?.cancel()
         }
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
         
         guard let resumeData = alamofireRequest?.resumeData else {
             XCTFail("request should produce resume data")
@@ -114,7 +114,7 @@ class DownloadTestCase: XCTestCase {
             continueExpectation.fulfill()
         })
         
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
         
         let fileManager = NSFileManager.defaultManager()
         let directory = fileManager.URLsForDirectory(searchPathDirectory, inDomains: self.searchPathDomain)[0]
