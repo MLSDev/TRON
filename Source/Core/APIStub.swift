@@ -49,7 +49,7 @@ public extension APIStub {
                     print("failed building response model from file: \(filePath)")
                 return
             }
-            model = try? Model.from(data: data)
+            model = try? Model(data: data)
         }
     }
 }
@@ -63,7 +63,7 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
     public var successful = true
     
     /// Response model for successful API stub
-    public var model : Model.ModelType?
+    public var model : Model?
     
     /// Error model for unsuccessful API stub
     public var error: APIError<ErrorModel>?
@@ -78,7 +78,7 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
      
      - parameter failure: Failure block to be executed if request fails. Nil by default.
      */
-    public func performStubWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) {
+    public func performStubWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) {
         if let model = model where successful {
             delay(stubDelay) {
                 success(model)
@@ -95,9 +95,9 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
      
      - parameter completion: Completion block to be executed when request is stubbed.
      */
-    public func performStubWithCompletion(completion : (Alamofire.Response<Model.ModelType,APIError<ErrorModel>> -> Void)) {
+    public func performStubWithCompletion(completion : (Alamofire.Response<Model,APIError<ErrorModel>> -> Void)) {
         delay(stubDelay) {
-            let result : Alamofire.Result<Model.ModelType,APIError<ErrorModel>>
+            let result : Alamofire.Result<Model,APIError<ErrorModel>>
             if let model = self.model where self.successful {
                 result = Result.Success(model)
             } else if let error = self.error {
@@ -106,7 +106,7 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
                 let error : APIError<ErrorModel> = APIError(request: nil, response: nil, data: nil, error: nil)
                 result = Result.Failure(error)
             }
-            let response: Alamofire.Response<Model.ModelType, APIError<ErrorModel>> = Alamofire.Response(request: nil, response: nil, data: nil, result: result)
+            let response: Alamofire.Response<Model, APIError<ErrorModel>> = Alamofire.Response(request: nil, response: nil, data: nil, result: result)
             completion(response)
         }
     }

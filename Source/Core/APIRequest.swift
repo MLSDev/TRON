@@ -100,12 +100,6 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         super.init(path: path, tron: tron)
     }
     
-    @available(*, deprecated, renamed="perform")
-    public func performWithSuccess(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Alamofire.Request?
-    {
-        return perform(success: success, failure: failure)
-    }
-    
     /**
      Send current request.
      
@@ -115,7 +109,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    public func perform(success success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Alamofire.Request?
+    public func perform(success success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Alamofire.Request?
     {
         if stubbingEnabled {
             apiStub.performStubWithSuccess(success, failure: failure)
@@ -131,7 +125,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
      
      - returns: Alamofire.Request or nil if request was stubbed.
     */
-    public func perform(completion completion: (Alamofire.Response<Model.ModelType,APIError<ErrorModel>> -> Void)) -> Alamofire.Request? {
+    public func perform(completion completion: (Alamofire.Response<Model,APIError<ErrorModel>> -> Void)) -> Alamofire.Request? {
         if stubbingEnabled {
             apiStub.performStubWithCompletion(completion)
             return nil
@@ -143,7 +137,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         }
     }
     
-    private func performAlamofireRequest(completion : Response<Model.ModelType,APIError<ErrorModel>> -> Void) -> Alamofire.Request
+    private func performAlamofireRequest(completion : Response<Model,APIError<ErrorModel>> -> Void) -> Alamofire.Request
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
@@ -160,7 +154,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         return request.validate().response(queue: processingQueue,responseSerializer: responseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
     }
     
-    private func performAlamofireRequest(success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Alamofire.Request
+    private func performAlamofireRequest(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Alamofire.Request
     {
         return performAlamofireRequest {
             self.callSuccessFailureBlocks(success, failure: failure, response: $0)

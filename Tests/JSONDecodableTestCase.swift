@@ -29,12 +29,17 @@ class Ancestor: JSONDecodable {
 }
 
 class Sibling: Ancestor {
-    typealias ModelType = Sibling
-    
     let foo: String = "4"
     
     required init(json: JSON) {
         super.init(json: json)
+    }
+}
+struct ThrowError : ErrorType {}
+
+class Throwable : JSONDecodable {
+    required init(json: JSON) throws {
+        throw ThrowError()
     }
 }
 
@@ -43,20 +48,28 @@ class JSONDecodableTestCase: XCTestCase {
     
     // TODO - Implement parsing for collection types
     
-//    func testDecodableArray() {
-//        let request: APIRequest<[Int],TronError> = tron.request(path: "foo")
-//        let json = [1,2,3,4]
-//        let parsedResponse = try! request.responseBuilder.buildResponseFromJSON(json)
-//        
-//        expect(parsedResponse) == [1,2,3,4]
-//    }
+    func testDecodableArray() {
+        let request: APIRequest<[Int],TronError> = tron.request(path: "foo")
+        let json = [1,2,3,4]
+        let parsedResponse = try! request.responseBuilder.buildResponseFromData(NSJSONSerialization.dataWithJSONObject(json, options: []))
+        
+        expect(parsedResponse) == [1,2,3,4]
+    }
+    
+    func testDecodableSupportsThrowingErrors() {
+        let request: APIRequest<Throwable,TronError> = tron.request(path: "foo")
+        let data = try! NSJSONSerialization.dataWithJSONObject([1], options: [])
+        let parsedResponse = try? request.responseBuilder.buildResponseFromData(data)
+        
+        expect(parsedResponse).to(beNil())
+    }
 
     // TODO - implement this stuff when Swift 3.0 comes out
     
 //    func testNonDecodableItemsAreThrownOut() {
 //        let request: APIRequest<[Int],TronError> = tron.request(path: "foo")
-//        let json = JSON([1,2,3,4, "foo"])
-//        let parsedResponse = request.responseBuilder.buildResponseFromJSON(json)
+//        let json = [1,2,3,4, "foo"]
+//        let parsedResponse = try! request.responseBuilder.buildResponseFromData(NSJSONSerialization.dataWithJSONObject(json, options: []))
 //        
 //        expect(parsedResponse) == [1,2,3,4]
 //    }

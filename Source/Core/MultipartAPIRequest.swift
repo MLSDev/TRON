@@ -38,7 +38,7 @@ public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseP
      
      - parameter encodingCompletion: Encoding completion block, that can be used to inspect encoding result. No action is required by default, therefore default value for this block is nil.
      */
-    public func performMultipart(success success: Model.ModelType -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold, encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)? = nil)
+    public func performMultipart(success success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold, encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)? = nil)
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")

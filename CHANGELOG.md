@@ -1,6 +1,21 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.0.0-beta.3](https://github.com/MLSDev/TRON/releases/tag/1.0.0-beta.3)
+
+### Breaking changes
+
+* `ResponseParseable` protocol reworked to only include single initializer instead of associated type `ModelType`. Therefore, all generic methods that previously accepted `Model.ModelType` type now accept `Model` type.
+* Removed `performWithSuccess(_:failure:)` method, please use `perform(success:failure:)` method instead.
+
+### Added
+
+* Ability to create APIRequest with Array generic constraint, for example - `APIRequest<[Int],TronError>`
+
+### Changed
+
+* `ResponseParseable` `initWithData:` method is now throwable, allowing parsed models to throw during initialization. When initializer throws, `APIRequest` treats it as a parsing error.
+
 ## [1.0.0-beta.2](https://github.com/MLSDev/TRON/releases/tag/1.0.0-beta.2)
 
 ### Breaking changes

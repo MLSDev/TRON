@@ -28,9 +28,7 @@ import Foundation
 /// Struct, that can be used as Model generic constraint in cases, where you don't care about response type.
 public struct EmptyResponse : ResponseParseable {
     
-    public init() {}
+    public init(data: NSData) {
     
-    public static func from(data data: NSData) throws -> EmptyResponse {
-        return EmptyResponse()
     }
 }

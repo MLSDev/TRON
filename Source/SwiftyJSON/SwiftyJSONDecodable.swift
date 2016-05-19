@@ -32,12 +32,12 @@ import SwiftyJSON
 public protocol JSONDecodable  : ResponseParseable {
     
     /// Create model object from SwiftyJSON.JSON struct.
-    init(json: JSON)
+    init(json: JSON) throws
 }
 
-public extension ResponseParseable where Self.ModelType : JSONDecodable, Self == Self.ModelType {
-    public static func from(data data: NSData) throws -> ModelType {
-        return self.init(json: JSON(data: data))
+public extension ResponseParseable where Self: JSONDecodable {
+    init(data: NSData) throws {
+        try self.init(json: JSON(data: data))
     }
 }
 
@@ -48,37 +48,23 @@ extension JSON : JSONDecodable {
         else { self.init(json.rawValue) }
     }
 }
-//
-//public struct CollectionTypeError : ErrorType {}
-//
-//public extension CollectionType where Generator.Element: ResponseParseable,  Generator.Element == Generator.Element.ModelType {
-//    static func from(json: AnyObject) throws -> [Generator.Element] {
-//        guard let array = json as? [AnyObject] else {
-//            throw CollectionTypeError()
-//        }
-//        return array.flatMap { return try? Generator.Element.from($0) }
-//    }
-//}
-//
-//extension JSONDecodable where Self: CollectionType, Self.Generator.Element : JSONDecodable, Self.Generator.Element == Self.Generator.Element.ModelType {
-//    init(json: JSON) {
-//        let foo = json.arrayValue.flatMap({
-//            return Self.Generator.Element.init(json: $0)
-//        })
-//        
-//    }
-//}
 
-//extension Array : JSONDecodable {
-//    public init(json: JSON) {
-//        self.init(json.arrayValue.flatMap {
-//            if let type = Element.self as? JSONDecodable.ModelType {
-//                return type.init(json: $0) as? Element
-//            }
-//            return nil
-//        })
-//    }
-//}
+extension Array : JSONDecodable {
+    public init(json: JSON) {
+        self.init(json.arrayValue.flatMap {
+            if let type = Element.self as? JSONDecodable.Type {
+                let element : Element?
+                do {
+                    element = try type.init(json: $0) as? Element
+                } catch {
+                    return nil
+                }
+                return element
+            }
+            return nil
+        })
+    }
+}
 
 extension String : JSONDecodable  {
     public init(json: JSON) {

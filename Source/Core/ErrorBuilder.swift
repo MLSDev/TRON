@@ -67,7 +67,7 @@ public struct APIError<T:ResponseParseable> : ErrorType {
     public let error : NSError?
     
     /// Parsed Error model
-    public var errorModel : T.ModelType?
+    public var errorModel : T?
     
     /**
      Initialize `APIError` with unsuccessful request info.
@@ -89,13 +89,13 @@ public struct APIError<T:ResponseParseable> : ErrorType {
 //        guard let object = try? data?.parseToAnyObject() else {
 //            return
 //        }
-        self.errorModel = try? T.from(data: data ?? NSData())
+        self.errorModel = try? T(data: data ?? NSData())
     }
     
     /**
      Convenience initializer, that can be used to create fixtured `APIError`.
      */
-    public init(errorModel: T.ModelType) {
+    public init(errorModel: T) {
         self.init(request: nil, response: nil, data: nil, error: nil)
         self.errorModel = errorModel
     }

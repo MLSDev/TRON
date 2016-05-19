@@ -126,8 +126,8 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
         self.resultDeliveryQueue = tron.resultDeliveryQueue
     }
     
-    internal func responseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.ResponseSerializer<Model.ModelType,APIError<ErrorModel>> {
-        return ResponseSerializer<Model.ModelType,APIError<ErrorModel>> { urlRequest, response, data, error in
+    internal func responseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.ResponseSerializer<Model,APIError<ErrorModel>> {
+        return ResponseSerializer<Model,APIError<ErrorModel>> { urlRequest, response, data, error in
             dispatch_async(dispatch_get_main_queue()) {
                 plugins.forEach {
                     $0.requestDidReceiveResponse(urlRequest, response,data,error)
@@ -136,7 +136,7 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
             guard error == nil else {
                 return .Failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
             }
-            let model: Model.ModelType
+            let model: Model
             do {
                 model = try self.responseBuilder.buildResponseFromData(data ?? NSData())
             }
@@ -147,9 +147,9 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
         }
     }
     
-    internal func callSuccessFailureBlocks(success: Model.ModelType -> Void,
+    internal func callSuccessFailureBlocks(success: Model -> Void,
                                            failure: (APIError<ErrorModel> -> Void)?,
-                                           response: Alamofire.Response<Model.ModelType,APIError<ErrorModel>>)
+                                           response: Alamofire.Response<Model,APIError<ErrorModel>>)
     {
         switch response.result
         {

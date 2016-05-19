@@ -32,9 +32,9 @@ extension APIRequest {
     /**
      Creates on Observable of success Model type. It starts a request each time it's subscribed to.
      
-     - returns: Observable<ModelType>
+     - returns: Observable<Model>
      */
-    public func rxResult() -> Observable<Model.ModelType> {
+    public func rxResult() -> Observable<Model> {
         return Observable.create({ observer in
             let token = self.perform(success: { result in
                 observer.onNext(result)
@@ -51,13 +51,13 @@ extension APIRequest {
 
 extension MultipartAPIRequest {
     /**
-     Creates an Observable<ModelType> for multipart upload.
+     Creates an Observable<Model> for multipart upload.
      
      - parameter memoryThreshold: Memory threshold that must not be exceeded when encoding data.
      
-     - returns: Observable<ModelType>
+     - returns: Observable<Model>
      */
-    public func rxMultipartResult(memoryThreshold threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model.ModelType> {
+    public func rxMultipartResult(memoryThreshold threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model> {
         return Observable.create { observer in
             var request : Alamofire.Request?
             self.performMultipart(success: { result in
