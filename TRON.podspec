@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'TRON'
-  s.version  = '1.0.0-beta.2'
+  s.version  = '1.0.0-beta.3'
   s.license  = 'MIT'
   s.summary  = 'Lightweight network abstraction layer, written on top of Alamofire'
   s.homepage = 'https://github.com/MLSDev/TRON'
