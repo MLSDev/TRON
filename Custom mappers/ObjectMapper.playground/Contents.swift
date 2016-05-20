@@ -1,21 +1,23 @@
 //: Playground - noun: a place where people can play
 
+import Cocoa
 import ObjectMapper
 import TRON
+import Foundation
 
 struct ObjectMapperError: ErrorType {}
 
 public protocol ObjectMapperParseable : ResponseParseable {
-    init?(map: Map)
+    init(map: Map)
 }
 
-public extension ResponseParseable where Self.ModelType : ObjectMapperParseable {
-    public static func from(json: AnyObject) throws -> ModelType {
-        let map = Map(mappingType: .FromJSON, JSONDictionary: json as! [String:AnyObject], toObject: true)
-        guard let model = ModelType(map: map) else {
+public extension ResponseParseable where Self : ObjectMapperParseable {
+    public init(data: NSData) throws {
+        guard let dictionary = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as? [String:AnyObject] else {
             throw ObjectMapperError()
         }
-        return model
+        let map = Map(mappingType: .FromJSON, JSONDictionary: dictionary ?? [:])
+        self.init(map: map)
     }
 }
 
@@ -30,10 +32,8 @@ struct Headers: ObjectMapperParseable {
 
 let tron = TRON(baseURL: "http://httpbin.org")
 let request: APIRequest<Headers,Int> = tron.request(path: "headers")
-request.performWithSuccess({ headers in
+request.perform(success: { headers in
     print(headers.host)
+    }, failure: { error in
+    print(error)
 })
-
-
-
-

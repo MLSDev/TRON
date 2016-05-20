@@ -42,8 +42,8 @@ request.perform(success: { user in
 
 ## Requirements
 
-- XCode 7.3+
-- Swift 2.2+
+- XCode 7.3
+- Swift 2.2
 - iOS 8
 
 ## Installation
@@ -96,7 +96,7 @@ public protocol NSURLBuildable {
 }
 ```
 
-By default, `TRON` uses `URLBuilder` class, that simply appends relative path to base URL, which is sufficient in most cases. You can customize url building process globally by changing `urlBuilder` property on `Tron` or locally, for a single request by modifying `urlBuilder` property on `APIRequest`.
+By default, `TRON` uses `URLBuilder` class, that simply appends relative path to base URL, which is sufficient in most cases. You can customize url building process globally by changing `urlBuilder` property on `TRON` or locally, for a single request by modifying `urlBuilder` property on `APIRequest`.
 
 ### HeaderBuildable
 
@@ -116,7 +116,7 @@ public enum AuthorizationRequirement {
 }
 ```
 
-It represents scenarios where user is not authorized, user is authorized, but authentication is not required, and a case, where request requires authentication.
+It represents scenarios where user is not authorized, user is authorized, but authorization is not required, and a case, where request requires authorization.
 
 By default, `TRON` uses `HeaderBuilder` class, which adds "Accept":"application/json" header to your requests.
 
@@ -149,15 +149,25 @@ request.perform(success: { result in }, failure: { error in })?.progress { bytes
 
 ## Response parsing
 
-Generic `APIRequest` implementation allows us to define expected response type before request is even sent. It also allows us to setup basic parsing rules, which is where `SwiftyJSON` comes in. We define a simple `JSONDecodable` protocol, that allows us to create models of specific type:
+Generic `APIRequest` implementation allows us to define expected response type before request is even sent. It also allows us to setup basic parsing rules, which is where `ResponseParseable` protocol comes in.
 
 ```swift
-public protocol JSONDecodable {
-    init(json: JSON)
+public protocol ResponseParseable {
+    init(data: NSData) throws
 }
 ```
 
-To parse your response from the server, all you need to do is to create `JSONDecodable` conforming type, for example:
+As you can see, protocol accepts NSData in initializer, which means anything can be parsed - JSON, or XML or something else.
+
+`TRON` also provides `JSONDecodable` protocol, that allows us to parse models using SwiftyJSON:
+
+```swift
+public protocol JSONDecodable: ResponseParseable {
+    init(json: JSON) throws
+}
+```
+
+To parse your response from the server using `SwiftyJSON`, all you need to do is to create `JSONDecodable` conforming type, for example:
 
 ```swift
 class User: JSONDecodable {
@@ -180,7 +190,7 @@ request.perform(success: { user in
 })
 ```
 
-There are also default implementations of `JSONDecodable` protocol for Swift built-in types like String, Int, Float, Double and Bool, so you can easily do something like this:
+There are also default implementations of `JSONDecodable` protocol for Swift built-in types like Array, String, Int, Float, Double and Bool, so you can easily do something like this:
 
 ```swift
 let request : APIRequest<String,MyAppError> = tron.request(path: "status")
@@ -189,25 +199,15 @@ request.perform(success: { status in
 })
 ```
 
-You can also use `EmptyResponse` struct in cases where you don't care about actual response, or response from the server is empty(<>).
+You can also use `EmptyResponse` struct in cases where you don't care about actual response.
 
 ## Custom mappers
 
-Instead of `JSONDecodable`, all generic constraints on TRON accept `ResponseParseable` protocol, that can be easily implemented for your mapper.
+All generic constraints on TRON accept `ResponseParseable` protocol, that can be easily implemented for your mapper.
 
-By default, we are using SwiftyJSON, and adding protocol default implementations on it.
+We are providing code examples on how to do this with two most mappers available in Swift - Unbox and ObjectMapper.
 
-**Note** Custom mappers are supported only when installing framework from CocoaPods due to inability of Carthage to split framework to subspecs.
-
-To use custom mapper, use Core podspec of TRON:
-
-```ruby
-    pod 'TRON/Core'
-```
-
-Then add your custom mapper protocol extension. We are providing code examples on how to do this with two most popular mappers available in Swift - Argo and ObjectMapper.
-
-[Playground with Argo ResponseParseable implementation](https://github.com/MLSDev/TRON/blob/master/Custom%20mappers/Argo.playground/Contents.swift)
+[Playground with Unbox ResponseParseable implementation](https://github.com/MLSDev/TRON/blob/master/Custom%20mappers/Unbox.playground/Contents.swift)
 
 [Playground with ObjectMapper ResponseParseable implementation](https://github.com/MLSDev/TRON/blob/master/Custom%20mappers/ObjectMapper.playground/Contents.swift)
 
@@ -442,8 +442,6 @@ There are some very cool concepts for local plugins, some of them are described 
 We are dedicated to building best possible tool for interacting with RESTful web-services. However, we understand, that every tool has it's purpose, and therefore it's always useful to know, what other tools can be used to achieve the same goal.
 
 `TRON` was heavily inspired by [Moya framework](https://github.com/Moya/Moya) and [LevelUPSDK](https://github.com/TheLevelUp/levelup-sdk-ios/blob/master/Source/API/Client/LUAPIClient.h)
-
-There are also alternative JSON mappers available, such as [Unbox](https://github.com/JohnSundell/Unbox)
 
 ## License
 

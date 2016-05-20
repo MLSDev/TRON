@@ -632,6 +632,8 @@
 		9A2F5F731CE8775900C3C0F9 /* MultipartAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipartAPIRequest.swift; path = Source/Core/MultipartAPIRequest.swift; sourceTree = "<group>"; };
 		9A51AABC1CC61ED80053CC48 /* Tron+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tron+RxSwift.swift"; path = "Source/RxSwift/Tron+RxSwift.swift"; sourceTree = "<group>"; };
 		9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxSwiftExtensionTestCase.swift; path = Tests/RxSwiftExtensionTestCase.swift; sourceTree = "<group>"; };
+		9A6693561CEF2A7C007CBC45 /* Unbox.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Unbox.playground; path = "Custom mappers/Unbox.playground"; sourceTree = "<group>"; };
+		9A6693571CEF30EF007CBC45 /* ObjectMapper.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = ObjectMapper.playground; path = "Custom mappers/ObjectMapper.playground"; sourceTree = "<group>"; };
 		9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadTestCase.swift; path = Tests/UploadTestCase.swift; sourceTree = "<group>"; };
 		9A704E4F1C5D01B300392DE5 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A704E511C5D01B300392DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -665,8 +667,6 @@
 		9AEE0B951C5A4E09003222A8 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Carthage/Checkouts/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = Carthage/Checkouts/SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = Carthage/Checkouts/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
-		9AFAB7C91C6F536A008C74D7 /* Argo.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Argo.playground; path = "Custom mappers/Argo.playground"; sourceTree = "<group>"; };
-		9AFAB7CA1C6F5410008C74D7 /* ObjectMapper.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = ObjectMapper.playground; path = "Custom mappers/ObjectMapper.playground"; sourceTree = "<group>"; };
 		9AFAE4D41CC5210F002739B0 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		9AFAE4D51CC52118002739B0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9AFAE4D61CC52367002739B0 /* Rx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Rx.xcodeproj; path = Carthage/Checkouts/RxSwift/Rx.xcodeproj; sourceTree = "<group>"; };
@@ -790,8 +790,8 @@
 			isa = PBXGroup;
 			children = (
 				9AFAE4D31CC520F6002739B0 /* Documentation */,
-				9AFAB7CA1C6F5410008C74D7 /* ObjectMapper.playground */,
-				9AFAB7C91C6F536A008C74D7 /* Argo.playground */,
+				9A6693571CEF30EF007CBC45 /* ObjectMapper.playground */,
+				9A6693561CEF2A7C007CBC45 /* Unbox.playground */,
 				9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */,
 				9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */,
 				9AFAE4D61CC52367002739B0 /* Rx.xcodeproj */,
