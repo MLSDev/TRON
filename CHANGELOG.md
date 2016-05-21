@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.0.0](https://github.com/MLSDev/TRON/releases/tag/1.0.0)
+
+### Changes
+
+None.
+
+If you haven't been following beta releases, please read [1.0.0 Migration Guide](/Docs/1.0 Migration Guide.md) to get an overview of new API additions and phylosophy behind some breaking changes that were made in this release.
+
 ## [1.0.0-beta.3](https://github.com/MLSDev/TRON/releases/tag/1.0.0-beta.3)
 
 ### Breaking changes
