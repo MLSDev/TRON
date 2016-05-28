@@ -10,6 +10,8 @@ Here are some examples of cool local plugins:
 Here's simple `MMProgressHUD` plugin, that allows showing progress HUD while request is loading:
 
 ```swift
+import Foundation
+import TRON
 import MMProgressHUD
 
 class MMProgressHUDPlugin : Plugin {
@@ -45,6 +47,15 @@ extension APIRequest {
         return self
     }
 }
+
+extension MultipartAPIRequest {
+    func progressTitle(title: String, successTitle: String = "Success", errorTitle: String? = nil) -> Self {
+        let progressPlugin = MMProgressHUDPlugin(progress: title,
+            success: successTitle, errorTitle: errorTitle)
+        plugins.append(progressPlugin)
+        return self
+    }
+}
 ```
 
 Example usage:
@@ -63,6 +74,9 @@ This way progress reporting is built-in into our loading system and switching fr
 Idea of plugin is simple: let's say you have, for example, like button. When user taps, you should send a like request. However, you may also need to prevent user from tapping again, and sending one more request. This is where this plugin comes in:
 
 ```swift
+import Foundation
+import TRON
+
 protocol UserInteractionBlockable : class
 {
     var userInteractionEnabled : Bool { get set }
@@ -95,6 +109,15 @@ class UserInteractionBlockingPlugin : Plugin
 
 extension APIRequest
 {
+    func blockElement(blockable: UserInteractionBlockable) -> Self
+    {
+        let plugin = UserInteractionBlockingPlugin(blockable: blockable)
+        plugins.append(plugin)
+        return self
+    }
+}
+
+extension MultipartAPIRequest {
     func blockElement(blockable: UserInteractionBlockable) -> Self
     {
         let plugin = UserInteractionBlockingPlugin(blockable: blockable)
