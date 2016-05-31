@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tron = TRON(baseURL: "https://api.github.com", plugins: [loggerPlugin])
         tron.headerBuilder = HeaderBuilder(defaultHeaders: [:])
         let request : APIRequest<String,Int> = tron.request(path: "zen")
-        let token = request.performWithSuccess({ zen in
+        let token = request.perform(success: { zen in
             print(zen)
             }, failure: { error in
         })
