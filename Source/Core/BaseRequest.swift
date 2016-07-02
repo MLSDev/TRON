@@ -136,6 +136,7 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
         self.processingQueue = tron.processingQueue
         self.resultDeliveryQueue = tron.resultDeliveryQueue
         self.encodingStrategy = tron.encodingStrategy
+        self.apiStub.successful = tron.stubbingShouldBeSuccessful
     }
     
     internal func responseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.ResponseSerializer<Model,APIError<ErrorModel>> {

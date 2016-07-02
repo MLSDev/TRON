@@ -42,6 +42,9 @@ public class TRON : TronDelegate {
     /// Global property, that defines whether stubbing is enabled. It is simply set on each `APIRequest` instance and can be reset.
     public var stubbingEnabled = false
     
+    /// Global property, that defines whether stubbing should be successful. It propogates to `APIRequest.apiStub.successful` property on creation of the request. Defaults to `true`.
+    public var stubbingShouldBeSuccessful = true
+    
     /// Global plugins, that will receive events from all requests, created from current TRON instance.
     public var plugins : [Plugin] = []
     

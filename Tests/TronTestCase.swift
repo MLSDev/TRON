@@ -62,4 +62,12 @@ class TronTestCase: XCTestCase {
         }
     }
     
+    func testStubbingShouldBeSuccessfulPropertyPropogatesToStub() {
+        let request : APIRequest<Int,TronError> = tron.request(path: "foo")
+        expect(request.apiStub.successful).to(beTruthy())
+        tron.stubbingShouldBeSuccessful = false
+        let request2 : APIRequest<Int,TronError> = tron.request(path: "foo")
+        expect(request2.apiStub.successful).toNot(beTruthy())
+    }
+    
 }

@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ### New
 
+* `stubbingShouldBeSuccessful` property on `TRON`, that allows setting up globally, will stubs succeed or not.
 * `encodingStrategy` property on `TRON` instance, that is used to select encoding type based on HTTP Method.
 * `encodingStrategy` property on `APIRequest`, that will be filled with `TRON` strategy on construction.
 
