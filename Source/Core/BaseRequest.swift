@@ -71,12 +71,23 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
     public let path: String
     
     /// HTTP method
-    public var method: Alamofire.Method = .GET
+    public var method: Alamofire.Method = .GET {
+        didSet {
+            encoding = encodingStrategy(method)
+        }
+    }
     
-    /// Parameters of current request
+    /// Parameters of current request.
     public var parameters: [String: AnyObject] = [:]
     
+    /// Selection of encoding based on HTTP method.
+    public var encodingStrategy : Alamofire.Method -> Alamofire.ParameterEncoding
+    
     /// Parameter encoding option.
+    /// This property is deprecated and may be removed in following releases.
+    /// Please use TRON.encodingStrategy property to set strategy globally, or 
+    /// APIRequest encodingStrategy property to set it locally for single request.
+    @available(*, deprecated, message="Use encodingStrategy property on TRON or APIRequest.")
     public var encoding: Alamofire.ParameterEncoding = .URL
     
     /// Headers, that should be used for current request.
@@ -124,6 +135,7 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
         self.urlBuilder = tron.urlBuilder
         self.processingQueue = tron.processingQueue
         self.resultDeliveryQueue = tron.resultDeliveryQueue
+        self.encodingStrategy = tron.encodingStrategy
     }
     
     internal func responseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.ResponseSerializer<Model,APIError<ErrorModel>> {

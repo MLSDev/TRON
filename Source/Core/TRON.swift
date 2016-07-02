@@ -45,6 +45,11 @@ public class TRON : TronDelegate {
     /// Global plugins, that will receive events from all requests, created from current TRON instance.
     public var plugins : [Plugin] = []
     
+    /// Encoding strategy, based on HTTP Method. Strategy will be set for all APIRequests, and can be overrided by setting new value on APIRequest.encodingStrategy property.
+    /// Default value - TRON.URLEncodingStrategy, which always sets .URL encoding.
+    /// - Note: This behaviour will be changed in following releases to use TRON.RESTEncodingStrategy.
+    public var encodingStrategy = TRON.URLEncodingStrategy()
+    
     /// Queue, used for processing response, received from the server. Defaults to QOS_CLASS_USER_INITIATED queue
     public var processingQueue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
     
@@ -177,5 +182,29 @@ public class TRON : TronDelegate {
         configuration.HTTPAdditionalHeaders = Manager.defaultHTTPHeaders
         let manager = Manager(configuration: configuration)
         return manager
+    }
+    
+    /**
+     Encoding strategy, which always sets .URL encoding for requests.
+     */
+    public static func URLEncodingStrategy() -> Alamofire.Method -> Alamofire.ParameterEncoding {
+        return { method in
+            return .URL
+        }
+    }
+    
+    /**
+     REST encoding strategy. OPTIONS, GET, HEAD, DELETE, TRACE, CONNECT HTTP methods use .URL encoding, POST, PUT and PATCH - use JSON encoding.
+     
+     - Note: This strategy will become default in following releases. It's advised to use it for best practices.
+     */
+    public static func RESTEncodingStrategy() -> Alamofire.Method -> Alamofire.ParameterEncoding {
+        return { method in
+            switch method
+            {
+            case .POST, .PUT, .PATCH : return .JSON
+            default: return .URL
+            }
+        }
     }
 }

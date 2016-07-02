@@ -1,6 +1,19 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Master
+
+### New
+
+* `encodingStrategy` property on `TRON` instance, that is used to select encoding type based on HTTP Method.
+* `encodingStrategy` property on `APIRequest`, that will be filled with `TRON` strategy on construction.
+
+By default, for backwards compatibility reasons, we use ParameterEncoding.URL as a default strategy. This will change in next major release of TRON, which will use `TRON.RESTEncodingStrategy` instead. This encoding strategy uses .JSON encoding for POST, PUT and PATCH requests, and .URL encoding for all other HTTP methods.
+
+### Deprecated
+
+* `encoding` property on `APIRequest`. Please use `encodingStrategy` property instead.
+
 ## [1.0.0](https://github.com/MLSDev/TRON/releases/tag/1.0.0)
 
 ### Changes
