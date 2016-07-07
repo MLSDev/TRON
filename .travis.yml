@@ -8,8 +8,8 @@ matrix:
       env: ACTION=tvOS
     - os: osx
       env: ACTION=watchOS
-    - os: osx
-      env: ACTION=carthage
+    # - os: osx
+    #   env: ACTION=carthage
     # - os: osx
     #   env: ACTION=cocoapods
     # - os: osx
