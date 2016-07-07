@@ -1,3 +1,4 @@
-github "Alamofire/Alamofire" "3.4.0"
-github "ReactiveX/RxSwift" "2.5"
+github "Alamofire/Alamofire" "3.4.1"
+github "Quick/Nimble" "v4.1.0"
+github "ReactiveX/RxSwift" "2.6.0"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
