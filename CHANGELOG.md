@@ -1,9 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## Master
+## [1.1.0](https://github.com/MLSDev/TRON/releases/tag/1.1.0)
 
-### New
+### Added
 
 * `stubbingShouldBeSuccessful` property on `TRON`, that allows setting up globally, will stubs succeed or not.
 * `encodingStrategy` property on `TRON` instance, that is used to select encoding type based on HTTP Method.

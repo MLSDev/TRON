@@ -51,25 +51,25 @@ request.perform(success: { user in
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 1.0.0'
+pod 'TRON', '~> 1.1.0'
 ```
 
 Only Core subspec, without SwiftyJSON dependency:
 
 ```ruby
-pod 'TRON/Core', '~> 1.0.0'
+pod 'TRON/Core', '~> 1.1.0'
 ```
 
 RxSwift extension for TRON:
 
 ```ruby
-pod 'TRON/RxSwift', '~> 1.0.0'
+pod 'TRON/RxSwift', '~> 1.1.0'
 ```
 
 ### Carthages
 
 ```ruby
-github "MLSDev/TRON", ~> 1.0.0
+github "MLSDev/TRON", ~> 1.1.0
 ```
 
 ## Project status
