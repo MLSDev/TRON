@@ -14,7 +14,7 @@ install-watchOS:
 	true
 
 install-carthage:
-	brew uninstall --force carthage && brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/d70c21cbd277de9ac16497618f15a88ce03690b8/Formula/carthage.rb
+	true
 
 # install-cocoapods:
 # 	true
