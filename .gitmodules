@@ -3,7 +3,7 @@
 	url = https://github.com/Alamofire/Alamofire.git
 [submodule "Carthage/Checkouts/Nimble"]
 	path = Carthage/Checkouts/Nimble
-	url = https://github.com/Quick/Nimble.git
+	url = https://github.com/norio-nomura/Nimble.git
 [submodule "Carthage/Checkouts/RxSwift"]
 	path = Carthage/Checkouts/RxSwift
 	url = https://github.com/ReactiveX/RxSwift.git

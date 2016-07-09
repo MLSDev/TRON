@@ -11,7 +11,7 @@ import Alamofire
 
 public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>: BaseRequest<Model,ErrorModel>
 {
-    let multipartFormData : MultipartFormData -> Void
+    let multipartFormData : (MultipartFormData) -> Void
     
     /**
      Create MultipartAPIRequest for specified relative path.
@@ -22,7 +22,7 @@ public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseP
      
      - parameter multipartFormData: Multipart-form data creation block.
      */
-    public init(path: String, tron: TRON, multipartFormData:MultipartFormData -> Void) {
+    public init(path: String, tron: TRON, multipartFormData:(MultipartFormData) -> Void) {
         self.multipartFormData = multipartFormData
         super.init(path: path, tron: tron)
     }
@@ -38,7 +38,8 @@ public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseP
      
      - parameter encodingCompletion: Encoding completion block, that can be used to inspect encoding result. No action is required by default, therefore default value for this block is nil.
      */
-    public func performMultipart(success success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil, encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold, encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)? = nil)
+    @discardableResult
+    public func performMultipart(success: (Model) -> Void, failure: ((APIError<ErrorModel>) -> Void)? = nil, encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold, encodingCompletion: ((Manager.MultipartFormDataEncodingResult) -> Void)? = nil)
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
@@ -49,23 +50,23 @@ public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseP
             return
         }
         
-        let multipartConstructionBlock: MultipartFormData -> Void = { requestFormData in
+        let multipartConstructionBlock: (MultipartFormData) -> Void = { requestFormData in
             self.parameters.forEach { (key,value) in
-                requestFormData.appendBodyPart(data: String(value).dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: key)
+                requestFormData.appendBodyPart(data: String(value).data(using:.utf8) ?? Data(), name: key)
             }
             self.multipartFormData(requestFormData)
         }
         
-        let encodingCompletion: Manager.MultipartFormDataEncodingResult -> Void = { completion in
-            if case .Failure(let error) = completion {
+        let encodingCompletion: (Manager.MultipartFormDataEncodingResult) -> Void = { completion in
+            if case .failure(let error) = completion {
                 let apiError = APIError<ErrorModel>(request: nil, response: nil, data: nil, error: error as NSError)
                 failure?(apiError)
-            } else if case .Success(let request, _, _) = completion {
+            } else if case .success(let request, _, _) = completion {
                 let allPlugins = self.plugins + (self.tronDelegate?.plugins ?? [])
                 allPlugins.forEach {
                     $0.willSendRequest(request.request)
                 }
-                request.validate().response(queue : self.processingQueue,
+                _ = request.validate().response(queue : self.processingQueue,
                                             responseSerializer: self.responseSerializer(notifyingPlugins:allPlugins))
                 {
                     self.callSuccessFailureBlocks(success, failure: failure, response: $0)

@@ -46,22 +46,22 @@ public class ErrorBuilder<U:ResponseParseable>
      
      - returns APIError instance
      */
-    public func buildErrorFromRequest(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> APIError<U> {
+    public func buildErrorFromRequest(_ request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: NSError?) -> APIError<U> {
         return APIError<U>(request: request, response: response, data: data, error: error)
     }
 }
 
 /// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
-public struct APIError<T:ResponseParseable> : ErrorType {
+public struct APIError<T:ResponseParseable> : ErrorProtocol {
     
     /// NSURLRequest that was unsuccessful
-    public let request : NSURLRequest?
+    public let request : URLRequest?
     
     /// Response received from web service
-    public let response : NSHTTPURLResponse?
+    public let response : HTTPURLResponse?
     
     /// Data, contained in response
-    public let data : NSData?
+    public let data : Data?
     
     /// Error instance, created by Foundation Loading System or Alamofire.
     public let error : NSError?
@@ -80,7 +80,7 @@ public struct APIError<T:ResponseParseable> : ErrorType {
      
      - error: Error instance, created by Foundation Loading System or Alamofire.
      */
-    public init(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?)
+    public init(request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: NSError?)
     {
         self.request = request
         self.response = response
@@ -89,7 +89,7 @@ public struct APIError<T:ResponseParseable> : ErrorType {
 //        guard let object = try? data?.parseToAnyObject() else {
 //            return
 //        }
-        self.errorModel = try? T(data: data ?? NSData())
+        self.errorModel = try? T(data: data ?? Data())
     }
     
     /**

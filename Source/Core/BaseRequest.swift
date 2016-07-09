@@ -21,7 +21,7 @@ public protocol NSURLBuildable {
      
      - returns constructed NSURL
      */
-    func urlForPath(path: String) -> NSURL
+    func urlForPath(_ path: String) -> URL
 }
 
 /**
@@ -38,7 +38,7 @@ public protocol HeaderBuildable {
      
      - returns: HTTP headers for current request
      */
-    func headersForAuthorization(requirement: AuthorizationRequirement, headers: [String:String]) -> [String: String]
+    func headersForAuthorization(_ requirement: AuthorizationRequirement, headers: [String:String]) -> [String: String]
 }
 
 /**
@@ -47,13 +47,13 @@ public protocol HeaderBuildable {
 public enum AuthorizationRequirement {
     
     /// Request does not need authorization
-    case None
+    case none
     
     /// Request can have authorization, and may receive additional fields in response
-    case Allowed
+    case allowed
     
     /// Request requires authorization
-    case Required
+    case required
 }
 
 /// Protocol used to allow `APIRequest` to communicate with `TRON` instance.
@@ -81,21 +81,21 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
     public var parameters: [String: AnyObject] = [:]
     
     /// Selection of encoding based on HTTP method.
-    public var encodingStrategy : Alamofire.Method -> Alamofire.ParameterEncoding
+    public var encodingStrategy : (Alamofire.Method) -> Alamofire.ParameterEncoding
     
     /// Parameter encoding option.
     /// This property is deprecated and may be removed in following releases.
     /// Please use TRON.encodingStrategy property to set strategy globally, or 
     /// APIRequest encodingStrategy property to set it locally for single request.
-    @available(*, deprecated, message="Use encodingStrategy property on TRON or APIRequest.")
-    public var encoding: Alamofire.ParameterEncoding = .URL
+    @available(*, deprecated, message: "Use encodingStrategy property on TRON or APIRequest.")
+    public var encoding: Alamofire.ParameterEncoding = .url
     
     /// Headers, that should be used for current request.
     /// - Note: Resulting headers may include global headers from `TRON` instance and `Alamofire.Manager` defaultHTTPHeaders.
     public var headers : [String:String] = [:]
     
     /// Authorization requirement for current request
-    public var authorizationRequirement = AuthorizationRequirement.None
+    public var authorizationRequirement = AuthorizationRequirement.none
     
     /// Header builder for current request
     public var headerBuilder: HeaderBuildable
@@ -116,10 +116,10 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
     public var apiStub = APIStub<Model, ErrorModel>()
     
     /// Queue, used for processing response, received from the server. Defaults to TRON.processingQueue queue.
-    public var processingQueue : dispatch_queue_t
+    public var processingQueue : DispatchQueue
     
     /// Queue, used to deliver result completion blocks. Defaults to TRON.resultDeliveryQueue queue.
-    public var resultDeliveryQueue : dispatch_queue_t
+    public var resultDeliveryQueue : DispatchQueue
     
     /// Delegate property that is used to communicate with `TRON` instance.
     weak var tronDelegate : TronDelegate?
@@ -141,37 +141,37 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
     
     internal func responseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.ResponseSerializer<Model,APIError<ErrorModel>> {
         return ResponseSerializer<Model,APIError<ErrorModel>> { urlRequest, response, data, error in
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async(execute: { 
                 plugins.forEach {
                     $0.requestDidReceiveResponse(urlRequest, response,data,error)
                 }
-            }
+            })
             guard error == nil else {
-                return .Failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
+                return .failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
             }
             let model: Model
             do {
-                model = try self.responseBuilder.buildResponseFromData(data ?? NSData())
+                model = try self.responseBuilder.buildResponseFromData(data ?? Data())
             }
             catch let parsingError as NSError {
-                return .Failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
+                return .failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
             }
-            return .Success(model)
+            return .success(model)
         }
     }
     
-    internal func callSuccessFailureBlocks(success: Model -> Void,
-                                           failure: (APIError<ErrorModel> -> Void)?,
+    internal func callSuccessFailureBlocks(_ success: (Model) -> Void,
+                                           failure: ((APIError<ErrorModel>) -> Void)?,
                                            response: Alamofire.Response<Model,APIError<ErrorModel>>)
     {
         switch response.result
         {
-        case .Success(let value):
-            dispatch_async(resultDeliveryQueue) {
+        case .success(let value):
+            (resultDeliveryQueue).async {
                 success(value)
             }
-        case .Failure(let error):
-            dispatch_async(resultDeliveryQueue) {
+        case .failure(let error):
+            (resultDeliveryQueue).async {
                 failure?(error)
             }
         }

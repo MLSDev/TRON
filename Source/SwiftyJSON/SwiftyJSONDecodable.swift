@@ -36,7 +36,7 @@ public protocol JSONDecodable  : ResponseParseable {
 }
 
 public extension ResponseParseable where Self: JSONDecodable {
-    init(data: NSData) throws {
+    init(data: Data) throws {
         try self.init(json: JSON(data: data))
     }
 }

@@ -34,7 +34,7 @@ class TronTestCase: XCTestCase {
         let request : APIRequest<Int,TronError> = tron.request(path: "foo")
         request.method = .POST
         
-        if case ParameterEncoding.URL = request.encoding {
+        if case ParameterEncoding.url = request.encoding {
             
         } else {
             XCTFail()
@@ -47,7 +47,7 @@ class TronTestCase: XCTestCase {
         let request : APIRequest<Int,TronError> = tron.request(path: "foo")
         request.method = .POST
         
-        if case ParameterEncoding.JSON = request.encoding {
+        if case ParameterEncoding.json = request.encoding {
         
         } else {
             XCTFail()
@@ -55,7 +55,7 @@ class TronTestCase: XCTestCase {
         
         request.method = .GET
         
-        if case ParameterEncoding.URL = request.encoding {
+        if case ParameterEncoding.url = request.encoding {
             
         } else {
             XCTFail()

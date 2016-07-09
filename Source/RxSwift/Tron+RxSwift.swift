@@ -68,7 +68,7 @@ extension MultipartAPIRequest {
                 },
                 encodingMemoryThreshold : threshold,
                 encodingCompletion : { completion in
-                    if case let Manager.MultipartFormDataEncodingResult.Success(originalRequest, _, _) = completion {
+                    if case let Manager.MultipartFormDataEncodingResult.success(originalRequest, _, _) = completion {
                         request = originalRequest
                     }
             })

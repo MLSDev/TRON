@@ -52,7 +52,7 @@ class ApiStubbingTestCase: XCTestCase {
     func testBuildingFromFileWorks() {
         let request :APIRequest<TestUser,TronError> = tron.request(path: "f00")
         request.stubbingEnabled = true
-        request.apiStub.buildModelFromFile("user.json", inBundle: NSBundle(forClass: self.dynamicType))
+        request.apiStub.buildModelFromFile("user.json", inBundle: Bundle(for: self.dynamicType))
         
         expect(request.apiStub.model?.name) == "Alan Bradley"
         expect(request.apiStub.model?.id) == 1

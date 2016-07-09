@@ -54,10 +54,10 @@ public class TRON : TronDelegate {
     public var encodingStrategy = TRON.URLEncodingStrategy()
     
     /// Queue, used for processing response, received from the server. Defaults to QOS_CLASS_USER_INITIATED queue
-    public var processingQueue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+    public var processingQueue = DispatchQueue.global(attributes: [.qosUserInitiated])
     
     /// Queue, used to deliver result completion blocks. Defaults to dispatch_get_main_queue().
-    public var resultDeliveryQueue = dispatch_get_main_queue()
+    public var resultDeliveryQueue = DispatchQueue.main
     
     /// Alamofire.Manager instance used to send network requests
     public let manager : Alamofire.Manager
@@ -87,8 +87,8 @@ public class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    public func request<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: .Default,path: path, tron: self)
+    public func request<Model:ResponseParseable, ErrorModel:ResponseParseable>(path: String) -> APIRequest<Model,ErrorModel> {
+        return APIRequest(type: .default,path: path, tron: self)
     }
     
     /**
@@ -100,8 +100,8 @@ public class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, file: NSURL) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.UploadFromFile(file), path: path, tron: self)
+    public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path: String, file: URL) -> APIRequest<Model,ErrorModel> {
+        return APIRequest(type: RequestType.uploadFromFile(file), path: path, tron: self)
     }
     
     /**
@@ -113,8 +113,8 @@ public class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, data: NSData) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.UploadData(data), path: path, tron: self)
+    public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path: String, data: Data) -> APIRequest<Model,ErrorModel> {
+        return APIRequest(type: RequestType.uploadData(data), path: path, tron: self)
     }
     
     /**
@@ -126,8 +126,8 @@ public class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, stream: NSInputStream) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.UploadStream(stream), path: path, tron: self)
+    public func upload<Model:ResponseParseable, ErrorModel:ResponseParseable>(path: String, stream: InputStream) -> APIRequest<Model,ErrorModel> {
+        return APIRequest(type: RequestType.uploadStream(stream), path: path, tron: self)
     }
     
     /**
@@ -139,7 +139,7 @@ public class TRON : TronDelegate {
      
      - returns: MultipartAPIRequest instance.
      */
-    public func uploadMultipart<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, formData: MultipartFormData -> Void) -> MultipartAPIRequest<Model,ErrorModel> {
+    public func uploadMultipart<Model:ResponseParseable, ErrorModel:ResponseParseable>(path: String, formData: (MultipartFormData) -> Void) -> MultipartAPIRequest<Model,ErrorModel> {
         return MultipartAPIRequest(path: path, tron: self, multipartFormData: formData)
     }
     
@@ -154,8 +154,8 @@ public class TRON : TronDelegate {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    public func download<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, destination: Request.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.Download(destination), path: path, tron: self)
+    public func download<Model:ResponseParseable, ErrorModel:ResponseParseable>(path: String, destination: Request.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
+        return APIRequest(type: RequestType.download(destination), path: path, tron: self)
     }
     
     /**
@@ -171,8 +171,8 @@ public class TRON : TronDelegate {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    public func download<Model:ResponseParseable, ErrorModel:ResponseParseable>(path path: String, destination: Request.DownloadFileDestination, resumingFromData: NSData) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.DownloadResuming(data: resumingFromData, destination: destination), path: path, tron: self)
+    public func download<Model:ResponseParseable, ErrorModel:ResponseParseable>(path: String, destination: Request.DownloadFileDestination, resumingFromData: Data) -> APIRequest<Model,ErrorModel> {
+        return APIRequest(type: RequestType.downloadResuming(data: resumingFromData, destination: destination), path: path, tron: self)
     }
     
     /**
@@ -181,8 +181,8 @@ public class TRON : TronDelegate {
      - returns Alamofire.Manager instance initialized with NSURLSessionConfiguration.defaultSessionConfiguration().
      */
     public final class func defaultAlamofireManager() -> Manager {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.HTTPAdditionalHeaders = Manager.defaultHTTPHeaders
+        let configuration = URLSessionConfiguration.default
+        configuration.httpAdditionalHeaders = Manager.defaultHTTPHeaders
         let manager = Manager(configuration: configuration)
         return manager
     }
@@ -190,9 +190,9 @@ public class TRON : TronDelegate {
     /**
      Encoding strategy, which always sets .URL encoding for requests.
      */
-    public static func URLEncodingStrategy() -> Alamofire.Method -> Alamofire.ParameterEncoding {
+    public static func URLEncodingStrategy() -> (Alamofire.Method) -> Alamofire.ParameterEncoding {
         return { method in
-            return .URL
+            return .url
         }
     }
     
@@ -201,12 +201,12 @@ public class TRON : TronDelegate {
      
      - Note: This strategy will become default in following releases. It's advised to use it for best practices.
      */
-    public static func RESTEncodingStrategy() -> Alamofire.Method -> Alamofire.ParameterEncoding {
+    public static func RESTEncodingStrategy() -> (Alamofire.Method) -> Alamofire.ParameterEncoding {
         return { method in
             switch method
             {
-            case .POST, .PUT, .PATCH : return .JSON
-            default: return .URL
+            case .POST, .PUT, .PATCH : return .json
+            default: return .url
             }
         }
     }

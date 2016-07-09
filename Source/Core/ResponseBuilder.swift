@@ -31,7 +31,7 @@ public protocol ResponseParseable {
     /**
     Parse response into concrete Model.
     */
-    init(data: NSData) throws
+    init(data: Data) throws
 }
 
 /**
@@ -49,7 +49,7 @@ public class ResponseBuilder<T:ResponseParseable>
 //     
 //     - returns parsed model.
 //     */
-    public func buildResponseFromData(data : NSData) throws -> T {
+    public func buildResponseFromData(_ data : Data) throws -> T {
         return try T(data: data)
     }
 }

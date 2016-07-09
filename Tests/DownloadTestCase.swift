@@ -14,8 +14,8 @@ import Nimble
 
 class DownloadTestCase: XCTestCase {
     
-    let searchPathDirectory = NSSearchPathDirectory.CachesDirectory
-    let searchPathDomain = NSSearchPathDomainMask.UserDomainMask
+    let searchPathDirectory = FileManager.SearchPathDirectory.cachesDirectory
+    let searchPathDomain = FileManager.SearchPathDomainMask.userDomainMask
     var tron: TRON!
     
     override func setUp() {
@@ -31,20 +31,20 @@ class DownloadTestCase: XCTestCase {
             domain: searchPathDomain
         )
         let request: APIRequest<EmptyResponse,TronError> = tron.download(path: "/stream/100", destination: destination)
-        let expectation = expectationWithDescription("Download expectation")
+        let expectation = self.expectation(withDescription: "Download expectation")
         request.perform(completion: { result in
             expectation.fulfill()
         })
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectations(withTimeout: 5, handler: nil)
         
-        let fileManager = NSFileManager.defaultManager()
-        let directory = fileManager.URLsForDirectory(searchPathDirectory, inDomains: self.searchPathDomain)[0]
+        let fileManager = FileManager.default
+        let directory = fileManager.urlsForDirectory(searchPathDirectory, inDomains: self.searchPathDomain)[0]
         
         do {
-            let contents = try fileManager.contentsOfDirectoryAtURL(
-                directory,
+            let contents = try fileManager.contentsOfDirectory(
+                at: directory,
                 includingPropertiesForKeys: nil,
-                options: .SkipsHiddenFiles
+                options: .skipsHiddenFiles
             )
             
             #if os(iOS) || os(tvOS)
@@ -53,25 +53,25 @@ class DownloadTestCase: XCTestCase {
                 let suggestedFilename = "100.json"
             #endif
             
-            let predicate = NSPredicate(format: "lastPathComponent = '\(suggestedFilename)'")
-            let filteredContents = (contents as NSArray).filteredArrayUsingPredicate(predicate)
+            let predicate = Predicate(format: "lastPathComponent = '\(suggestedFilename)'")
+            let filteredContents = (contents as NSArray).filtered(using: predicate)
             XCTAssertEqual(filteredContents.count, 1, "should have one file in Documents")
             
-            if let file = filteredContents.first as? NSURL {
+            if let file = filteredContents.first as? URL {
                 XCTAssertEqual(
                     file.lastPathComponent ?? "",
                     "\(suggestedFilename)",
                     "filename should be \(suggestedFilename)"
                 )
                 
-                if let data = NSData(contentsOfURL: file) {
-                    XCTAssertGreaterThan(data.length, 0, "data length should be non-zero")
+                if let data = try? Data(contentsOf: file) {
+                    XCTAssertGreaterThan(data.count, 0, "data length should be non-zero")
                 } else {
                     XCTFail("data should exist for contents of URL")
                 }
                 
                 do {
-                    try fileManager.removeItemAtURL(file)
+                    try fileManager.removeItem(at: file)
                 } catch {
                     XCTFail("file manager should remove item at URL: \(file)")
                 }
@@ -93,7 +93,7 @@ class DownloadTestCase: XCTestCase {
         )
         let path = "/wikipedia/commons/6/69/NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg"
         let request: APIRequest<EmptyResponse,TronError> = tron.download(path: path, destination: destination)
-        let expectation = expectationWithDescription("Download expectation")
+        let expectation = self.expectation(withDescription: "Download expectation")
         let alamofireRequest = request.perform(completion: { result in
             expectation.fulfill()
         })
@@ -101,7 +101,7 @@ class DownloadTestCase: XCTestCase {
             print("progress ",$0,$1,$2)
             alamofireRequest?.cancel()
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
         
         guard let resumeData = alamofireRequest?.resumeData else {
             XCTFail("request should produce resume data")
@@ -109,21 +109,21 @@ class DownloadTestCase: XCTestCase {
         }
         
         let continueDownloadRequest : APIRequest<EmptyResponse,TronError> = tron.download(path: path, destination: destination, resumingFromData : resumeData)
-        let continueExpectation = expectationWithDescription("Continue download expectation")
+        let continueExpectation = self.expectation(withDescription: "Continue download expectation")
         continueDownloadRequest.perform(completion: { result in
             continueExpectation.fulfill()
         })
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
         
-        let fileManager = NSFileManager.defaultManager()
-        let directory = fileManager.URLsForDirectory(searchPathDirectory, inDomains: self.searchPathDomain)[0]
+        let fileManager = FileManager.default
+        let directory = fileManager.urlsForDirectory(searchPathDirectory, inDomains: self.searchPathDomain)[0]
         
         do {
-            let contents = try fileManager.contentsOfDirectoryAtURL(
-                directory,
+            let contents = try fileManager.contentsOfDirectory(
+                at: directory,
                 includingPropertiesForKeys: nil,
-                options: .SkipsHiddenFiles
+                options: .skipsHiddenFiles
             )
             
             #if os(iOS) || os(tvOS)
@@ -132,25 +132,25 @@ class DownloadTestCase: XCTestCase {
                 let suggestedFilename = "NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg"
             #endif
             
-            let predicate = NSPredicate(format: "lastPathComponent = '\(suggestedFilename)'")
-            let filteredContents = (contents as NSArray).filteredArrayUsingPredicate(predicate)
+            let predicate = Predicate(format: "lastPathComponent = '\(suggestedFilename)'")
+            let filteredContents = (contents as NSArray).filtered(using: predicate)
             XCTAssertEqual(filteredContents.count, 1, "should have one file in Documents")
             
-            if let file = filteredContents.first as? NSURL {
+            if let file = filteredContents.first as? URL {
                 XCTAssertEqual(
                     file.lastPathComponent ?? "",
                     "\(suggestedFilename)",
                     "filename should be \(suggestedFilename)"
                 )
                 
-                if let data = NSData(contentsOfURL: file) {
-                    XCTAssertGreaterThan(data.length, 0, "data length should be non-zero")
+                if let data = try? Data(contentsOf: file) {
+                    XCTAssertGreaterThan(data.count, 0, "data length should be non-zero")
                 } else {
                     XCTFail("data should exist for contents of URL")
                 }
                 
                 do {
-                    try fileManager.removeItemAtURL(file)
+                    try fileManager.removeItem(at: file)
                 } catch {
                     XCTFail("file manager should remove item at URL: \(file)")
                 }

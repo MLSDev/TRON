@@ -49,7 +49,11 @@ public  class URLBuilder : NSURLBuildable {
      
      - returns constructed NSURL
      */
-    public func urlForPath(path: String) -> NSURL {
-        return NSURL(string: baseURLString)?.URLByAppendingPathComponent(path) ?? NSURL()
+    public func urlForPath(_ path: String) -> URL {
+        do {
+            return try URL(string: baseURLString)?.appendingPathComponent(path) ?? NSURL() as URL
+        } catch {
+            return NSURL() as URL
+        }
     }
 }

@@ -38,18 +38,18 @@ public class NetworkLoggerPlugin : Plugin {
     
     public init() {}
     
-    public func willSendRequest(request: NSURLRequest?) {
+    public func willSendRequest(_ request: URLRequest?) {
         
     }
     
-    public func requestDidReceiveResponse(response: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?)) {
+    public func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, NSError?)) {
         if response.3 != nil {
             if logFailures {
-                print("[Request] error\n ->  \(response.0?.URLString ?? "")) \n Response: \(response.1)\n ResponseString: \(String.init(data: response.2 ?? NSData(), encoding: NSUTF8StringEncoding)) \n Error: \(response.3)")
+                print("[Request] error\n ->  \(response.0?.urlString ?? "")) \n Response: \(response.1)\n ResponseString: \(String.init(data: response.2 ?? Data(), encoding: String.Encoding.utf8)) \n Error: \(response.3)")
             }
         } else {
             if logSuccess {
-                print("[Request] success\n ->  \(response.0?.URLString ?? "")")
+                print("[Request] success\n ->  \(response.0?.urlString ?? "")")
             }
         }
     }

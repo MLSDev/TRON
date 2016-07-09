@@ -27,7 +27,7 @@ class PluginTestCase: XCTestCase {
         let pluginTester = PluginTester()
         let tron = TRON(baseURL: "http://httpbin.org")
         let request: APIRequest<String,Int> = tron.request(path: "status/200")
-        let expectation = expectationWithDescription("PluginTester expectation")
+        let expectation = self.expectation(withDescription: "PluginTester expectation")
         request.plugins.append(pluginTester)
         request.perform(success: { _ in
             if pluginTester.didReceiveResponseCalled && pluginTester.willSendCalled {
@@ -39,7 +39,7 @@ class PluginTestCase: XCTestCase {
             }
         })
         
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
     }
     
     func testPluginsAreInitializable() {

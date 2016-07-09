@@ -26,13 +26,10 @@
 import Foundation
 import Alamofire
 
-private func delay(delay:Double, closure:()->()) {
-    dispatch_after(
-        dispatch_time(
-            DISPATCH_TIME_NOW,
-            Int64(delay * Double(NSEC_PER_SEC))
-        ),
-        dispatch_get_main_queue(), closure)
+private func delay(_ delay:Double, closure:()->()) {
+    DispatchQueue.main.after(
+        when: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC),
+        execute: closure)
 }
 
 public extension APIStub {
@@ -42,10 +39,10 @@ public extension APIStub {
      - parameter fileName: Name of the file to build response from
      - parameter bundle: bundle to look for file.
      */
-    public func buildModelFromFile(fileName: String, inBundle bundle: NSBundle = NSBundle.mainBundle()) {
+    public func buildModelFromFile(_ fileName: String, inBundle bundle: Bundle = Bundle.main) {
         if let filePath = bundle.pathForResource(fileName as String, ofType: nil)
         {
-            guard let data = NSData(contentsOfFile: filePath) else {
+            guard let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) else {
                     print("failed building response model from file: \(filePath)")
                 return
             }
@@ -78,7 +75,7 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
      
      - parameter failure: Failure block to be executed if request fails. Nil by default.
      */
-    public func performStubWithSuccess(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) {
+    public func performStubWithSuccess(_ success: (Model) -> Void, failure: ((APIError<ErrorModel>) -> Void)? = nil) {
         if let model = model where successful {
             delay(stubDelay) {
                 success(model)
@@ -95,16 +92,16 @@ public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
      
      - parameter completion: Completion block to be executed when request is stubbed.
      */
-    public func performStubWithCompletion(completion : (Alamofire.Response<Model,APIError<ErrorModel>> -> Void)) {
+    public func performStubWithCompletion(_ completion : ((Alamofire.Response<Model,APIError<ErrorModel>>) -> Void)) {
         delay(stubDelay) {
             let result : Alamofire.Result<Model,APIError<ErrorModel>>
             if let model = self.model where self.successful {
-                result = Result.Success(model)
+                result = Result.success(model)
             } else if let error = self.error {
-                result = Result.Failure(error)
+                result = Result.failure(error)
             } else {
                 let error : APIError<ErrorModel> = APIError(request: nil, response: nil, data: nil, error: nil)
-                result = Result.Failure(error)
+                result = Result.failure(error)
             }
             let response: Alamofire.Response<Model, APIError<ErrorModel>> = Alamofire.Response(request: nil, response: nil, data: nil, result: result)
             completion(response)

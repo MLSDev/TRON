@@ -51,7 +51,7 @@ public class HeaderBuilder: HeaderBuildable {
      
      - returns: HTTP headers for current request
      */
-    public func headersForAuthorization(requirement: AuthorizationRequirement, headers: [String : String]) -> [String : String] {
+    public func headersForAuthorization(_ requirement: AuthorizationRequirement, headers: [String : String]) -> [String : String] {
         var combinedHeaders = defaultHeaders
         headers.forEach {
             combinedHeaders[$0.0] = $0.1

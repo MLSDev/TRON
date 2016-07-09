@@ -22,38 +22,38 @@ class RxSwiftExtensionTestCase: XCTestCase {
     
     func testRxResultSuccessfullyCompletes() {
         let request : APIRequest<String,TronError> = tron.request(path: "get")
-        let expectation = expectationWithDescription("200")
+        let expectation = self.expectation(withDescription: "200")
         _ = request.rxResult().subscribeNext { _ in
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
     }
     
     func testRxResultIsClosedAfterSuccessfulResponse() {
         let request : APIRequest<String,TronError> = tron.request(path: "get")
-        let expectation = expectationWithDescription("200")
+        let expectation = self.expectation(withDescription: "200")
         _ = request.rxResult().subscribeCompleted { _ in
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
     }
     
     func testRxResultCanBeFailed() {
         let request : APIRequest<Int,TronError> = tron.request(path: "status/418")
-        let expectation = expectationWithDescription("Teapot")
+        let expectation = self.expectation(withDescription: "Teapot")
         _ = request.rxResult().subscribeError { _ in
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
     }
     
     func testMultipartRxCanBeSuccessful() {
         let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { formData in
-            formData.appendBodyPart(data: "bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
+            formData.appendBodyPart(data: "bar".data(using: .utf8) ?? Data(), name: "foo")
         }
         request.method = .POST
         
-        let expectation = expectationWithDescription("foo")
+        let expectation = self.expectation(withDescription: "foo")
         
         _ = request.rxMultipartResult().subscribeNext { result in
             if let dictionary = result.response["form"] as? [String:String] {
@@ -62,19 +62,19 @@ class RxSwiftExtensionTestCase: XCTestCase {
                 }
             }
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
     }
     
     func testMultipartRxCanBeFailureful() {
         let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { formData in
-            formData.appendBodyPart(data: "bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
+            formData.appendBodyPart(data: "bar".data(using: .utf8) ?? Data(), name: "foo")
         }
         
-        let expectation = expectationWithDescription("foo")
+        let expectation = self.expectation(withDescription: "foo")
         
         _ = request.rxMultipartResult().subscribeError { error in
             expectation.fulfill()
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(withTimeout: 10, handler: nil)
     }
 }
