@@ -43,15 +43,15 @@ public class NetworkActivityPlugin : Plugin {
      */
     var networkActivityCount = 0 {
         didSet {
-            application.networkActivityIndicatorVisible = networkActivityCount > 0
+            application.isNetworkActivityIndicatorVisible = networkActivityCount > 0
         }
     }
     
-    public func willSendRequest(request: NSURLRequest?) {
+    public func willSendRequest(_ request: URLRequest?) {
         networkActivityCount += 1
     }
     
-    public func requestDidReceiveResponse(response: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?)) {
+    public func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, NSError?)) {
         networkActivityCount -= 1
     }
 }

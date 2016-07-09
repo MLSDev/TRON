@@ -45,7 +45,7 @@ class PluginTestCase: XCTestCase {
     func testPluginsAreInitializable() {
         let _ = NetworkLoggerPlugin()
         #if os(iOS)
-            let _ = NetworkActivityPlugin(application: UIApplication.sharedApplication())
+            let _ = NetworkActivityPlugin(application: UIApplication.shared())
         #endif
         
     }
