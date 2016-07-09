@@ -118,7 +118,7 @@ class UploadTestCase: XCTestCase {
     }
     
     func testIntParametersAreAcceptedAsMultipartParameters() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { $0 }
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { _ in }
         request.method = .POST
         request.parameters = ["foo":1]
         
@@ -134,7 +134,7 @@ class UploadTestCase: XCTestCase {
     }
     
     func testBoolParametersAreAcceptedAsMultipartParameters() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { $0 }
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { _ in }
         request.method = .POST
         request.parameters = ["foo":true]
         

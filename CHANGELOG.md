@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Swift3 branch
+
+### Removals
+
+* `encoding` property on `APIRequest` - use `encodingStrategy` closure instead.
+
 ## [1.1.0](https://github.com/MLSDev/TRON/releases/tag/1.1.0)
 
 ### Added

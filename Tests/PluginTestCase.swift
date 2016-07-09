@@ -61,7 +61,7 @@ class PluginTestCase: XCTestCase {
         request.plugins.append(localPluginTester)
         tron.plugins.append(globalPluginTester)
         
-        request.performMultipart(success: { $0 })
+        request.performMultipart(success: { _ = $0 })
         
         expect(localPluginTester.willSendCalled).toEventually(equal(true))
         expect(globalPluginTester.willSendCalled).toEventually(equal(true))

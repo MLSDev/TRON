@@ -58,7 +58,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         case .default:
             return manager.request(method, urlBuilder.urlForPath(path),
                                    parameters: parameters,
-                                   encoding: encoding,
+                                   encoding: encodingStrategy(method),
                                    headers:  headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
             
         case .uploadFromFile(let url):
@@ -79,7 +79,7 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         case .download(let destination):
             return manager.download(method, urlBuilder.urlForPath(path),
                                     parameters: parameters,
-                                    encoding: encoding,
+                                    encoding: encodingStrategy(method),
                                     headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
                                     destination: destination)
         
