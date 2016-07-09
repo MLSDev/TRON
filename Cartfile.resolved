@@ -1,4 +1,4 @@
-github "Alamofire/Alamofire" "3.4.1"
+github "Alamofire/Alamofire" "8c98469c299229847aaa69238ff65c0447f312ac"
 github "Quick/Nimble" "v4.1.0"
 github "ReactiveX/RxSwift" "2.6.0"
 github "SwiftyJSON/SwiftyJSON" "2.3.3"
