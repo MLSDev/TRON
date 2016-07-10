@@ -73,6 +73,9 @@
 		9A51AAC21CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */; };
 		9A51AAC31CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */; };
 		9A51AAC41CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */; };
+		9A67F8F81D3282C300AA6B69 /* ParseableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67F8F71D3282C300AA6B69 /* ParseableTestCase.swift */; };
+		9A67F8F91D3282C300AA6B69 /* ParseableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67F8F71D3282C300AA6B69 /* ParseableTestCase.swift */; };
+		9A67F8FA1D3282C300AA6B69 /* ParseableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67F8F71D3282C300AA6B69 /* ParseableTestCase.swift */; };
 		9A6AD3721CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */; };
 		9A6AD3731CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */; };
 		9A6AD3741CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */; };
@@ -634,6 +637,7 @@
 		9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxSwiftExtensionTestCase.swift; path = Tests/RxSwiftExtensionTestCase.swift; sourceTree = "<group>"; };
 		9A6693561CEF2A7C007CBC45 /* Unbox.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Unbox.playground; path = "Custom mappers/Unbox.playground"; sourceTree = "<group>"; };
 		9A6693571CEF30EF007CBC45 /* ObjectMapper.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = ObjectMapper.playground; path = "Custom mappers/ObjectMapper.playground"; sourceTree = "<group>"; };
+		9A67F8F71D3282C300AA6B69 /* ParseableTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseableTestCase.swift; path = Tests/ParseableTestCase.swift; sourceTree = "<group>"; };
 		9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadTestCase.swift; path = Tests/UploadTestCase.swift; sourceTree = "<group>"; };
 		9A704E4F1C5D01B300392DE5 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A704E511C5D01B300392DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -863,6 +867,7 @@
 				9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */,
 				9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */,
 				9ABDA2241CE7626F00E1A2D9 /* DownloadTestCase.swift */,
+				9A67F8F71D3282C300AA6B69 /* ParseableTestCase.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -1639,6 +1644,7 @@
 				9A6AD3731CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */,
 				9A90CC751C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */,
 				9A51AAC31CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */,
+				9A67F8F91D3282C300AA6B69 /* ParseableTestCase.swift in Sources */,
 				9A90CC841C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */,
 				9A90CC6F1C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */,
 				9A90CC6C1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */,
@@ -1679,6 +1685,7 @@
 				9A6AD3741CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */,
 				9A90CC761C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */,
 				9A51AAC41CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */,
+				9A67F8FA1D3282C300AA6B69 /* ParseableTestCase.swift in Sources */,
 				9A90CC851C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */,
 				9A90CC701C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */,
 				9A90CC6D1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */,
@@ -1751,6 +1758,7 @@
 				9A6AD3721CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */,
 				9A90CC741C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */,
 				9A51AAC21CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */,
+				9A67F8F81D3282C300AA6B69 /* ParseableTestCase.swift in Sources */,
 				9A90CC831C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */,
 				9A90CC6E1C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */,
 				9A90CC6B1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */,

@@ -25,32 +25,12 @@
 
 import Foundation
 
-/// Generic parsing protocol, used as generic constraint in `APIRequest`. It can be adopted to be used with various mappers. For example, JSONDecodable protocol demonstrates `ResponseParseable` protocol usage with SwiftyJSON mapper.
-public protocol ResponseParseable {
-    
-    /**
-    Parse response into concrete Model.
-    */
-    init(data: Data) throws
+public protocol Parseable {
+    static func parse<T:Parseable>(data: Data) throws -> T
 }
 
-/**
- Default ResponseBuilder.
- */
-public class ResponseBuilder<T:ResponseParseable>
+public enum ParsingError : ErrorProtocol
 {
-    /// Initialize default response builder
-    public init() {}
-//    
-//    /**
-//     Create model from NSData HTTP response.
-//     
-//     - parameter data: NSData response
-//     
-//     - returns parsed model.
-//     */
-    public func buildResponseFromData(_ data : Data) throws -> T {
-        return try T(data: data)
-    }
+    case wrongType
+    case constructionFailed
 }
-

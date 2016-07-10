@@ -46,7 +46,7 @@ public extension APIStub {
                     print("failed building response model from file: \(filePath)")
                 return
             }
-            model = try? Model(data: data)
+            model = try? Model.parse(data: data)
         }
     }
 }
@@ -54,7 +54,7 @@ public extension APIStub {
 /**
  `APIStub` instance that is used to represent stubbed successful or unsuccessful response value.
  */
-public class APIStub<Model: ResponseParseable, ErrorModel: ResponseParseable> {
+public class APIStub<Model: Parseable, ErrorModel: Parseable> {
     
     /// Should the stub be successful. By default - true
     public var successful = true

@@ -66,7 +66,7 @@ public protocol TronDelegate: class {
     var plugins : [Plugin] { get }
 }
 
-public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable> {
+public class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
     /// Relative path of current request
     public let path: String
     
@@ -91,9 +91,6 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
     
     /// URL builder for current request
     public var urlBuilder: NSURLBuildable
-    
-    /// Response builder for current request
-    public var responseBuilder = ResponseBuilder<Model>()
     
     /// Error builder for current request
     public var errorBuilder = ErrorBuilder<ErrorModel>()
@@ -140,7 +137,7 @@ public class BaseRequest<Model: ResponseParseable, ErrorModel: ResponseParseable
             }
             let model: Model
             do {
-                model = try self.responseBuilder.buildResponseFromData(data ?? Data())
+                model = try Model.parse(data: data ?? Data())
             }
             catch let parsingError as NSError {
                 return .failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))

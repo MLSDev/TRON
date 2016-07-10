@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-public class MultipartAPIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>: BaseRequest<Model,ErrorModel>
+public class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Model,ErrorModel>
 {
     let multipartFormData : (MultipartFormData) -> Void
     

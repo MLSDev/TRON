@@ -49,7 +49,7 @@ public enum RequestType {
 /**
  `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. It is reusable and configurable for any needs.
  */
-public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>: BaseRequest<Model,ErrorModel> {
+public class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Model,ErrorModel> {
     
     internal let requestType: RequestType
     

@@ -15,7 +15,7 @@ import SwiftyJSON
 class TestResponse : JSONDecodable {
     let response : [String:AnyObject]
     
-    required init(json: JSON) {
+    required init(json: JSON) throws {
         response = json.dictionaryObject ?? [:]
     }
 }
