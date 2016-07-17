@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ### API changes
 
+* `ResponseParseable` was rewritten and renamed to `Parseable`. It now allows creating models without using a constructor. Therefore, it's now possibly to use really any kind of mapper and make factory-like response builders.
 * Success blocks on `APIRequest` are now optional and equal to nil by default.
 
 ### Renamings
@@ -13,6 +14,8 @@ All notable changes to this project will be documented in this file.
 
 ### Removals
 
+* `responseBuilder` property on `APIRequest` was removed, as it's no longer used when parsing received response.
+* `JSONDecodable` extension on `Array` is temporarily unavailable due to issues with Swift compiler.
 * `encoding` property on `APIRequest` - use `encodingStrategy` closure instead.
 
 ## [1.1.0](https://github.com/MLSDev/TRON/releases/tag/1.1.0)
