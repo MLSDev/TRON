@@ -75,10 +75,10 @@ public class APIStub<Model: Parseable, ErrorModel: Parseable> {
      
      - parameter failure: Failure block to be executed if request fails. Nil by default.
      */
-    public func performStubWithSuccess(_ success: (Model) -> Void, failure: ((APIError<ErrorModel>) -> Void)? = nil) {
+    public func performStubWithSuccess(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) {
         if let model = model where successful {
             delay(stubDelay) {
-                success(model)
+                success?(model)
             }
         } else if let error = error {
             delay(stubDelay) {

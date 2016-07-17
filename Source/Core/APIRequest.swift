@@ -110,7 +110,7 @@ public class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mo
      - returns: Alamofire.Request or nil if request was stubbed.
      */
     @discardableResult
-    public func perform(success: (Model) -> Void, failure: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.Request?
+    public func perform(success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.Request?
     {
         if stubbingEnabled {
             apiStub.performStubWithSuccess(success, failure: failure)
@@ -119,6 +119,11 @@ public class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mo
         return performAlamofireRequest(success, failure: failure)
     }
     
+    @available(*,unavailable,renamed:"performCollectingTimeline")
+    @discardableResult
+    public func perform(completion: ((Alamofire.Response<Model,APIError<ErrorModel>>) -> Void)) -> Alamofire.Request? {
+        return nil
+    }
     /**
      Perform current request with completion block, that contains Alamofire.Response.
      
@@ -127,7 +132,7 @@ public class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mo
      - returns: Alamofire.Request or nil if request was stubbed.
     */
     @discardableResult
-    public func perform(completion: ((Alamofire.Response<Model,APIError<ErrorModel>>) -> Void)) -> Alamofire.Request? {
+    public func performCollectingTimeline(withCompletion completion: ((Alamofire.Response<Model,APIError<ErrorModel>>) -> Void)) -> Alamofire.Request? {
         if stubbingEnabled {
             apiStub.performStubWithCompletion(completion)
             return nil
@@ -156,7 +161,7 @@ public class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mo
         return request.validate().response(queue: processingQueue,responseSerializer: responseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
     }
     
-    private func performAlamofireRequest(_ success: (Model) -> Void, failure: ((APIError<ErrorModel>) -> Void)?) -> Alamofire.Request
+    private func performAlamofireRequest(_ success: ((Model) -> Void)?, failure: ((APIError<ErrorModel>) -> Void)?) -> Alamofire.Request
     {
         return performAlamofireRequest {
             self.callSuccessFailureBlocks(success, failure: failure, response: $0)

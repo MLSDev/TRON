@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## Swift3 branch
 
+### API changes
+
+* Success blocks on `APIRequest` are now optional and equal to nil by default.
+
+### Renamings
+
+* `perform(completion:)` method was renamed to `performCollectingTimeline(withCompletion:)` to better match method internal behaviour
+
 ### Removals
 
 * `encoding` property on `APIRequest` - use `encodingStrategy` closure instead.

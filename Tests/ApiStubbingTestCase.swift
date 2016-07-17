@@ -76,7 +76,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.stubbingEnabled = true
         request.apiStub.model = 5
         
-        request.perform(completion: { response in
+        request.performCollectingTimeline(withCompletion: { response in
             expect(response.result.value) == 5
         })
     }
@@ -86,7 +86,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.stubbingEnabled = true
         request.apiStub.error = APIError<Int>(errorModel: 5)
         
-        request.perform { response in
+        request.performCollectingTimeline { response in
             expect(response.result.error?.errorModel) == 5
         }
     }

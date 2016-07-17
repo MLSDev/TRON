@@ -146,7 +146,7 @@ public class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
         }
     }
     
-    internal func callSuccessFailureBlocks(_ success: (Model) -> Void,
+    internal func callSuccessFailureBlocks(_ success: ((Model) -> Void)?,
                                            failure: ((APIError<ErrorModel>) -> Void)?,
                                            response: Alamofire.Response<Model,APIError<ErrorModel>>)
     {
@@ -154,7 +154,7 @@ public class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
         {
         case .success(let value):
             (resultDeliveryQueue).async {
-                success(value)
+                success?(value)
             }
         case .failure(let error):
             (resultDeliveryQueue).async {

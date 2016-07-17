@@ -32,7 +32,7 @@ class DownloadTestCase: XCTestCase {
         )
         let request: APIRequest<EmptyResponse,TronError> = tron.download(path: "/stream/100", destination: destination)
         let expectation = self.expectation(withDescription: "Download expectation")
-        request.perform(completion: { result in
+        request.performCollectingTimeline(withCompletion: { result in
             expectation.fulfill()
         })
         waitForExpectations(withTimeout: 5, handler: nil)
@@ -94,7 +94,7 @@ class DownloadTestCase: XCTestCase {
         let path = "/wikipedia/commons/6/69/NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg"
         let request: APIRequest<EmptyResponse,TronError> = tron.download(path: path, destination: destination)
         let expectation = self.expectation(withDescription: "Download expectation")
-        let alamofireRequest = request.perform(completion: { result in
+        let alamofireRequest = request.performCollectingTimeline(withCompletion: { result in
             expectation.fulfill()
         })
         alamofireRequest?.progress { //_,_,_ in
@@ -110,7 +110,7 @@ class DownloadTestCase: XCTestCase {
         
         let continueDownloadRequest : APIRequest<EmptyResponse,TronError> = tron.download(path: path, destination: destination, resumingFromData : resumeData)
         let continueExpectation = self.expectation(withDescription: "Continue download expectation")
-        continueDownloadRequest.perform(completion: { result in
+        continueDownloadRequest.performCollectingTimeline(withCompletion: { result in
             continueExpectation.fulfill()
         })
         
