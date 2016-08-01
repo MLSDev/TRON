@@ -57,7 +57,9 @@ extension MultipartAPIRequest {
      
      - returns: Observable<Model>
      */
-    public func rxMultipartResult(memoryThreshold threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model> {
+    public func rxMultipartResult(memoryThreshold threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+                                                  progressClosure: ((bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) -> Void)? = nil
+                                                  ) -> Observable<Model> {
         return Observable.create { observer in
             var request : Alamofire.Request?
             self.performMultipart(success: { result in
@@ -69,6 +71,9 @@ extension MultipartAPIRequest {
                 encodingMemoryThreshold : threshold,
                 encodingCompletion : { completion in
                     if case let Manager.MultipartFormDataEncodingResult.Success(originalRequest, _, _) = completion {
+                        if let progressClosure = progressClosure {
+                            originalRequest.progress(progressClosure)
+                        }
                         request = originalRequest
                     }
             })
