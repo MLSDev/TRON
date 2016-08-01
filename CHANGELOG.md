@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.1.1](https://github.com/MLSDev/TRON/releases/tag/1.1.1)
+
+### Added
+
+* Optional `progressClosure` parameter to `rxMultipartUpload` method for multipart requests
+
 ## [1.1.0](https://github.com/MLSDev/TRON/releases/tag/1.1.0)
 
 ### Added
