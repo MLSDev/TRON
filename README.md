@@ -66,10 +66,10 @@ RxSwift extension for TRON:
 pod 'TRON/RxSwift', '~> 1.1.0'
 ```
 
-### Carthages
+### Carthage
 
 ```ruby
-github "MLSDev/TRON", ~> 1.1.0
+github "MLSDev/TRON" ~> 1.1.0
 ```
 
 ## Project status
