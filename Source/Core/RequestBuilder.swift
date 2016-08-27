@@ -28,7 +28,7 @@ import Foundation
 /**
  `URLBuilder` constructs resulting NSURL by calling `URLByAppendingPathComponent` method on baseURL.
  */
-open  class URLBuilder : NSURLBuildable {
+open class URLBuilder : NSURLBuildable {
     
     /// Base URL string
     open let baseURLString : String

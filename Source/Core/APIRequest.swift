@@ -137,7 +137,7 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
         }
     }
     
-    fileprivate func performAlamofireRequest(_ completion : @escaping (Response<Model,APIError<ErrorModel>>) -> Void) -> Alamofire.Request
+    private func performAlamofireRequest(_ completion : @escaping (Response<Model,APIError<ErrorModel>>) -> Void) -> Alamofire.Request
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
@@ -154,7 +154,7 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
         return request.validate().response(queue: processingQueue,responseSerializer: responseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
     }
     
-    fileprivate func performAlamofireRequest(_ success: ((Model) -> Void)?, failure: ((APIError<ErrorModel>) -> Void)?) -> Alamofire.Request
+    private func performAlamofireRequest(_ success: ((Model) -> Void)?, failure: ((APIError<ErrorModel>) -> Void)?) -> Alamofire.Request
     {
         return performAlamofireRequest {
             self.callSuccessFailureBlocks(success, failure: failure, response: $0)

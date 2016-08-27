@@ -69,12 +69,10 @@ class RxSwiftExtensionTestCase: XCTestCase {
         let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
             formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
         }
-        
+        request.method = .delete
         let expectation = self.expectation(description: "foo")
         
-        _ = request.rxMultipartResult().subscribe(onNext: { _ in
-                print("fuck you")
-            }, onError: { error in
+        _ = request.rxMultipartResult().subscribe(onError: { error in
             expectation.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)

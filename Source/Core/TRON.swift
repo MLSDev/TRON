@@ -190,7 +190,7 @@ open class TRON : TronDelegate {
     /**
      Encoding strategy, which always sets .URL encoding for requests.
      */
-    public static func URLEncodingStrategy() -> (Alamofire.HTTPMethod) -> Alamofire.ParameterEncoding {
+    open static func URLEncodingStrategy() -> (Alamofire.HTTPMethod) -> Alamofire.ParameterEncoding {
         return { method in
             return .url
         }
@@ -201,7 +201,7 @@ open class TRON : TronDelegate {
      
      - Note: This strategy will become default in following releases. It's advised to use it for best practices.
      */
-    public static func RESTEncodingStrategy() -> (Alamofire.HTTPMethod) -> Alamofire.ParameterEncoding {
+    open static func RESTEncodingStrategy() -> (Alamofire.HTTPMethod) -> Alamofire.ParameterEncoding {
         return { method in
             switch method
             {
