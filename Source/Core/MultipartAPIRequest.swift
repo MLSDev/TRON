@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-public class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Model,ErrorModel>
+open class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Model,ErrorModel>
 {
     let multipartFormData : (MultipartFormData) -> Void
     
@@ -22,7 +22,7 @@ public class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseR
      
      - parameter multipartFormData: Multipart-form data creation block.
      */
-    public init(path: String, tron: TRON, multipartFormData:(MultipartFormData) -> Void) {
+    public init(path: String, tron: TRON, multipartFormData:@escaping (MultipartFormData) -> Void) {
         self.multipartFormData = multipartFormData
         super.init(path: path, tron: tron)
     }
@@ -38,7 +38,7 @@ public class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseR
      
      - parameter encodingCompletion: Encoding completion block, that can be used to inspect encoding result. No action is required by default, therefore default value for this block is nil.
      */
-    public func performMultipart(success: (Model) -> Void, failure: ((APIError<ErrorModel>) -> Void)? = nil, encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold, encodingCompletion: ((Manager.MultipartFormDataEncodingResult) -> Void)? = nil)
+    open func performMultipart(_ success: @escaping (Model) -> Void, failure: ((APIError<ErrorModel>) -> Void)? = nil, encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)? = nil)
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
@@ -51,12 +51,12 @@ public class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseR
         
         let multipartConstructionBlock: (MultipartFormData) -> Void = { requestFormData in
             self.parameters.forEach { (key,value) in
-                requestFormData.appendBodyPart(data: String(value).data(using:.utf8) ?? Data(), name: key)
+                requestFormData.append(String(describing: value).data(using:.utf8) ?? Data(), withName: key)
             }
             self.multipartFormData(requestFormData)
         }
         
-        let encodingCompletion: (Manager.MultipartFormDataEncodingResult) -> Void = { completion in
+        let encodingCompletion: (SessionManager.MultipartFormDataEncodingResult) -> Void = { completion in
             if case .failure(let error) = completion {
                 let apiError = APIError<ErrorModel>(request: nil, response: nil, data: nil, error: error as NSError)
                 failure?(apiError)
@@ -77,10 +77,10 @@ public class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseR
             }
         }
         
-        manager.upload(method, urlBuilder.urlForPath(path),
+        manager.upload(multipartFormData:  multipartConstructionBlock, usingThreshold: encodingMemoryThreshold,
+                       to: urlBuilder.urlForPath(path),
+                       withMethod: method,
                        headers:  headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
-                       multipartFormData:  multipartConstructionBlock,
-                       encodingMemoryThreshold: encodingMemoryThreshold,
                        encodingCompletion:  encodingCompletion)
     }
 }

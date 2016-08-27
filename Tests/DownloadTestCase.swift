@@ -27,18 +27,18 @@ class DownloadTestCase: XCTestCase {
         // Given
         
         let destination = Alamofire.Request.suggestedDownloadDestination(
-            directory: searchPathDirectory,
-            domain: searchPathDomain
+            for: searchPathDirectory,
+            in: searchPathDomain
         )
-        let request: APIRequest<EmptyResponse,TronError> = tron.download(path: "/stream/100", destination: destination)
-        let expectation = self.expectation(withDescription: "Download expectation")
+        let request: APIRequest<EmptyResponse,TronError> = tron.download("/stream/100", destination: destination)
+        let expectation = self.expectation(description: "Download expectation")
         request.performCollectingTimeline(withCompletion: { result in
             expectation.fulfill()
         })
-        waitForExpectations(withTimeout: 5, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
         
         let fileManager = FileManager.default
-        let directory = fileManager.urlsForDirectory(searchPathDirectory, inDomains: self.searchPathDomain)[0]
+        let directory = fileManager.urls(for: searchPathDirectory, in: self.searchPathDomain)[0]
         
         do {
             let contents = try fileManager.contentsOfDirectory(
@@ -53,13 +53,13 @@ class DownloadTestCase: XCTestCase {
                 let suggestedFilename = "100.json"
             #endif
             
-            let predicate = Predicate(format: "lastPathComponent = '\(suggestedFilename)'")
+            let predicate = NSPredicate(format: "lastPathComponent = '\(suggestedFilename)'")
             let filteredContents = (contents as NSArray).filtered(using: predicate)
             XCTAssertEqual(filteredContents.count, 1, "should have one file in Documents")
             
             if let file = filteredContents.first as? URL {
                 XCTAssertEqual(
-                    file.lastPathComponent ?? "",
+                    file.lastPathComponent,
                     "\(suggestedFilename)",
                     "filename should be \(suggestedFilename)"
                 )
@@ -88,12 +88,12 @@ class DownloadTestCase: XCTestCase {
         tron = TRON(baseURL: "https://upload.wikimedia.org")
         
         let destination = Alamofire.Request.suggestedDownloadDestination(
-            directory: searchPathDirectory,
-            domain: searchPathDomain
+            for: searchPathDirectory,
+            in: searchPathDomain
         )
         let path = "/wikipedia/commons/6/69/NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg"
-        let request: APIRequest<EmptyResponse,TronError> = tron.download(path: path, destination: destination)
-        let expectation = self.expectation(withDescription: "Download expectation")
+        let request: APIRequest<EmptyResponse,TronError> = tron.download(path, destination: destination)
+        let expectation = self.expectation(description: "Download expectation")
         let alamofireRequest = request.performCollectingTimeline(withCompletion: { result in
             expectation.fulfill()
         })
@@ -101,23 +101,23 @@ class DownloadTestCase: XCTestCase {
             print("progress ",$0,$1,$2)
             alamofireRequest?.cancel()
         }
-        waitForExpectations(withTimeout: 10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
         
         guard let resumeData = alamofireRequest?.resumeData else {
             XCTFail("request should produce resume data")
             return
         }
         
-        let continueDownloadRequest : APIRequest<EmptyResponse,TronError> = tron.download(path: path, destination: destination, resumingFromData : resumeData)
-        let continueExpectation = self.expectation(withDescription: "Continue download expectation")
+        let continueDownloadRequest : APIRequest<EmptyResponse,TronError> = tron.download(path, destination: destination, resumingFromData : resumeData)
+        let continueExpectation = self.expectation(description: "Continue download expectation")
         continueDownloadRequest.performCollectingTimeline(withCompletion: { result in
             continueExpectation.fulfill()
         })
         
-        waitForExpectations(withTimeout: 10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
         
         let fileManager = FileManager.default
-        let directory = fileManager.urlsForDirectory(searchPathDirectory, inDomains: self.searchPathDomain)[0]
+        let directory = fileManager.urls(for: searchPathDirectory, in: self.searchPathDomain)[0]
         
         do {
             let contents = try fileManager.contentsOfDirectory(
@@ -132,13 +132,13 @@ class DownloadTestCase: XCTestCase {
                 let suggestedFilename = "NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg"
             #endif
             
-            let predicate = Predicate(format: "lastPathComponent = '\(suggestedFilename)'")
+            let predicate = NSPredicate(format: "lastPathComponent = '\(suggestedFilename)'")
             let filteredContents = (contents as NSArray).filtered(using: predicate)
             XCTAssertEqual(filteredContents.count, 1, "should have one file in Documents")
             
             if let file = filteredContents.first as? URL {
                 XCTAssertEqual(
-                    file.lastPathComponent ?? "",
+                    file.lastPathComponent,
                     "\(suggestedFilename)",
                     "filename should be \(suggestedFilename)"
                 )

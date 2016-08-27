@@ -60,58 +60,58 @@ public enum AuthorizationRequirement {
 public protocol TronDelegate: class {
     
     /// Alamofire.Manager used to send requests
-    var manager: Alamofire.Manager { get }
+    var manager: Alamofire.SessionManager { get }
     
     /// Global array of plugins on `TRON` instance
     var plugins : [Plugin] { get }
 }
 
-public class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
+open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
     /// Relative path of current request
-    public let path: String
+    open let path: String
     
     /// HTTP method
-    public var method: Alamofire.Method = .GET
+    open var method: Alamofire.HTTPMethod = .get
     
     /// Parameters of current request.
-    public var parameters: [String: AnyObject] = [:]
+    open var parameters: [String: AnyObject] = [:]
     
     /// Selection of encoding based on HTTP method.
-    public var encodingStrategy : (Alamofire.Method) -> Alamofire.ParameterEncoding
+    open var encodingStrategy : (Alamofire.HTTPMethod) -> Alamofire.ParameterEncoding
     
     /// Headers, that should be used for current request.
     /// - Note: Resulting headers may include global headers from `TRON` instance and `Alamofire.Manager` defaultHTTPHeaders.
-    public var headers : [String:String] = [:]
+    open var headers : [String:String] = [:]
     
     /// Authorization requirement for current request
-    public var authorizationRequirement = AuthorizationRequirement.none
+    open var authorizationRequirement = AuthorizationRequirement.none
     
     /// Header builder for current request
-    public var headerBuilder: HeaderBuildable
+    open var headerBuilder: HeaderBuildable
     
     /// URL builder for current request
-    public var urlBuilder: NSURLBuildable
+    open var urlBuilder: NSURLBuildable
     
     /// Error builder for current request
-    public var errorBuilder = ErrorBuilder<ErrorModel>()
+    open var errorBuilder = ErrorBuilder<ErrorModel>()
     
     /// Is stubbing enabled for current request?
-    public var stubbingEnabled = false
+    open var stubbingEnabled = false
     
     /// API stub to be used when stubbing this request
-    public var apiStub = APIStub<Model, ErrorModel>()
+    open var apiStub = APIStub<Model, ErrorModel>()
     
     /// Queue, used for processing response, received from the server. Defaults to TRON.processingQueue queue.
-    public var processingQueue : DispatchQueue
+    open var processingQueue : DispatchQueue
     
     /// Queue, used to deliver result completion blocks. Defaults to TRON.resultDeliveryQueue queue.
-    public var resultDeliveryQueue : DispatchQueue
+    open var resultDeliveryQueue : DispatchQueue
     
     /// Delegate property that is used to communicate with `TRON` instance.
     weak var tronDelegate : TronDelegate?
     
     /// Array of plugins for current `APIRequest`.
-    public var plugins : [Plugin] = []
+    open var plugins : [Plugin] = []
     
     init(path: String, tron: TRON) {
         self.path = path
@@ -137,7 +137,7 @@ public class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
             }
             let model: Model
             do {
-                model = try Model.parse(data: data ?? Data())
+                model = try Model.parse(data ?? Data())
             }
             catch let parsingError as NSError {
                 return .failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))

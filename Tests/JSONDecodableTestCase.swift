@@ -35,7 +35,7 @@ class Sibling: Ancestor {
         super.init(json: json)
     }
 }
-struct ThrowError : ErrorProtocol {}
+struct ThrowError : Error {}
 
 class Throwable : JSONDecodable {
     required init(json: JSON) throws {
@@ -58,7 +58,7 @@ class JSONDecodableTestCase: XCTestCase {
     
     func testDecodableSupportsThrowingErrors() {
         let data = try! JSONSerialization.data(withJSONObject: [1], options: [])
-        let parsedResponse = try? Throwable.parse(data: data) as Throwable
+        let parsedResponse = try? Throwable.parse(data) as Throwable
         
         expect(parsedResponse).to(beNil())
     }
@@ -84,33 +84,33 @@ class JSONDecodableTestCase: XCTestCase {
 
     func testJSONDecodableParsing() {
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<Headers,Int> = tron.request(path: "headers")
-        let expectation = self.expectation(withDescription: "Parsing headers response")
-        request.perform(success: { headers in
+        let request: APIRequest<Headers,Int> = tron.request("headers")
+        let expectation = self.expectation(description: "Parsing headers response")
+        request.perform({ headers in
             if headers.host == "httpbin.org" {
                 expectation.fulfill()
             }
         })
         
-        waitForExpectations(withTimeout: 3, handler: nil)
+        waitForExpectations(timeout: 3, handler: nil)
     }
     
     func testJSONDecodableWorksWithSiblings() {
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<Sibling,Int> = tron.request(path: "headers")
-        let expectation = self.expectation(withDescription: "Parsing headers response")
-        request.perform(success: { sibling in
+        let request: APIRequest<Sibling,Int> = tron.request("headers")
+        let expectation = self.expectation(description: "Parsing headers response")
+        request.perform({ sibling in
             if sibling.foo == "4" {
                 expectation.fulfill()
             }
         })
         
-        waitForExpectations(withTimeout: 10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testJSONDecodableParsingEmptyResponse() {
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<Headers,Int> = tron.request(path: "headers")
+        let request: APIRequest<Headers,Int> = tron.request("headers")
         let responseSerializer = request.responseSerializer(notifyingPlugins: [])
         let result = responseSerializer.serializeResponse(nil,nil, nil,nil)
         

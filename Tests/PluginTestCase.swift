@@ -15,9 +15,9 @@ class PluginTestCase: XCTestCase {
     func testGlobalPluginsAreCalledCorrectly() {
         let pluginTester = PluginTester()
         let tron = TRON(baseURL: "http://httpbin.org", plugins: [pluginTester])
-        let request : APIRequest<Int,Int> = tron.request(path: "status/200")
+        let request : APIRequest<Int,Int> = tron.request("status/200")
         
-        request.perform(success: {_ in })
+        request.perform({_ in })
         
         expect(pluginTester.didReceiveResponseCalled).toEventually(equal(true))
         expect(pluginTester.willSendCalled).toEventually(equal(true))
@@ -26,10 +26,10 @@ class PluginTestCase: XCTestCase {
     func testLocalPluginsAreCalledCorrectly() {
         let pluginTester = PluginTester()
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<String,Int> = tron.request(path: "status/200")
-        let expectation = self.expectation(withDescription: "PluginTester expectation")
+        let request: APIRequest<String,Int> = tron.request("status/200")
+        let expectation = self.expectation(description: "PluginTester expectation")
         request.plugins.append(pluginTester)
-        request.perform(success: { _ in
+        request.perform({ _ in
             if pluginTester.didReceiveResponseCalled && pluginTester.willSendCalled {
                 expectation.fulfill()
             }
@@ -39,13 +39,13 @@ class PluginTestCase: XCTestCase {
             }
         })
         
-        waitForExpectations(withTimeout: 10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testPluginsAreInitializable() {
         let _ = NetworkLoggerPlugin()
         #if os(iOS)
-            let _ = NetworkActivityPlugin(application: UIApplication.shared())
+            let _ = NetworkActivityPlugin(application: UIApplication.shared)
         #endif
         
     }
@@ -55,13 +55,13 @@ class PluginTestCase: XCTestCase {
         let localPluginTester = PluginTester()
         
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: MultipartAPIRequest<String,Int> = tron.uploadMultipart(path: "status/200") { formData in
+        let request: MultipartAPIRequest<String,Int> = tron.uploadMultipart("status/200") { formData in
             
         }
         request.plugins.append(localPluginTester)
         tron.plugins.append(globalPluginTester)
         
-        request.performMultipart(success: { _ = $0 })
+        request.performMultipart({ _ = $0 })
         
         expect(localPluginTester.willSendCalled).toEventually(equal(true))
         expect(globalPluginTester.willSendCalled).toEventually(equal(true))

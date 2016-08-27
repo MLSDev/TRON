@@ -279,7 +279,7 @@ struct Users
 
     static func create() -> APIRequest<User,MyAppError> {
         let request: APIRequest<User,MyAppError> = tron.request(path: "users")
-        request.method = .POST
+        request.method = .post
         return request
     }
 

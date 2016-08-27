@@ -28,21 +28,21 @@ import Foundation
 /**
  Plugin, that can be used to log network success and failure responses.
  */
-public class NetworkLoggerPlugin : Plugin {
+open class NetworkLoggerPlugin : Plugin {
     
     /// Log successful requests
-    public var logSuccess = false
+    open var logSuccess = false
     
     /// Log unsuccessful requests
-    public var logFailures = true
+    open var logFailures = true
     
     public init() {}
     
-    public func willSendRequest(_ request: URLRequest?) {
+    open func willSendRequest(_ request: URLRequest?) {
         
     }
     
-    public func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, NSError?)) {
+    open func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, NSError?)) {
         if response.3 != nil {
             if logFailures {
                 print("[Request] error\n ->  \(response.0?.urlString ?? "")) \n Response: \(response.1)\n ResponseString: \(String.init(data: response.2 ?? Data(), encoding: String.Encoding.utf8)) \n Error: \(response.3)")

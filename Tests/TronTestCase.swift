@@ -21,7 +21,7 @@ class TronTestCase: XCTestCase {
     }
     
     func testTronRequestBuildables() {
-        let request: APIRequest<Int,TronError> = tron.request(path: "/foo")
+        let request: APIRequest<Int,TronError> = tron.request("/foo")
         
         let tronBuilder = tron.urlBuilder as? URLBuilder
         let requestBuilder = request.urlBuilder as? URLBuilder
@@ -31,8 +31,8 @@ class TronTestCase: XCTestCase {
     func testURLEncodingStrategySetsURLEncoding() {
         tron.encodingStrategy = TRON.URLEncodingStrategy()
         
-        let request : APIRequest<Int,TronError> = tron.request(path: "foo")
-        request.method = .POST
+        let request : APIRequest<Int,TronError> = tron.request("foo")
+        request.method = .post
         
         if case ParameterEncoding.url = request.encodingStrategy(request.method) {
             
@@ -44,8 +44,8 @@ class TronTestCase: XCTestCase {
     func testRESTEncodingStrategySetsProperEncoding() {
         tron.encodingStrategy = TRON.RESTEncodingStrategy()
         
-        let request : APIRequest<Int,TronError> = tron.request(path: "foo")
-        request.method = .POST
+        let request : APIRequest<Int,TronError> = tron.request("foo")
+        request.method = .post
         
         if case ParameterEncoding.json = request.encodingStrategy(request.method) {
         
@@ -53,7 +53,7 @@ class TronTestCase: XCTestCase {
             XCTFail()
         }
         
-        request.method = .GET
+        request.method = .get
         
         if case ParameterEncoding.url = request.encodingStrategy(request.method) {
             
@@ -63,10 +63,10 @@ class TronTestCase: XCTestCase {
     }
     
     func testStubbingShouldBeSuccessfulPropertyPropogatesToStub() {
-        let request : APIRequest<Int,TronError> = tron.request(path: "foo")
+        let request : APIRequest<Int,TronError> = tron.request("foo")
         expect(request.apiStub.successful).to(beTruthy())
         tron.stubbingShouldBeSuccessful = false
-        let request2 : APIRequest<Int,TronError> = tron.request(path: "foo")
+        let request2 : APIRequest<Int,TronError> = tron.request("foo")
         expect(request2.apiStub.successful).toNot(beTruthy())
     }
     

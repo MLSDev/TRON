@@ -13,7 +13,7 @@ import TRON
 extension XCTestCase {
     func URLForResource(_ fileName: String, withExtension: String) -> URL {
         let bundle = Bundle(for: UploadTestCase.self)
-        return bundle.urlForResource(fileName, withExtension: withExtension)!
+        return bundle.url(forResource:fileName, withExtension: withExtension)!
     }
 }
 
@@ -27,10 +27,10 @@ class UploadTestCase: XCTestCase {
     }
     
     func testUploadFromFile() {
-        let request: APIRequest<TestResponse,TronError> = tron.upload(path: "/post", file: URLForResource("cat", withExtension: "jpg"))
-        request.method = .POST
-        let expectation = self.expectation(withDescription: "Upload from file")
-        request.perform(success: { result in
+        let request: APIRequest<TestResponse,TronError> = tron.upload("/post", file: URLForResource("cat", withExtension: "jpg"))
+        request.method = .post
+        let expectation = self.expectation(description: "Upload from file")
+        request.perform({ result in
             if let dictionary = result.response["headers"] as? [String:String] {
                 if dictionary["Content-Length"] == "2592" {
                     expectation.fulfill()
@@ -39,16 +39,16 @@ class UploadTestCase: XCTestCase {
             }, failure: { _ in
             XCTFail()
         })
-        waitForExpectations(withTimeout: 5, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
     
     func testUploadData() {
         let data = "foo".data(using: String.Encoding.utf8)
-        let request: APIRequest<TestResponse,TronError> = tron.upload(path: "/post", data: data!)
-        request.method = .POST
-        let expectation = self.expectation(withDescription: "Upload data")
-        request.perform(success: { result in
+        let request: APIRequest<TestResponse,TronError> = tron.upload("/post", data: data!)
+        request.method = .post
+        let expectation = self.expectation(description: "Upload data")
+        request.perform({ result in
             if let dictionary = result.response["form"] as? [String:String] {
                 if dictionary.keys.first == "foo" {
                     expectation.fulfill()
@@ -57,17 +57,17 @@ class UploadTestCase: XCTestCase {
             }, failure: { _ in
                 XCTFail()
         })
-        waitForExpectations(withTimeout: 5, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
     func testUploadFromStream() {
         let imageURL = URLForResource("cat", withExtension: "jpg")
         let imageStream = InputStream(url: imageURL)!
         
-        let request: APIRequest<TestResponse,TronError> = tron.upload(path: "/post", stream: imageStream)
-        request.method = .POST
-        let expectation = self.expectation(withDescription: "Upload stream")
-        request.perform(success: { result in
+        let request: APIRequest<TestResponse,TronError> = tron.upload("/post", stream: imageStream)
+        request.method = .post
+        let expectation = self.expectation(description: "Upload stream")
+        request.perform({ result in
             if let dictionary = result.response["headers"] as? [String:String] {
                 if dictionary["Content-Length"] == "2592" {
                     expectation.fulfill()
@@ -76,77 +76,77 @@ class UploadTestCase: XCTestCase {
             }, failure: { _ in
                 XCTFail()
         })
-        waitForExpectations(withTimeout: 5, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
     func testMultipartUploadWorks() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { formData in
-            formData.appendBodyPart(data: "bar".data(using: .utf8) ?? Data(), name: "foo")
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
+            formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
         }
-        request.method = .POST
+        request.method = .post
         
-        let expectation = self.expectation(withDescription: "foo")
+        let expectation = self.expectation(description: "foo")
         
-        request.performMultipart(success: {
+        request.performMultipart({
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["foo"] == "bar" {
                     expectation.fulfill()
                 }
             }
         })
-        waitForExpectations(withTimeout: 10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testMultipartUploadIsAbleToUploadFile() {
-        let path = Bundle(for: self.dynamicType).pathForResource("cat", ofType: "jpg")
+        let path = Bundle(for: type(of: self)).path(forResource: "cat", ofType: "jpg")
         let data = try? Data(contentsOf: URL(fileURLWithPath: path ?? ""))
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { formData in
-            formData.appendBodyPart(data: data ?? Data(),name: "cat", mimeType: "image/jpeg")
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
+            formData.append(data ?? Data(), withName: "cat", mimeType: "image/jpeg")
         }
-        request.method = .POST
+        request.method = .post
         
-        let catExpectation = expectation(withDescription: "meau!")
+        let catExpectation = expectation(description: "meau!")
         
-        request.performMultipart(success: {
+        request.performMultipart({
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["cat"] != nil {
                     catExpectation.fulfill()
                 }
             }
         })
-        waitForExpectations(withTimeout: 10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testIntParametersAreAcceptedAsMultipartParameters() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { _ in }
-        request.method = .POST
-        request.parameters = ["foo":1]
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { _ in }
+        request.method = .post
+        request.parameters = ["foo":1 as AnyObject]
         
-        let expectation = self.expectation(withDescription: "Int expectation")
-        request.performMultipart(success: {
+        let expectation = self.expectation(description: "Int expectation")
+        request.performMultipart({
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["foo"] == "1" {
                     expectation.fulfill()
                 }
             }
         })
-        waitForExpectations(withTimeout: 10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testBoolParametersAreAcceptedAsMultipartParameters() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { _ in }
-        request.method = .POST
-        request.parameters = ["foo":true]
+        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { _ in }
+        request.method = .post
+        request.parameters = ["foo":true as AnyObject]
         
-        let expectation = self.expectation(withDescription: "Int expectation")
+        let expectation = self.expectation(description: "Int expectation")
         
-        request.performMultipart(success: {
+        request.performMultipart({
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["foo"] == "1" {
                     expectation.fulfill()
                 }
             }
         })
-        waitForExpectations(withTimeout: 10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

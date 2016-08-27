@@ -24,7 +24,9 @@
 // THE SOFTWARE.
 
 import Foundation
-import SwiftyJSON/**
+import SwiftyJSON
+
+/**
  Protocol for parsing JSON response. It is used as a generic constraint for `APIRequest` instance.
  */
 public protocol JSONDecodable : Parseable  {
@@ -34,7 +36,7 @@ public protocol JSONDecodable : Parseable  {
 }
 
 public extension JSONDecodable {
-    static func parse<T:Parseable>(data: Data) throws -> T {
+    static func parse<T:Parseable>(_ data: Data) throws -> T {
         guard let type = T.self as? JSONDecodable.Type else {
             throw ParsingError.wrongType
         }
@@ -72,7 +74,7 @@ extension JSON : JSONDecodable {
 
 extension String : JSONDecodable  {
     public init(json: JSON) {
-        self.init(json.stringValue)
+        self.init(json.stringValue)!
     }
 }
 

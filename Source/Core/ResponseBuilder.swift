@@ -26,10 +26,10 @@
 import Foundation
 
 public protocol Parseable {
-    static func parse<T:Parseable>(data: Data) throws -> T
+    static func parse<T:Parseable>(_ data: Data) throws -> T
 }
 
-public enum ParsingError : ErrorProtocol
+public enum ParsingError : Error
 {
     case wrongType
     case constructionFailed

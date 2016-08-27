@@ -36,13 +36,13 @@ extension APIRequest {
      */
     public func rxResult() -> Observable<Model> {
         return Observable.create({ observer in
-            let token = self.perform(success: { result in
+            let token = self.perform({ result in
                 observer.onNext(result)
                 observer.onCompleted()
             }, failure: { error in
                 observer.onError(error)
             })
-            return AnonymousDisposable {
+            return Disposables.create {
                 token?.cancel()
             }
         })
@@ -57,10 +57,10 @@ extension MultipartAPIRequest {
      
      - returns: Observable<Model>
      */
-    public func rxMultipartResult(memoryThreshold threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold) -> Observable<Model> {
+    public func rxMultipartResult(memoryThreshold threshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold) -> Observable<Model> {
         return Observable.create { observer in
             var request : Alamofire.Request?
-            self.performMultipart(success: { result in
+            self.performMultipart({ result in
                 observer.onNext(result)
                 observer.onCompleted()
                 }, failure: { error in
@@ -68,12 +68,11 @@ extension MultipartAPIRequest {
                 },
                 encodingMemoryThreshold : threshold,
                 encodingCompletion : { completion in
-                    if case let Manager.MultipartFormDataEncodingResult.success(originalRequest, _, _) = completion {
+                    if case let SessionManager.MultipartFormDataEncodingResult.success(originalRequest, _, _) = completion {
                         request = originalRequest
                     }
             })
-            
-            return AnonymousDisposable {
+            return Disposables.create {
                 request?.cancel()
             }
         }

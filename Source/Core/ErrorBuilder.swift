@@ -28,7 +28,7 @@ import Foundation
 /**
  `ErrorBuilder` class is used to build error object from unsuccessful API requests.
  */
-public class ErrorBuilder<U:Parseable>
+open class ErrorBuilder<U:Parseable>
 {
     /// initialize default error builder
     public init() {}
@@ -46,13 +46,13 @@ public class ErrorBuilder<U:Parseable>
      
      - returns APIError instance
      */
-    public func buildErrorFromRequest(_ request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: NSError?) -> APIError<U> {
+    open func buildErrorFromRequest(_ request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: NSError?) -> APIError<U> {
         return APIError<U>(request: request, response: response, data: data, error: error)
     }
 }
 
 /// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
-public struct APIError<T:Parseable> : ErrorProtocol {
+public struct APIError<T:Parseable> : Error {
     
     /// NSURLRequest that was unsuccessful
     public let request : URLRequest?
@@ -86,7 +86,7 @@ public struct APIError<T:Parseable> : ErrorProtocol {
         self.response = response
         self.data = data
         self.error = error
-        self.errorModel = try? T.parse(data: data ?? Data())
+        self.errorModel = try? T.parse(data ?? Data())
     }
     
     /**

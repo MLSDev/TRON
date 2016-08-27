@@ -26,10 +26,8 @@
 import Foundation
 import Alamofire
 
-private func delay(_ delay:Double, closure:()->()) {
-    DispatchQueue.main.after(
-        when: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC),
-        execute: closure)
+private func delay(_ delay:Double, closure:@escaping ()->Void) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: closure)
 }
 
 public extension APIStub {
@@ -40,13 +38,13 @@ public extension APIStub {
      - parameter bundle: bundle to look for file.
      */
     public func buildModelFromFile(_ fileName: String, inBundle bundle: Bundle = Bundle.main) {
-        if let filePath = bundle.pathForResource(fileName as String, ofType: nil)
+        if let filePath = bundle.path(forResource: fileName as String, ofType: nil)
         {
             guard let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) else {
                     print("failed building response model from file: \(filePath)")
                 return
             }
-            model = try? Model.parse(data: data)
+            model = try? Model.parse(data)
         }
     }
 }
@@ -54,19 +52,19 @@ public extension APIStub {
 /**
  `APIStub` instance that is used to represent stubbed successful or unsuccessful response value.
  */
-public class APIStub<Model: Parseable, ErrorModel: Parseable> {
+open class APIStub<Model: Parseable, ErrorModel: Parseable> {
     
     /// Should the stub be successful. By default - true
-    public var successful = true
+    open var successful = true
     
     /// Response model for successful API stub
-    public var model : Model?
+    open var model : Model?
     
     /// Error model for unsuccessful API stub
-    public var error: APIError<ErrorModel>?
+    open var error: APIError<ErrorModel>?
     
     /// Delay before stub is executed
-    public var stubDelay = 0.1
+    open var stubDelay = 0.1
     
     /**
      Stub current request.
@@ -75,8 +73,8 @@ public class APIStub<Model: Parseable, ErrorModel: Parseable> {
      
      - parameter failure: Failure block to be executed if request fails. Nil by default.
      */
-    public func performStubWithSuccess(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) {
-        if let model = model where successful {
+    open func performStubWithSuccess(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) {
+        if let model = model, successful {
             delay(stubDelay) {
                 success?(model)
             }
@@ -92,10 +90,10 @@ public class APIStub<Model: Parseable, ErrorModel: Parseable> {
      
      - parameter completion: Completion block to be executed when request is stubbed.
      */
-    public func performStubWithCompletion(_ completion : ((Alamofire.Response<Model,APIError<ErrorModel>>) -> Void)) {
+    open func performStubWithCompletion(_ completion : ((Alamofire.Response<Model,APIError<ErrorModel>>) -> Void)) {
         delay(stubDelay) {
             let result : Alamofire.Result<Model,APIError<ErrorModel>>
-            if let model = self.model where self.successful {
+            if let model = self.model, self.successful {
                 result = Result.success(model)
             } else if let error = self.error {
                 result = Result.failure(error)
