@@ -72,6 +72,11 @@ pod 'TRON/RxSwift', '~> 2.0.0'
 github "MLSDev/TRON", ~> 2.0.0
 ```
 
+## Migration Guides
+
+- [TRON 2.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/2.0%20Migration%20Guide.md)
+- [TRON 1.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/1.0%20Migration%20Guide.md)
+
 ## Project status
 
 `TRON` is under active development by MLSDev Inc. Pull requests and issues are welcome!
