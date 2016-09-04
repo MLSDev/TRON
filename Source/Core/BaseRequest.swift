@@ -10,18 +10,18 @@ import Foundation
 import Alamofire
 
 /**
- Protocol, that defines how NSURL is constructed by consumer.
+ Protocol, that defines how URL is constructed by consumer.
  */
-public protocol NSURLBuildable {
+public protocol URLBuildable {
     
     /**
-     Construct NSURL with given path
+     Construct URL with given path
      
      - parameter path: relative path
      
-     - returns constructed NSURL
+     - returns constructed URL
      */
-    func urlForPath(_ path: String) -> URL
+    func url(forPath path: String) -> URL
 }
 
 /**
@@ -38,7 +38,7 @@ public protocol HeaderBuildable {
      
      - returns: HTTP headers for current request
      */
-    func headersForAuthorization(_ requirement: AuthorizationRequirement, headers: [String:String]) -> [String: String]
+    func headers(forAuthorizationRequirement requirement: AuthorizationRequirement, including headers: [String:String]) -> [String: String]
 }
 
 /**
@@ -90,7 +90,7 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
     open var headerBuilder: HeaderBuildable
     
     /// URL builder for current request
-    open var urlBuilder: NSURLBuildable
+    open var urlBuilder: URLBuildable
     
     /// Error builder for current request
     open var errorBuilder = ErrorBuilder<ErrorModel>()
@@ -125,8 +125,8 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
         self.apiStub.successful = tron.stubbingShouldBeSuccessful
     }
     
-    internal func responseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.ResponseSerializer<Model,APIError<ErrorModel>> {
-        return ResponseSerializer<Model,APIError<ErrorModel>> { urlRequest, response, data, error in
+    internal func responseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.ResponseSerializer<Model> {
+        return ResponseSerializer<Model> { urlRequest, response, data, error in
             DispatchQueue.main.async(execute: { 
                 plugins.forEach {
                     $0.requestDidReceiveResponse(urlRequest, response,data,error)
@@ -139,7 +139,7 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
             do {
                 model = try Model.parse(data ?? Data())
             }
-            catch let parsingError as NSError {
+            catch let parsingError {
                 return .failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
             }
             return .success(model)
@@ -148,7 +148,7 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
     
     internal func callSuccessFailureBlocks(_ success: ((Model) -> Void)?,
                                            failure: ((APIError<ErrorModel>) -> Void)?,
-                                           response: Alamofire.Response<Model,APIError<ErrorModel>>)
+                                           response: Alamofire.Response<Model>)
     {
         switch response.result
         {
@@ -158,8 +158,27 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
             }
         case .failure(let error):
             (resultDeliveryQueue).async {
-                failure?(error)
+                failure?(error as! APIError<ErrorModel>)
             }
         }
+    }
+}
+
+// DEPRECATED
+
+@available(*,unavailable,renamed:"URLBuildable")
+public protocol NSURLBuildable {}
+
+extension URLBuildable {
+    @available(*,unavailable,renamed:"url(forPath:)")
+    public func urlForPath(_ path: String) -> URL {
+        fatalError("UNAVAILABLE")
+    }
+}
+
+extension HeaderBuildable {
+    @available(*,unavailable,renamed:"headers(forAuthorizationRequirement:including:)")
+    public func headersForAuthorization(_ requirement: AuthorizationRequirement, headers: [String:String]) -> [String: String] {
+        fatalError("UNAVAILABLE")
     }
 }

@@ -32,7 +32,7 @@ class APIRequestTestCase: XCTestCase {
     func testErrorBuilding() {
         let request: APIRequest<Int,TronError> = tron.request("status/418")
         let expectation = self.expectation(description: "Teapot")
-        request.perform({ _ in
+        request.perform(withSuccess: { _ in
             XCTFail()
         }) { error in
             if error.response?.statusCode == 418 {
@@ -45,7 +45,7 @@ class APIRequestTestCase: XCTestCase {
     func testSuccessCallBackIsCalledOnMainThread() {
         let request : APIRequest<String,TronError> = tron.request("get")
         let expectation = self.expectation(description: "200")
-        request.perform({ _ in
+        request.perform(withSuccess: { _ in
             if Thread.isMainThread {
                 expectation.fulfill()
             }
@@ -58,7 +58,7 @@ class APIRequestTestCase: XCTestCase {
     func testFailureCallbackIsCalledOnMainThread() {
         let request : APIRequest<Int,TronError> = tron.request("status/418")
         let expectation = self.expectation(description: "Teapot")
-        request.perform({ _ in
+        request.perform(withSuccess: { _ in
             XCTFail()
         }) { error in
             if Thread.isMainThread {
@@ -71,7 +71,7 @@ class APIRequestTestCase: XCTestCase {
     func testParsingFailureCallbackIsCalledOnMainThread() {
         let request : APIRequest<Int,TronError> = tron.request("html")
         let expectation = self.expectation(description: "Parsing failure")
-        request.perform({ _ in
+        request.perform(withSuccess: { _ in
             XCTFail()
         }) { error in
             if Thread.isMainThread {
@@ -85,7 +85,7 @@ class APIRequestTestCase: XCTestCase {
         tron.resultDeliveryQueue = DispatchQueue.global(qos: .background)
         let request : APIRequest<Int,TronError> = tron.request("get")
         let expectation = self.expectation(description: "200")
-        request.perform({ _ in
+        request.perform(withSuccess: { _ in
             if !Thread.isMainThread {
                 expectation.fulfill()
             }
@@ -99,7 +99,7 @@ class APIRequestTestCase: XCTestCase {
         tron.resultDeliveryQueue = DispatchQueue.global(qos: .background)
         let request : APIRequest<Int,TronError> = tron.request("html")
         let expectation = self.expectation(description: "Parsing failure")
-        request.perform({ _ in
+        request.perform(withSuccess: { _ in
             XCTFail()
             }) { error in
                 if !Thread.isMainThread {
@@ -113,7 +113,7 @@ class APIRequestTestCase: XCTestCase {
         let request : APIRequest<EmptyResponse, TronError> = tron.request("headers")
         request.method = .head
         let expectation = self.expectation(description: "Empty response")
-        request.perform({ _ in
+        request.perform(withSuccess: { _ in
                 expectation.fulfill()
             }, failure: { _ in
                 XCTFail()
@@ -132,7 +132,7 @@ class APIRequestTestCase: XCTestCase {
         let request : APIRequest<EmptyResponse, TronError> = tron.request("headers")
         request.method = .head
         let expectation = self.expectation(description: "Empty response")
-        request.perform({ _ in
+        request.perform(withSuccess: { _ in
             expectation.fulfill()
             }, failure: { _ in
                 XCTFail()
@@ -154,7 +154,7 @@ class APIRequestTestCase: XCTestCase {
         
         let expectation = self.expectation(description: "foo")
         
-        request.performMultipart({
+        request.performMultipart(withSuccess: {
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["foo"] == "bar" {
                     expectation.fulfill()

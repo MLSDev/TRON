@@ -38,14 +38,14 @@ open class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseReq
      
      - parameter encodingCompletion: Encoding completion block, that can be used to inspect encoding result. No action is required by default, therefore default value for this block is nil.
      */
-    open func performMultipart(_ success: @escaping (Model) -> Void, failure: ((APIError<ErrorModel>) -> Void)? = nil, encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)? = nil)
+    open func performMultipart(withSuccess successBlock: @escaping (Model) -> Void, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil, encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)? = nil)
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
         
         if stubbingEnabled {
-            apiStub.performStubWithSuccess(success, failure: failure)
+            apiStub.performStub(withSuccess: successBlock, failure: failureBlock)
             return
         }
         
@@ -58,8 +58,8 @@ open class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseReq
         
         let encodingCompletion: (SessionManager.MultipartFormDataEncodingResult) -> Void = { completion in
             if case .failure(let error) = completion {
-                let apiError = APIError<ErrorModel>(request: nil, response: nil, data: nil, error: error as NSError)
-                failure?(apiError)
+                let apiError = APIError<ErrorModel>(request: nil, response: nil, data: nil, error: error)
+                failureBlock?(apiError)
             } else if case .success(let request, _, _) = completion {
                 let allPlugins = self.plugins + (self.tronDelegate?.plugins ?? [])
                 allPlugins.forEach {
@@ -68,7 +68,7 @@ open class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseReq
                 _ = request.validate().response(queue : self.processingQueue,
                                             responseSerializer: self.responseSerializer(notifyingPlugins:allPlugins))
                 {
-                    self.callSuccessFailureBlocks(success, failure: failure, response: $0)
+                    self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
                 }
                 if !(self.tronDelegate?.manager.startRequestsImmediately ?? false){
                     request.resume()
@@ -78,9 +78,19 @@ open class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseReq
         }
         
         manager.upload(multipartFormData:  multipartConstructionBlock, usingThreshold: encodingMemoryThreshold,
-                       to: urlBuilder.urlForPath(path),
+                       to: urlBuilder.url(forPath: path),
                        withMethod: method,
-                       headers:  headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
+                       headers:  headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers),
                        encodingCompletion:  encodingCompletion)
+    }
+}
+
+// DEPRECATED 
+
+extension MultipartAPIRequest {
+    @available(*,unavailable,renamed:"performMultipart(withSuccess:failure:encodingMemoryThreshold:encodingCompletion:)")
+    open func performMultipart(_ success: @escaping (Model) -> Void, failure: ((APIError<ErrorModel>) -> Void)? = nil, encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)? = nil)
+    {
+        fatalError("UNAVAILABLE")
     }
 }

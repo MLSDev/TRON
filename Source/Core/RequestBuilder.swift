@@ -26,9 +26,9 @@
 import Foundation
 
 /**
- `URLBuilder` constructs resulting NSURL by calling `URLByAppendingPathComponent` method on baseURL.
+ `URLBuilder` constructs resulting URL by calling `URLByAppendingPathComponent` method on baseURL.
  */
-open class URLBuilder : NSURLBuildable {
+open class URLBuilder : URLBuildable {
     
     /// Base URL string
     open let baseURLString : String
@@ -43,13 +43,13 @@ open class URLBuilder : NSURLBuildable {
     }
     
     /**
-     Construct NSURL with given path
+     Construct URL with given path
      
      - parameter path: relative path
      
-     - returns constructed NSURL
+     - returns constructed URL
      */
-    open func urlForPath(_ path: String) -> URL {
+    open func url(forPath path: String) -> URL {
         return URL(string: baseURLString)?.appendingPathComponent(path) ?? NSURL() as URL
     }
 }

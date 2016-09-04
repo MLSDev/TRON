@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## Swift3 branch
+## Next
 
 ### API changes
 
@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Renamings
 
+* Swift 3 API design guidelines have been applied to all API.
 * `perform(completion:)` method was renamed to `performCollectingTimeline(withCompletion:)` to better match method internal behaviour
 
 ### Removals

@@ -36,7 +36,7 @@ extension APIRequest {
      */
     open func rxResult() -> Observable<Model> {
         return Observable.create({ observer in
-            let token = self.perform({ result in
+            let token = self.perform(withSuccess: { result in
                 observer.onNext(result)
                 observer.onCompleted()
             }, failure: { error in
@@ -60,7 +60,7 @@ extension MultipartAPIRequest {
     open func rxMultipartResult(memoryThreshold threshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold) -> Observable<Model> {
         return Observable.create { observer in
             var request : Alamofire.Request?
-            self.performMultipart({ result in
+            self.performMultipart(withSuccess: { result in
                 observer.onNext(result)
                 observer.onCompleted()
                 }, failure: { error in

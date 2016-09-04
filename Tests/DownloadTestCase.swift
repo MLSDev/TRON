@@ -30,7 +30,7 @@ class DownloadTestCase: XCTestCase {
             for: searchPathDirectory,
             in: searchPathDomain
         )
-        let request: APIRequest<EmptyResponse,TronError> = tron.download("/stream/100", destination: destination)
+        let request: APIRequest<EmptyResponse,TronError> = tron.download("/stream/100", to: destination)
         let expectation = self.expectation(description: "Download expectation")
         request.performCollectingTimeline(withCompletion: { result in
             expectation.fulfill()
@@ -92,7 +92,7 @@ class DownloadTestCase: XCTestCase {
             in: searchPathDomain
         )
         let path = "/wikipedia/commons/6/69/NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg"
-        let request: APIRequest<EmptyResponse,TronError> = tron.download(path, destination: destination)
+        let request: APIRequest<EmptyResponse,TronError> = tron.download(path, to: destination)
         let expectation = self.expectation(description: "Download expectation")
         let alamofireRequest = request.performCollectingTimeline(withCompletion: { result in
             expectation.fulfill()
@@ -108,7 +108,7 @@ class DownloadTestCase: XCTestCase {
             return
         }
         
-        let continueDownloadRequest : APIRequest<EmptyResponse,TronError> = tron.download(path, destination: destination, resumingFromData : resumeData)
+        let continueDownloadRequest : APIRequest<EmptyResponse,TronError> = tron.download(path, to: destination, resumingFrom : resumeData)
         let continueExpectation = self.expectation(description: "Continue download expectation")
         continueDownloadRequest.performCollectingTimeline(withCompletion: { result in
             continueExpectation.fulfill()

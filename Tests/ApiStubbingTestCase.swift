@@ -30,7 +30,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.stubbingEnabled = true
         request.apiStub.model = 5
         
-        request.perform({ response in
+        request.perform(withSuccess: { response in
             expect(response) == 5
             }) { _ in
                 XCTFail()
@@ -42,7 +42,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.stubbingEnabled = true
         request.apiStub.error = APIError<Int>(errorModel: 5)
         
-        request.perform({ response in
+        request.perform(withSuccess: { response in
             XCTFail()
             }) { error in
              expect(error.errorModel) == 5
@@ -52,7 +52,7 @@ class ApiStubbingTestCase: XCTestCase {
     func testBuildingFromFileWorks() {
         let request :APIRequest<TestUser,TronError> = tron.request("f00")
         request.stubbingEnabled = true
-        request.apiStub.buildModelFromFile("user.json", inBundle: Bundle(for: type(of: self)))
+        request.apiStub.buildModel(fromFileNamed: "user.json", inBundle: Bundle(for: type(of: self)))
         
         expect(request.apiStub.model?.name) == "Alan Bradley"
         expect(request.apiStub.model?.id) == 1
@@ -64,7 +64,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.stubbingEnabled = true
         request.apiStub.model = 5
         
-        request.performMultipart({ model in
+        request.performMultipart(withSuccess: { model in
             expect(model) == 5
             }, failure: { _ in
                 XCTFail()
@@ -87,7 +87,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.apiStub.error = APIError<Int>(errorModel: 5)
         
         request.performCollectingTimeline { response in
-            expect(response.result.error?.errorModel) == 5
+            expect((response.result.error as? APIError<Int>)?.errorModel) == 5
         }
     }
 }

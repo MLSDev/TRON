@@ -18,7 +18,7 @@ class PluginTester : Plugin
         willSendCalled = true
     }
     
-    func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, NSError?)) {
+    func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?)) {
         didReceiveResponseCalled = true
     }
 }

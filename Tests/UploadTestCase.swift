@@ -27,10 +27,10 @@ class UploadTestCase: XCTestCase {
     }
     
     func testUploadFromFile() {
-        let request: APIRequest<TestResponse,TronError> = tron.upload("/post", file: URLForResource("cat", withExtension: "jpg"))
+        let request: APIRequest<TestResponse,TronError> = tron.upload("/post", fromFileAt: URLForResource("cat", withExtension: "jpg"))
         request.method = .post
         let expectation = self.expectation(description: "Upload from file")
-        request.perform({ result in
+        request.perform(withSuccess: { result in
             if let dictionary = result.response["headers"] as? [String:String] {
                 if dictionary["Content-Length"] == "2592" {
                     expectation.fulfill()
@@ -48,7 +48,7 @@ class UploadTestCase: XCTestCase {
         let request: APIRequest<TestResponse,TronError> = tron.upload("/post", data: data!)
         request.method = .post
         let expectation = self.expectation(description: "Upload data")
-        request.perform({ result in
+        request.perform(withSuccess: { result in
             if let dictionary = result.response["form"] as? [String:String] {
                 if dictionary.keys.first == "foo" {
                     expectation.fulfill()
@@ -64,10 +64,10 @@ class UploadTestCase: XCTestCase {
         let imageURL = URLForResource("cat", withExtension: "jpg")
         let imageStream = InputStream(url: imageURL)!
         
-        let request: APIRequest<TestResponse,TronError> = tron.upload("/post", stream: imageStream)
+        let request: APIRequest<TestResponse,TronError> = tron.upload("/post", from: imageStream)
         request.method = .post
         let expectation = self.expectation(description: "Upload stream")
-        request.perform({ result in
+        request.perform(withSuccess: { result in
             if let dictionary = result.response["headers"] as? [String:String] {
                 if dictionary["Content-Length"] == "2592" {
                     expectation.fulfill()
@@ -87,7 +87,7 @@ class UploadTestCase: XCTestCase {
         
         let expectation = self.expectation(description: "foo")
         
-        request.performMultipart({
+        request.performMultipart(withSuccess: {
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["foo"] == "bar" {
                     expectation.fulfill()
@@ -107,7 +107,7 @@ class UploadTestCase: XCTestCase {
         
         let catExpectation = expectation(description: "meau!")
         
-        request.performMultipart({
+        request.performMultipart(withSuccess: {
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["cat"] != nil {
                     catExpectation.fulfill()
@@ -123,7 +123,7 @@ class UploadTestCase: XCTestCase {
         request.parameters = ["foo":1 as AnyObject]
         
         let expectation = self.expectation(description: "Int expectation")
-        request.performMultipart({
+        request.performMultipart(withSuccess: {
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["foo"] == "1" {
                     expectation.fulfill()
@@ -140,7 +140,7 @@ class UploadTestCase: XCTestCase {
         
         let expectation = self.expectation(description: "Int expectation")
         
-        request.performMultipart({
+        request.performMultipart(withSuccess: {
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["foo"] == "1" {
                     expectation.fulfill()

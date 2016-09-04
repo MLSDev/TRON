@@ -56,25 +56,25 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
     internal func alamofireRequest(from manager: Alamofire.SessionManager) -> Alamofire.Request {
         switch requestType {
         case .default:
-            return manager.request(urlBuilder.urlForPath(path), withMethod: method,
+            return manager.request(urlBuilder.url(forPath: path), withMethod: method,
                                    parameters: parameters,
                                    encoding: encodingStrategy(method),
-                                   headers:  headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
+                                   headers:  headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
             
         case .uploadFromFile(let url):
-            return manager.upload(url, to: urlBuilder.urlForPath(path), withMethod: method, headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
+            return manager.upload(url, to: urlBuilder.url(forPath: path), withMethod: method, headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
         
         case .uploadData(let data):
-            return manager.upload(data, to: urlBuilder.urlForPath(path), withMethod: method, headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
+            return manager.upload(data, to: urlBuilder.url(forPath: path), withMethod: method, headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
             
         case .uploadStream(let stream):
-            return manager.upload(stream, to: urlBuilder.urlForPath(path), withMethod: method, headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
+            return manager.upload(stream, to: urlBuilder.url(forPath: path), withMethod: method, headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
             
         case .download(let destination):
-            return manager.download(urlBuilder.urlForPath(path), to: destination, withMethod: method,
+            return manager.download(urlBuilder.url(forPath: path), to: destination, withMethod: method,
                                     parameters: parameters,
                                     encoding: encodingStrategy(method),
-                                    headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
+                                    headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
         
         case .downloadResuming(let data, let destination):
             return manager.download(resourceWithin: data, to: destination)
@@ -103,18 +103,18 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
      - returns: Alamofire.Request or nil if request was stubbed.
      */
     @discardableResult
-    open func perform(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.Request?
+    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.Request?
     {
         if stubbingEnabled {
-            apiStub.performStubWithSuccess(success, failure: failure)
+            apiStub.performStub(withSuccess: successBlock, failure: failureBlock)
             return nil
         }
-        return performAlamofireRequest(success, failure: failure)
+        return performAlamofireRequest(successBlock, failure: failureBlock)
     }
     
     @available(*,unavailable,renamed:"performCollectingTimeline")
     @discardableResult
-    open func perform(_ completion: ((Alamofire.Response<Model,APIError<ErrorModel>>) -> Void)) -> Alamofire.Request? {
+    open func perform(_ completion: ((Alamofire.Response<Model>) -> Void)) -> Alamofire.Request? {
         return nil
     }
     /**
@@ -125,9 +125,9 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
      - returns: Alamofire.Request or nil if request was stubbed.
     */
     @discardableResult
-    open func performCollectingTimeline(withCompletion completion: ((Alamofire.Response<Model,APIError<ErrorModel>>) -> Void)) -> Alamofire.Request? {
+    open func performCollectingTimeline(withCompletion completion: ((Alamofire.Response<Model>) -> Void)) -> Alamofire.Request? {
         if stubbingEnabled {
-            apiStub.performStubWithCompletion(completion)
+            apiStub.performStub(withCompletion: completion)
             return nil
         }
         return performAlamofireRequest { response in
@@ -137,7 +137,7 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
         }
     }
     
-    private func performAlamofireRequest(_ completion : @escaping (Response<Model,APIError<ErrorModel>>) -> Void) -> Alamofire.Request
+    private func performAlamofireRequest(_ completion : @escaping (Response<Model>) -> Void) -> Alamofire.Request
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
@@ -159,5 +159,16 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
         return performAlamofireRequest {
             self.callSuccessFailureBlocks(success, failure: failure, response: $0)
         }
+    }
+}
+
+// DEPRECATED 
+
+extension APIRequest {
+    @discardableResult
+    @available(*,unavailable,renamed:"perform(withSuccess:failure:)")
+    open func perform(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.Request?
+    {
+        fatalError("UNAVAILABLE")
     }
 }

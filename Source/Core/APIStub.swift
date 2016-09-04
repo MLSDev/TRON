@@ -37,7 +37,7 @@ public extension APIStub {
      - parameter fileName: Name of the file to build response from
      - parameter bundle: bundle to look for file.
      */
-    public func buildModelFromFile(_ fileName: String, inBundle bundle: Bundle = Bundle.main) {
+    public func buildModel(fromFileNamed fileName: String, inBundle bundle: Bundle = Bundle.main) {
         if let filePath = bundle.path(forResource: fileName as String, ofType: nil)
         {
             guard let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) else {
@@ -73,14 +73,14 @@ open class APIStub<Model: Parseable, ErrorModel: Parseable> {
      
      - parameter failure: Failure block to be executed if request fails. Nil by default.
      */
-    open func performStubWithSuccess(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) {
+    open func performStub(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) {
         if let model = model, successful {
             delay(stubDelay) {
-                success?(model)
+                successBlock?(model)
             }
         } else if let error = error {
             delay(stubDelay) {
-                failure?(error)
+                failureBlock?(error)
             }
         }
     }
@@ -90,9 +90,9 @@ open class APIStub<Model: Parseable, ErrorModel: Parseable> {
      
      - parameter completion: Completion block to be executed when request is stubbed.
      */
-    open func performStubWithCompletion(_ completion : ((Alamofire.Response<Model,APIError<ErrorModel>>) -> Void)) {
+    open func performStub(withCompletion completionBlock : ((Alamofire.Response<Model>) -> Void)) {
         delay(stubDelay) {
-            let result : Alamofire.Result<Model,APIError<ErrorModel>>
+            let result : Alamofire.Result<Model>
             if let model = self.model, self.successful {
                 result = Result.success(model)
             } else if let error = self.error {
@@ -101,8 +101,27 @@ open class APIStub<Model: Parseable, ErrorModel: Parseable> {
                 let error : APIError<ErrorModel> = APIError(request: nil, response: nil, data: nil, error: nil)
                 result = Result.failure(error)
             }
-            let response: Alamofire.Response<Model, APIError<ErrorModel>> = Alamofire.Response(request: nil, response: nil, data: nil, result: result)
-            completion(response)
+            let response: Alamofire.Response<Model> = Alamofire.Response(request: nil, response: nil, data: nil, result: result)
+            completionBlock(response)
         }
+    }
+}
+
+// DEPRECATED
+
+extension APIStub {
+    @available(*,unavailable,renamed:"buildModel(fromFileNamed:inBundle:)")
+    public func buildModelFromFile(_ fileName: String, inBundle bundle: Bundle = Bundle.main) {
+        fatalError("UNAVAILABLE")
+    }
+    
+    @available(*,unavailable,renamed:"performStub(withSuccess:failure:)")
+    open func performStubWithSuccess(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) {
+        fatalError("UNAVAILABLE")
+    }
+    
+    @available(*,unavailable,renamed:"performStub(withCompletion:)")
+    open func performStubWithCompletion(_ completion : ((Alamofire.Response<Model>) -> Void)) {
+        fatalError("UNAVAILABLE")
     }
 }

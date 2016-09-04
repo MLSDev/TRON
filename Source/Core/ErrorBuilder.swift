@@ -36,7 +36,7 @@ open class ErrorBuilder<U:Parseable>
     /**
      Build concrete APIError instance.
      
-     - parameter request: NSURLRequest that was unsuccessful
+     - parameter request: URLRequest that was unsuccessful
      
      - parameter response: response received from web service
      
@@ -46,7 +46,7 @@ open class ErrorBuilder<U:Parseable>
      
      - returns APIError instance
      */
-    open func buildErrorFromRequest(_ request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: NSError?) -> APIError<U> {
+    open func buildErrorFromRequest(_ request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) -> APIError<U> {
         return APIError<U>(request: request, response: response, data: data, error: error)
     }
 }
@@ -54,7 +54,7 @@ open class ErrorBuilder<U:Parseable>
 /// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
 public struct APIError<T:Parseable> : Error {
     
-    /// NSURLRequest that was unsuccessful
+    /// URLRequest that was unsuccessful
     public let request : URLRequest?
     
     /// Response received from web service
@@ -64,7 +64,7 @@ public struct APIError<T:Parseable> : Error {
     public let data : Data?
     
     /// Error instance, created by Foundation Loading System or Alamofire.
-    public let error : NSError?
+    public let error : Error?
     
     /// Parsed Error model
     public var errorModel : T?
@@ -72,7 +72,7 @@ public struct APIError<T:Parseable> : Error {
     /**
      Initialize `APIError` with unsuccessful request info.
      
-     - parameter request: NSURLRequest that was unsuccessful
+     - parameter request: URLRequest that was unsuccessful
      
      - parameter response: response received from web service
      
@@ -80,7 +80,7 @@ public struct APIError<T:Parseable> : Error {
      
      - error: Error instance, created by Foundation Loading System or Alamofire.
      */
-    public init(request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: NSError?)
+    public init(request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?)
     {
         self.request = request
         self.response = response

@@ -36,8 +36,8 @@ open class TRON : TronDelegate {
     /// Header builder to be used by default in all requests. Can be overridden for specific requests.
     open var headerBuilder : HeaderBuildable = HeaderBuilder(defaultHeaders: ["Accept":"application/json"])
     
-    /// NSURL builder to be used by default in all requests. Can be overridden for specific requests.
-    open var urlBuilder : NSURLBuildable
+    /// URL builder to be used by default in all requests. Can be overridden for specific requests.
+    open var urlBuilder : URLBuildable
     
     /// Global property, that defines whether stubbing is enabled. It is simply set on each `APIRequest` instance and can be reset.
     open var stubbingEnabled = false
@@ -100,8 +100,8 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, file: URL) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.uploadFromFile(file), path: path, tron: self)
+    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, fromFileAt fileURL: URL) -> APIRequest<Model,ErrorModel> {
+        return APIRequest(type: RequestType.uploadFromFile(fileURL), path: path, tron: self)
     }
     
     /**
@@ -126,7 +126,7 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, stream: InputStream) -> APIRequest<Model,ErrorModel> {
+    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, from stream: InputStream) -> APIRequest<Model,ErrorModel> {
         return APIRequest(type: RequestType.uploadStream(stream), path: path, tron: self)
     }
     
@@ -154,7 +154,7 @@ open class TRON : TronDelegate {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, destination: Request.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
+    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, to destination: Request.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
         return APIRequest(type: RequestType.download(destination), path: path, tron: self)
     }
     
@@ -171,8 +171,8 @@ open class TRON : TronDelegate {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, destination: Request.DownloadFileDestination, resumingFromData: Data) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.downloadResuming(data: resumingFromData, destination: destination), path: path, tron: self)
+    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, to destination: Request.DownloadFileDestination, resumingFrom: Data) -> APIRequest<Model,ErrorModel> {
+        return APIRequest(type: RequestType.downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self)
     }
     
     /**
@@ -209,5 +209,29 @@ open class TRON : TronDelegate {
             default: return .url
             }
         }
+    }
+}
+
+// DEPRECATED
+
+extension TRON {
+    @available(*,unavailable,renamed:"upload(_:fromFileAt:)")
+    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, file: URL) -> APIRequest<Model,ErrorModel> {
+        fatalError("UNAVAILABLE")
+    }
+    
+    @available(*,unavailable,renamed:"upload(_:from:)")
+    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, stream: InputStream) -> APIRequest<Model,ErrorModel> {
+        fatalError("UNAVAILABLE")
+    }
+    
+    @available(*,unavailable,renamed:"download(_:to:)")
+    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, destination: Request.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
+        fatalError("UNAVAILABLE")
+    }
+    
+    @available(*,unavailable,renamed:"download(_:to:resumingFrom:)")
+    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, destination: Request.DownloadFileDestination, resumingFromData: Data) -> APIRequest<Model,ErrorModel> {
+        fatalError("UNAVAILABLE")
     }
 }

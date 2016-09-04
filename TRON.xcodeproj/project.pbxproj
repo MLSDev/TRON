@@ -935,10 +935,10 @@
 		9AEE0BC81C5A4FB5003222A8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9AEE0BD11C5A4FB5003222A8 /* Nimble.framework */,
-				9AEE0BD31C5A4FB5003222A8 /* NimbleTests.xctest */,
 				9AEE0BD51C5A4FB5003222A8 /* Nimble.framework */,
 				9AEE0BD71C5A4FB5003222A8 /* NimbleTests.xctest */,
+				9AEE0BD11C5A4FB5003222A8 /* Nimble.framework */,
+				9AEE0BD31C5A4FB5003222A8 /* NimbleTests.xctest */,
 				9AEE0BD91C5A4FB5003222A8 /* Nimble.framework */,
 				9AEE0BDB1C5A4FB5003222A8 /* NimbleTests.xctest */,
 			);

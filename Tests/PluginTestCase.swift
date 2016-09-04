@@ -17,7 +17,7 @@ class PluginTestCase: XCTestCase {
         let tron = TRON(baseURL: "http://httpbin.org", plugins: [pluginTester])
         let request : APIRequest<Int,Int> = tron.request("status/200")
         
-        request.perform({_ in })
+        request.performCollectingTimeline(withCompletion: {_ in })
         
         expect(pluginTester.didReceiveResponseCalled).toEventually(equal(true))
         expect(pluginTester.willSendCalled).toEventually(equal(true))
@@ -29,7 +29,7 @@ class PluginTestCase: XCTestCase {
         let request: APIRequest<String,Int> = tron.request("status/200")
         let expectation = self.expectation(description: "PluginTester expectation")
         request.plugins.append(pluginTester)
-        request.perform({ _ in
+        request.perform(withSuccess: { _ in
             if pluginTester.didReceiveResponseCalled && pluginTester.willSendCalled {
                 expectation.fulfill()
             }
@@ -61,7 +61,7 @@ class PluginTestCase: XCTestCase {
         request.plugins.append(localPluginTester)
         tron.plugins.append(globalPluginTester)
         
-        request.performMultipart({ _ = $0 })
+        request.performMultipart(withSuccess: { _ = $0 })
         
         expect(localPluginTester.willSendCalled).toEventually(equal(true))
         expect(globalPluginTester.willSendCalled).toEventually(equal(true))

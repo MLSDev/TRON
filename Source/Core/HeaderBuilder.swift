@@ -26,7 +26,7 @@
 import Foundation
 
 /**
- `HeaderBuilder` class is used to construct HTTP headers for NSURLRequest.
+ `HeaderBuilder` class is used to construct HTTP headers for URLRequest.
  */
 open class HeaderBuilder: HeaderBuildable {
     
@@ -51,7 +51,7 @@ open class HeaderBuilder: HeaderBuildable {
      
      - returns: HTTP headers for current request
      */
-    open func headersForAuthorization(_ requirement: AuthorizationRequirement, headers: [String : String]) -> [String : String] {
+    open func headers(forAuthorizationRequirement requirement: AuthorizationRequirement, including headers: [String : String]) -> [String : String] {
         var combinedHeaders = defaultHeaders
         headers.forEach {
             combinedHeaders[$0.0] = $0.1

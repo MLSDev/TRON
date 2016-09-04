@@ -51,7 +51,7 @@ open class NetworkActivityPlugin : Plugin {
         networkActivityCount += 1
     }
     
-    open func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, NSError?)) {
+    open func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?)) {
         networkActivityCount -= 1
     }
 }
