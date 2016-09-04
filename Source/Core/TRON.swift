@@ -49,9 +49,8 @@ open class TRON : TronDelegate {
     open var plugins : [Plugin] = []
     
     /// Encoding strategy, based on HTTP Method. Strategy will be set for all APIRequests, and can be overrided by setting new value on APIRequest.encodingStrategy property.
-    /// Default value - TRON.URLEncodingStrategy, which always sets .URL encoding.
-    /// - Note: This behaviour will be changed in following releases to use TRON.RESTEncodingStrategy.
-    open var encodingStrategy = TRON.URLEncodingStrategy()
+    /// Default value - TRON.RESTEncodingStrategy
+    open var encodingStrategy = TRON.RESTEncodingStrategy()
     
     /// Queue, used for processing response, received from the server. Defaults to QOS_CLASS_USER_INITIATED queue
     open var processingQueue = DispatchQueue.global(qos: .userInitiated)
@@ -96,7 +95,7 @@ open class TRON : TronDelegate {
      
      - parameter path: Path, that will be appended to current `baseURL`.
      
-     - parameter file: File url to upload from.
+     - parameter fileURL: File url to upload from.
      
      - returns: APIRequest instance.
      */
@@ -148,7 +147,7 @@ open class TRON : TronDelegate {
      
      - parameter path: Path, that will be appended to current `baseURL`.
      
-     - parameter destination: Destination to download to.
+     - parameter destination: Destination for downloading.
      
      - returns: APIRequest instance.
      
@@ -165,7 +164,7 @@ open class TRON : TronDelegate {
      
      - parameter destination: Destination to download to.
      
-     - parameter resumingFromData: Resume data for current request.
+     - parameter resumingFrom: Resume data for current request.
      
      - returns: APIRequest instance.
      
@@ -197,9 +196,9 @@ open class TRON : TronDelegate {
     }
     
     /**
-     REST encoding strategy. OPTIONS, GET, HEAD, DELETE, TRACE, CONNECT HTTP methods use .URL encoding, POST, PUT and PATCH - use JSON encoding.
+     REST encoding strategy. .post, .put, .patch methods use .json encoding, all others - .url encoding.
      
-     - Note: This strategy will become default in following releases. It's advised to use it for best practices.
+     - Note: This strategy is used by default.
      */
     open static func RESTEncodingStrategy() -> (Alamofire.HTTPMethod) -> Alamofire.ParameterEncoding {
         return { method in

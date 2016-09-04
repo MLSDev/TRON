@@ -3,10 +3,13 @@ All notable changes to this project will be documented in this file.
 
 ## Next
 
+`TRON` 2.0 is supported on iOS 9.0, macOS 10.11 and higher due to Alamofire.framework required versions.
+
 ### API changes
 
 * `ResponseParseable` was rewritten and renamed to `Parseable`. It now allows creating models without using a constructor. Therefore, it's now possibly to use really any kind of mapper and make factory-like response builders.
 * Success blocks on `APIRequest` are now optional and equal to nil by default.
+* `TRON.RESTEncodingStrategy` is now a default encoding strategy.
 
 ### Renamings
 

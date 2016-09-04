@@ -47,7 +47,7 @@ public enum RequestType {
 }
 
 /**
- `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. It is reusable and configurable for any needs.
+ `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. 
  */
 open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Model,ErrorModel> {
     
@@ -96,9 +96,9 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
     /**
      Send current request.
      
-     - parameter success: Success block to be executed when request finished
+     - parameter successBlock: Success block to be executed when request finished
      
-     - parameter failure: Failure block to be executed if request fails. Nil by default.
+     - parameter failureBlock: Failure block to be executed if request fails. Nil by default.
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */

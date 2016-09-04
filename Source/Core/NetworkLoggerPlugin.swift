@@ -45,7 +45,7 @@ open class NetworkLoggerPlugin : Plugin {
     open func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?)) {
         if response.3 != nil {
             if logFailures {
-                print("[Request] error\n ->  \(response.0?.urlString ?? "")) \n Response: \(response.1)\n ResponseString: \(String.init(data: response.2 ?? Data(), encoding: String.Encoding.utf8)) \n Error: \(response.3)")
+                print("[Request] error\n -> \(response.0?.httpMethod ?? "") \(response.0?.urlString ?? "")) \n Response: \(response.1)\n ResponseString: \(String.init(data: response.2 ?? Data(), encoding: String.Encoding.utf8)) \n Error: \(response.3)")
             }
         } else {
             if logSuccess {

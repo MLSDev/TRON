@@ -9,8 +9,12 @@
 import Foundation
 import Alamofire
 
+/**
+ `MultipartAPIRequest` encapsulates Alamofire multipart form upload request creation logic, stubbing options, and response/error parsing.
+ */
 open class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Model,ErrorModel>
 {
+    /// multipartFormData creation block
     let multipartFormData : (MultipartFormData) -> Void
     
     /**
@@ -34,9 +38,9 @@ open class MultipartAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseReq
      
      - parameter failure: Failure block to be executed if request fails. Nil by default.
      
-     - parameter encodingMemoryThreshold: Memory threshold, depending on which request will be streamed from disk or from memory
+     - parameter encodingMemoryThreshold: If data size is less than `encodingMemoryThreshold` request will be streamed from memory, otherwise - from disk.
      
-     - parameter encodingCompletion: Encoding completion block, that can be used to inspect encoding result. No action is required by default, therefore default value for this block is nil.
+     - parameter encodingCompletion: Encoding completion block, that can be used to inspect encoding result. No action is required by default,  default value for this block is nil.
      */
     open func performMultipart(withSuccess successBlock: @escaping (Model) -> Void, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil, encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)? = nil)
     {

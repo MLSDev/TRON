@@ -66,6 +66,7 @@ public protocol TronDelegate: class {
     var plugins : [Plugin] { get }
 }
 
+/// Base class, that contains common functionality, extracted from `APIRequest` and `MultipartAPIRequest`.
 open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
     /// Relative path of current request
     open let path: String
@@ -113,6 +114,7 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
     /// Array of plugins for current `APIRequest`.
     open var plugins : [Plugin] = []
     
+    /// Creates `BaseRequest` instance, initialized with several `TRON` properties.
     init(path: String, tron: TRON) {
         self.path = path
         self.tronDelegate = tron

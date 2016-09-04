@@ -69,9 +69,9 @@ open class APIStub<Model: Parseable, ErrorModel: Parseable> {
     /**
      Stub current request.
      
-     - parameter success: Success block to be executed when request finished
+     - parameter successBlock: Success block to be executed when request finished
      
-     - parameter failure: Failure block to be executed if request fails. Nil by default.
+     - parameter failureBlock: Failure block to be executed if request fails. Nil by default.
      */
     open func performStub(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) {
         if let model = model, successful {
@@ -88,7 +88,7 @@ open class APIStub<Model: Parseable, ErrorModel: Parseable> {
     /**
      Stub current request.
      
-     - parameter completion: Completion block to be executed when request is stubbed.
+     - parameter completionBlock: Completion block to be executed when request is stubbed.
      */
     open func performStub(withCompletion completionBlock : ((Alamofire.Response<Model>) -> Void)) {
         delay(stubDelay) {
