@@ -25,7 +25,7 @@ import PackageDescription
 let package = Package(
   name: "TRON",
   dependencies: [
-    .Package(url: "https://github.com/Alamofire/Alamofire.git", versions: Version(3, 1, 5)..<Version(4, 0, 0)),
+    .Package(url: "https://github.com/Alamofire/Alamofire.git", versions: Version(3, 5, 0)..<Version(4, 0, 0)),
     .Package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", versions: Version(2, 3, 1)..<Version(3, 0, 0))
   ]
 )

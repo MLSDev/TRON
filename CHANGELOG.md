@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/MLSDev/TRON/releases/tag/1.2.0)
+
+Support for building with Swift 2.3 along with Swift 2.2.
+
 ## [1.1.0](https://github.com/MLSDev/TRON/releases/tag/1.1.0)
 
 ### Added
