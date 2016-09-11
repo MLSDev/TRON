@@ -55,7 +55,7 @@ class PluginTestCase: XCTestCase {
         let localPluginTester = PluginTester()
         
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: MultipartAPIRequest<String,Int> = tron.uploadMultipart("status/200") { formData in
+        let request: UploadAPIRequest<String,Int> = tron.uploadMultipart("status/200") { formData in
             
         }
         request.plugins.append(localPluginTester)

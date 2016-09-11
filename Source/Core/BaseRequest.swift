@@ -3,8 +3,25 @@
 //  TRON
 //
 //  Created by Denys Telezhkin on 15.05.16.
-//  Copyright © 2016 Denys Telezhkin. All rights reserved.
+//  Copyright © 2015 - present MLSDev. All rights reserved.
 //
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 
 import Foundation
 import Alamofire
@@ -68,6 +85,7 @@ public protocol TronDelegate: class {
 
 /// Base class, that contains common functionality, extracted from `APIRequest` and `MultipartAPIRequest`.
 open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
+    
     /// Relative path of current request
     open let path: String
     
@@ -77,8 +95,8 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
     /// Parameters of current request.
     open var parameters: [String: AnyObject] = [:]
     
-    /// Selection of encoding based on HTTP method.
-    open var encodingStrategy : (Alamofire.HTTPMethod) -> Alamofire.ParameterEncoding
+    /// Defines how parameters are encoded.
+    open var parameterEncoding : Alamofire.ParameterEncoding
     
     /// Headers, that should be used for current request.
     /// - Note: Resulting headers may include global headers from `TRON` instance and `Alamofire.Manager` defaultHTTPHeaders.
@@ -115,7 +133,7 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
     open var plugins : [Plugin] = []
     
     /// Creates `BaseRequest` instance, initialized with several `TRON` properties.
-    init(path: String, tron: TRON) {
+    public init(path: String, tron: TRON) {
         self.path = path
         self.tronDelegate = tron
         self.stubbingEnabled = tron.stubbingEnabled
@@ -123,13 +141,17 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
         self.urlBuilder = tron.urlBuilder
         self.processingQueue = tron.processingQueue
         self.resultDeliveryQueue = tron.resultDeliveryQueue
-        self.encodingStrategy = tron.encodingStrategy
+        self.parameterEncoding = tron.parameterEncoding
         self.apiStub.successful = tron.stubbingShouldBeSuccessful
     }
     
-    internal func responseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.ResponseSerializer<Model> {
-        return ResponseSerializer<Model> { urlRequest, response, data, error in
-            DispatchQueue.main.async(execute: { 
+    internal func alamofireRequest(from manager: Alamofire.SessionManager) -> Alamofire.Request? {
+        fatalError("Needs to be implemented in subclasses")
+    }
+    
+    internal func dataResponseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.DataResponseSerializer<Model> {
+        return DataResponseSerializer<Model> { urlRequest, response, data, error in
+            DispatchQueue.main.async(execute: {
                 plugins.forEach {
                     $0.requestDidReceiveResponse(urlRequest, response,data,error)
                 }
@@ -148,19 +170,46 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
         }
     }
     
+    internal func performStub(success: ((Model) -> Void)?, failure: ((APIError<ErrorModel>) -> Void)?) -> Bool {
+        if stubbingEnabled {
+            apiStub.performStub(withSuccess: success, failure: failure)
+            return true
+        }
+        return false
+    }
+    
+    internal func performStub(completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> Bool {
+        if stubbingEnabled {
+            apiStub.performStub(withCompletion: completion)
+            return true
+        }
+        return false
+    }
+    
+    internal func performStub(completion: @escaping ((Alamofire.DownloadResponse<Model>) -> Void)) -> Bool {
+        if stubbingEnabled {
+            apiStub.performStub(withCompletion: completion)
+            return true
+        }
+        return false
+    }
+    
     internal func callSuccessFailureBlocks(_ success: ((Model) -> Void)?,
                                            failure: ((APIError<ErrorModel>) -> Void)?,
-                                           response: Alamofire.Response<Model>)
+                                           response: Alamofire.DataResponse<Model>)
     {
         switch response.result
         {
         case .success(let value):
-            (resultDeliveryQueue).async {
+            resultDeliveryQueue.async {
                 success?(value)
             }
         case .failure(let error):
-            (resultDeliveryQueue).async {
-                failure?(error as! APIError<ErrorModel>)
+            resultDeliveryQueue.async {
+                guard let error = error as? APIError<ErrorModel> else {
+                    return
+                }
+                failure?(error)
             }
         }
     }

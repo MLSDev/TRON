@@ -48,7 +48,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
     }
     
     func testMultipartRxCanBeSuccessful() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
+        let request: UploadAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
             formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
         }
         request.method = .post
@@ -66,7 +66,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
     }
     
     func testMultipartRxCanBeFailureful() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
+        let request: UploadAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
             formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
         }
         request.method = .delete

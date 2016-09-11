@@ -147,7 +147,7 @@ class APIRequestTestCase: XCTestCase {
         let manager = SessionManager(configuration: configuration)
         manager.startRequestsImmediately = false
         let tron = TRON(baseURL: "http://httpbin.org", manager: manager)
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
+        let request: UploadAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
             formData.append("bar".data(using: String.Encoding.utf8) ?? Data(), withName: "foo")
         }
         request.method = .post

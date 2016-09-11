@@ -48,9 +48,9 @@ open class TRON : TronDelegate {
     /// Global plugins, that will receive events from all requests, created from current TRON instance.
     open var plugins : [Plugin] = []
     
-    /// Encoding strategy, based on HTTP Method. Strategy will be set for all APIRequests, and can be overrided by setting new value on APIRequest.encodingStrategy property.
-    /// Default value - TRON.RESTEncodingStrategy
-    open var encodingStrategy = TRON.RESTEncodingStrategy()
+    /// Default parameter encoding, that will be set on all APIRequests. Can be overrided by setting new value on APIRequest.parameterEncoding property.
+    /// Default value - URLEncoding.default
+    open var parameterEncoding: Alamofire.ParameterEncoding = URLEncoding.default
     
     /// Queue, used for processing response, received from the server. Defaults to QOS_CLASS_USER_INITIATED queue
     open var processingQueue = DispatchQueue.global(qos: .userInitiated)
@@ -87,7 +87,7 @@ open class TRON : TronDelegate {
      - returns: APIRequest instance.
      */
     open func request<Model:Parseable, ErrorModel:Parseable>(_ path: String) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: .default,path: path, tron: self)
+        return APIRequest(path: path, tron: self)
     }
     
     /**
@@ -99,8 +99,8 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, fromFileAt fileURL: URL) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.uploadFromFile(fileURL), path: path, tron: self)
+    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .uploadFromFile(fileURL), path: path, tron: self)
     }
     
     /**
@@ -112,8 +112,8 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, data: Data) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.uploadData(data), path: path, tron: self)
+    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, data: Data) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .uploadData(data), path: path, tron: self)
     }
     
     /**
@@ -125,8 +125,8 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, from stream: InputStream) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.uploadStream(stream), path: path, tron: self)
+    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .uploadStream(stream), path: path, tron: self)
     }
     
     /**
@@ -138,8 +138,8 @@ open class TRON : TronDelegate {
      
      - returns: MultipartAPIRequest instance.
      */
-    open func uploadMultipart<Model:Parseable, ErrorModel:Parseable>(_ path: String, formData: @escaping (MultipartFormData) -> Void) -> MultipartAPIRequest<Model,ErrorModel> {
-        return MultipartAPIRequest(path: path, tron: self, multipartFormData: formData)
+    open func uploadMultipart<Model:Parseable, ErrorModel:Parseable>(_ path: String, formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .multipartFormData(formData), path: path, tron: self)
     }
     
     /**
@@ -153,8 +153,8 @@ open class TRON : TronDelegate {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, to destination: Request.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.download(destination), path: path, tron: self)
+    open func download<ErrorModel:Parseable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<ErrorModel> {
+        return DownloadAPIRequest(type: .download(destination), path: path, tron: self)
     }
     
     /**
@@ -170,8 +170,8 @@ open class TRON : TronDelegate {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, to destination: Request.DownloadFileDestination, resumingFrom: Data) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(type: RequestType.downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self)
+    open func download<ErrorModel:Parseable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data) -> DownloadAPIRequest<ErrorModel> {
+        return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self)
     }
     
     /**
@@ -184,30 +184,6 @@ open class TRON : TronDelegate {
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
         let manager = SessionManager(configuration: configuration)
         return manager
-    }
-    
-    /**
-     Encoding strategy, which always sets .URL encoding for requests.
-     */
-    open static func URLEncodingStrategy() -> (Alamofire.HTTPMethod) -> Alamofire.ParameterEncoding {
-        return { method in
-            return .url
-        }
-    }
-    
-    /**
-     REST encoding strategy. .post, .put, .patch methods use .json encoding, all others - .url encoding.
-     
-     - Note: This strategy is used by default.
-     */
-    open static func RESTEncodingStrategy() -> (Alamofire.HTTPMethod) -> Alamofire.ParameterEncoding {
-        return { method in
-            switch method
-            {
-            case .post, .put, .patch : return .json
-            default: return .url
-            }
-        }
     }
 }
 
@@ -225,12 +201,12 @@ extension TRON {
     }
     
     @available(*,unavailable,renamed:"download(_:to:)")
-    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, destination: Request.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
+    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, destination: DownloadRequest.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
         fatalError("UNAVAILABLE")
     }
     
     @available(*,unavailable,renamed:"download(_:to:resumingFrom:)")
-    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, destination: Request.DownloadFileDestination, resumingFromData: Data) -> APIRequest<Model,ErrorModel> {
+    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, destination: DownloadRequest.DownloadFileDestination, resumingFromData: Data) -> APIRequest<Model,ErrorModel> {
         fatalError("UNAVAILABLE")
     }
 }

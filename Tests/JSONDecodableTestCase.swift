@@ -111,7 +111,7 @@ class JSONDecodableTestCase: XCTestCase {
     func testJSONDecodableParsingEmptyResponse() {
         let tron = TRON(baseURL: "http://httpbin.org")
         let request: APIRequest<Headers,Int> = tron.request("headers")
-        let responseSerializer = request.responseSerializer(notifyingPlugins: [])
+        let responseSerializer = request.dataResponseSerializer(notifyingPlugins: [])
         let result = responseSerializer.serializeResponse(nil,nil, nil,nil)
         
         if case Alamofire.Result.success(_) = result {

@@ -25,72 +25,16 @@
 
 import Alamofire
 
-/// Enum for various request types.
-public enum RequestType {
-    /// Will create `NSURLSessionDataTask`
-    case `default`
-    
-    /// Will create `NSURLSessionUploadTask` using `uploadTaskWithRequest(_:fromFile:)` method
-    case uploadFromFile(URL)
-    
-    /// Will create `NSURLSessionUploadTask` using `uploadTaskWithRequest(_:fromData:)` method
-    case uploadData(Data)
-    
-    /// Will create `NSURLSessionUploadTask` using `uploadTaskWithStreamedRequest(_)` method
-    case uploadStream(InputStream)
-    
-    /// Will create `NSURLSessionDownloadTask` using `downloadTaskWithRequest(_)` method
-    case download(Request.DownloadFileDestination)
-    
-    /// Will create `NSURLSessionDownloadTask` using `downloadTaskWithResumeData(_)` method
-    case downloadResuming(data: Data, destination: Request.DownloadFileDestination)
-}
-
 /**
  `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. 
  */
 open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Model,ErrorModel> {
     
-    internal let requestType: RequestType
-    
-    internal func alamofireRequest(from manager: Alamofire.SessionManager) -> Alamofire.Request {
-        switch requestType {
-        case .default:
-            return manager.request(urlBuilder.url(forPath: path), withMethod: method,
+    override func alamofireRequest(from manager: SessionManager) -> Request {
+            return manager.request(urlBuilder.url(forPath: path), method: method,
                                    parameters: parameters,
-                                   encoding: encodingStrategy(method),
+                                   encoding: parameterEncoding,
                                    headers:  headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
-            
-        case .uploadFromFile(let url):
-            return manager.upload(url, to: urlBuilder.url(forPath: path), withMethod: method, headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
-        
-        case .uploadData(let data):
-            return manager.upload(data, to: urlBuilder.url(forPath: path), withMethod: method, headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
-            
-        case .uploadStream(let stream):
-            return manager.upload(stream, to: urlBuilder.url(forPath: path), withMethod: method, headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
-            
-        case .download(let destination):
-            return manager.download(urlBuilder.url(forPath: path), to: destination, withMethod: method,
-                                    parameters: parameters,
-                                    encoding: encodingStrategy(method),
-                                    headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
-        
-        case .downloadResuming(let data, let destination):
-            return manager.download(resourceWithin: data, to: destination)
-        }
-    }
-    
-    /**
-    Initialize request with relative path and `TRON` instance.
-     
-     - parameter path: relative path to resource.
-     
-     - parameter tron: `TRON` instance to be used to configure current request.
-     */
-    public init(type: RequestType, path: String, tron: TRON) {
-        self.requestType = type
-        super.init(path: path, tron: tron)
     }
     
     /**
@@ -103,20 +47,16 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
      - returns: Alamofire.Request or nil if request was stubbed.
      */
     @discardableResult
-    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.Request?
+    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.DataRequest?
     {
-        if stubbingEnabled {
-            apiStub.performStub(withSuccess: successBlock, failure: failureBlock)
+        if performStub(success: successBlock, failure: failureBlock) {
             return nil
         }
-        return performAlamofireRequest(successBlock, failure: failureBlock)
+        return performAlamofireRequest {
+            self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
+        }
     }
     
-    @available(*,unavailable,renamed:"performCollectingTimeline")
-    @discardableResult
-    open func perform(_ completion: ((Alamofire.Response<Model>) -> Void)) -> Alamofire.Request? {
-        return nil
-    }
     /**
      Perform current request with completion block, that contains Alamofire.Response.
      
@@ -125,24 +65,21 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
      - returns: Alamofire.Request or nil if request was stubbed.
     */
     @discardableResult
-    open func performCollectingTimeline(withCompletion completion: ((Alamofire.Response<Model>) -> Void)) -> Alamofire.Request? {
-        if stubbingEnabled {
-            apiStub.performStub(withCompletion: completion)
+    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> Alamofire.DataRequest? {
+        if performStub(completion: completion) {
             return nil
         }
-        return performAlamofireRequest { response in
-            self.resultDeliveryQueue.async() {
-                completion(response)
-            }
-        }
+        return performAlamofireRequest(completion)
     }
     
-    private func performAlamofireRequest(_ completion : @escaping (Response<Model>) -> Void) -> Alamofire.Request
+    private func performAlamofireRequest(_ completion : @escaping (DataResponse<Model>) -> Void) -> DataRequest
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
-        let request = alamofireRequest(from: manager)
+        guard let request = alamofireRequest(from: manager) as? DataRequest else {
+            fatalError("Failed to receive DataRequest")
+        }
         if !tronDelegate!.manager.startRequestsImmediately {
             request.resume()
         }
@@ -151,20 +88,19 @@ open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Mode
         allPlugins.forEach {
             $0.willSendRequest(request.request)
         }
-        return request.validate().response(queue: processingQueue,responseSerializer: responseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
-    }
-    
-    private func performAlamofireRequest(_ success: ((Model) -> Void)?, failure: ((APIError<ErrorModel>) -> Void)?) -> Alamofire.Request
-    {
-        return performAlamofireRequest {
-            self.callSuccessFailureBlocks(success, failure: failure, response: $0)
-        }
+        return request.validate().response(queue: processingQueue,responseSerializer: dataResponseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
     }
 }
 
-// DEPRECATED 
+// DEPRECATED
 
 extension APIRequest {
+    @available(*,unavailable,renamed:"performCollectingTimeline")
+    @discardableResult
+    open func perform(_ completion: ((Alamofire.DataResponse<Model>) -> Void)) -> Alamofire.DataRequest? {
+        return nil
+    }
+    
     @discardableResult
     @available(*,unavailable,renamed:"perform(withSuccess:failure:)")
     open func perform(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.Request?

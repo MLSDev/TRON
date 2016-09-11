@@ -28,40 +28,6 @@ class TronTestCase: XCTestCase {
         expect(requestBuilder === tronBuilder).to(beTruthy())
     }
     
-    func testURLEncodingStrategySetsURLEncoding() {
-        tron.encodingStrategy = TRON.URLEncodingStrategy()
-        
-        let request : APIRequest<Int,TronError> = tron.request("foo")
-        request.method = .post
-        
-        if case ParameterEncoding.url = request.encodingStrategy(request.method) {
-            
-        } else {
-            XCTFail()
-        }
-    }
-    
-    func testRESTEncodingStrategySetsProperEncoding() {
-        tron.encodingStrategy = TRON.RESTEncodingStrategy()
-        
-        let request : APIRequest<Int,TronError> = tron.request("foo")
-        request.method = .post
-        
-        if case ParameterEncoding.json = request.encodingStrategy(request.method) {
-        
-        } else {
-            XCTFail()
-        }
-        
-        request.method = .get
-        
-        if case ParameterEncoding.url = request.encodingStrategy(request.method) {
-            
-        } else {
-            XCTFail()
-        }
-    }
-    
     func testStubbingShouldBeSuccessfulPropertyPropogatesToStub() {
         let request : APIRequest<Int,TronError> = tron.request("foo")
         expect(request.apiStub.successful).to(beTruthy())

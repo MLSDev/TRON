@@ -90,7 +90,7 @@ open class APIStub<Model: Parseable, ErrorModel: Parseable> {
      
      - parameter completionBlock: Completion block to be executed when request is stubbed.
      */
-    open func performStub(withCompletion completionBlock : ((Alamofire.Response<Model>) -> Void)) {
+    open func performStub(withCompletion completionBlock : @escaping ((Alamofire.DataResponse<Model>) -> Void)) {
         delay(stubDelay) {
             let result : Alamofire.Result<Model>
             if let model = self.model, self.successful {
@@ -101,7 +101,23 @@ open class APIStub<Model: Parseable, ErrorModel: Parseable> {
                 let error : APIError<ErrorModel> = APIError(request: nil, response: nil, data: nil, error: nil)
                 result = Result.failure(error)
             }
-            let response: Alamofire.Response<Model> = Alamofire.Response(request: nil, response: nil, data: nil, result: result)
+            let response: Alamofire.DataResponse<Model> = Alamofire.DataResponse(request: nil, response: nil, data: nil, result: result)
+            completionBlock(response)
+        }
+    }
+    
+    open func performStub(withCompletion completionBlock : @escaping ((Alamofire.DownloadResponse<Model>) -> Void)) {
+        delay(stubDelay) {
+            let result : Alamofire.Result<Model>
+            if let model = self.model, self.successful {
+                result = Result.success(model)
+            } else if let error = self.error {
+                result = Result.failure(error)
+            } else {
+                let error : APIError<ErrorModel> = APIError(request: nil, response: nil, data: nil, error: nil)
+                result = Result.failure(error)
+            }
+            let response: Alamofire.DownloadResponse<Model> = DownloadResponse(request: nil, response: nil, temporaryURL: nil, destinationURL: nil, resumeData: nil, result: result)
             completionBlock(response)
         }
     }
@@ -121,7 +137,7 @@ extension APIStub {
     }
     
     @available(*,unavailable,renamed:"performStub(withCompletion:)")
-    open func performStubWithCompletion(_ completion : ((Alamofire.Response<Model>) -> Void)) {
+    open func performStubWithCompletion(_ completion : ((Alamofire.DataResponse<Model>) -> Void)) {
         fatalError("UNAVAILABLE")
     }
 }

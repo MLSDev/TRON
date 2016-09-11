@@ -26,11 +26,11 @@ class DownloadTestCase: XCTestCase {
     func testDownloadRequest() {
         // Given
         
-        let destination = Alamofire.Request.suggestedDownloadDestination(
+        let destination = Alamofire.DownloadRequest.suggestedDownloadDestination(
             for: searchPathDirectory,
             in: searchPathDomain
         )
-        let request: APIRequest<EmptyResponse,TronError> = tron.download("/stream/100", to: destination)
+        let request: DownloadAPIRequest<TronError> = tron.download("/stream/100", to: destination)
         let expectation = self.expectation(description: "Download expectation")
         request.performCollectingTimeline(withCompletion: { result in
             expectation.fulfill()
@@ -87,18 +87,18 @@ class DownloadTestCase: XCTestCase {
         // Given
         tron = TRON(baseURL: "https://upload.wikimedia.org")
         
-        let destination = Alamofire.Request.suggestedDownloadDestination(
+        let destination = Alamofire.DownloadRequest.suggestedDownloadDestination(
             for: searchPathDirectory,
             in: searchPathDomain
         )
         let path = "/wikipedia/commons/6/69/NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg"
-        let request: APIRequest<EmptyResponse,TronError> = tron.download(path, to: destination)
+        let request: DownloadAPIRequest<TronError> = tron.download(path, to: destination)
         let expectation = self.expectation(description: "Download expectation")
         let alamofireRequest = request.performCollectingTimeline(withCompletion: { result in
             expectation.fulfill()
         })
-        alamofireRequest?.progress { //_,_,_ in
-            print("progress ",$0,$1,$2)
+        alamofireRequest?.downloadProgress { fraction in//_,_,_ in
+            print("progress ",fraction)
             alamofireRequest?.cancel()
         }
         waitForExpectations(timeout: 10, handler: nil)
@@ -108,7 +108,7 @@ class DownloadTestCase: XCTestCase {
             return
         }
         
-        let continueDownloadRequest : APIRequest<EmptyResponse,TronError> = tron.download(path, to: destination, resumingFrom : resumeData)
+        let continueDownloadRequest : DownloadAPIRequest<TronError> = tron.download(path, to: destination, resumingFrom : resumeData)
         let continueExpectation = self.expectation(description: "Continue download expectation")
         continueDownloadRequest.performCollectingTimeline(withCompletion: { result in
             continueExpectation.fulfill()
