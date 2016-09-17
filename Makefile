@@ -23,7 +23,7 @@ install-cocoapods:
 # Run Tasks
 
 test-iOS:
-	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON iOS" -destination "name=iPhone 6s" -enableCodeCoverage YES test -confifuration "Release" | xcpretty -ct
+	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON iOS" -destination "name=iPhone 6s" -enableCodeCoverage YES test -configuration "Release" | xcpretty -ct
 	bash <(curl -s https://codecov.io/bash)
 
 test-OSX:
