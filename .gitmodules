@@ -9,4 +9,4 @@ url=https://github.com/Quick/Nimble.git
 	url = https://github.com/ReactiveX/RxSwift.git
 [submodule "Carthage/Checkouts/SwiftyJSON"]
 	path = Carthage/Checkouts/SwiftyJSON
-url=https://github.com/BaiduHiDeviOS/SwiftyJSON.git
+url=https://github.com/MLSDev/SwiftyJSON.git

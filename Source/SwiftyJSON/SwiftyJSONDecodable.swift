@@ -40,7 +40,7 @@ public extension JSONDecodable {
         guard let type = T.self as? JSONDecodable.Type else {
             throw ParsingError.wrongType
         }
-        guard let model =  try type.init(json: JSON(data: data as Data)) as? T else {
+        guard let model =  try type.init(json: JSON(data: data)) as? T else {
             throw ParsingError.constructionFailed
         }
         return model

@@ -1,4 +1,4 @@
-github "Alamofire/Alamofire" "fcb4829a78d28e3491c6767cfb74e774871943b0"
-github "norio-nomura/Nimble" "97bc35989e142179851d84eb89d6fcae214ee32b"
-github "ReactiveX/RxSwift" "edf423d42e06c30a1eb69111e4ee25d91e9be657"
-github "SwiftyJSON/SwiftyJSON" "1a9755949a652967dc2986cd7f4653496e556715"
+github "Alamofire/Alamofire" "4.0.0"
+github "Quick/Nimble" "db706fc1d7130f6ac96c56aaf0e635fa3217fe57"
+github "ReactiveX/RxSwift" "3.0.0-beta.1"
+github "MLSDev/SwiftyJSON" "3.0.0-beta.1"

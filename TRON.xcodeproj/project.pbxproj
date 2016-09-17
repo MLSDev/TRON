@@ -45,10 +45,10 @@
 		9A154FB21C67A6BA00B33F01 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA71C67A6BA00B33F01 /* RequestBuilder.swift */; };
 		9A154FB31C67A6BA00B33F01 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA71C67A6BA00B33F01 /* RequestBuilder.swift */; };
 		9A154FB41C67A6BA00B33F01 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA71C67A6BA00B33F01 /* RequestBuilder.swift */; };
-		9A154FB51C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */; };
-		9A154FB61C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */; };
-		9A154FB71C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */; };
-		9A154FB81C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */; };
+		9A154FB51C67A6BA00B33F01 /* Parseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* Parseable.swift */; };
+		9A154FB61C67A6BA00B33F01 /* Parseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* Parseable.swift */; };
+		9A154FB71C67A6BA00B33F01 /* Parseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* Parseable.swift */; };
+		9A154FB81C67A6BA00B33F01 /* Parseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* Parseable.swift */; };
 		9A154FBC1C67A6CB00B33F01 /* NetworkActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FB91C67A6CB00B33F01 /* NetworkActivityPlugin.swift */; };
 		9A154FC01C67A6CB00B33F01 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FBA1C67A6CB00B33F01 /* NetworkLoggerPlugin.swift */; };
 		9A154FC11C67A6CB00B33F01 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FBA1C67A6CB00B33F01 /* NetworkLoggerPlugin.swift */; };
@@ -631,7 +631,7 @@
 		9A154FA51C67A6BA00B33F01 /* ErrorBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorBuilder.swift; path = Source/Core/ErrorBuilder.swift; sourceTree = "<group>"; };
 		9A154FA61C67A6BA00B33F01 /* HeaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilder.swift; path = Source/Core/HeaderBuilder.swift; sourceTree = "<group>"; };
 		9A154FA71C67A6BA00B33F01 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestBuilder.swift; path = Source/Core/RequestBuilder.swift; sourceTree = "<group>"; };
-		9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResponseBuilder.swift; path = Source/Core/ResponseBuilder.swift; sourceTree = "<group>"; };
+		9A154FA81C67A6BA00B33F01 /* Parseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Parseable.swift; path = Source/Core/Parseable.swift; sourceTree = "<group>"; };
 		9A154FB91C67A6CB00B33F01 /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkActivityPlugin.swift; path = Source/Core/NetworkActivityPlugin.swift; sourceTree = "<group>"; };
 		9A154FBA1C67A6CB00B33F01 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPlugin.swift; path = Source/Core/NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		9A154FBB1C67A6CB00B33F01 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plugin.swift; path = Source/Core/Plugin.swift; sourceTree = "<group>"; };
@@ -880,7 +880,7 @@
 				9A154FA51C67A6BA00B33F01 /* ErrorBuilder.swift */,
 				9A154FA61C67A6BA00B33F01 /* HeaderBuilder.swift */,
 				9A154FA71C67A6BA00B33F01 /* RequestBuilder.swift */,
-				9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */,
+				9A154FA81C67A6BA00B33F01 /* Parseable.swift */,
 			);
 			name = Builders;
 			sourceTree = "<group>";
@@ -1629,7 +1629,7 @@
 				9A154F961C67A6AB00B33F01 /* APIRequest.swift in Sources */,
 				9A154FC51C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAA1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
-				9A154FB61C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
+				9A154FB61C67A6BA00B33F01 /* Parseable.swift in Sources */,
 				9A99B4EE1D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */,
 				9A13FA821C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
 				9A99B50D1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */,
@@ -1671,7 +1671,7 @@
 				9A154F971C67A6AB00B33F01 /* APIRequest.swift in Sources */,
 				9A154FC61C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAB1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
-				9A154FB71C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
+				9A154FB71C67A6BA00B33F01 /* Parseable.swift in Sources */,
 				9A99B4EF1D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */,
 				9A13FA831C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
 				9A99B50E1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */,
@@ -1713,7 +1713,7 @@
 				9A154F981C67A6AB00B33F01 /* APIRequest.swift in Sources */,
 				9A154FC71C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAC1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
-				9A154FB81C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
+				9A154FB81C67A6BA00B33F01 /* Parseable.swift in Sources */,
 				9A99B4F01D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */,
 				9A13FA841C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
 				9A99B50F1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */,
@@ -1753,7 +1753,7 @@
 				9A154F991C67A6AB00B33F01 /* APIStub.swift in Sources */,
 				9A2F5F561CE872C800C3C0F9 /* BaseRequest.swift in Sources */,
 				9A154F951C67A6AB00B33F01 /* APIRequest.swift in Sources */,
-				9A154FB51C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
+				9A154FB51C67A6BA00B33F01 /* Parseable.swift in Sources */,
 				9A99B4ED1D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */,
 				9A154FB11C67A6BA00B33F01 /* RequestBuilder.swift in Sources */,
 			);

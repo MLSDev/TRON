@@ -1,1 +1,1 @@
-github "norio-nomura/Nimble" "nn-swift-3-compatibility"
+github "Quick/Nimble" "master"
