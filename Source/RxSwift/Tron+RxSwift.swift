@@ -28,41 +28,40 @@ import RxSwift
 import Alamofire
 
 extension APIRequest {
-    
+
     /**
      Creates on Observable of success Model type. It starts a request each time it's subscribed to.
-     
+
      - returns: Observable<Model>
      */
-    public func rxResult() -> Observable<Model> {
+    open func rxResult() -> Observable<Model> {
         return Observable.create({ observer in
-            let token = self.perform(success: { result in
+            let token = self.perform(withSuccess: { result in
                 observer.onNext(result)
                 observer.onCompleted()
             }, failure: { error in
                 observer.onError(error)
             })
-            return AnonymousDisposable {
+            return Disposables.create {
                 token?.cancel()
             }
         })
     }
 }
 
-extension MultipartAPIRequest {
+extension UploadAPIRequest {
     /**
      Creates an Observable<Model> for multipart upload.
-     
+
      - parameter memoryThreshold: Memory threshold that must not be exceeded when encoding data.
-     
+
      - returns: Observable<Model>
      */
-    public func rxMultipartResult(memoryThreshold threshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
-                                                  progressClosure: ((bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) -> Void)? = nil
-                                                  ) -> Observable<Model> {
+    open func rxMultipartResult(memoryThreshold threshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold,
+                                uploadProgress: (Request.ProgressHandler)? = nil) -> Observable<Model> {
         return Observable.create { observer in
             var request : Alamofire.Request?
-            self.performMultipart(success: { result in
+            self.performMultipart(withSuccess: { result in
                 observer.onNext(result)
                 observer.onCompleted()
                 }, failure: { error in
@@ -70,15 +69,14 @@ extension MultipartAPIRequest {
                 },
                 encodingMemoryThreshold : threshold,
                 encodingCompletion : { completion in
-                    if case let Manager.MultipartFormDataEncodingResult.Success(originalRequest, _, _) = completion {
-                        if let progressClosure = progressClosure {
-                            originalRequest.progress(progressClosure)
-                        }
+                    if case let SessionManager.MultipartFormDataEncodingResult.success(originalRequest, _, _) = completion {
                         request = originalRequest
+                        if let progressClosure = uploadProgress {
+                            originalRequest.uploadProgress(closure: progressClosure)
+                        }
                     }
             })
-            
-            return AnonymousDisposable {
+            return Disposables.create {
                 request?.cancel()
             }
         }

@@ -31,9 +31,9 @@ import UIKit
  
  - Note: this plugin should be used globally by `TRON` instance. It also assumes, that you have only one `TRON` in your application.
  */
-public class NetworkActivityPlugin : Plugin {
+open class NetworkActivityPlugin : Plugin {
     
-    private let application : UIApplication
+    fileprivate let application : UIApplication
     
     required public init(application : UIApplication) {
         self.application = application
@@ -43,15 +43,15 @@ public class NetworkActivityPlugin : Plugin {
      */
     var networkActivityCount = 0 {
         didSet {
-            application.networkActivityIndicatorVisible = networkActivityCount > 0
+            application.isNetworkActivityIndicatorVisible = networkActivityCount > 0
         }
     }
     
-    public func willSendRequest(request: NSURLRequest?) {
+    open func willSendRequest(_ request: URLRequest?) {
         networkActivityCount += 1
     }
     
-    public func requestDidReceiveResponse(response: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?)) {
+    open func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?)) {
         networkActivityCount -= 1
     }
 }

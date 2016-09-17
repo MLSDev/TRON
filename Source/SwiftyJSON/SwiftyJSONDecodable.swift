@@ -29,46 +29,52 @@ import SwiftyJSON
 /**
  Protocol for parsing JSON response. It is used as a generic constraint for `APIRequest` instance.
  */
-public protocol JSONDecodable  : ResponseParseable {
+public protocol JSONDecodable : Parseable  {
     
     /// Create model object from SwiftyJSON.JSON struct.
     init(json: JSON) throws
 }
 
-public extension ResponseParseable where Self: JSONDecodable {
-    init(data: NSData) throws {
-        try self.init(json: JSON(data: data))
+public extension JSONDecodable {
+    static func parse<T:Parseable>(_ data: Data) throws -> T {
+        guard let type = T.self as? JSONDecodable.Type else {
+            throw ParsingError.wrongType
+        }
+        guard let model =  try type.init(json: JSON(data: data)) as? T else {
+            throw ParsingError.constructionFailed
+        }
+        return model
     }
 }
 
 extension JSON : JSONDecodable {
-    public init(json: JSON) {
+    public init(json: JSON) throws {
         if let array = json.array { self.init(array) }
         else if let dictionary = json.dictionary { self.init(dictionary) }
         else { self.init(json.rawValue) }
     }
 }
 
-extension Array : JSONDecodable {
-    public init(json: JSON) {
-        self.init(json.arrayValue.flatMap {
-            if let type = Element.self as? JSONDecodable.Type {
-                let element : Element?
-                do {
-                    element = try type.init(json: $0) as? Element
-                } catch {
-                    return nil
-                }
-                return element
-            }
-            return nil
-        })
-    }
-}
+//extension Array : JSONDecodable {
+//    public init(json: JSON) {
+//        self.init(json.arrayValue.flatMap {
+//            if let type = Element.self as? JSONDecodable.Type {
+//                let element : Element?
+//                do {
+//                    element = try type.init(json: $0) as? Element
+//                } catch {
+//                    return nil
+//                }
+//                return element
+//            }
+//            return nil
+//        })
+//    }
+//}
 
 extension String : JSONDecodable  {
     public init(json: JSON) {
-        self.init(json.stringValue)
+        self.init(json.stringValue)!
     }
 }
 

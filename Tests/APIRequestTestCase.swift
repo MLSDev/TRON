@@ -15,8 +15,8 @@ import SwiftyJSON
 class TestResponse : JSONDecodable {
     let response : [String:AnyObject]
     
-    required init(json: JSON) {
-        response = json.dictionaryObject ?? [:]
+    required init(json: JSON) throws {
+        response = json.dictionaryObject as [String : AnyObject]? ?? [:]
     }
 }
 
@@ -30,138 +30,138 @@ class APIRequestTestCase: XCTestCase {
     }
     
     func testErrorBuilding() {
-        let request: APIRequest<Int,TronError> = tron.request(path: "status/418")
-        let expectation = expectationWithDescription("Teapot")
-        request.perform(success: { _ in
+        let request: APIRequest<Int,TronError> = tron.request("status/418")
+        let expectation = self.expectation(description: "Teapot")
+        request.perform(withSuccess: { _ in
             XCTFail()
         }) { error in
             if error.response?.statusCode == 418 {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testSuccessCallBackIsCalledOnMainThread() {
-        let request : APIRequest<String,TronError> = tron.request(path: "get")
-        let expectation = expectationWithDescription("200")
-        request.perform(success: { _ in
-            if NSThread.isMainThread() {
+        let request : APIRequest<String,TronError> = tron.request("get")
+        let expectation = self.expectation(description: "200")
+        request.perform(withSuccess: { _ in
+            if Thread.isMainThread {
                 expectation.fulfill()
             }
             }) { _ in
             XCTFail()
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testFailureCallbackIsCalledOnMainThread() {
-        let request : APIRequest<Int,TronError> = tron.request(path: "status/418")
-        let expectation = expectationWithDescription("Teapot")
-        request.perform(success: { _ in
+        let request : APIRequest<Int,TronError> = tron.request("status/418")
+        let expectation = self.expectation(description: "Teapot")
+        request.perform(withSuccess: { _ in
             XCTFail()
         }) { error in
-            if NSThread.isMainThread() {
+            if Thread.isMainThread {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testParsingFailureCallbackIsCalledOnMainThread() {
-        let request : APIRequest<Int,TronError> = tron.request(path: "html")
-        let expectation = expectationWithDescription("Parsing failure")
-        request.perform(success: { _ in
+        let request : APIRequest<Int,TronError> = tron.request("html")
+        let expectation = self.expectation(description: "Parsing failure")
+        request.perform(withSuccess: { _ in
             XCTFail()
         }) { error in
-            if NSThread.isMainThread() {
+            if Thread.isMainThread {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testSuccessBlockCanBeCalledOnBackgroundThread() {
-        tron.resultDeliveryQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
-        let request : APIRequest<Int,TronError> = tron.request(path: "get")
-        let expectation = expectationWithDescription("200")
-        request.perform(success: { _ in
-            if !NSThread.isMainThread() {
+        tron.resultDeliveryQueue = DispatchQueue.global(qos: .background)
+        let request : APIRequest<Int,TronError> = tron.request("get")
+        let expectation = self.expectation(description: "200")
+        request.perform(withSuccess: { _ in
+            if !Thread.isMainThread {
                 expectation.fulfill()
             }
             }) { _ in
                 XCTFail()
             }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testFailureCallbacksCanBeCalledOnBackgroundThread() {
-        tron.resultDeliveryQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
-        let request : APIRequest<Int,TronError> = tron.request(path: "html")
-        let expectation = expectationWithDescription("Parsing failure")
-        request.perform(success: { _ in
+        tron.resultDeliveryQueue = DispatchQueue.global(qos: .background)
+        let request : APIRequest<Int,TronError> = tron.request("html")
+        let expectation = self.expectation(description: "Parsing failure")
+        request.perform(withSuccess: { _ in
             XCTFail()
             }) { error in
-                if !NSThread.isMainThread() {
+                if !Thread.isMainThread {
                     expectation.fulfill()
                 }
         }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testEmptyResponseStillCallsSuccessBlock() {
-        let request : APIRequest<EmptyResponse, TronError> = tron.request(path: "headers")
-        request.method = .HEAD
-        let expectation = expectationWithDescription("Empty response")
-        request.perform(success: { _ in
+        let request : APIRequest<EmptyResponse, TronError> = tron.request("headers")
+        request.method = .head
+        let expectation = self.expectation(description: "Empty response")
+        request.perform(withSuccess: { _ in
                 expectation.fulfill()
             }, failure: { _ in
                 XCTFail()
             }
         )
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testRequestWillStartEvenIfStartAutomaticallyIsFalse()
     {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.HTTPAdditionalHeaders = Manager.defaultHTTPHeaders
-        let manager = Manager(configuration: configuration)
+        let configuration = URLSessionConfiguration.default
+        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
+        let manager = SessionManager(configuration: configuration)
         manager.startRequestsImmediately = false
         let tron = TRON(baseURL: "http://httpbin.org", manager: manager)
-        let request : APIRequest<EmptyResponse, TronError> = tron.request(path: "headers")
-        request.method = .HEAD
-        let expectation = expectationWithDescription("Empty response")
-        request.perform(success: { _ in
+        let request : APIRequest<EmptyResponse, TronError> = tron.request("headers")
+        request.method = .head
+        let expectation = self.expectation(description: "Empty response")
+        request.perform(withSuccess: { _ in
             expectation.fulfill()
             }, failure: { _ in
                 XCTFail()
             }
         )
-        waitForExpectationsWithTimeout(5, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
     func testMultipartUploadWillStartEvenIfStartAutomaticallyIsFalse() {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.HTTPAdditionalHeaders = Manager.defaultHTTPHeaders
-        let manager = Manager(configuration: configuration)
+        let configuration = URLSessionConfiguration.default
+        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
+        let manager = SessionManager(configuration: configuration)
         manager.startRequestsImmediately = false
         let tron = TRON(baseURL: "http://httpbin.org", manager: manager)
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { formData in
-            formData.appendBodyPart(data: "bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
+        let request: UploadAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
+            formData.append("bar".data(using: String.Encoding.utf8) ?? Data(), withName: "foo")
         }
-        request.method = .POST
+        request.method = .post
         
-        let expectation = expectationWithDescription("foo")
+        let expectation = self.expectation(description: "foo")
         
-        request.performMultipart(success: {
+        request.performMultipart(withSuccess: {
             if let dictionary = $0.response["form"] as? [String:String] {
                 if dictionary["foo"] == "bar" {
                     expectation.fulfill()
                 }
             }
         })
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
 }

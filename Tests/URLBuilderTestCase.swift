@@ -15,8 +15,8 @@ class URLBuilderTestCase: XCTestCase {
     let tron = TRON(baseURL: "https://github.com")
     
     func testURLBuildableAppendsPathComponent() {
-        expect(self.tron.urlBuilder.urlForPath("foo").absoluteString) == "https://github.com/foo"
-        expect(self.tron.urlBuilder.urlForPath("/bar").absoluteString) == "https://github.com/bar"
+        expect(self.tron.urlBuilder.url(forPath: "foo").absoluteString) == "https://github.com/foo"
+        expect(self.tron.urlBuilder.url(forPath: "/bar").absoluteString) == "https://github.com/bar"
     }
     
 }

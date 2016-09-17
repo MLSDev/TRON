@@ -17,13 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var tron : TRON!
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {
         let loggerPlugin = NetworkLoggerPlugin()
         loggerPlugin.logSuccess = true
         tron = TRON(baseURL: "https://api.github.com", plugins: [loggerPlugin])
         tron.headerBuilder = HeaderBuilder(defaultHeaders: [:])
-        let request : APIRequest<String,Int> = tron.request(path: "zen")
-        let token = request.perform(success: { zen in
+        let request : APIRequest<String,Int> = tron.request("zen")
+        let token = request.perform(withSuccess: { zen in
             print(zen)
             }, failure: { error in
         })

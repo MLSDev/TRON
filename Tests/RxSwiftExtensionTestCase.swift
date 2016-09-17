@@ -21,60 +21,60 @@ class RxSwiftExtensionTestCase: XCTestCase {
     }
     
     func testRxResultSuccessfullyCompletes() {
-        let request : APIRequest<String,TronError> = tron.request(path: "get")
-        let expectation = expectationWithDescription("200")
-        _ = request.rxResult().subscribeNext { _ in
+        let request : APIRequest<String,TronError> = tron.request("get")
+        let expectation = self.expectation(description: "200")
+        _ = request.rxResult().subscribe(onNext: { _ in
             expectation.fulfill()
-        }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        })
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testRxResultIsClosedAfterSuccessfulResponse() {
-        let request : APIRequest<String,TronError> = tron.request(path: "get")
-        let expectation = expectationWithDescription("200")
-        _ = request.rxResult().subscribeCompleted { _ in
+        let request : APIRequest<String,TronError> = tron.request("get")
+        let expectation = self.expectation(description: "200")
+        _ = request.rxResult().subscribe(onCompleted: { _ in
             expectation.fulfill()
-        }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        })
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testRxResultCanBeFailed() {
-        let request : APIRequest<Int,TronError> = tron.request(path: "status/418")
-        let expectation = expectationWithDescription("Teapot")
-        _ = request.rxResult().subscribeError { _ in
+        let request : APIRequest<Int,TronError> = tron.request("status/418")
+        let expectation = self.expectation(description: "Teapot")
+        _ = request.rxResult().subscribe(onError: { _ in
             expectation.fulfill()
-        }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        })
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testMultipartRxCanBeSuccessful() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { formData in
-            formData.appendBodyPart(data: "bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
+        let request: UploadAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
+            formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
         }
-        request.method = .POST
+        request.method = .post
         
-        let expectation = expectationWithDescription("foo")
+        let expectation = self.expectation(description: "foo")
         
-        _ = request.rxMultipartResult().subscribeNext { result in
+        _ = request.rxMultipartResult().subscribe(onNext: { result in
             if let dictionary = result.response["form"] as? [String:String] {
                 if dictionary["foo"] == "bar" {
                     expectation.fulfill()
                 }
             }
-        }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        })
+        waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testMultipartRxCanBeFailureful() {
-        let request: MultipartAPIRequest<TestResponse,TronError> = tron.uploadMultipart(path: "post") { formData in
-            formData.appendBodyPart(data: "bar".dataUsingEncoding(NSUTF8StringEncoding) ?? NSData(), name: "foo")
+        let request: UploadAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
+            formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
         }
+        request.method = .delete
+        let expectation = self.expectation(description: "foo")
         
-        let expectation = expectationWithDescription("foo")
-        
-        _ = request.rxMultipartResult().subscribeError { error in
+        _ = request.rxMultipartResult().subscribe(onError: { error in
             expectation.fulfill()
-        }
-        waitForExpectationsWithTimeout(10, handler: nil)
+        })
+        waitForExpectations(timeout: 10, handler: nil)
     }
 }

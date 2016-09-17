@@ -14,11 +14,11 @@ class PluginTester : Plugin
     var willSendCalled = false
     var didReceiveResponseCalled = false
     
-    func willSendRequest(request: NSURLRequest?) {
+    func willSendRequest(_ request: URLRequest?) {
         willSendCalled = true
     }
     
-    func requestDidReceiveResponse(response: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?)) {
+    func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?)) {
         didReceiveResponseCalled = true
     }
 }

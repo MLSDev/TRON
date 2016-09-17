@@ -14,30 +14,28 @@ install-watchOS:
 	true
 
 install-carthage:
-	true
+	brew remove carthage --force || true
+	brew install carthage
 
-# install-cocoapods:
-# 	true
-
-# install-oss-osx:
-# 	sh swiftenv-install.sh
+install-cocoapods:
+	gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
 
 # Run Tasks
 
 test-iOS:
-	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON iOS" -destination "name=iPhone 6s" -enableCodeCoverage YES test | xcpretty -ct
+	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON iOS" -destination "name=iPhone 6s" -enableCodeCoverage YES test -confifuration "Release" | xcpretty -ct
 	bash <(curl -s https://codecov.io/bash)
 
 test-OSX:
-	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON OSX" -enableCodeCoverage YES test | xcpretty -ct
+	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON OSX" -enableCodeCoverage YES test -configuration "Release" | xcpretty -ct
 	bash <(curl -s https://codecov.io/bash)
 
 test-tvOS:
-	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON tvOS" -destination "name=Apple TV 1080p" -enableCodeCoverage YES test | xcpretty -ct
+	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON tvOS" -destination "name=Apple TV 1080p" -enableCodeCoverage YES test -configuration "Release" | xcpretty -ct
 	bash <(curl -s https://codecov.io/bash)
 
 test-watchOS:
-	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON watchOS" -destination "name=Apple Watch - 42mm" | xcpretty -c
+	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON watchOS" -destination "name=Apple Watch - 42mm" -configuration "Release" | xcpretty -c
 
 test-carthage:
 	carthage build --no-skip-current --platform iOS
@@ -45,6 +43,3 @@ test-carthage:
 
 # test-cocoapods:
 # 	pod lib lint TRON.podspec --allow-warnings --verbose
-
-# test-oss-osx:
-# 	. ~/.swiftenv/init && swift build

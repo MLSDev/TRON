@@ -33,7 +33,7 @@ We designed TRON to be simple to use and also very easy to customize. After init
 
 ```swift
 let request: APIRequest<User,MyAppError> = tron.request(path: "me")
-request.perform(success: { user in
+request.perform(withSuccess: { user in
   print("Received User: \(user)")
 }, failure: { error in
   print("User request failed, parsed error: \(error)")
@@ -42,35 +42,40 @@ request.perform(success: { user in
 
 ## Requirements
 
-- XCode 7.3
-- Swift 2.2
-- iOS 8
+- XCode 8
+- Swift 3
+- iOS 9
 
 ## Installation
 
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 1.1.0'
+pod 'TRON', '~> 2.0.0-beta.1'
 ```
 
 Only Core subspec, without SwiftyJSON dependency:
 
 ```ruby
-pod 'TRON/Core', '~> 1.1.0'
+pod 'TRON/Core', '~> 2.0.0-beta.1'
 ```
 
 RxSwift extension for TRON:
 
 ```ruby
-pod 'TRON/RxSwift', '~> 1.1.0'
+pod 'TRON/RxSwift', '~> 2.0.0-beta.1'
 ```
 
 ### Carthage
 
 ```ruby
-github "MLSDev/TRON" ~> 1.1.0
+github "MLSDev/TRON", ~> 2.0.0-beta.1
 ```
+
+## Migration Guides
+
+- [TRON 2.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/2.0%20Migration%20Guide.md)
+- [TRON 1.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/1.0%20Migration%20Guide.md)
 
 ## Project status
 
@@ -86,13 +91,13 @@ let tron = TRON(baseURL: "https://api.myapp.com/")
 
 You need to keep strong reference to `TRON` object, because it holds Alamofire.Manager, that is running all requests.
 
-### NSURLBuildable
+### URLBuildable
 
-`NSURLBuildable` protocol is used to convert relative path to NSURL, that will be used by request.
+`URLBuildable` protocol is used to convert relative path to URL, that will be used by request.
 
 ```swift
-public protocol NSURLBuildable {
-    func urlForPath(path: String) -> NSURL
+public protocol URLBuildable {
+    func url(forPath path: String) -> URL
 }
 ```
 
@@ -104,7 +109,7 @@ By default, `TRON` uses `URLBuilder` class, that simply appends relative path to
 
 ```swift
 public protocol HeaderBuildable {
-    func headersForAuthorization(requirement: AuthorizationRequirement, headers: [String:String]) -> [String: String]
+    func headers(forAuthorizationRequirement requirement: AuthorizationRequirement, including headers: [String:String]) -> [String: String]
 }
 ```
 
@@ -112,7 +117,7 @@ public protocol HeaderBuildable {
 
 ```swift
 public enum AuthorizationRequirement {
-    case None, Allowed, Required
+    case none, allowed, required
 }
 ```
 
@@ -122,18 +127,18 @@ By default, `TRON` uses `HeaderBuilder` class, which adds "Accept":"application/
 
 ## Sending requests
 
-To send `APIRequest`, call `perform(success:failure:)` method on `APIRequest`:
+To send `APIRequest`, call `perform(withSuccess:failure:)` method on `APIRequest`:
 
 ```swift
-let alamofireRequest = request.perform(success: { result in }, failure: { error in})
+let alamofireRequest = request.perform(withSuccess: { result in }, failure: { error in})
 ```
 
 Notice that `alamofireRequest` variable returned from this method is an Alamofire.Request?, that will be nil if request is stubbed.
 
-Alternatively, you can use `perform(completion:)` method that contains `Alamofire.Response` inside completion closure:
+Alternatively, you can use `performCollectingTimeline(withCompletion:)` method that contains `Alamofire.Response` inside completion closure:
 
 ```swift
-request.perform(completion: { response in
+request.performCollectingTimeline(withCompletion: { response in
     print(response.timeline)
     print(response.result)
 })
@@ -142,27 +147,27 @@ request.perform(completion: { response in
 In both cases, you can additionally chain `Alamofire.Request` methods, if you need:
 
 ```swift
-request.perform(success: { result in }, failure: { error in })?.progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
+request.perform(withSuccess: { result in }, failure: { error in })?.progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
     print(bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
 }
 ```
 
 ## Response parsing
 
-Generic `APIRequest` implementation allows us to define expected response type before request is even sent. It also allows us to setup basic parsing rules, which is where `ResponseParseable` protocol comes in.
+Generic `APIRequest` implementation allows us to define expected response type before request is even sent. It also allows us to setup basic parsing rules, which is where `Parseable` protocol comes in.
 
 ```swift
-public protocol ResponseParseable {
-    init(data: NSData) throws
+public protocol Parseable {
+    static func parse<T:Parseable>(_ data: Data) throws -> T
 }
 ```
 
-As you can see, protocol accepts NSData in initializer, which means anything can be parsed - JSON, or XML or something else.
+Protocol accepts Data in initializer, which means anything can be parsed - JSON, or XML or something else.
 
 `TRON` also provides `JSONDecodable` protocol, that allows us to parse models using SwiftyJSON:
 
 ```swift
-public protocol JSONDecodable: ResponseParseable {
+public protocol JSONDecodable: Parseable {
     init(json: JSON) throws
 }
 ```
@@ -185,7 +190,7 @@ And send a request:
 
 ```swift
 let request: APIRequest<User,MyAppError> = tron.request(path: "me")
-request.perform(success: { user in
+request.perform(withSuccess: { user in
   print("Received user: \(user.name) with id: \(user.id)")
 })
 ```
@@ -194,28 +199,18 @@ There are also default implementations of `JSONDecodable` protocol for Swift bui
 
 ```swift
 let request : APIRequest<String,MyAppError> = tron.request(path: "status")
-request.perform(success: { status in
+request.perform(withSuccess: { status in
     print("Server status: \(status)") //
 })
 ```
 
 You can also use `EmptyResponse` struct in cases where you don't care about actual response.
 
-## Custom mappers
-
-All generic constraints on TRON accept `ResponseParseable` protocol, that can be easily implemented for your mapper.
-
-We are providing code examples on how to do this with two most mappers available in Swift - Unbox and ObjectMapper.
-
-[Playground with Unbox ResponseParseable implementation](https://github.com/MLSDev/TRON/blob/master/Custom%20mappers/Unbox.playground/Contents.swift)
-
-[Playground with ObjectMapper ResponseParseable implementation](https://github.com/MLSDev/TRON/blob/master/Custom%20mappers/ObjectMapper.playground/Contents.swift)
-
 ## RxSwift
 
 ```swift
 let request : APIRequest<Foo, MyError> = tron.request(path: "foo")
-_ = request.rxResult.subscribeNext { result in
+_ = request.rxResult().subscribeNext { result in
     print(result)
 }
 ```
@@ -229,14 +224,14 @@ multipartRequest.rxMultipartResult().subscribeNext { result in
 
 ### Error handling
 
-`TRON` includes built-in parsing for errors by assuming, that error can also be parsed as `ResponseParseable` instance. `APIError` is a generic class, that includes several default properties, that can be fetched from unsuccessful request:
+`TRON` includes built-in parsing for errors by assuming, that error can also be parsed as `Parseable` instance. `APIError` is a generic class, that includes several default properties, that can be fetched from unsuccessful request:
 
 ```swift
-struct APIError<T:ResponseParseable> {
-    public let request : NSURLRequest?
+struct APIError<T:Parseable> {
+    public let request : URLRequest?
     public let response : NSHTTPURLResponse?
-    public let data : NSData?
-    public let error : NSError?
+    public let data : Data?
+    public let error : Error?
 
     public var errorModel: T?
 }
@@ -261,11 +256,11 @@ class MyAppError : JSONDecodable {
 This way, you only need to define how your errors are parsed, and not worry about other failure details like response code, because they are already included:
 
 ```swift
-request.perform(success: { response in }, failure: { error in
-    print(error.request) // Original NSURLRequest
+request.perform(withSuccess: { response in }, failure: { error in
+    print(error.request) // Original URLRequest
     print(error.response) // NSHTTPURLResponse
-    print(error.data) // NSData of response
-    print(error.error) // NSError from Foundation Loading system
+    print(error.data) // Data of response
+    print(error.error) // Error from Foundation Loading system
     print(error.errors) // MyAppError parsed property
   })
 ```
@@ -279,7 +274,7 @@ struct Users
 
     static func create() -> APIRequest<User,MyAppError> {
         let request: APIRequest<User,MyAppError> = tron.request(path: "users")
-        request.method = .POST
+        request.method = .post
         return request
     }
 
@@ -287,16 +282,16 @@ struct Users
         return tron.request(path: "users/\(id)")
     }
 
-    static func update(id: Int, parameters: [String:AnyObject]) -> APIRequest<User, MyAppError> {
+    static func update(id: Int, parameters: [String:Any]) -> APIRequest<User, MyAppError> {
         let request: APIRequest<User,MyAppError> = tron.request(path: "users/\(id)")
-        request.method = .PUT
+        request.method = .put
         request.parameters = parameters
         return request
     }
 
     static func delete(id: Int) -> APIRequest<User,MyAppError> {
         let request: APIRequest<User,MyAppError> = tron.request(path: "users/\(id)")
-        request.method = .DELETE
+        request.method = .delete
         return request
     }
 }
@@ -305,7 +300,7 @@ struct Users
 Using these requests is really simple:
 
 ```swift
-Users.read(56).perform(success: { user in
+Users.read(56).perform(withSuccess: { user in
   print("received user id 56 with name: \(user.name)")
 })
 ```
@@ -313,9 +308,9 @@ Users.read(56).perform(success: { user in
 It can be also nice to introduce namespacing to your API:
 
 ```swift
-struct API {}
+enum API {}
 extension API {
-  struct Users {
+  enum Users {
     // ...
   }
 }
@@ -324,7 +319,7 @@ extension API {
 This way you can call your API methods like so:
 
 ```swift
-API.Users.delete(56).perform(success: { user in
+API.Users.delete(56).perform(withSuccess: { user in
   print("user \(user) deleted")
 })
 ```
@@ -338,7 +333,7 @@ let request = API.Users.get(56)
 request.stubbingEnabled = true
 request.apiStub.model = User.fixture()
 
-request.perform(success: { stubbedUser in
+request.perform(withSuccess: { stubbedUser in
   print("received stubbed User model: \(stubbedUser)")
 })
 ```
@@ -349,7 +344,7 @@ Stubbing can be enabled globally on `TRON` object or locally for a single `APIRe
 let request = API.Users.get(56)
 request.stubbingEnabled = true
 request.apiStub.error = APIError<MyAppError>.fixtureError()
-request.perform(success: { _ in }, failure: { error in
+request.perform(withSuccess: { _ in }, failure: { error in
   print("received stubbed api error")
 })
 ```
@@ -366,7 +361,7 @@ request.apiStub.successful = false
 * From file:
 
 ```swift
-let request = tron.upload(path: "photo", file: fileUrl)
+let request = tron.upload(path: "photo", fromFileAt: fileUrl)
 ```
 
 * NSData:
@@ -378,7 +373,7 @@ let request = tron.upload(path: "photo", data: data)
 * Stream:
 
 ```swift
-let request = tron.upload(path: "photo", stream: stream)
+let request = tron.upload(path: "photo", fromStream: stream)
 ```
 
 * Multipart-form data:
@@ -387,7 +382,7 @@ let request = tron.upload(path: "photo", stream: stream)
 let request: MultipartAPIRequest<EmptyResponse,MyAppError> = tron.uploadMultipart(path: "form") { formData in
     formData.appendBodyPart(data: data,name: "cat", mimeType: "image/jpeg")
 }
-request.performMultipart(success: { result in
+request.performMultipart(withSuccess: { result in
     print("form sent successfully")
 })
 ```
@@ -397,13 +392,13 @@ request.performMultipart(success: { result in
 ## Download
 
 ```swift
-let request = tron.download(path: "file", destination: destination)
+let request = tron.download(path: "file", to: destination)
 ```
 
 Resume downloads:
 
 ```swift
-let request = tron.download(path: "file", destination: destination, resumingFromData: data)
+let request = tron.download(path: "file", to: destination, resumingFrom: data)
 ```
 
 ## Plugins
@@ -412,8 +407,8 @@ let request = tron.download(path: "file", destination: destination, resumingFrom
 
 ```swift
 public protocol Plugin {
-    func willSendRequest(request: NSURLRequest?)    
-    func requestDidReceiveResponse(response: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?))
+    func willSendRequest(request: URLRequest?)    
+    func requestDidReceiveResponse(response: (URLRequest?, NSHTTPURLResponse?, Data?, Error?))
 }
 ```
 

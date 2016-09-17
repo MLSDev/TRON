@@ -21,52 +21,18 @@ class TronTestCase: XCTestCase {
     }
     
     func testTronRequestBuildables() {
-        let request: APIRequest<Int,TronError> = tron.request(path: "/foo")
+        let request: APIRequest<Int,TronError> = tron.request("/foo")
         
         let tronBuilder = tron.urlBuilder as? URLBuilder
         let requestBuilder = request.urlBuilder as? URLBuilder
         expect(requestBuilder === tronBuilder).to(beTruthy())
     }
     
-    func testURLEncodingStrategySetsURLEncoding() {
-        tron.encodingStrategy = TRON.URLEncodingStrategy()
-        
-        let request : APIRequest<Int,TronError> = tron.request(path: "foo")
-        request.method = .POST
-        
-        if case ParameterEncoding.URL = request.encoding {
-            
-        } else {
-            XCTFail()
-        }
-    }
-    
-    func testRESTEncodingStrategySetsProperEncoding() {
-        tron.encodingStrategy = TRON.RESTEncodingStrategy()
-        
-        let request : APIRequest<Int,TronError> = tron.request(path: "foo")
-        request.method = .POST
-        
-        if case ParameterEncoding.JSON = request.encoding {
-        
-        } else {
-            XCTFail()
-        }
-        
-        request.method = .GET
-        
-        if case ParameterEncoding.URL = request.encoding {
-            
-        } else {
-            XCTFail()
-        }
-    }
-    
     func testStubbingShouldBeSuccessfulPropertyPropogatesToStub() {
-        let request : APIRequest<Int,TronError> = tron.request(path: "foo")
+        let request : APIRequest<Int,TronError> = tron.request("foo")
         expect(request.apiStub.successful).to(beTruthy())
         tron.stubbingShouldBeSuccessful = false
-        let request2 : APIRequest<Int,TronError> = tron.request(path: "foo")
+        let request2 : APIRequest<Int,TronError> = tron.request("foo")
         expect(request2.apiStub.successful).toNot(beTruthy())
     }
     

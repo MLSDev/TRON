@@ -25,97 +25,36 @@
 
 import Alamofire
 
-/// Enum for various request types.
-public enum RequestType {
-    /// Will create `NSURLSessionDataTask`
-    case Default
-    
-    /// Will create `NSURLSessionUploadTask` using `uploadTaskWithRequest(_:fromFile:)` method
-    case UploadFromFile(NSURL)
-    
-    /// Will create `NSURLSessionUploadTask` using `uploadTaskWithRequest(_:fromData:)` method
-    case UploadData(NSData)
-    
-    /// Will create `NSURLSessionUploadTask` using `uploadTaskWithStreamedRequest(_)` method
-    case UploadStream(NSInputStream)
-    
-    /// Will create `NSURLSessionDownloadTask` using `downloadTaskWithRequest(_)` method
-    case Download(Request.DownloadFileDestination)
-    
-    /// Will create `NSURLSessionDownloadTask` using `downloadTaskWithResumeData(_)` method
-    case DownloadResuming(data: NSData, destination: Request.DownloadFileDestination)
-}
-
 /**
- `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. It is reusable and configurable for any needs.
+ `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. 
  */
-public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>: BaseRequest<Model,ErrorModel> {
+open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Model,ErrorModel> {
     
-    internal let requestType: RequestType
-    
-    internal func alamofireRequest(from manager: Alamofire.Manager) -> Alamofire.Request {
-        switch requestType {
-        case .Default:
-            return manager.request(method, urlBuilder.urlForPath(path),
+    override func alamofireRequest(from manager: SessionManager) -> Request {
+            return manager.request(urlBuilder.url(forPath: path), method: method,
                                    parameters: parameters,
-                                   encoding: encoding,
-                                   headers:  headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers))
-            
-        case .UploadFromFile(let url):
-            return manager.upload(method, urlBuilder.urlForPath(path),
-                                  headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
-                                  file: url)
-        
-        case .UploadData(let data):
-            return manager.upload(method, urlBuilder.urlForPath(path),
-                                  headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
-                                  data: data)
-            
-        case .UploadStream(let stream):
-            return manager.upload(method, urlBuilder.urlForPath(path),
-                                  headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
-                                  stream: stream)
-            
-        case .Download(let destination):
-            return manager.download(method, urlBuilder.urlForPath(path),
-                                    parameters: parameters,
-                                    encoding: encoding,
-                                    headers: headerBuilder.headersForAuthorization(authorizationRequirement, headers: headers),
-                                    destination: destination)
-        
-        case .DownloadResuming(let data, let destination):
-            return manager.download(data, destination: destination)
-        }
-    }
-    
-    /**
-    Initialize request with relative path and `TRON` instance.
-     
-     - parameter path: relative path to resource.
-     
-     - parameter tron: `TRON` instance to be used to configure current request.
-     */
-    public init(type: RequestType, path: String, tron: TRON) {
-        self.requestType = type
-        super.init(path: path, tron: tron)
+                                   encoding: parameterEncoding,
+                                   headers:  headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
     }
     
     /**
      Send current request.
      
-     - parameter success: Success block to be executed when request finished
+     - parameter successBlock: Success block to be executed when request finished
      
-     - parameter failure: Failure block to be executed if request fails. Nil by default.
+     - parameter failureBlock: Failure block to be executed if request fails. Nil by default.
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    public func perform(success success: Model -> Void, failure: (APIError<ErrorModel> -> Void)? = nil) -> Alamofire.Request?
+    @discardableResult
+    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.DataRequest?
     {
-        if stubbingEnabled {
-            apiStub.performStubWithSuccess(success, failure: failure)
+        if performStub(success: successBlock, failure: failureBlock) {
             return nil
         }
-        return performAlamofireRequest(success, failure: failure)
+        return performAlamofireRequest {
+            self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
+        }
     }
     
     /**
@@ -125,24 +64,22 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
      
      - returns: Alamofire.Request or nil if request was stubbed.
     */
-    public func perform(completion completion: (Alamofire.Response<Model,APIError<ErrorModel>> -> Void)) -> Alamofire.Request? {
-        if stubbingEnabled {
-            apiStub.performStubWithCompletion(completion)
+    @discardableResult
+    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> Alamofire.DataRequest? {
+        if performStub(completion: completion) {
             return nil
         }
-        return performAlamofireRequest { response in
-            dispatch_async(self.resultDeliveryQueue) {
-                completion(response)
-            }
-        }
+        return performAlamofireRequest(completion)
     }
     
-    private func performAlamofireRequest(completion : Response<Model,APIError<ErrorModel>> -> Void) -> Alamofire.Request
+    private func performAlamofireRequest(_ completion : @escaping (DataResponse<Model>) -> Void) -> DataRequest
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
-        let request = alamofireRequest(from: manager)
+        guard let request = alamofireRequest(from: manager) as? DataRequest else {
+            fatalError("Failed to receive DataRequest")
+        }
         if !tronDelegate!.manager.startRequestsImmediately {
             request.resume()
         }
@@ -151,13 +88,23 @@ public class APIRequest<Model: ResponseParseable, ErrorModel: ResponseParseable>
         allPlugins.forEach {
             $0.willSendRequest(request.request)
         }
-        return request.validate().response(queue: processingQueue,responseSerializer: responseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
+        return request.validate().response(queue: processingQueue,responseSerializer: dataResponseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
+    }
+}
+
+// DEPRECATED
+
+extension APIRequest {
+    @available(*,unavailable,renamed:"performCollectingTimeline")
+    @discardableResult
+    open func perform(_ completion: ((Alamofire.DataResponse<Model>) -> Void)) -> Alamofire.DataRequest? {
+        return nil
     }
     
-    private func performAlamofireRequest(success: Model -> Void, failure: (APIError<ErrorModel> -> Void)?) -> Alamofire.Request
+    @discardableResult
+    @available(*,unavailable,renamed:"perform(withSuccess:failure:)")
+    open func perform(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.Request?
     {
-        return performAlamofireRequest {
-            self.callSuccessFailureBlocks(success, failure: failure, response: $0)
-        }
+        fatalError("UNAVAILABLE")
     }
 }

@@ -1,6 +1,33 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.0.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/2.0.0-beta.1)
+
+`TRON` 2.0 is supported on iOS 9.0, macOS 10.11 and higher due to Alamofire.framework required versions. Read [migration guide](/Docs/2.0 Migration Guide.md) for overview of API changes.
+
+**NOTE** This release uses [forked SwiftyJSON](https://github.com/MLSDev/SwiftyJSON), and `SwiftyJSON3` cocoapod, because original repo has not been updated to Swift 3. In future release we hope to use `SwiftyJSON` cocoapod.
+
+### API changes
+
+* `ResponseParseable` was rewritten and renamed to `Parseable`. It now allows creating models without using a constructor. Therefore, it's now possibly to use really any kind of mapper and make factory-like response builders.
+* Success blocks on `APIRequest` are now optional and equal to nil by default.
+* `MultipartAPIRequest` now becomes a part of larger `UploadAPIRequest` class.
+* Introduced new `DownloadAPIRequest` class, that receives part of `APIRequest` functionality.
+
+### Renamings
+
+* Swift 3 API design guidelines have been applied to all API.
+* `perform(completion:)` method was renamed to `performCollectingTimeline(withCompletion:)` to better match method internal behaviour
+* `encoding` property on `TRON` and requests has been renamed to `parameterEncoding` and now has a different type - `Alamofire.ParameterEncoding`
+
+### Removals
+
+* `responseBuilder` property on `APIRequest` was removed, as it's no longer used when parsing received response.
+* `JSONDecodable` extension on `Array` is temporarily unavailable due to issues with Swift compiler.
+* `encodingStrategy` property on TRON was removed - please use `parameterEncoding` instead.
+* `TRON.RESTencodingStrategy` and `TRON.URLEncodingStrategy` were removed - please refer to Alamofire 4 migration guide for details.
+* `RequestType` enum was replaced by `UploadRequestType` and `DownloadRequestType` on `DownloadAPIRequest` and `UploadAPIRequest` classes.
+
 ## [1.1.1](https://github.com/MLSDev/TRON/releases/tag/1.1.1)
 
 ### Added

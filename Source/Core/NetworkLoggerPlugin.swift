@@ -28,28 +28,28 @@ import Foundation
 /**
  Plugin, that can be used to log network success and failure responses.
  */
-public class NetworkLoggerPlugin : Plugin {
+open class NetworkLoggerPlugin : Plugin {
     
     /// Log successful requests
-    public var logSuccess = false
+    open var logSuccess = false
     
     /// Log unsuccessful requests
-    public var logFailures = true
+    open var logFailures = true
     
     public init() {}
     
-    public func willSendRequest(request: NSURLRequest?) {
+    open func willSendRequest(_ request: URLRequest?) {
         
     }
     
-    public func requestDidReceiveResponse(response: (NSURLRequest?, NSHTTPURLResponse?, NSData?, NSError?)) {
+    open func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?)) {
         if response.3 != nil {
             if logFailures {
-                print("[Request] error\n ->  \(response.0?.URLString ?? "")) \n Response: \(response.1)\n ResponseString: \(String.init(data: response.2 ?? NSData(), encoding: NSUTF8StringEncoding)) \n Error: \(response.3)")
+                print("[Request] error\n -> \(response.0?.httpMethod ?? "") \(response.0?.url?.absoluteString ?? "")) \n Response: \(response.1)\n ResponseString: \(String.init(data: response.2 ?? Data(), encoding: String.Encoding.utf8)) \n Error: \(response.3)")
             }
         } else {
             if logSuccess {
-                print("[Request] success\n ->  \(response.0?.URLString ?? "")")
+                print("[Request] success\n ->  \(response.0?.url?.absoluteString ?? "")")
             }
         }
     }

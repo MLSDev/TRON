@@ -28,7 +28,7 @@ import Foundation
 /**
  `ErrorBuilder` class is used to build error object from unsuccessful API requests.
  */
-public class ErrorBuilder<U:ResponseParseable>
+open class ErrorBuilder<U:Parseable>
 {
     /// initialize default error builder
     public init() {}
@@ -36,7 +36,7 @@ public class ErrorBuilder<U:ResponseParseable>
     /**
      Build concrete APIError instance.
      
-     - parameter request: NSURLRequest that was unsuccessful
+     - parameter request: URLRequest that was unsuccessful
      
      - parameter response: response received from web service
      
@@ -46,25 +46,25 @@ public class ErrorBuilder<U:ResponseParseable>
      
      - returns APIError instance
      */
-    public func buildErrorFromRequest(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> APIError<U> {
+    open func buildErrorFromRequest(_ request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) -> APIError<U> {
         return APIError<U>(request: request, response: response, data: data, error: error)
     }
 }
 
 /// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
-public struct APIError<T:ResponseParseable> : ErrorType {
+public struct APIError<T:Parseable> : Error {
     
-    /// NSURLRequest that was unsuccessful
-    public let request : NSURLRequest?
+    /// URLRequest that was unsuccessful
+    public let request : URLRequest?
     
     /// Response received from web service
-    public let response : NSHTTPURLResponse?
+    public let response : HTTPURLResponse?
     
     /// Data, contained in response
-    public let data : NSData?
+    public let data : Data?
     
     /// Error instance, created by Foundation Loading System or Alamofire.
-    public let error : NSError?
+    public let error : Error?
     
     /// Parsed Error model
     public var errorModel : T?
@@ -72,7 +72,7 @@ public struct APIError<T:ResponseParseable> : ErrorType {
     /**
      Initialize `APIError` with unsuccessful request info.
      
-     - parameter request: NSURLRequest that was unsuccessful
+     - parameter request: URLRequest that was unsuccessful
      
      - parameter response: response received from web service
      
@@ -80,16 +80,13 @@ public struct APIError<T:ResponseParseable> : ErrorType {
      
      - error: Error instance, created by Foundation Loading System or Alamofire.
      */
-    public init(request : NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?)
+    public init(request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?)
     {
         self.request = request
         self.response = response
         self.data = data
         self.error = error
-//        guard let object = try? data?.parseToAnyObject() else {
-//            return
-//        }
-        self.errorModel = try? T(data: data ?? NSData())
+        self.errorModel = try? T.parse(data ?? Data())
     }
     
     /**

@@ -45,10 +45,10 @@
 		9A154FB21C67A6BA00B33F01 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA71C67A6BA00B33F01 /* RequestBuilder.swift */; };
 		9A154FB31C67A6BA00B33F01 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA71C67A6BA00B33F01 /* RequestBuilder.swift */; };
 		9A154FB41C67A6BA00B33F01 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA71C67A6BA00B33F01 /* RequestBuilder.swift */; };
-		9A154FB51C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */; };
-		9A154FB61C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */; };
-		9A154FB71C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */; };
-		9A154FB81C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */; };
+		9A154FB51C67A6BA00B33F01 /* Parseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* Parseable.swift */; };
+		9A154FB61C67A6BA00B33F01 /* Parseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* Parseable.swift */; };
+		9A154FB71C67A6BA00B33F01 /* Parseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* Parseable.swift */; };
+		9A154FB81C67A6BA00B33F01 /* Parseable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FA81C67A6BA00B33F01 /* Parseable.swift */; };
 		9A154FBC1C67A6CB00B33F01 /* NetworkActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FB91C67A6CB00B33F01 /* NetworkActivityPlugin.swift */; };
 		9A154FC01C67A6CB00B33F01 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FBA1C67A6CB00B33F01 /* NetworkLoggerPlugin.swift */; };
 		9A154FC11C67A6CB00B33F01 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A154FBA1C67A6CB00B33F01 /* NetworkLoggerPlugin.swift */; };
@@ -62,10 +62,6 @@
 		9A2F5F701CE8731F00C3C0F9 /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2F5F551CE872C800C3C0F9 /* BaseRequest.swift */; };
 		9A2F5F711CE8731F00C3C0F9 /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2F5F551CE872C800C3C0F9 /* BaseRequest.swift */; };
 		9A2F5F721CE8732000C3C0F9 /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2F5F551CE872C800C3C0F9 /* BaseRequest.swift */; };
-		9A2F5F741CE8775900C3C0F9 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2F5F731CE8775900C3C0F9 /* MultipartAPIRequest.swift */; };
-		9A2F5F751CE8775900C3C0F9 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2F5F731CE8775900C3C0F9 /* MultipartAPIRequest.swift */; };
-		9A2F5F761CE8775900C3C0F9 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2F5F731CE8775900C3C0F9 /* MultipartAPIRequest.swift */; };
-		9A2F5F771CE8775900C3C0F9 /* MultipartAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2F5F731CE8775900C3C0F9 /* MultipartAPIRequest.swift */; };
 		9A51AABD1CC61ED80053CC48 /* Tron+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AABC1CC61ED80053CC48 /* Tron+RxSwift.swift */; };
 		9A51AABE1CC61ED80053CC48 /* Tron+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AABC1CC61ED80053CC48 /* Tron+RxSwift.swift */; };
 		9A51AABF1CC61ED80053CC48 /* Tron+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AABC1CC61ED80053CC48 /* Tron+RxSwift.swift */; };
@@ -73,6 +69,9 @@
 		9A51AAC21CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */; };
 		9A51AAC31CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */; };
 		9A51AAC41CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */; };
+		9A67F8F81D3282C300AA6B69 /* ParseableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67F8F71D3282C300AA6B69 /* ParseableTestCase.swift */; };
+		9A67F8F91D3282C300AA6B69 /* ParseableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67F8F71D3282C300AA6B69 /* ParseableTestCase.swift */; };
+		9A67F8FA1D3282C300AA6B69 /* ParseableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A67F8F71D3282C300AA6B69 /* ParseableTestCase.swift */; };
 		9A6AD3721CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */; };
 		9A6AD3731CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */; };
 		9A6AD3741CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */; };
@@ -122,6 +121,14 @@
 		9A90CC901C5FABBD00472DB8 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8C1C5FABBD00472DB8 /* user.json */; };
 		9A90CC911C5FABBD00472DB8 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8C1C5FABBD00472DB8 /* user.json */; };
 		9A90CC921C5FABBD00472DB8 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A90CC8C1C5FABBD00472DB8 /* user.json */; };
+		9A99B4ED1D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A99B4EC1D85A548005B90D0 /* DownloadAPIRequest.swift */; };
+		9A99B4EE1D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A99B4EC1D85A548005B90D0 /* DownloadAPIRequest.swift */; };
+		9A99B4EF1D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A99B4EC1D85A548005B90D0 /* DownloadAPIRequest.swift */; };
+		9A99B4F01D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A99B4EC1D85A548005B90D0 /* DownloadAPIRequest.swift */; };
+		9A99B50C1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A99B50B1D85AF61005B90D0 /* UploadAPIRequest.swift */; };
+		9A99B50D1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A99B50B1D85AF61005B90D0 /* UploadAPIRequest.swift */; };
+		9A99B50E1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A99B50B1D85AF61005B90D0 /* UploadAPIRequest.swift */; };
+		9A99B50F1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A99B50B1D85AF61005B90D0 /* UploadAPIRequest.swift */; };
 		9AB7F5E01CA578BA0078BE59 /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB7F5DF1CA578BA0078BE59 /* EmptyResponse.swift */; };
 		9AB7F5E11CA578BA0078BE59 /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB7F5DF1CA578BA0078BE59 /* EmptyResponse.swift */; };
 		9AB7F5E21CA578BA0078BE59 /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB7F5DF1CA578BA0078BE59 /* EmptyResponse.swift */; };
@@ -624,16 +631,14 @@
 		9A154FA51C67A6BA00B33F01 /* ErrorBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorBuilder.swift; path = Source/Core/ErrorBuilder.swift; sourceTree = "<group>"; };
 		9A154FA61C67A6BA00B33F01 /* HeaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilder.swift; path = Source/Core/HeaderBuilder.swift; sourceTree = "<group>"; };
 		9A154FA71C67A6BA00B33F01 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestBuilder.swift; path = Source/Core/RequestBuilder.swift; sourceTree = "<group>"; };
-		9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResponseBuilder.swift; path = Source/Core/ResponseBuilder.swift; sourceTree = "<group>"; };
+		9A154FA81C67A6BA00B33F01 /* Parseable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Parseable.swift; path = Source/Core/Parseable.swift; sourceTree = "<group>"; };
 		9A154FB91C67A6CB00B33F01 /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkActivityPlugin.swift; path = Source/Core/NetworkActivityPlugin.swift; sourceTree = "<group>"; };
 		9A154FBA1C67A6CB00B33F01 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPlugin.swift; path = Source/Core/NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		9A154FBB1C67A6CB00B33F01 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plugin.swift; path = Source/Core/Plugin.swift; sourceTree = "<group>"; };
 		9A2F5F551CE872C800C3C0F9 /* BaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseRequest.swift; path = Source/Core/BaseRequest.swift; sourceTree = "<group>"; };
-		9A2F5F731CE8775900C3C0F9 /* MultipartAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipartAPIRequest.swift; path = Source/Core/MultipartAPIRequest.swift; sourceTree = "<group>"; };
 		9A51AABC1CC61ED80053CC48 /* Tron+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tron+RxSwift.swift"; path = "Source/RxSwift/Tron+RxSwift.swift"; sourceTree = "<group>"; };
 		9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxSwiftExtensionTestCase.swift; path = Tests/RxSwiftExtensionTestCase.swift; sourceTree = "<group>"; };
-		9A6693561CEF2A7C007CBC45 /* Unbox.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Unbox.playground; path = "Custom mappers/Unbox.playground"; sourceTree = "<group>"; };
-		9A6693571CEF30EF007CBC45 /* ObjectMapper.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = ObjectMapper.playground; path = "Custom mappers/ObjectMapper.playground"; sourceTree = "<group>"; };
+		9A67F8F71D3282C300AA6B69 /* ParseableTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseableTestCase.swift; path = Tests/ParseableTestCase.swift; sourceTree = "<group>"; };
 		9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadTestCase.swift; path = Tests/UploadTestCase.swift; sourceTree = "<group>"; };
 		9A704E4F1C5D01B300392DE5 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A704E511C5D01B300392DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -661,6 +666,8 @@
 		9A90CCAC1C5FB98E00472DB8 /* OS X.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "OS X.plist"; path = "Supporting files/OS X.plist"; sourceTree = "<group>"; };
 		9A90CCAD1C5FB98E00472DB8 /* tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = tvOS.plist; path = "Supporting files/tvOS.plist"; sourceTree = "<group>"; };
 		9A90CCAE1C5FB98E00472DB8 /* watchOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = watchOS.plist; path = "Supporting files/watchOS.plist"; sourceTree = "<group>"; };
+		9A99B4EC1D85A548005B90D0 /* DownloadAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadAPIRequest.swift; path = Source/Core/DownloadAPIRequest.swift; sourceTree = "<group>"; };
+		9A99B50B1D85AF61005B90D0 /* UploadAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadAPIRequest.swift; path = Source/Core/UploadAPIRequest.swift; sourceTree = "<group>"; };
 		9AB7F5DF1CA578BA0078BE59 /* EmptyResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyResponse.swift; path = Source/Core/EmptyResponse.swift; sourceTree = "<group>"; };
 		9ABDA2241CE7626F00E1A2D9 /* DownloadTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadTestCase.swift; path = Tests/DownloadTestCase.swift; sourceTree = "<group>"; };
 		9AC2A9001CC649DD0021D847 /* cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = cat.jpg; path = Tests/Fixtures/cat.jpg; sourceTree = "<group>"; };
@@ -790,8 +797,6 @@
 			isa = PBXGroup;
 			children = (
 				9AFAE4D31CC520F6002739B0 /* Documentation */,
-				9A6693571CEF30EF007CBC45 /* ObjectMapper.playground */,
-				9A6693561CEF2A7C007CBC45 /* Unbox.playground */,
 				9AEE0BC71C5A4FB5003222A8 /* Nimble.xcodeproj */,
 				9AEE0BAE1C5A4E2D003222A8 /* SwiftyJSON.xcodeproj */,
 				9AFAE4D61CC52367002739B0 /* Rx.xcodeproj */,
@@ -835,7 +840,8 @@
 			isa = PBXGroup;
 			children = (
 				9A154F911C67A6AB00B33F01 /* APIRequest.swift */,
-				9A2F5F731CE8775900C3C0F9 /* MultipartAPIRequest.swift */,
+				9A99B4EC1D85A548005B90D0 /* DownloadAPIRequest.swift */,
+				9A99B50B1D85AF61005B90D0 /* UploadAPIRequest.swift */,
 				9A2F5F551CE872C800C3C0F9 /* BaseRequest.swift */,
 				9A154F921C67A6AB00B33F01 /* APIStub.swift */,
 				9A154F941C67A6AB00B33F01 /* TRON.swift */,
@@ -863,6 +869,7 @@
 				9A51AAC11CC620D60053CC48 /* RxSwiftExtensionTestCase.swift */,
 				9A6AD3711CE5D5E4007AD9B5 /* UploadTestCase.swift */,
 				9ABDA2241CE7626F00E1A2D9 /* DownloadTestCase.swift */,
+				9A67F8F71D3282C300AA6B69 /* ParseableTestCase.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -873,7 +880,7 @@
 				9A154FA51C67A6BA00B33F01 /* ErrorBuilder.swift */,
 				9A154FA61C67A6BA00B33F01 /* HeaderBuilder.swift */,
 				9A154FA71C67A6BA00B33F01 /* RequestBuilder.swift */,
-				9A154FA81C67A6BA00B33F01 /* ResponseBuilder.swift */,
+				9A154FA81C67A6BA00B33F01 /* Parseable.swift */,
 			);
 			name = Builders;
 			sourceTree = "<group>";
@@ -930,10 +937,10 @@
 		9AEE0BC81C5A4FB5003222A8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9AEE0BD11C5A4FB5003222A8 /* Nimble.framework */,
-				9AEE0BD31C5A4FB5003222A8 /* NimbleTests.xctest */,
 				9AEE0BD51C5A4FB5003222A8 /* Nimble.framework */,
 				9AEE0BD71C5A4FB5003222A8 /* NimbleTests.xctest */,
+				9AEE0BD11C5A4FB5003222A8 /* Nimble.framework */,
+				9AEE0BD31C5A4FB5003222A8 /* NimbleTests.xctest */,
 				9AEE0BD91C5A4FB5003222A8 /* Nimble.framework */,
 				9AEE0BDB1C5A4FB5003222A8 /* NimbleTests.xctest */,
 			);
@@ -1182,14 +1189,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Denys Telezhkin";
 				TargetAttributes = {
 					9A1024911C5F806A006E0163 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 					9A10249A1C5F806A006E0163 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 					9A1024C91C5F8169006E0163 = {
 						CreatedOnToolsVersion = 7.2;
@@ -1205,9 +1214,11 @@
 					};
 					9A722F491C5A49AE0087908D = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 					9A722F531C5A49AE0087908D = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -1618,9 +1629,10 @@
 				9A154F961C67A6AB00B33F01 /* APIRequest.swift in Sources */,
 				9A154FC51C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAA1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
-				9A2F5F751CE8775900C3C0F9 /* MultipartAPIRequest.swift in Sources */,
-				9A154FB61C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
+				9A154FB61C67A6BA00B33F01 /* Parseable.swift in Sources */,
+				9A99B4EE1D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */,
 				9A13FA821C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
+				9A99B50D1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */,
 				9AB7F5E11CA578BA0078BE59 /* EmptyResponse.swift in Sources */,
 				9A154FA21C67A6AB00B33F01 /* TRON.swift in Sources */,
 				9A154F9A1C67A6AB00B33F01 /* APIStub.swift in Sources */,
@@ -1637,6 +1649,7 @@
 				9A6AD3731CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */,
 				9A90CC751C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */,
 				9A51AAC31CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */,
+				9A67F8F91D3282C300AA6B69 /* ParseableTestCase.swift in Sources */,
 				9A90CC841C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */,
 				9A90CC6F1C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */,
 				9A90CC6C1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */,
@@ -1658,9 +1671,10 @@
 				9A154F971C67A6AB00B33F01 /* APIRequest.swift in Sources */,
 				9A154FC61C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAB1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
-				9A2F5F761CE8775900C3C0F9 /* MultipartAPIRequest.swift in Sources */,
-				9A154FB71C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
+				9A154FB71C67A6BA00B33F01 /* Parseable.swift in Sources */,
+				9A99B4EF1D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */,
 				9A13FA831C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
+				9A99B50E1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */,
 				9AB7F5E21CA578BA0078BE59 /* EmptyResponse.swift in Sources */,
 				9A154FA31C67A6AB00B33F01 /* TRON.swift in Sources */,
 				9A154F9B1C67A6AB00B33F01 /* APIStub.swift in Sources */,
@@ -1677,6 +1691,7 @@
 				9A6AD3741CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */,
 				9A90CC761C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */,
 				9A51AAC41CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */,
+				9A67F8FA1D3282C300AA6B69 /* ParseableTestCase.swift in Sources */,
 				9A90CC851C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */,
 				9A90CC701C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */,
 				9A90CC6D1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */,
@@ -1698,9 +1713,10 @@
 				9A154F981C67A6AB00B33F01 /* APIRequest.swift in Sources */,
 				9A154FC71C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FAC1C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
-				9A2F5F771CE8775900C3C0F9 /* MultipartAPIRequest.swift in Sources */,
-				9A154FB81C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
+				9A154FB81C67A6BA00B33F01 /* Parseable.swift in Sources */,
+				9A99B4F01D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */,
 				9A13FA841C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
+				9A99B50F1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */,
 				9AB7F5E31CA578BA0078BE59 /* EmptyResponse.swift in Sources */,
 				9A154FA41C67A6AB00B33F01 /* TRON.swift in Sources */,
 				9A154F9C1C67A6AB00B33F01 /* APIStub.swift in Sources */,
@@ -1727,17 +1743,18 @@
 				9A13FA811C662C2D00A54352 /* SwiftyJSONDecodable.swift in Sources */,
 				9A154FBC1C67A6CB00B33F01 /* NetworkActivityPlugin.swift in Sources */,
 				9A154FA91C67A6BA00B33F01 /* ErrorBuilder.swift in Sources */,
-				9A2F5F741CE8775900C3C0F9 /* MultipartAPIRequest.swift in Sources */,
 				9A154FAD1C67A6BA00B33F01 /* HeaderBuilder.swift in Sources */,
 				9A154FC41C67A6CB00B33F01 /* Plugin.swift in Sources */,
 				9A154FC01C67A6CB00B33F01 /* NetworkLoggerPlugin.swift in Sources */,
+				9A99B50C1D85AF61005B90D0 /* UploadAPIRequest.swift in Sources */,
 				9A51AABD1CC61ED80053CC48 /* Tron+RxSwift.swift in Sources */,
 				9A154FA11C67A6AB00B33F01 /* TRON.swift in Sources */,
 				9AB7F5E01CA578BA0078BE59 /* EmptyResponse.swift in Sources */,
 				9A154F991C67A6AB00B33F01 /* APIStub.swift in Sources */,
 				9A2F5F561CE872C800C3C0F9 /* BaseRequest.swift in Sources */,
 				9A154F951C67A6AB00B33F01 /* APIRequest.swift in Sources */,
-				9A154FB51C67A6BA00B33F01 /* ResponseBuilder.swift in Sources */,
+				9A154FB51C67A6BA00B33F01 /* Parseable.swift in Sources */,
+				9A99B4ED1D85A548005B90D0 /* DownloadAPIRequest.swift in Sources */,
 				9A154FB11C67A6BA00B33F01 /* RequestBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1749,6 +1766,7 @@
 				9A6AD3721CE5D5E4007AD9B5 /* UploadTestCase.swift in Sources */,
 				9A90CC741C5FABA100472DB8 /* HeaderBuilderTestCase.swift in Sources */,
 				9A51AAC21CC620D60053CC48 /* RxSwiftExtensionTestCase.swift in Sources */,
+				9A67F8F81D3282C300AA6B69 /* ParseableTestCase.swift in Sources */,
 				9A90CC831C5FABA100472DB8 /* URLBuilderTestCase.swift in Sources */,
 				9A90CC6E1C5FABA100472DB8 /* ApiStubbingTestCase.swift in Sources */,
 				9A90CC6B1C5FABA100472DB8 /* APIRequestTestCase.swift in Sources */,
@@ -1921,7 +1939,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/OS X.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-OSX";
 				PRODUCT_NAME = TRON;
 				SDKROOT = macosx;
@@ -1945,11 +1962,11 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/OS X.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-OSX";
 				PRODUCT_NAME = TRON;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -1965,6 +1982,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1979,6 +1997,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-OSXTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1987,6 +2007,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2009,6 +2030,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2020,6 +2042,7 @@
 				PRODUCT_NAME = TRON;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -2048,6 +2071,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mlsdev.TRON-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Release;
@@ -2057,6 +2081,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2079,6 +2104,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2090,6 +2116,7 @@
 				PRODUCT_NAME = TRON;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
@@ -2098,8 +2125,8 @@
 		9A704E5E1C5D01B300392DE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MLSDev.Example;
@@ -2110,12 +2137,13 @@
 		9A704E5F1C5D01B300392DE5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MLSDev.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -2130,8 +2158,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2153,12 +2183,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2178,8 +2209,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2188,6 +2221,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -2195,10 +2229,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
@@ -2213,6 +2248,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2224,6 +2260,7 @@
 				PRODUCT_NAME = TRON;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -2232,6 +2269,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2242,6 +2280,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRON;
 				PRODUCT_NAME = TRON;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -2254,6 +2294,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -2265,6 +2306,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
