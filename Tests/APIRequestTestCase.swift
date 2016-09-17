@@ -10,7 +10,7 @@ import XCTest
 import TRON
 import Nimble
 import Alamofire
-import SwiftyJSON
+import SwiftyJSON3
 
 class TestResponse : JSONDecodable {
     let response : [String:AnyObject]

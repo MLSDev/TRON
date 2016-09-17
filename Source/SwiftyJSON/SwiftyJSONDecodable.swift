@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 
 import Foundation
-import SwiftyJSON
+import SwiftyJSON3
 
 /**
  Protocol for parsing JSON response. It is used as a generic constraint for `APIRequest` instance.

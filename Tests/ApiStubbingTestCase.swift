@@ -9,7 +9,7 @@
 import XCTest
 @testable import TRON
 import Nimble
-import SwiftyJSON
+import SwiftyJSON3
 
 struct TestUser : JSONDecodable {
     let name: String

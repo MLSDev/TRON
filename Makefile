@@ -42,4 +42,4 @@ test-carthage:
 	ls Carthage/build/iOS/TRON.framework
 
 test-cocoapods:
-	pod lib lint TRON.podspec --allow-warnings --verbose
+	pod repo update && pod lib lint --allow-warnings --verbose
