@@ -41,5 +41,5 @@ test-carthage:
 	carthage build --no-skip-current --platform iOS
 	ls Carthage/build/iOS/TRON.framework
 
-# test-cocoapods:
-# 	pod lib lint TRON.podspec --allow-warnings --verbose
+test-cocoapods:
+	pod lib lint TRON.podspec --allow-warnings --verbose
