@@ -84,7 +84,13 @@ public protocol TronDelegate: class {
 }
 
 /// Base class, that contains common functionality, extracted from `APIRequest` and `MultipartAPIRequest`.
-open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
+open class BaseRequest<Model, ErrorModel> {
+    
+    /// Serializes Data into Model
+    public typealias ResponseParser = (Data) throws -> Model
+    
+    /// Serializes received failed response into APIError<ErrorModel> object
+    public typealias ErrorParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> APIError<ErrorModel>
     
     /// Relative path of current request
     open let path: String
@@ -111,14 +117,17 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
     /// URL builder for current request
     open var urlBuilder: URLBuildable
     
-    /// Error builder for current request
-    open var errorBuilder = ErrorBuilder<ErrorModel>()
+    /// Serializes Data into Model
+    open var responseParser : ResponseParser
+    
+    /// Serializes received failed response into APIError<ErrorModel> object
+    open var errorParser : ErrorParser
     
     /// Is stubbing enabled for current request?
     open var stubbingEnabled = false
     
     /// API stub to be used when stubbing this request
-    open var apiStub = APIStub<Model, ErrorModel>()
+    lazy open var apiStub : APIStub<Model, ErrorModel> = { return APIStub(request: self) }()
     
     /// Queue, used for processing response, received from the server. Defaults to TRON.processingQueue queue.
     open var processingQueue : DispatchQueue
@@ -133,7 +142,7 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
     open var plugins : [Plugin] = []
     
     /// Creates `BaseRequest` instance, initialized with several `TRON` properties.
-    public init(path: String, tron: TRON) {
+    public init(path: String, tron: TRON, responseParser: @escaping ResponseParser, errorParser: @escaping ErrorParser) {
         self.path = path
         self.tronDelegate = tron
         self.stubbingEnabled = tron.stubbingEnabled
@@ -142,6 +151,8 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
         self.processingQueue = tron.processingQueue
         self.resultDeliveryQueue = tron.resultDeliveryQueue
         self.parameterEncoding = tron.parameterEncoding
+        self.responseParser = responseParser
+        self.errorParser = errorParser
         self.apiStub.successful = tron.stubbingShouldBeSuccessful
     }
     
@@ -156,18 +167,15 @@ open class BaseRequest<Model: Parseable, ErrorModel: Parseable> {
                     $0.requestDidReceiveResponse(urlRequest, response,data,error)
                 }
             })
-            guard error == nil else {
-                return .failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: error))
+            if let error = error {
+                return .failure(self.errorParser(urlRequest, response, data, error))
             }
             let model: Model
-            do {
-                model = try Model.parse(data ?? Data())
+            do { try model = self.responseParser(data ?? Data()) }
+            catch {
+                return .failure(self.errorParser(urlRequest, response, data, error))
             }
-            catch let parsingError {
-                return .failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: data, error: parsingError))
-            }
-            return .success(model)
-        }
+            return .success(model)        }
     }
     
     internal func performStub(success: ((Model) -> Void)?, failure: ((APIError<ErrorModel>) -> Void)?) -> Bool {

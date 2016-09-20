@@ -91,7 +91,7 @@ class DownloadTestCase: XCTestCase {
             for: searchPathDirectory,
             in: searchPathDomain
         )
-        let path = "/wikipedia/commons/6/69/NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg"
+        let path = "/wikipedia/commons/thumb/a/ab/Olympiastadion_at_dusk.JPG/2560px-Olympiastadion_at_dusk.JPG"
         let request: DownloadAPIRequest<TronError> = tron.download(path, to: destination)
         let expectation = self.expectation(description: "Download expectation")
         let alamofireRequest = request.performCollectingTimeline(withCompletion: { result in
@@ -99,7 +99,9 @@ class DownloadTestCase: XCTestCase {
         })
         alamofireRequest?.downloadProgress { fraction in//_,_,_ in
             print("progress ",fraction)
-            alamofireRequest?.cancel()
+            if fraction.fractionCompleted > 0.1 {
+                alamofireRequest?.cancel()
+            }
         }
         waitForExpectations(timeout: 10, handler: nil)
         
@@ -126,11 +128,7 @@ class DownloadTestCase: XCTestCase {
                 options: .skipsHiddenFiles
             )
             
-            #if os(iOS) || os(tvOS)
-                let suggestedFilename = "NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg"
-            #elseif os(OSX)
-                let suggestedFilename = "NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg"
-            #endif
+            let suggestedFilename = "Olympiastadion_at_dusk.JPG"
             
             let predicate = NSPredicate(format: "lastPathComponent = '\(suggestedFilename)'")
             let filteredContents = (contents as NSArray).filtered(using: predicate)

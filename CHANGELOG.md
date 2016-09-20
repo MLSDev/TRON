@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Next
+
+* `Parseable` protocol was rewritten from generic static func to having associatedtype and a func inside. This is done to broaden support for any kinds of mappers. Good example would be CoreData objects creation, that requires different contexts for background threads, and was difficult to implement using old syntax.
+* All `TRON` request methods now contain obligatory `responseParser` and `errorParser` properties, that define, how response and errors are parsed.
+* `APIStub` objects are now using `responseParser` and `errorParser` of the request, and therefore have been entirely rewritten with new properties, that accept `Data` objects instead of directly setting result.
+* `JSONDecodable` protocol now provides convenience methods to use with `TRON` and `APIRequest`, that work the same as before, therefore almost maintaining backwards code compatibility for `TRON/SwiftyJSON` subspec.
+* `ErrorBuilder` class was removed.
+
 ## [2.0.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/2.0.0-beta.1)
 
 `TRON` 2.0 is supported on iOS 9.0, macOS 10.11 and higher due to Alamofire.framework required versions. Read [migration guide](/Docs/2.0 Migration Guide.md) for overview of API changes.

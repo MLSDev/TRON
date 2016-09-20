@@ -36,14 +36,16 @@ public enum DownloadRequestType {
 /**
  `DownloadAPIRequest` encapsulates download request creation logic, stubbing options, and response/error parsing.
  */
-open class DownloadAPIRequest<ErrorModel: Parseable>: BaseRequest<EmptyResponse,ErrorModel> {
+open class DownloadAPIRequest<ErrorModel>: BaseRequest<EmptyResponse,ErrorModel> {
     
     let type : DownloadRequestType
     
     // Creates `DownloadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
-    public init(type: DownloadRequestType, path: String, tron: TRON) {
+    public init(type: DownloadRequestType, path: String, tron: TRON, errorParser: @escaping ErrorParser) {
         self.type = type
-        super.init(path: path, tron: tron)
+        super.init(path: path, tron: tron,
+                   responseParser: { try EmptyResponseParser().parse($0)},
+                   errorParser: errorParser)
     }
     
     override func alamofireRequest(from manager: SessionManager) -> Request? {
@@ -101,7 +103,7 @@ open class DownloadAPIRequest<ErrorModel: Parseable>: BaseRequest<EmptyResponse,
                 }
             })
             guard error == nil else {
-                return .failure(self.errorBuilder.buildErrorFromRequest(urlRequest, response: response, data: nil, error: error))
+                return .failure(self.errorParser(urlRequest, response, nil,  error))
             }
             return .success(EmptyResponse())
         }

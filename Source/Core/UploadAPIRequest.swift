@@ -44,14 +44,14 @@ public enum UploadRequestType {
 /**
  `UploadAPIRequest` encapsulates upload request creation logic, stubbing options, and response/error parsing.
  */
-open class UploadAPIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Model,ErrorModel> {
+open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
     
     let type: UploadRequestType
     
     // Creates `UploadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
-    public init(type: UploadRequestType, path: String, tron: TRON) {
+    public init(type: UploadRequestType, path: String, tron: TRON, responseParser: @escaping ResponseParser, errorParser: @escaping ErrorParser) {
         self.type = type
-        super.init(path: path, tron: tron)
+        super.init(path: path, tron: tron, responseParser: responseParser, errorParser: errorParser)
     }
     
     override func alamofireRequest(from manager: SessionManager) -> Request? {

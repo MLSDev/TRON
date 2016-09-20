@@ -86,8 +86,11 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func request<Model:Parseable, ErrorModel:Parseable>(_ path: String) -> APIRequest<Model,ErrorModel> {
-        return APIRequest(path: path, tron: self)
+    open func request<Model, ErrorModel>(_ path: String,
+                      responseParser: @escaping APIRequest<Model,ErrorModel>.ResponseParser,
+                      errorParser: @escaping APIRequest<Model,ErrorModel>.ErrorParser) -> APIRequest<Model,ErrorModel>
+    {
+        return APIRequest(path: path, tron: self, responseParser: responseParser, errorParser: errorParser)
     }
     
     /**
@@ -99,8 +102,10 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .uploadFromFile(fileURL), path: path, tron: self)
+    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, fromFileAt fileURL: URL,
+                     responseParser: @escaping UploadAPIRequest<Model,ErrorModel>.ResponseParser,
+                     errorParser: @escaping UploadAPIRequest<Model,ErrorModel>.ErrorParser) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .uploadFromFile(fileURL), path: path, tron: self, responseParser: responseParser, errorParser: errorParser)
     }
     
     /**
@@ -112,8 +117,10 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, data: Data) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .uploadData(data), path: path, tron: self)
+    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, data: Data,
+                     responseParser: @escaping UploadAPIRequest<Model,ErrorModel>.ResponseParser,
+                     errorParser: @escaping UploadAPIRequest<Model,ErrorModel>.ErrorParser) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .uploadData(data), path: path, tron: self, responseParser: responseParser, errorParser: errorParser)
     }
     
     /**
@@ -125,8 +132,10 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .uploadStream(stream), path: path, tron: self)
+    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, from stream: InputStream,
+                     responseParser: @escaping UploadAPIRequest<Model,ErrorModel>.ResponseParser,
+                     errorParser: @escaping UploadAPIRequest<Model,ErrorModel>.ErrorParser) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .uploadStream(stream), path: path, tron: self, responseParser: responseParser, errorParser: errorParser)
     }
     
     /**
@@ -138,8 +147,11 @@ open class TRON : TronDelegate {
      
      - returns: MultipartAPIRequest instance.
      */
-    open func uploadMultipart<Model:Parseable, ErrorModel:Parseable>(_ path: String, formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .multipartFormData(formData), path: path, tron: self)
+    open func uploadMultipart<Model:Parseable, ErrorModel:Parseable>(_ path: String,
+        responseParser: @escaping UploadAPIRequest<Model,ErrorModel>.ResponseParser,
+        errorParser: @escaping UploadAPIRequest<Model,ErrorModel>.ErrorParser,
+        formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .multipartFormData(formData), path: path, tron: self, responseParser: responseParser, errorParser: errorParser)
     }
     
     /**
@@ -153,8 +165,8 @@ open class TRON : TronDelegate {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    open func download<ErrorModel:Parseable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<ErrorModel> {
-        return DownloadAPIRequest(type: .download(destination), path: path, tron: self)
+    open func download<ErrorModel:Parseable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, errorParser: @escaping DownloadAPIRequest<ErrorModel>.ErrorParser) -> DownloadAPIRequest<ErrorModel> {
+        return DownloadAPIRequest(type: .download(destination), path: path, tron: self, errorParser: errorParser)
     }
     
     /**
@@ -170,8 +182,8 @@ open class TRON : TronDelegate {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    open func download<ErrorModel:Parseable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data) -> DownloadAPIRequest<ErrorModel> {
-        return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self)
+    open func download<ErrorModel:Parseable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data, errorParser: @escaping DownloadAPIRequest<ErrorModel>.ErrorParser) -> DownloadAPIRequest<ErrorModel> {
+        return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self, errorParser: errorParser)
     }
     
     /**

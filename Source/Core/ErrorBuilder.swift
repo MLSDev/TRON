@@ -25,34 +25,8 @@
 
 import Foundation
 
-/**
- `ErrorBuilder` class is used to build error object from unsuccessful API requests.
- */
-open class ErrorBuilder<U:Parseable>
-{
-    /// initialize default error builder
-    public init() {}
-    
-    /**
-     Build concrete APIError instance.
-     
-     - parameter request: URLRequest that was unsuccessful
-     
-     - parameter response: response received from web service
-     
-     - parameter data: data, contained in response
-     
-     - error: Error instance, created by Foundation Loading System or Alamofire.
-     
-     - returns APIError instance
-     */
-    open func buildErrorFromRequest(_ request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) -> APIError<U> {
-        return APIError<U>(request: request, response: response, data: data, error: error)
-    }
-}
-
 /// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
-public struct APIError<T:Parseable> : Error {
+public struct APIError<T> : Error {
     
     /// URLRequest that was unsuccessful
     public let request : URLRequest?
@@ -86,7 +60,6 @@ public struct APIError<T:Parseable> : Error {
         self.response = response
         self.data = data
         self.error = error
-        self.errorModel = try? T.parse(data ?? Data())
     }
     
     /**

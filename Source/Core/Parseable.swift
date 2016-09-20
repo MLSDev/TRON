@@ -29,21 +29,8 @@ import Foundation
  Protocol, that allows creating parsed models from Data, received in request response.
  */
 public protocol Parseable {
+    associatedtype ModelType
     
     /// Parse `data`, creating `Parseable` model.
-    static func parse<T:Parseable>(_ data: Data) throws -> T
-}
-
-/// Enum with possible parsing errors.
-public enum ParsingError : Error
-{
-    /**
-     Error is thrown, if `Parseable` object does not satisfy requirement of current parser
-     
-     For example, `JSONDecodable` tries to decode object that is `Parseable` but not `JSONDecodable`, it raises following error.
-     */
-    case wrongType
-    
-    /// `Parseable` protocol throwed an error while creating `Parseable` model
-    case constructionFailed
+    func parse(_ data: Data) throws -> ModelType
 }

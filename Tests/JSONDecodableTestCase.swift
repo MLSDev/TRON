@@ -56,12 +56,12 @@ class JSONDecodableTestCase: XCTestCase {
 //        expect(parsedResponse) == [1,2,3,4]
 //    }
     
-    func testDecodableSupportsThrowingErrors() {
-        let data = try! JSONSerialization.data(withJSONObject: [1], options: [])
-        let parsedResponse = try? Throwable.parse(data) as Throwable
-        
-        expect(parsedResponse).to(beNil())
-    }
+//    func testDecodableSupportsThrowingErrors() {
+//        let data = try! JSONSerialization.data(withJSONObject: [1], options: [])
+//        let parsedResponse = try? Throwable.parse(data) as Throwable
+//        
+//        expect(parsedResponse).to(beNil())
+//    }
 
     // TODO - implement this stuff when Swift 3.0 comes out
     

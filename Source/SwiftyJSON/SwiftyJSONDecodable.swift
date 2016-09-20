@@ -25,25 +25,32 @@
 
 import Foundation
 import SwiftyJSON3
+import Alamofire
 
 /**
- Protocol for parsing JSON response. It is used as a generic constraint for `APIRequest` instance.
+ Protocol for creating model from SwiftyJSON object.
  */
-public protocol JSONDecodable : Parseable  {
+public protocol JSONDecodable  {
     
-    /// Create model object from SwiftyJSON.JSON struct.
+    /// Creates model object from SwiftyJSON.JSON struct.
     init(json: JSON) throws
 }
 
-public extension JSONDecodable {
-    static func parse<T:Parseable>(_ data: Data) throws -> T {
-        guard let type = T.self as? JSONDecodable.Type else {
-            throw ParsingError.wrongType
-        }
-        guard let model =  try type.init(json: JSON(data: data)) as? T else {
-            throw ParsingError.constructionFailed
-        }
-        return model
+public struct JSONParser<T: JSONDecodable> : Parseable {
+    public init() {}
+    
+    public func parse(_ data: Data) throws -> T {
+        return try T.init(json: JSON(data: data))
+    }
+}
+
+public struct JSONErrorParser<T: JSONDecodable> {
+    public init() {}
+    
+    public func parseError(fromRequest request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) -> APIError<T> {
+        var apiError = APIError<T>(request: request, response: response, data: data, error: error)
+        apiError.errorModel = try? T.init(json: JSON(data: data ?? Data()))
+        return apiError
     }
 }
 
@@ -52,6 +59,110 @@ extension JSON : JSONDecodable {
         if let array = json.array { self.init(array) }
         else if let dictionary = json.dictionary { self.init(dictionary) }
         else { self.init(json.rawValue) }
+    }
+}
+
+extension BaseRequest where Model: JSONDecodable, ErrorModel: JSONDecodable {
+    convenience init(path: String, tron: TRON) {
+        self.init(path:path, tron: tron,
+                  responseParser:{ try JSONParser<Model>().parse($0) },
+                  errorParser: { JSONErrorParser().parseError(fromRequest: $0.0, response: $0.1, data: $0.2, error: $0.3)})
+    }
+}
+
+extension TRON {
+    
+    open func request<Model: JSONDecodable, ErrorModel:JSONDecodable>(_ path: String) -> APIRequest<Model,ErrorModel>
+    {
+        return APIRequest(path: path, tron: self,
+                          responseParser: { try JSONParser<Model>().parse($0) },
+                          errorParser: { JSONErrorParser().parseError(fromRequest: $0.0, response: $0.1, data: $0.2, error: $0.3)})
+    }
+    
+    open func upload<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .uploadFromFile(fileURL), path: path, tron: self,
+                                responseParser: { try JSONParser<Model>().parse($0) },
+                                errorParser: { JSONErrorParser().parseError(fromRequest: $0.0, response: $0.1, data: $0.2, error: $0.3)})
+    }
+    
+    /**
+     Creates APIRequest with specified relative path and type RequestType.UploadData.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter data: Data to upload.
+     
+     - returns: APIRequest instance.
+     */
+    open func upload<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, data: Data) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .uploadData(data), path: path, tron: self,
+                                responseParser: { try JSONParser<Model>().parse($0) },
+                                errorParser: { JSONErrorParser().parseError(fromRequest: $0.0, response: $0.1, data: $0.2, error: $0.3)})
+    }
+    
+    /**
+     Creates APIRequest with specified relative path and type RequestType.UploadStream.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter stream: Stream to upload from.
+     
+     - returns: APIRequest instance.
+     */
+    open func upload<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .uploadStream(stream), path: path, tron: self,
+                                responseParser: { try JSONParser<Model>().parse($0) },
+                                errorParser: { JSONErrorParser().parseError(fromRequest: $0.0, response: $0.1, data: $0.2, error: $0.3)})
+    }
+    
+    /**
+     Creates MultipartAPIRequest with specified relative path.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter formData: Multipart form data creation block.
+     
+     - returns: MultipartAPIRequest instance.
+     */
+    open func uploadMultipart<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String,
+                              formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model,ErrorModel> {
+        return UploadAPIRequest(type: .multipartFormData(formData), path: path, tron: self,
+                                responseParser: { try JSONParser<Model>().parse($0) },
+                                errorParser: { JSONErrorParser().parseError(fromRequest: $0.0, response: $0.1, data: $0.2, error: $0.3)})
+    }
+    
+    /**
+     Creates APIRequest with specified relative path and type RequestType.Download.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter destination: Destination for downloading.
+     
+     - returns: APIRequest instance.
+     
+     - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
+     */
+    open func download<ErrorModel:JSONDecodable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<ErrorModel> {
+        return DownloadAPIRequest(type: .download(destination), path: path, tron: self,
+                                  errorParser: { JSONErrorParser().parseError(fromRequest: $0.0, response: $0.1, data: $0.2, error: $0.3)})
+    }
+    
+    /**
+     Creates APIRequest with specified relative path and type RequestType.DownloadResuming.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter destination: Destination to download to.
+     
+     - parameter resumingFrom: Resume data for current request.
+     
+     - returns: APIRequest instance.
+     
+     - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
+     */
+    open func download<ErrorModel:JSONDecodable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data) -> DownloadAPIRequest<ErrorModel> {
+        return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self,
+                                  errorParser: { JSONErrorParser().parseError(fromRequest: $0.0, response: $0.1, data: $0.2, error: $0.3)})
     }
 }
 
@@ -100,4 +211,8 @@ extension Bool : JSONDecodable {
     public init(json: JSON) {
         self.init(json.boolValue)
     }
+}
+
+extension EmptyResponse : JSONDecodable {
+    public init(json: JSON) throws {}
 }

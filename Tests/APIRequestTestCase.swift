@@ -39,7 +39,7 @@ class APIRequestTestCase: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
     func testSuccessCallBackIsCalledOnMainThread() {

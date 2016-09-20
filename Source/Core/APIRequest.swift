@@ -28,7 +28,7 @@ import Alamofire
 /**
  `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. 
  */
-open class APIRequest<Model: Parseable, ErrorModel: Parseable>: BaseRequest<Model,ErrorModel> {
+open class APIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
     
     override func alamofireRequest(from manager: SessionManager) -> Request {
             return manager.request(urlBuilder.url(forPath: path), method: method,

@@ -28,25 +28,32 @@ class ApiStubbingTestCase: XCTestCase {
     func testStubsSuccessWork() {
         let request: APIRequest<Int,TronError> = tron.request("f00")
         request.stubbingEnabled = true
-        request.apiStub.model = 5
+        request.apiStub.successData = String(5).data(using: .utf8)
         
+        let exp = expectation(description: "Stubs success")
         request.perform(withSuccess: { response in
             expect(response) == 5
+            exp.fulfill()
             }) { _ in
                 XCTFail()
         }
+        waitForExpectations(timeout: 3, handler: nil)
     }
-    
+
     func testStubsFailureWorks() {
         let request :APIRequest<Int,Int> = tron.request("f00")
         request.stubbingEnabled = true
-        request.apiStub.error = APIError<Int>(errorModel: 5)
+        request.apiStub.successful = false
+        request.apiStub.errorData = String(5).data(using:  .utf8)
         
+        let exp = expectation(description: "Stubs fails")
         request.perform(withSuccess: { response in
             XCTFail()
             }) { error in
              expect(error.errorModel) == 5
+                exp.fulfill()
         }
+        waitForExpectations(timeout: 3, handler: nil)
     }
     
     func testBuildingFromFileWorks() {
@@ -62,29 +69,36 @@ class ApiStubbingTestCase: XCTestCase {
         let request: UploadAPIRequest<Int,TronError> = tron.uploadMultipart("f00") { formData in
         }
         request.stubbingEnabled = true
-        request.apiStub.model = 5
+        request.apiStub.successData = String(5).data(using: .utf8)
         
+        let exp = expectation(description: "multipart stubbing success")
         request.performMultipart(withSuccess: { model in
-            expect(model) == 5
+            if model == 5 { exp.fulfill() }
             }, failure: { _ in
                 XCTFail()
         })
+        waitForExpectations(timeout: 3, handler: nil)
     }
     
     func testStubbingSuccessfullyWorksWithCompletionHandler() {
         let request :APIRequest<Int,Int> = tron.request("f00")
         request.stubbingEnabled = true
-        request.apiStub.model = 5
+        request.apiStub.successData = String(5).data(using: .utf8)
         
+        let exp = expectation(description: "stub with completion handler")
         request.performCollectingTimeline(withCompletion: { response in
-            expect(response.result.value) == 5
+            if response.result.value == 5 {
+                exp.fulfill()
+            }
         })
+        waitForExpectations(timeout: 3, handler: nil)
     }
     
     func testStubbingFailurefullyWorksWithCompletionHandler() {
         let request :APIRequest<Int,Int> = tron.request("f00")
         request.stubbingEnabled = true
-        request.apiStub.error = APIError<Int>(errorModel: 5)
+        request.apiStub.successful = false
+        request.apiStub.errorData = String(5).data(using:  .utf8)
         
         request.performCollectingTimeline { response in
             expect((response.result.error as? APIError<Int>)?.errorModel) == 5

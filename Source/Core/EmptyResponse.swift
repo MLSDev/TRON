@@ -26,12 +26,10 @@
 import Foundation
 
 /// Struct, that can be used as Model generic constraint in cases, where you don't care about response type.
-public struct EmptyResponse : Parseable {
-    
-    public static func parse<T : Parseable>(_ data: Data) throws -> T {
-        guard let type = T.self as? EmptyResponse.Type else {
-            throw ParsingError.wrongType
-        }
-        return type.init() as! T
+public struct EmptyResponse  {}
+
+public struct EmptyResponseParser : Parseable {
+    public func parse(_ data: Data) throws -> EmptyResponse {
+        return EmptyResponse()
     }
 }
