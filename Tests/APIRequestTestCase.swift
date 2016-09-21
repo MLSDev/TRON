@@ -10,7 +10,7 @@ import XCTest
 import TRON
 import Nimble
 import Alamofire
-import SwiftyJSON3
+import SwiftyJSON
 
 class TestResponse : JSONDecodable {
     let response : [String:AnyObject]
@@ -107,6 +107,25 @@ class APIRequestTestCase: XCTestCase {
                 }
         }
         waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testRequestWithCompletionIsCalledOnMainThread() {
+        let request : APIRequest<Int,TronError> = tron.request("get")
+        let expectation = self.expectation(description: "200")
+        request.performCollectingTimeline { _ in
+            if Thread.isMainThread { expectation.fulfill() }
+        }
+        waitForExpectations(timeout: 2, handler: nil)
+    }
+    
+    func testRequestWithCompletionCanBeCalledOnBackgroundThread() {
+        let request : APIRequest<Int,TronError> = tron.request("get")
+        request.resultDeliveryQueue = DispatchQueue.global(qos: .background)
+        let expectation = self.expectation(description: "200")
+        request.performCollectingTimeline { _ in
+            if !Thread.isMainThread { expectation.fulfill() }
+        }
+        waitForExpectations(timeout: 2, handler: nil)
     }
     
     func testEmptyResponseStillCallsSuccessBlock() {

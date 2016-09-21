@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'SwiftyJSON' do |swiftyjson|
       swiftyjson.dependency 'TRON/Core'
-      swiftyjson.dependency 'SwiftyJSON3', '~> 3.0.0-beta.1'
+      swiftyjson.dependency 'SwiftyJSON', '~> 3.0.0'
       swiftyjson.source_files = 'Source/SwiftyJSON/*.swift'
   end
 

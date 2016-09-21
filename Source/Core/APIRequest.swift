@@ -88,7 +88,7 @@ open class APIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
         allPlugins.forEach {
             $0.willSendRequest(request.request)
         }
-        return request.validate().response(queue: processingQueue,responseSerializer: dataResponseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
+        return request.validate().response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
     }
 }
 

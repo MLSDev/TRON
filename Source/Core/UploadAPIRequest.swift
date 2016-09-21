@@ -145,7 +145,7 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
                 allPlugins.forEach {
                     $0.willSendRequest(request.request)
                 }
-                _ = request.validate().response(queue : self.processingQueue,
+                _ = request.validate().response(queue : self.resultDeliveryQueue,
                                                 responseSerializer: self.dataResponseSerializer(notifyingPlugins:allPlugins))
                 {
                     self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
@@ -180,7 +180,7 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
         allPlugins.forEach {
             $0.willSendRequest(request.request)
         }
-        return request.validate().response(queue: processingQueue,responseSerializer: dataResponseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
+        return request.validate().response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
     }
 }
 

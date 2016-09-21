@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 
 import Foundation
-import SwiftyJSON3
+import SwiftyJSON
 import Alamofire
 
 /**

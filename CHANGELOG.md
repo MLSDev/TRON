@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Next
+
+* Using SwiftyJSON pod
+* Fixed bug where completion callbacks would be called on background queue
+* `processingQueue` properties were removed
+
 ## [2.0.0-beta.2](https://github.com/MLSDev/TRON/releases/tag/2.0.0-beta.2)
 
 * `Parseable` protocol was rewritten from generic static func to having associatedtype and a func inside. This is done to broaden support for any kinds of mappers. Good example would be CoreData objects creation, that requires different contexts for background threads, and was difficult to implement using old syntax.

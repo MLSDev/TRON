@@ -92,7 +92,7 @@ open class DownloadAPIRequest<ErrorModel>: BaseRequest<EmptyResponse,ErrorModel>
         allPlugins.forEach {
             $0.willSendRequest(request.request)
         }
-        return request.validate().response(queue: processingQueue, responseSerializer: responseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
+        return request.validate().response(queue: resultDeliveryQueue, responseSerializer: responseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
     }
     
     internal func responseSerializer(notifyingPlugins plugins: [Plugin]) -> DownloadResponseSerializer<EmptyResponse> {

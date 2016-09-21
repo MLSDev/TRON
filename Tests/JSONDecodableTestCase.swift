@@ -9,7 +9,7 @@
 import XCTest
 @testable import TRON
 import Nimble
-import SwiftyJSON3
+import SwiftyJSON
 import Alamofire
 
 private struct Headers : JSONDecodable {

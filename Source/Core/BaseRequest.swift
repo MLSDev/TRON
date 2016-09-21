@@ -129,9 +129,6 @@ open class BaseRequest<Model, ErrorModel> {
     /// API stub to be used when stubbing this request
     lazy open var apiStub : APIStub<Model, ErrorModel> = { return APIStub(request: self) }()
     
-    /// Queue, used for processing response, received from the server. Defaults to TRON.processingQueue queue.
-    open var processingQueue : DispatchQueue
-    
     /// Queue, used to deliver result completion blocks. Defaults to TRON.resultDeliveryQueue queue.
     open var resultDeliveryQueue : DispatchQueue
     
@@ -148,7 +145,6 @@ open class BaseRequest<Model, ErrorModel> {
         self.stubbingEnabled = tron.stubbingEnabled
         self.headerBuilder = tron.headerBuilder
         self.urlBuilder = tron.urlBuilder
-        self.processingQueue = tron.processingQueue
         self.resultDeliveryQueue = tron.resultDeliveryQueue
         self.parameterEncoding = tron.parameterEncoding
         self.responseParser = responseParser
@@ -175,7 +171,8 @@ open class BaseRequest<Model, ErrorModel> {
             catch {
                 return .failure(self.errorParser(urlRequest, response, data, error))
             }
-            return .success(model)        }
+            return .success(model)
+        }
     }
     
     internal func performStub(success: ((Model) -> Void)?, failure: ((APIError<ErrorModel>) -> Void)?) -> Bool {
