@@ -31,6 +31,6 @@ import Foundation
 public protocol Parseable {
     associatedtype ModelType
     
-    /// Parse `data`, creating `Parseable` model.
+    /// Parse `data`, creating `ModelType` model.
     func parse(_ data: Data) throws -> ModelType
 }
