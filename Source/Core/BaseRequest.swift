@@ -99,7 +99,7 @@ open class BaseRequest<Model, ErrorModel> {
     open var method: Alamofire.HTTPMethod = .get
     
     /// Parameters of current request.
-    open var parameters: [String: AnyObject] = [:]
+    open var parameters: [String: Any] = [:]
     
     /// Defines how parameters are encoded.
     open var parameterEncoding : Alamofire.ParameterEncoding
