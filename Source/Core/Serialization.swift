@@ -24,13 +24,16 @@
 // THE SOFTWARE.
 
 import Foundation
+import Alamofire
 
-/**
- Protocol, that allows creating parsed models from Data, received in request response.
- */
-public protocol Parseable {
-    associatedtype ModelType
+public protocol ErrorHandlingDataResponseSerializerProtocol : DataResponseSerializerProtocol {
+    associatedtype SerializedError
     
-    /// Parse `data`, creating `ModelType` model.
-    func parse(_ data: Data) throws -> ModelType
+    var serializeError: (Alamofire.Result<SerializedObject>?,URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> { get }
+}
+
+public protocol ErrorHandlingDownloadResponseSerializerProtocol : DownloadResponseSerializerProtocol {
+    associatedtype SerializedError
+    
+    var serializeError: (Alamofire.Result<SerializedObject>?,URLRequest?, HTTPURLResponse?, URL?, Error?) -> APIError<SerializedError> { get }
 }

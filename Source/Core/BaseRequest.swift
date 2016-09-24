@@ -87,10 +87,10 @@ public protocol TronDelegate: class {
 open class BaseRequest<Model, ErrorModel> {
     
     /// Serializes Data into Model
-    public typealias ResponseParser = (Data) throws -> Model
+    public typealias ResponseParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> Result<Model>
     
     /// Serializes received failed response into APIError<ErrorModel> object
-    public typealias ErrorParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> APIError<ErrorModel>
+    public typealias ErrorParser = (Result<Model>?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> APIError<ErrorModel>
     
     /// Relative path of current request
     open let path: String
@@ -117,17 +117,11 @@ open class BaseRequest<Model, ErrorModel> {
     /// URL builder for current request
     open var urlBuilder: URLBuildable
     
-    /// Serializes Data into Model
-    open var responseParser : ResponseParser
-    
-    /// Serializes received failed response into APIError<ErrorModel> object
-    open var errorParser : ErrorParser
-    
     /// Is stubbing enabled for current request?
     open var stubbingEnabled = false
     
     /// API stub to be used when stubbing this request
-    lazy open var apiStub : APIStub<Model, ErrorModel> = { return APIStub(request: self) }()
+    lazy open var apiStub : APIStub<Model, ErrorModel> = { return APIStub(request:self) }()
     
     /// Queue, used to deliver result completion blocks. Defaults to TRON.resultDeliveryQueue queue.
     open var resultDeliveryQueue : DispatchQueue
@@ -139,7 +133,7 @@ open class BaseRequest<Model, ErrorModel> {
     open var plugins : [Plugin] = []
     
     /// Creates `BaseRequest` instance, initialized with several `TRON` properties.
-    public init(path: String, tron: TRON, responseParser: @escaping ResponseParser, errorParser: @escaping ErrorParser) {
+    public init(path: String, tron: TRON) {
         self.path = path
         self.tronDelegate = tron
         self.stubbingEnabled = tron.stubbingEnabled
@@ -147,32 +141,11 @@ open class BaseRequest<Model, ErrorModel> {
         self.urlBuilder = tron.urlBuilder
         self.resultDeliveryQueue = tron.resultDeliveryQueue
         self.parameterEncoding = tron.parameterEncoding
-        self.responseParser = responseParser
-        self.errorParser = errorParser
         self.apiStub.successful = tron.stubbingShouldBeSuccessful
     }
     
     internal func alamofireRequest(from manager: Alamofire.SessionManager) -> Alamofire.Request? {
         fatalError("Needs to be implemented in subclasses")
-    }
-    
-    internal func dataResponseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.DataResponseSerializer<Model> {
-        return DataResponseSerializer<Model> { urlRequest, response, data, error in
-            DispatchQueue.main.async(execute: {
-                plugins.forEach {
-                    $0.requestDidReceiveResponse(urlRequest, response,data,error)
-                }
-            })
-            if let error = error {
-                return .failure(self.errorParser(urlRequest, response, data, error))
-            }
-            let model: Model
-            do { try model = self.responseParser(data ?? Data()) }
-            catch {
-                return .failure(self.errorParser(urlRequest, response, data, error))
-            }
-            return .success(model)
-        }
     }
     
     internal func performStub(success: ((Model) -> Void)?, failure: ((APIError<ErrorModel>) -> Void)?) -> Bool {

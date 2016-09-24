@@ -56,6 +56,8 @@ open class APIStub<Model, ErrorModel> {
     /// Data to be passed to successful stub
     open var successData : Data?
     
+    open var successDownloadURL : URL?
+    
     /// Error to be passed into request's `errorParser` if stub is failureful.
     open var errorRequest : URLRequest?
     
@@ -70,14 +72,30 @@ open class APIStub<Model, ErrorModel> {
     
     /// Response model for successful API stub
     open var model : Model? {
-        guard let data = successData else { return nil }
-        guard let request = request else { return nil}
-        return try? request.responseParser(data)
+        if let request = request as? APIRequest<Model,ErrorModel> {
+            return request.responseSerializer(nil,nil,successData,nil).value
+        }
+        if let request = request as? UploadAPIRequest<Model,ErrorModel> {
+            return request.responseSerializer(nil,nil,successData,nil).value
+        }
+        if let request = request as? DownloadAPIRequest<Model,ErrorModel> {
+            return request.responseSerializer(nil, nil, successDownloadURL, nil).value
+        }
+        return nil
     }
     
     /// Error model for unsuccessful API stub
     open var error: APIError<ErrorModel>? {
-        return request?.errorParser(errorRequest, errorResponse, errorData, loadingError)
+        if let request = request as? APIRequest<Model,ErrorModel> {
+            return request.errorSerializer(nil, errorRequest,errorResponse,errorData,loadingError)
+        }
+        if let request = request as? UploadAPIRequest<Model,ErrorModel> {
+            return request.errorSerializer(nil, errorRequest,errorResponse,nil,loadingError)
+        }
+        if let request = request as? DownloadAPIRequest<Model,ErrorModel> {
+            return request.errorSerializer(nil, errorRequest, errorResponse, nil, loadingError)
+        }
+        return nil
     }
     
     /// Delay before stub is executed

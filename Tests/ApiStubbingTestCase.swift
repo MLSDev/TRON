@@ -53,7 +53,7 @@ class ApiStubbingTestCase: XCTestCase {
              expect(error.errorModel) == 5
                 exp.fulfill()
         }
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testBuildingFromFileWorks() {

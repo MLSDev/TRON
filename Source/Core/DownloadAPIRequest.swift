@@ -36,16 +36,33 @@ public enum DownloadRequestType {
 /**
  `DownloadAPIRequest` encapsulates download request creation logic, stubbing options, and response/error parsing.
  */
-open class DownloadAPIRequest<ErrorModel>: BaseRequest<EmptyResponse,ErrorModel> {
+open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
     
     let type : DownloadRequestType
     
+    public typealias DownloadResponseParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> Result<Model>
+    
+    /// Serializes received failed response into APIError<ErrorModel> object
+    public typealias DownloadErrorParser = (Result<Model>?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> APIError<ErrorModel>
+    
+    
+    /// Serializes Data into Model
+    open var responseSerializer : DownloadResponseParser
+    
+    open var errorSerializer : DownloadErrorParser
+    
     // Creates `DownloadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
-    public init(type: DownloadRequestType, path: String, tron: TRON, errorParser: @escaping ErrorParser) {
+    public init<Serializer : ErrorHandlingDownloadResponseSerializerProtocol>(type: DownloadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
+        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
+    {
         self.type = type
-        super.init(path: path, tron: tron,
-                   responseParser: { try EmptyResponseParser().parse($0)},
-                   errorParser: errorParser)
+        self.responseSerializer = { request,response, data, error in
+            responseSerializer.serializeResponse(request,response,data,error)
+        }
+        self.errorSerializer = { result, request,response, data, error in
+            return responseSerializer.serializeError(result,request, response, data, error)
+        }
+        super.init(path: path, tron: tron)
     }
     
     override func alamofireRequest(from manager: SessionManager) -> Request? {
@@ -69,14 +86,14 @@ open class DownloadAPIRequest<ErrorModel>: BaseRequest<EmptyResponse,ErrorModel>
      - returns: Alamofire.Request or nil if request was stubbed.
      */
     @discardableResult
-    open func performCollectingTimeline(withCompletion completion: @escaping ((DownloadResponse<EmptyResponse>) -> Void)) -> DownloadRequest? {
+    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DownloadResponse<Model>) -> Void)) -> DownloadRequest? {
         if performStub(completion: completion) {
             return nil
         }
         return performAlamofireRequest(completion)
     }
     
-    private func performAlamofireRequest(_ completion : @escaping (DownloadResponse<EmptyResponse>) -> Void) -> DownloadRequest
+    private func performAlamofireRequest(_ completion : @escaping (DownloadResponse<Model>) -> Void) -> DownloadRequest
     {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
@@ -92,20 +109,25 @@ open class DownloadAPIRequest<ErrorModel>: BaseRequest<EmptyResponse,ErrorModel>
         allPlugins.forEach {
             $0.willSendRequest(request.request)
         }
-        return request.validate().response(queue: resultDeliveryQueue, responseSerializer: responseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
+        return request.validate().response(queue: resultDeliveryQueue, responseSerializer: downloadResponseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
     }
     
-    internal func responseSerializer(notifyingPlugins plugins: [Plugin]) -> DownloadResponseSerializer<EmptyResponse> {
-        return DownloadResponseSerializer<EmptyResponse> { urlRequest, response, url, error in
+    internal func downloadResponseSerializer(notifyingPlugins plugins: [Plugin]) -> DownloadResponseSerializer<Model> {
+        return DownloadResponseSerializer<Model> { urlRequest, response, url, error in
             DispatchQueue.main.async(execute: {
                 plugins.forEach {
                     $0.requestDidReceiveResponse((urlRequest, response, nil,error))
                 }
             })
-            guard error == nil else {
-                return .failure(self.errorParser(urlRequest, response, nil,  error))
+            if let error = error {
+                return .failure(self.errorSerializer(nil, urlRequest, response, url, error))
             }
-            return .success(EmptyResponse())
+            let result = self.responseSerializer(urlRequest, response, url, error)
+            if let model = result.value {
+                return .success(model)
+            } else {
+                return .failure(self.errorSerializer(result, urlRequest, response, url, error))
+            }
         }
     }
 }

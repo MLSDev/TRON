@@ -1,8 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## Next
+## [2.0.0-beta.3](https://github.com/MLSDev/TRON/releases/tag/2.0.0-beta.3)
 
+* Rework `Parseable` protocol into `ErrorHandlingDataResponseSerializerProtocol` and `ErrorHandlingDownloadResponseSerializerProtocol`
 * Using SwiftyJSON pod
 * Fixed bug where completion callbacks would be called on background queue
 * `processingQueue` properties were removed

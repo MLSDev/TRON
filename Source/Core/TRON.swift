@@ -86,11 +86,11 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func request<Model, ErrorModel>(_ path: String,
-                      responseParser: @escaping APIRequest<Model,ErrorModel>.ResponseParser,
-                      errorParser: @escaping APIRequest<Model,ErrorModel>.ErrorParser) -> APIRequest<Model,ErrorModel>
+    open func request<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
+        (_ path: String, responseSerializer : Serializer) -> APIRequest<Model,ErrorModel>
+        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
     {
-        return APIRequest(path: path, tron: self, responseParser: responseParser, errorParser: errorParser)
+        return APIRequest(path: path, tron: self, responseSerializer: responseSerializer)
     }
     
     /**
@@ -102,10 +102,11 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, fromFileAt fileURL: URL,
-                     responseParser: @escaping UploadAPIRequest<Model,ErrorModel>.ResponseParser,
-                     errorParser: @escaping UploadAPIRequest<Model,ErrorModel>.ErrorParser) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .uploadFromFile(fileURL), path: path, tron: self, responseParser: responseParser, errorParser: errorParser)
+    open func upload<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
+        (_ path: String, fromFileAt fileURL: URL, responseSerializer : Serializer) -> UploadAPIRequest<Model,ErrorModel>
+        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
+    {
+        return UploadAPIRequest(type: .uploadFromFile(fileURL), path: path, tron: self, responseSerializer: responseSerializer)
     }
     
     /**
@@ -117,10 +118,11 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, data: Data,
-                     responseParser: @escaping UploadAPIRequest<Model,ErrorModel>.ResponseParser,
-                     errorParser: @escaping UploadAPIRequest<Model,ErrorModel>.ErrorParser) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .uploadData(data), path: path, tron: self, responseParser: responseParser, errorParser: errorParser)
+    open func upload<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
+        (_ path: String, data: Data, responseSerializer : Serializer) -> UploadAPIRequest<Model,ErrorModel>
+        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
+    {
+        return UploadAPIRequest(type: .uploadData(data), path: path, tron: self, responseSerializer: responseSerializer)
     }
     
     /**
@@ -132,10 +134,11 @@ open class TRON : TronDelegate {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, from stream: InputStream,
-                     responseParser: @escaping UploadAPIRequest<Model,ErrorModel>.ResponseParser,
-                     errorParser: @escaping UploadAPIRequest<Model,ErrorModel>.ErrorParser) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .uploadStream(stream), path: path, tron: self, responseParser: responseParser, errorParser: errorParser)
+    open func upload<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
+        (_ path: String, from stream: InputStream, responseSerializer : Serializer) -> UploadAPIRequest<Model,ErrorModel>
+        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
+    {
+        return UploadAPIRequest(type: .uploadStream(stream), path: path, tron: self, responseSerializer: responseSerializer)
     }
     
     /**
@@ -147,11 +150,11 @@ open class TRON : TronDelegate {
      
      - returns: MultipartAPIRequest instance.
      */
-    open func uploadMultipart<Model:Parseable, ErrorModel:Parseable>(_ path: String,
-        responseParser: @escaping UploadAPIRequest<Model,ErrorModel>.ResponseParser,
-        errorParser: @escaping UploadAPIRequest<Model,ErrorModel>.ErrorParser,
-        formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .multipartFormData(formData), path: path, tron: self, responseParser: responseParser, errorParser: errorParser)
+    open func uploadMultipart<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
+        (_ path: String,responseSerializer : Serializer, formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model,ErrorModel>
+        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
+    {
+        return UploadAPIRequest(type: .multipartFormData(formData), path: path, tron: self, responseSerializer: responseSerializer)
     }
     
     /**
@@ -165,8 +168,11 @@ open class TRON : TronDelegate {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    open func download<ErrorModel:Parseable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, errorParser: @escaping DownloadAPIRequest<ErrorModel>.ErrorParser) -> DownloadAPIRequest<ErrorModel> {
-        return DownloadAPIRequest(type: .download(destination), path: path, tron: self, errorParser: errorParser)
+    open func download<Model, ErrorModel, Serializer: ErrorHandlingDownloadResponseSerializerProtocol>
+        (_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, responseSerializer : Serializer) -> DownloadAPIRequest<Model,ErrorModel>
+        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
+    {
+        return DownloadAPIRequest(type: .download(destination), path: path, tron: self, responseSerializer: responseSerializer)
     }
     
     /**
@@ -182,8 +188,11 @@ open class TRON : TronDelegate {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    open func download<ErrorModel:Parseable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data, errorParser: @escaping DownloadAPIRequest<ErrorModel>.ErrorParser) -> DownloadAPIRequest<ErrorModel> {
-        return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self, errorParser: errorParser)
+    open func download<Model, ErrorModel, Serializer: ErrorHandlingDownloadResponseSerializerProtocol>
+        (_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data, responseSerializer : Serializer) -> DownloadAPIRequest<Model,ErrorModel>
+        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
+    {
+        return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self, responseSerializer: responseSerializer)
     }
     
     /**
@@ -203,22 +212,22 @@ open class TRON : TronDelegate {
 
 extension TRON {
     @available(*,unavailable,renamed:"upload(_:fromFileAt:)")
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, file: URL) -> APIRequest<Model,ErrorModel> {
+    open func upload<Model, ErrorModel>(_ path: String, file: URL) -> APIRequest<Model,ErrorModel> {
         fatalError("UNAVAILABLE")
     }
     
     @available(*,unavailable,renamed:"upload(_:from:)")
-    open func upload<Model:Parseable, ErrorModel:Parseable>(_ path: String, stream: InputStream) -> APIRequest<Model,ErrorModel> {
+    open func upload<Model, ErrorModel>(_ path: String, stream: InputStream) -> APIRequest<Model,ErrorModel> {
         fatalError("UNAVAILABLE")
     }
     
     @available(*,unavailable,renamed:"download(_:to:)")
-    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, destination: DownloadRequest.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
+    open func download<Model, ErrorModel>(_ path: String, destination: DownloadRequest.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
         fatalError("UNAVAILABLE")
     }
     
     @available(*,unavailable,renamed:"download(_:to:resumingFrom:)")
-    open func download<Model:Parseable, ErrorModel:Parseable>(_ path: String, destination: DownloadRequest.DownloadFileDestination, resumingFromData: Data) -> APIRequest<Model,ErrorModel> {
+    open func download<Model, ErrorModel>(_ path: String, destination: DownloadRequest.DownloadFileDestination, resumingFromData: Data) -> APIRequest<Model,ErrorModel> {
         fatalError("UNAVAILABLE")
     }
 }
