@@ -154,20 +154,32 @@ request.perform(withSuccess: { result in }, failure: { error in })?.progress { b
 
 ## Response parsing
 
-Generic `APIRequest` implementation allows us to define expected response type before request is even sent. It also allows us to setup basic parsing rules, which is where `Parseable` protocol comes in.
+Generic `APIRequest` implementation allows us to define expected response type before request is even sent. We use `Alamofire` `DataResponseSerializerProtocol`, and are adding to it `ErrorHandlingDataResponseSerializerProtocol`, which basically allows us to have two generics for both success and error values.
 
 ```swift
-public protocol Parseable {
-    static func parse<T:Parseable>(_ data: Data) throws -> T
+
+// Alamofire 4:
+
+public protocol DataResponseSerializerProtocol {
+associatedtype SerializedObject
+
+var serializeResponse: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<SerializedObject> { get }
 }
+
+// TRON 2:
+
+public protocol ErrorHandlingDataResponseSerializerProtocol : DataResponseSerializerProtocol {
+associatedtype SerializedError
+
+var serializeError: (Alamofire.Result<SerializedObject>?,URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> { get }
+}
+
 ```
 
-Protocol accepts Data in initializer, which means anything can be parsed - JSON, or XML or something else.
-
-`TRON` also provides `JSONDecodable` protocol, that allows us to parse models using SwiftyJSON:
+`TRON` provides `JSONDecodable` protocol, that allows us to parse models using [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON):
 
 ```swift
-public protocol JSONDecodable: Parseable {
+public protocol JSONDecodable {
     init(json: JSON) throws
 }
 ```
@@ -195,7 +207,7 @@ request.perform(withSuccess: { user in
 })
 ```
 
-There are also default implementations of `JSONDecodable` protocol for Swift built-in types like Array, String, Int, Float, Double and Bool, so you can easily do something like this:
+There are also default implementations of `JSONDecodable` protocol for Swift built-in types like String, Int, Float, Double and Bool, so you can easily do something like this:
 
 ```swift
 let request : APIRequest<String,MyAppError> = tron.request(path: "status")
@@ -204,7 +216,9 @@ request.perform(withSuccess: { status in
 })
 ```
 
-You can also use `EmptyResponse` struct in cases where you don't care about actual response.
+You can also use `EmptyResponse` struct in cases where you don't care about actual response. 
+
+There is also an array extension for `JSONDecodable`, however it's commented out due to [this](https://github.com/MLSDev/TRON/issues/17).
 
 ## RxSwift
 
@@ -224,10 +238,10 @@ multipartRequest.rxMultipartResult().subscribeNext { result in
 
 ### Error handling
 
-`TRON` includes built-in parsing for errors by assuming, that error can also be parsed as `Parseable` instance. `APIError` is a generic class, that includes several default properties, that can be fetched from unsuccessful request:
+`TRON` includes built-in parsing for errors. `APIError` is a generic class, that includes several default properties, that can be fetched from unsuccessful request:
 
 ```swift
-struct APIError<T:Parseable> {
+struct APIError<T> {
     public let request : URLRequest?
     public let response : NSHTTPURLResponse?
     public let data : Data?
@@ -261,8 +275,29 @@ request.perform(withSuccess: { response in }, failure: { error in
     print(error.response) // NSHTTPURLResponse
     print(error.data) // Data of response
     print(error.error) // Error from Foundation Loading system
-    print(error.errors) // MyAppError parsed property
+    print(error.errorModel.errors) // MyAppError parsed property
   })
+```
+
+## Using Alamofire custom response serializers 
+
+Any custom response serializer for `Alamofire` can be used with TRON, you just need to specify error type, that will be used, for example, if `CustomError` is `JSONDecodable`:
+
+```swift
+extension Alamofire.DataResponseSerializer : ErrorHandlingDataResponseSerializerProtocol {
+    public typealias SerializedError = CustomError
+
+    public var serializeError: (Result<SerializedObject>?, URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> {
+        return { erroredResponse, request, response, data, error in
+            let serializationError : Error? = erroredResponse?.error ?? error
+            var error = APIError<ErrorModel>(request: request, response: response,data: data, error: serializationError)
+
+            // Here you can define, how error needs to be parsed
+            error.errorModel =  try? ErrorModel.init(json: JSON(data: data ?? Data()))
+            return error
+        }
+    }
+}
 ```
 
 ## CRUD

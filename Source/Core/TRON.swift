@@ -84,6 +84,8 @@ open class TRON : TronDelegate {
      
      - parameter path: Path, that will be appended to current `baseURL`.
      
+     - parameter responseSerializer: object used to serialize response.
+     
      - returns: APIRequest instance.
      */
     open func request<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
@@ -99,6 +101,8 @@ open class TRON : TronDelegate {
      - parameter path: Path, that will be appended to current `baseURL`.
      
      - parameter fileURL: File url to upload from.
+     
+     - parameter responseSerializer: object used to serialize response.
      
      - returns: APIRequest instance.
      */
@@ -116,6 +120,8 @@ open class TRON : TronDelegate {
      
      - parameter data: Data to upload.
      
+     - parameter responseSerializer: object used to serialize response.
+     
      - returns: APIRequest instance.
      */
     open func upload<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
@@ -132,6 +138,8 @@ open class TRON : TronDelegate {
      
      - parameter stream: Stream to upload from.
      
+     - parameter responseSerializer: object used to serialize response.
+     
      - returns: APIRequest instance.
      */
     open func upload<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
@@ -145,6 +153,8 @@ open class TRON : TronDelegate {
      Creates MultipartAPIRequest with specified relative path.
      
      - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter responseSerializer: object used to serialize response.
      
      - parameter formData: Multipart form data creation block.
      
@@ -163,6 +173,8 @@ open class TRON : TronDelegate {
      - parameter path: Path, that will be appended to current `baseURL`.
      
      - parameter destination: Destination for downloading.
+     
+     - parameter responseSerializer: object used to serialize response.
      
      - returns: APIRequest instance.
      
@@ -183,6 +195,8 @@ open class TRON : TronDelegate {
      - parameter destination: Destination to download to.
      
      - parameter resumingFrom: Resume data for current request.
+     
+     - parameter responseSerializer: object used to serialize response.
      
      - returns: APIRequest instance.
      

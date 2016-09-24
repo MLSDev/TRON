@@ -30,18 +30,20 @@ import Alamofire
  */
 open class APIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
     
-    /// Serializes Data into Model
-    open var responseSerializer : ResponseParser
+    /// Serializes received response into Result<Model>
+    open var responseParser : ResponseParser
     
-    open var errorSerializer : ErrorParser
+    /// Serializes received error into APIError<ErrorModel>
+    open var errorParser : ErrorParser
     
+    /// Creates `APIRequest`, filling `responseParser` and `errorParser` properties
     init<Serializer : ErrorHandlingDataResponseSerializerProtocol>(path: String, tron: TRON, responseSerializer: Serializer)
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
     {
-        self.responseSerializer = { request,response, data, error in
+        self.responseParser = { request,response, data, error in
             responseSerializer.serializeResponse(request,response,data,error)
         }
-        self.errorSerializer = { result, request,response, data, error in
+        self.errorParser = { result, request,response, data, error in
             return responseSerializer.serializeError(result,request, response, data, error)
         }
         super.init(path: path, tron: tron)
@@ -116,14 +118,14 @@ open class APIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
                 }
             })
             if let error = error {
-                return .failure(self.errorSerializer(nil, urlRequest, response, data, error))
+                return .failure(self.errorParser(nil, urlRequest, response, data, error))
             }
             
-            let result = self.responseSerializer(urlRequest, response, data, error)
+            let result = self.responseParser(urlRequest, response, data, error)
             if let model = result.value {
                 return .success(model)
             } else {
-                return .failure(self.errorSerializer(result, urlRequest, response, data, error))
+                return .failure(self.errorParser(result, urlRequest, response, data, error))
             }
         }
     }

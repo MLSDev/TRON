@@ -620,6 +620,7 @@
 
 /* Begin PBXFileReference section */
 		9A05B1841D96B44500AC2B0B /* ResponseSerializationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResponseSerializationTestCase.swift; path = Tests/ResponseSerializationTestCase.swift; sourceTree = "<group>"; };
+		9A05B1881D96BE1A00AC2B0B /* 2.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "2.0 Migration Guide.md"; path = "Docs/2.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9A1024921C5F806A006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A10249B1C5F806A006E0163 /* TRON OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1024CA1C5F8169006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -950,6 +951,7 @@
 		9AFAE4D31CC520F6002739B0 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				9A05B1881D96BE1A00AC2B0B /* 2.0 Migration Guide.md */,
 				9AFAE4D51CC52118002739B0 /* README.md */,
 				9AFAE4D41CC5210F002739B0 /* CHANGELOG.md */,
 			);

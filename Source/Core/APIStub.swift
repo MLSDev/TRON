@@ -73,13 +73,13 @@ open class APIStub<Model, ErrorModel> {
     /// Response model for successful API stub
     open var model : Model? {
         if let request = request as? APIRequest<Model,ErrorModel> {
-            return request.responseSerializer(nil,nil,successData,nil).value
+            return request.responseParser(nil,nil,successData,nil).value
         }
         if let request = request as? UploadAPIRequest<Model,ErrorModel> {
-            return request.responseSerializer(nil,nil,successData,nil).value
+            return request.responseParser(nil,nil,successData,nil).value
         }
         if let request = request as? DownloadAPIRequest<Model,ErrorModel> {
-            return request.responseSerializer(nil, nil, successDownloadURL, nil).value
+            return request.responseParser(nil, nil, successDownloadURL, nil).value
         }
         return nil
     }
@@ -87,13 +87,13 @@ open class APIStub<Model, ErrorModel> {
     /// Error model for unsuccessful API stub
     open var error: APIError<ErrorModel>? {
         if let request = request as? APIRequest<Model,ErrorModel> {
-            return request.errorSerializer(nil, errorRequest,errorResponse,errorData,loadingError)
+            return request.errorParser(nil, errorRequest,errorResponse,errorData,loadingError)
         }
         if let request = request as? UploadAPIRequest<Model,ErrorModel> {
-            return request.errorSerializer(nil, errorRequest,errorResponse,nil,loadingError)
+            return request.errorParser(nil, errorRequest,errorResponse,nil,loadingError)
         }
         if let request = request as? DownloadAPIRequest<Model,ErrorModel> {
-            return request.errorSerializer(nil, errorRequest, errorResponse, nil, loadingError)
+            return request.errorParser(nil, errorRequest, errorResponse, nil, loadingError)
         }
         return nil
     }

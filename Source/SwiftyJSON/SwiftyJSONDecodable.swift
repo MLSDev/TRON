@@ -36,13 +36,11 @@ public protocol JSONDecodable  {
     init(json: JSON) throws
 }
 
-public enum JSONDecodableDownloadSerializationError : Error {
-    case failedToCreateJSONResponse
-}
-
+/// `JSONDecodable` data response parser
 public struct JSONDecodableParser<Model: JSONDecodable, ErrorModel: JSONDecodable> : ErrorHandlingDataResponseSerializerProtocol {
     public init() {}
     
+    /// A closure used by response handlers that takes a request, response, data and error and returns a result.
     public var serializeResponse: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Model> {
         return { request, response, data, error in
             let json = JSON(data: data ?? Data())
@@ -56,6 +54,7 @@ public struct JSONDecodableParser<Model: JSONDecodable, ErrorModel: JSONDecodabl
         }
     }
     
+    /// A closure used by response handlers that takes a parsed result, request, response, data and error and returns a serialized error.
     public var serializeError: (Result<Model>?,URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<ErrorModel> {
         return { erroredResponse, request, response, data, error in
             let serializationError : Error? = erroredResponse?.error ?? error
@@ -66,9 +65,16 @@ public struct JSONDecodableParser<Model: JSONDecodable, ErrorModel: JSONDecodabl
     }
 }
 
+/// Error that is thrown, if after successful download, passed URL or Data with contents of that URL are nil.
+public enum JSONDecodableDownloadSerializationError : Error {
+    case failedToCreateJSONResponse
+}
+
+/// `JSONDecodable` download response parser
 public struct JSONDecodableDownloadParser<Model: JSONDecodable, ErrorModel: JSONDecodable> : ErrorHandlingDownloadResponseSerializerProtocol {
     public init() {}
     
+    /// A closure used by response handlers that takes a request, response, url and error and returns a result.
     public var serializeResponse: (URLRequest?, HTTPURLResponse?, URL?, Error?) -> Result<Model> {
         return { request, response, url, error in
             if let url = url, let data = try? Data(contentsOf: url) {
@@ -85,6 +91,7 @@ public struct JSONDecodableDownloadParser<Model: JSONDecodable, ErrorModel: JSON
         }
     }
     
+    /// A closure used by response handlers that takes a parsed result, request, response, url and error and returns a serialized error.
     public var serializeError: (Result<Model>?,URLRequest?, HTTPURLResponse?, URL?, Error?) -> APIError<ErrorModel> {
         return { erroredResponse, request, response, url, error in
             let serializationError : Error? = erroredResponse?.error ?? error
@@ -107,19 +114,29 @@ extension JSON : JSONDecodable {
     }
 }
 
-//extension APIRequest where Model: JSONDecodable, ErrorModel: JSONDecodable {
-//    convenience init(path: String, tron: TRON) {
-//        self.init(path: path, tron: tron, responseSerializer: JSONParser())
-//    }
-//}
-
 extension TRON {
     
+    /**
+     Creates APIRequest with specified relative path and type RequestType.Default.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - returns: APIRequest instance.
+     */
     open func request<Model: JSONDecodable, ErrorModel:JSONDecodable>(_ path: String) -> APIRequest<Model,ErrorModel>
     {
         return APIRequest(path: path, tron: self, responseSerializer: JSONDecodableParser())
     }
     
+    /**
+     Creates APIRequest with specified relative path and type RequestType.UploadFromFile.
+     
+     - parameter path: Path, that will be appended to current `baseURL`.
+     
+     - parameter fileURL: File url to upload from.
+     
+     - returns: APIRequest instance.
+     */
     open func upload<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model,ErrorModel> {
         return UploadAPIRequest(type: .uploadFromFile(fileURL), path: path, tron: self, responseSerializer: JSONDecodableParser())
     }

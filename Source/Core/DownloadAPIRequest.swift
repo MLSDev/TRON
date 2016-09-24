@@ -38,28 +38,31 @@ public enum DownloadRequestType {
  */
 open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
     
+    /// DownloadAPIREquest type
     let type : DownloadRequestType
     
+    /// Serialize download response into `Result<Model>`.
     public typealias DownloadResponseParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> Result<Model>
     
     /// Serializes received failed response into APIError<ErrorModel> object
     public typealias DownloadErrorParser = (Result<Model>?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> APIError<ErrorModel>
     
     
-    /// Serializes Data into Model
-    open var responseSerializer : DownloadResponseParser
+    /// Serializes received response into Result<Model>
+    open var responseParser : DownloadResponseParser
     
-    open var errorSerializer : DownloadErrorParser
+    /// Serializes received error into APIError<ErrorModel>
+    open var errorParser : DownloadErrorParser
     
     // Creates `DownloadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
     public init<Serializer : ErrorHandlingDownloadResponseSerializerProtocol>(type: DownloadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
     {
         self.type = type
-        self.responseSerializer = { request,response, data, error in
+        self.responseParser = { request,response, data, error in
             responseSerializer.serializeResponse(request,response,data,error)
         }
-        self.errorSerializer = { result, request,response, data, error in
+        self.errorParser = { result, request,response, data, error in
             return responseSerializer.serializeError(result,request, response, data, error)
         }
         super.init(path: path, tron: tron)
@@ -120,13 +123,13 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> 
                 }
             })
             if let error = error {
-                return .failure(self.errorSerializer(nil, urlRequest, response, url, error))
+                return .failure(self.errorParser(nil, urlRequest, response, url, error))
             }
-            let result = self.responseSerializer(urlRequest, response, url, error)
+            let result = self.responseParser(urlRequest, response, url, error)
             if let model = result.value {
                 return .success(model)
             } else {
-                return .failure(self.errorSerializer(result, urlRequest, response, url, error))
+                return .failure(self.errorParser(result, urlRequest, response, url, error))
             }
         }
     }
