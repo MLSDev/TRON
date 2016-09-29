@@ -24,23 +24,55 @@
 // THE SOFTWARE.
 
 import Foundation
+import Alamofire
 
 /**
  Protocol that serves to provide plugin functionality to `TRON`.
  */
 public protocol Plugin {
     
-    /**
-     Method to be called when request is about to be sent.
-     
-     - parameter request: URLRequest instance to be sent.
-     */
-    func willSendRequest(_ request: URLRequest?)
+    /// Notifies that `request` is about to be converted to Alamofire.Request
+    ///
+    /// - parameter request: TRON BaseRequest
+    func willSendRequest<Model,ErrorModel>(_ request: BaseRequest<Model,ErrorModel>)
     
-    /**
-     Method to be called when request receives response.
-     
-     - parameter response: Tuple with (URLRequest, NSHTTPURLResponse, Data, Error) values from Alamofire.
-     */
-    func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?))
+    
+    /// Notifies that `request` formed from `tronRequest`, is about to be sent.
+    ///
+    /// - parameter request: Alamofire.Request instance
+    /// - parameter formedFrom: TRON.BaseRequest instance or one of the subclasses
+    func willSendAlamofireRequest<Model,ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+    
+    /// Notifies that `request`, formed from `tronRequest`, was sent.
+    ///
+    /// - parameter request:     Alamofire.Request instance
+    /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
+    func didSendAlamofireRequest<Model,ErrorModel>(_ request : Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+    
+    /// Notifies that `response` was received for `request`, formed from `tronRequest`.
+    ///
+    /// - parameter response:    Tuple with (URLRequest?, HTTPURLResponse?, Data?, Error?)
+    /// - parameter request:     Alamofire.Request instance
+    /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
+    func didReceiveResponse<Model,ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+}
+
+public extension Plugin {
+    
+
+    func willSendRequest<Model,ErrorModel>(_ request: BaseRequest<Model,ErrorModel>) {
+        
+    }
+
+    func willSendAlamofireRequest<Model,ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>) {
+        
+    }
+
+    func didSendAlamofireRequest<Model,ErrorModel>(_ request : Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>) {
+        
+    }
+
+    func didReceiveResponse<Model,ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>) {
+        
+    }
 }

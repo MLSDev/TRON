@@ -83,6 +83,10 @@ public protocol TronDelegate: class {
     var plugins : [Plugin] { get }
 }
 
+public enum TRONError : Error {
+    case requestDeallocated
+}
+
 /// Base class, that contains common functionality, extracted from `APIRequest` and `MultipartAPIRequest`.
 open class BaseRequest<Model, ErrorModel> {
     
@@ -131,6 +135,10 @@ open class BaseRequest<Model, ErrorModel> {
     
     /// Array of plugins for current `APIRequest`.
     open var plugins : [Plugin] = []
+    
+    internal var allPlugins : [Plugin] {
+        return plugins + (tronDelegate?.plugins ?? [])
+    }
     
     /// Creates `BaseRequest` instance, initialized with several `TRON` properties.
     public init(path: String, tron: TRON) {

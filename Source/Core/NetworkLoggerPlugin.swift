@@ -24,6 +24,7 @@
 // THE SOFTWARE.
 
 import Foundation
+import Alamofire
 
 /**
  Plugin, that can be used to log network success and failure responses.
@@ -38,18 +39,26 @@ open class NetworkLoggerPlugin : Plugin {
     
     public init() {}
     
-    open func willSendRequest(_ request: URLRequest?) {
+    open func willSendRequest<Model, ErrorModel>(_ request: BaseRequest<Model, ErrorModel>) {
         
     }
     
-    open func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?)) {
+    open func willSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
+        
+    }
+    
+    open func didSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
+        
+    }
+    
+    open func didReceiveResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         if response.3 != nil {
             if logFailures {
-                print("[Request] error\n -> \(response.0?.httpMethod ?? "") \(response.0?.url?.absoluteString ?? "")) \n Response: \(response.1)\n ResponseString: \(String.init(data: response.2 ?? Data(), encoding: String.Encoding.utf8)) \n Error: \(response.3)")
+                debugPrint("Request failed: \(request.debugDescription)")
             }
         } else {
             if logSuccess {
-                print("[Request] success\n ->  \(response.0?.url?.absoluteString ?? "")")
+                debugPrint("Request success: \(request.debugDescription)")
             }
         }
     }

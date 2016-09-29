@@ -25,6 +25,7 @@
 
 import Foundation
 import UIKit
+import Alamofire
 
 /**
  Plugin, that monitors sent api requests, and automatically sets UIApplication networkActivityIndicatorVisible property.
@@ -47,11 +48,11 @@ open class NetworkActivityPlugin : Plugin {
         }
     }
     
-    open func willSendRequest(_ request: URLRequest?) {
+    public func didSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         networkActivityCount += 1
     }
     
-    open func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?)) {
+    public func didReceiveResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         networkActivityCount -= 1
     }
 }

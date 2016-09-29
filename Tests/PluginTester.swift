@@ -8,17 +8,28 @@
 
 import Foundation
 import TRON
+import Alamofire
 
 class PluginTester : Plugin
 {
     var willSendCalled = false
+    var willSendAlamofireCalled = false
+    var didSendAlamofireCalled = false
     var didReceiveResponseCalled = false
     
-    func willSendRequest(_ request: URLRequest?) {
+    func willSendRequest<Model, ErrorModel>(_ request: BaseRequest<Model, ErrorModel>) {
         willSendCalled = true
     }
     
-    func requestDidReceiveResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?)) {
+    func willSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom: BaseRequest<Model, ErrorModel>) {
+        willSendAlamofireCalled = true
+    }
+    
+    func didSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom: BaseRequest<Model, ErrorModel>) {
+        didSendAlamofireCalled = true
+    }
+    
+    func didReceiveResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom: BaseRequest<Model, ErrorModel>) {
         didReceiveResponseCalled = true
     }
 }

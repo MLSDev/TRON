@@ -19,8 +19,10 @@ class PluginTestCase: XCTestCase {
         
         request.performCollectingTimeline(withCompletion: {_ in })
         
-        expect(pluginTester.didReceiveResponseCalled).toEventually(equal(true))
         expect(pluginTester.willSendCalled).toEventually(equal(true))
+        expect(pluginTester.willSendAlamofireCalled).toEventually(equal(true))
+        expect(pluginTester.didSendAlamofireCalled).toEventually(equal(true))
+        expect(pluginTester.didReceiveResponseCalled).toEventually(equal(true))
     }
     
     func testLocalPluginsAreCalledCorrectly() {

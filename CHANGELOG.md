@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Next
+
+* Plugin protocol was rewritten to contain generic methods and more information about what is happening in TRON ecosystem.
+
 ## [2.0.0-beta.3](https://github.com/MLSDev/TRON/releases/tag/2.0.0-beta.3)
 
 * `Parseable` protocol was rewritten to directly inherit from `Alamofire.DataResponseSerializerProtocol`. It allows us to have two generic typealiases - `SerializedObject` from `Alamofire` and added to it `SerializedError` from TRON.

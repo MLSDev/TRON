@@ -136,6 +136,7 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
+        allPlugins.forEach { $0.willSendRequest(self) }
         guard case UploadRequestType.multipartFormData(let multipartFormDataBlock) = type else {
             return
         }
@@ -156,18 +157,16 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
                 let apiError = APIError<ErrorModel>(request: nil, response: nil, data: nil, error: error)
                 failureBlock?(apiError)
             } else if case .success(let request, _, _) = completion {
-                let allPlugins = self.plugins + (self.tronDelegate?.plugins ?? [])
-                allPlugins.forEach {
-                    $0.willSendRequest(request.request)
-                }
+                self.allPlugins.forEach { $0.willSendAlamofireRequest(request, formedFrom: self) }
                 _ = request.validate().response(queue : self.resultDeliveryQueue,
-                                                responseSerializer: self.dataResponseSerializer(notifyingPlugins:allPlugins))
+                                                responseSerializer: self.dataResponseSerializer(with: request))
                 {
                     self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
                 }
                 if !(self.tronDelegate?.manager.startRequestsImmediately ?? false){
                     request.resume()
                 }
+                self.allPlugins.forEach { $0.didSendAlamofireRequest(request, formedFrom: self) }
                 encodingCompletion?(completion)
             }
         }
@@ -184,36 +183,38 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
+        allPlugins.forEach { $0.willSendRequest(self) }
         guard let request = alamofireRequest(from: manager) as? UploadRequest else {
             fatalError("Failed to receive UploadRequest")
         }
+        allPlugins.forEach { $0.willSendAlamofireRequest(request, formedFrom: self) }
         if !tronDelegate!.manager.startRequestsImmediately {
             request.resume()
         }
-        // Notify plugins about new network request
-        let allPlugins = plugins + (tronDelegate?.plugins ?? [])
-        allPlugins.forEach {
-            $0.willSendRequest(request.request)
-        }
-        return request.validate().response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(notifyingPlugins: allPlugins), completionHandler: completion)
+        allPlugins.forEach { $0.didSendAlamofireRequest(request, formedFrom: self) }
+        return request.validate().response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(with: request), completionHandler: completion)
     }
     
-    internal func dataResponseSerializer(notifyingPlugins plugins: [Plugin]) -> Alamofire.DataResponseSerializer<Model> {
-        return DataResponseSerializer<Model> { urlRequest, response, data, error in
+    internal func dataResponseSerializer(with request: Request) -> Alamofire.DataResponseSerializer<Model> {
+        return DataResponseSerializer<Model> { [weak self, allPlugins] urlRequest, response, data, error in
+            guard let weakSelf = self else {
+                debugPrint("Request deallocated before calling DataResponseSerializer")
+                return .failure(TRONError.requestDeallocated)
+            }
             DispatchQueue.main.async(execute: {
-                plugins.forEach {
-                    $0.requestDidReceiveResponse(urlRequest, response,data,error)
+                allPlugins.forEach {
+                    $0.didReceiveResponse(response: (urlRequest, response, data, error), forRequest: request, formedFrom: weakSelf)
                 }
             })
             if let error = error {
-                return .failure(self.errorParser(nil, urlRequest, response, data, error))
+                return .failure(weakSelf.errorParser(nil, urlRequest, response, data, error))
             }
             
-            let result = self.responseParser(urlRequest, response, data, error)
+            let result = weakSelf.responseParser(urlRequest, response, data, error)
             if let model = result.value {
                 return .success(model)
             } else {
-                return .failure(self.errorParser(result, urlRequest, response, data, error))
+                return .failure(weakSelf.errorParser(result, urlRequest, response, data, error))
             }
         }
     }
