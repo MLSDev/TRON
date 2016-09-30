@@ -101,38 +101,53 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> 
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
-        allPlugins.forEach { $0.willSendRequest(self) }
+        willSendRequest()
         guard let request = alamofireRequest(from: manager) as? DownloadRequest else {
             fatalError("Failed to receive DataRequest")
         }
-        allPlugins.forEach { $0.willSendAlamofireRequest(request, formedFrom: self) }
+        willSendAlamofireRequest(request)
         if !tronDelegate!.manager.startRequestsImmediately {
             request.resume()
         }
-        allPlugins.forEach { $0.didSendAlamofireRequest(request, formedFrom: self)}
-        return request.validate().response(queue: resultDeliveryQueue, responseSerializer: downloadResponseSerializer(with: request), completionHandler: completion)
+        didSendAlamofireRequest(request)
+        return request.validate().response(queue: resultDeliveryQueue, responseSerializer: downloadResponseSerializer(with: request), completionHandler: { [weak self] downloadResponse in
+            self?.didReceiveDownloadResponse(downloadResponse, forRequest: request)
+            completion(downloadResponse)
+        })
     }
     
     internal func downloadResponseSerializer(with request: DownloadRequest) -> DownloadResponseSerializer<Model> {
-        return DownloadResponseSerializer<Model> { [weak self, allPlugins] urlRequest, response, url, error in
+        return DownloadResponseSerializer<Model> { [weak self] urlRequest, response, url, error in
             guard let weakSelf = self else {
                 debugPrint("Request deallocated before calling DownloadResponseSerializer")
                 return .failure(TRONError.requestDeallocated)
             }
-            DispatchQueue.main.async(execute: {
-                allPlugins.forEach {
-                    $0.didReceiveResponse(response: (urlRequest, response,nil,error), forRequest: request, formedFrom: weakSelf)
-                }
-            })
+            self?.willProcessResponse((urlRequest,response,nil,error), for: request)
+            
+            var result : Alamofire.Result<Model>
+            var apiError : APIError<ErrorModel>?
+            var parsedModel : Model?
+            
             if let error = error {
-                return .failure(weakSelf.errorParser(nil, urlRequest, response, url, error))
-            }
-            let result = weakSelf.responseParser(urlRequest, response, url, error)
-            if let model = result.value {
-                return .success(model)
+                apiError = weakSelf.errorParser(nil, urlRequest, response, url, error)
+                result = .failure(apiError!)
             } else {
-                return .failure(weakSelf.errorParser(result, urlRequest, response, url, error))
+                result = weakSelf.responseParser(urlRequest, response, url, error)
+                if let model = result.value {
+                    parsedModel = model
+                    result = .success(model)
+                } else {
+                    apiError = weakSelf.errorParser(result, urlRequest, response, url, error)
+                    result = .failure(apiError!)
+                }
             }
+            if let error = apiError {
+                self?.didReceiveError(error, for: (urlRequest,response,nil,error), request: request)
+            } else if let model = parsedModel {
+                self?.didSuccessfullyParseResponse((urlRequest,response,nil,error), creating: model, forRequest: request)
+            }
+            
+            return result
         }
     }
 }

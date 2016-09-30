@@ -16,6 +16,8 @@ class PluginTester : Plugin
     var willSendAlamofireCalled = false
     var didSendAlamofireCalled = false
     var didReceiveResponseCalled = false
+    var didReceiveError = false
+    var didReceiveSuccess = false
     
     func willSendRequest<Model, ErrorModel>(_ request: BaseRequest<Model, ErrorModel>) {
         willSendCalled = true
@@ -29,7 +31,15 @@ class PluginTester : Plugin
         didSendAlamofireCalled = true
     }
     
-    func didReceiveResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom: BaseRequest<Model, ErrorModel>) {
+    func willProcessResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom: BaseRequest<Model, ErrorModel>) {
         didReceiveResponseCalled = true
+    }
+    
+    func didSuccessfullyParseResponse<Model, ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?), creating result: Model, forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
+        didReceiveSuccess = true
+    }
+    
+    func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>, forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
+        didReceiveError = true
     }
 }

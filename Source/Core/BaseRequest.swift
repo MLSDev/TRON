@@ -136,7 +136,7 @@ open class BaseRequest<Model, ErrorModel> {
     /// Array of plugins for current `APIRequest`.
     open var plugins : [Plugin] = []
     
-    internal var allPlugins : [Plugin] {
+    private var allPlugins : [Plugin] {
         return plugins + (tronDelegate?.plugins ?? [])
     }
     
@@ -196,6 +196,70 @@ open class BaseRequest<Model, ErrorModel> {
                     return
                 }
                 failure?(error)
+            }
+        }
+    }
+    
+    internal func willSendRequest() {
+        allPlugins.forEach { plugin in
+            plugin.dispatchQueue.async {
+                plugin.willSendRequest(self)
+            }
+        }
+    }
+    
+    internal func willSendAlamofireRequest(_ request: Alamofire.Request) {
+        allPlugins.forEach { plugin in
+            plugin.dispatchQueue.async {
+                plugin.willSendAlamofireRequest(request, formedFrom: self)
+            }
+        }
+    }
+    
+    internal func didSendAlamofireRequest(_ request: Alamofire.Request) {
+        allPlugins.forEach { plugin in
+            plugin.dispatchQueue.async {
+                plugin.didSendAlamofireRequest(request, formedFrom: self)
+            }
+        }
+    }
+    
+    internal func willProcessResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?), for request: Request) {
+        allPlugins.forEach { plugin in
+            plugin.dispatchQueue.async {
+                plugin.willProcessResponse(response: response, forRequest: request, formedFrom: self)
+            }
+        }
+    }
+    
+    internal func didSuccessfullyParseResponse(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?), creating result: Model, forRequest request: Alamofire.Request) {
+        allPlugins.forEach { plugin in
+            plugin.dispatchQueue.async {
+                plugin.didSuccessfullyParseResponse(response, creating: result, forRequest: request, formedFrom: self)
+            }
+        }
+    }
+    
+    internal func didReceiveError(_ error: APIError<ErrorModel>, for response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Alamofire.Request) {
+        allPlugins.forEach { plugin in
+            plugin.dispatchQueue.async {
+                plugin.didReceiveError(error, forResponse: response, request: request, formedFrom: self)
+            }
+        }
+    }
+    
+    internal func didReceiveDataResponse(_ response: DataResponse<Model>, forRequest request: Alamofire.Request) {
+        allPlugins.forEach { plugin in
+            plugin.dispatchQueue.async {
+                plugin.didReceiveDataResponse(response, forRequest: request, formedFrom: self)
+            }
+        }
+    }
+    
+    internal func didReceiveDownloadResponse(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest) {
+        allPlugins.forEach { plugin in
+            plugin.dispatchQueue.async {
+                plugin.didReceiveDownloadResponse(response, forRequest: request, formedFrom: self)
             }
         }
     }
