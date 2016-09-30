@@ -48,11 +48,11 @@ open class NetworkActivityPlugin : Plugin {
         }
     }
     
-    public func didSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
+    open func didSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         networkActivityCount += 1
     }
     
-    public func didReceiveResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
+    open func willProcessResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         networkActivityCount -= 1
     }
 }

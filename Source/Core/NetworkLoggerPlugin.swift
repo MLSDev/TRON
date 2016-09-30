@@ -39,27 +39,16 @@ open class NetworkLoggerPlugin : Plugin {
     
     public init() {}
     
-    open func willSendRequest<Model, ErrorModel>(_ request: BaseRequest<Model, ErrorModel>) {
-        
+    open func didSuccessfullyParseResponse<Model, ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?), creating result: Model, forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
+        if logSuccess {
+            debugPrint("Request success: \(request.debugDescription)")
+        }
     }
     
-    open func willSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
-        
-    }
-    
-    open func didSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
-        
-    }
-    
-    open func didReceiveResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
-        if response.3 != nil {
-            if logFailures {
-                debugPrint("Request failed: \(request.debugDescription)")
-            }
-        } else {
-            if logSuccess {
-                debugPrint("Request success: \(request.debugDescription)")
-            }
+    open func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>, forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
+        if logFailures {
+            print("Request error: \(error.error)")
+            debugPrint(request)
         }
     }
 }
