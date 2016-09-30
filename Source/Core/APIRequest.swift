@@ -106,8 +106,8 @@ open class APIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
         }
         didSendAlamofireRequest(request)
         
-        return request.validate().response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(with: request), completionHandler: { [weak self] dataResponse in
-                self?.didReceiveDataResponse(dataResponse, forRequest: request)
+        return request.validate().response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(with: request), completionHandler: { dataResponse in
+                self.didReceiveDataResponse(dataResponse, forRequest: request)
                 completion(dataResponse)
             })
     }

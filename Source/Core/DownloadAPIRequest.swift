@@ -110,8 +110,8 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> 
             request.resume()
         }
         didSendAlamofireRequest(request)
-        return request.validate().response(queue: resultDeliveryQueue, responseSerializer: downloadResponseSerializer(with: request), completionHandler: { [weak self] downloadResponse in
-            self?.didReceiveDownloadResponse(downloadResponse, forRequest: request)
+        return request.validate().response(queue: resultDeliveryQueue, responseSerializer: downloadResponseSerializer(with: request), completionHandler: { downloadResponse in
+            self.didReceiveDownloadResponse(downloadResponse, forRequest: request)
             completion(downloadResponse)
         })
     }

@@ -192,8 +192,8 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
             request.resume()
         }
         didSendAlamofireRequest(request)
-        return request.validate().response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(with: request), completionHandler: { [weak self] dataResponse in
-                self?.didReceiveDataResponse(dataResponse, forRequest: request)
+        return request.validate().response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(with: request), completionHandler: { dataResponse in
+                self.didReceiveDataResponse(dataResponse, forRequest: request)
                 completion(dataResponse)
         })
     }
