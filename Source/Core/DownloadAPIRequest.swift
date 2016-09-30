@@ -117,34 +117,31 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> 
     }
     
     internal func downloadResponseSerializer(with request: DownloadRequest) -> DownloadResponseSerializer<Model> {
-        return DownloadResponseSerializer<Model> { [weak self] urlRequest, response, url, error in
-            guard let weakSelf = self else {
-                debugPrint("Request deallocated before calling DownloadResponseSerializer")
-                return .failure(TRONError.requestDeallocated)
-            }
-            self?.willProcessResponse((urlRequest,response,nil,error), for: request)
+        return DownloadResponseSerializer<Model> { urlRequest, response, url, error in
+            
+            self.willProcessResponse((urlRequest,response,nil,error), for: request)
             
             var result : Alamofire.Result<Model>
             var apiError : APIError<ErrorModel>?
             var parsedModel : Model?
             
             if let error = error {
-                apiError = weakSelf.errorParser(nil, urlRequest, response, url, error)
+                apiError = self.errorParser(nil, urlRequest, response, url, error)
                 result = .failure(apiError!)
             } else {
-                result = weakSelf.responseParser(urlRequest, response, url, error)
+                result = self.responseParser(urlRequest, response, url, error)
                 if let model = result.value {
                     parsedModel = model
                     result = .success(model)
                 } else {
-                    apiError = weakSelf.errorParser(result, urlRequest, response, url, error)
+                    apiError = self.errorParser(result, urlRequest, response, url, error)
                     result = .failure(apiError!)
                 }
             }
             if let error = apiError {
-                self?.didReceiveError(error, for: (urlRequest,response,nil,error), request: request)
+                self.didReceiveError(error, for: (urlRequest,response,nil,error), request: request)
             } else if let model = parsedModel {
-                self?.didSuccessfullyParseResponse((urlRequest,response,nil,error), creating: model, forRequest: request)
+                self.didSuccessfullyParseResponse((urlRequest,response,nil,error), creating: model, forRequest: request)
             }
             
             return result

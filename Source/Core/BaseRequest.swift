@@ -83,10 +83,6 @@ public protocol TronDelegate: class {
     var plugins : [Plugin] { get }
 }
 
-public enum TRONError : Error {
-    case requestDeallocated
-}
-
 /// Base class, that contains common functionality, extracted from `APIRequest` and `MultipartAPIRequest`.
 open class BaseRequest<Model, ErrorModel> {
     
