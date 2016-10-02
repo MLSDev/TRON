@@ -37,7 +37,10 @@ public protocol JSONDecodable  {
 }
 
 /// `JSONDecodable` data response parser
-public struct JSONDecodableParser<Model: JSONDecodable, ErrorModel: JSONDecodable> : ErrorHandlingDataResponseSerializerProtocol {
+public struct JSONDecodableParser<Model: JSONDecodable, ErrorModel: JSONDecodable> : ErrorHandlingDataResponseSerializerProtocol
+{
+    public typealias SerializedError = ErrorModel
+    
     public init() {}
     
     /// A closure used by response handlers that takes a request, response, data and error and returns a result.
@@ -53,13 +56,16 @@ public struct JSONDecodableParser<Model: JSONDecodable, ErrorModel: JSONDecodabl
             }
         }
     }
-    
+}
+
+extension ErrorHandlingDataResponseSerializerProtocol where SerializedError : JSONDecodable
+{
     /// A closure used by response handlers that takes a parsed result, request, response, data and error and returns a serialized error.
-    public var serializeError: (Result<Model>?,URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<ErrorModel> {
+    public var serializeError: (Result<SerializedObject>?,URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> {
         return { erroredResponse, request, response, data, error in
             let serializationError : Error? = erroredResponse?.error ?? error
-            var error = APIError<ErrorModel>(request: request, response: response,data: data, error: serializationError)
-            error.errorModel = try? ErrorModel.init(json: JSON(data: data ?? Data()))
+            var error = APIError<SerializedError>(request: request, response: response,data: data, error: serializationError)
+            error.errorModel = try? SerializedError.init(json: JSON(data: data ?? Data()))
             return error
         }
     }
@@ -71,7 +77,10 @@ public enum JSONDecodableDownloadSerializationError : Error {
 }
 
 /// `JSONDecodable` download response parser
-public struct JSONDecodableDownloadParser<Model: JSONDecodable, ErrorModel: JSONDecodable> : ErrorHandlingDownloadResponseSerializerProtocol {
+public struct JSONDecodableDownloadParser<Model: JSONDecodable, ErrorModel: JSONDecodable> : ErrorHandlingDownloadResponseSerializerProtocol
+{
+    public typealias SerializedError = ErrorModel
+    
     public init() {}
     
     /// A closure used by response handlers that takes a request, response, url and error and returns a result.
@@ -90,17 +99,20 @@ public struct JSONDecodableDownloadParser<Model: JSONDecodable, ErrorModel: JSON
             return .failure(JSONDecodableDownloadSerializationError.failedToCreateJSONResponse)
         }
     }
-    
+}
+
+extension ErrorHandlingDownloadResponseSerializerProtocol where SerializedError : JSONDecodable
+{
     /// A closure used by response handlers that takes a parsed result, request, response, url and error and returns a serialized error.
-    public var serializeError: (Result<Model>?,URLRequest?, HTTPURLResponse?, URL?, Error?) -> APIError<ErrorModel> {
+    public var serializeError: (Result<SerializedObject>?,URLRequest?, HTTPURLResponse?, URL?, Error?) -> APIError<SerializedError> {
         return { erroredResponse, request, response, url, error in
             let serializationError : Error? = erroredResponse?.error ?? error
             var data : Data?
             if let url = url {
                 data = try? Data(contentsOf: url)
             }
-            var error = APIError<ErrorModel>(request: request, response: response,data: data, error: serializationError)
-            error.errorModel = try? ErrorModel.init(json: JSON(data: data ?? Data()))
+            var error = APIError<SerializedError>(request: request, response: response,data: data, error: serializationError)
+            error.errorModel = try? SerializedError.init(json: JSON(data: data ?? Data()))
             return error
         }
     }

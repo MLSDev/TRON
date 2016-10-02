@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## Next
 
 * Plugin protocol was rewritten to contain generic methods and more information about what is happening in TRON ecosystem.
+* `ErrorHandlingDataResponseSerializerProtocol` and `ErrorHandlingDownloadResponseSerializerProtocol` now have protocol extensions for default SwiftyJSON error parsing.
 
 ## [2.0.0-beta.3](https://github.com/MLSDev/TRON/releases/tag/2.0.0-beta.3)
 
