@@ -23,6 +23,7 @@ install-cocoapods:
 # Run Tasks
 
 test-iOS:
+	xcrun instruments -w "iPhone 6s (10.0)"
 	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON iOS" -destination "name=iPhone 6s" -enableCodeCoverage YES test -configuration "Release" | xcpretty -ct
 	bash <(curl -s https://codecov.io/bash)
 
@@ -31,6 +32,7 @@ test-OSX:
 	bash <(curl -s https://codecov.io/bash)
 
 test-tvOS:
+	xcrun instruments -w "Apple TV 1080p (10.0)"
 	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON tvOS" -destination "name=Apple TV 1080p" -enableCodeCoverage YES test -configuration "Release" | xcpretty -ct
 	bash <(curl -s https://codecov.io/bash)
 
