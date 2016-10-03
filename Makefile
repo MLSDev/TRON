@@ -2,13 +2,13 @@ SHELL := /bin/bash
 # Install Tasks
 
 install-iOS:
-	true
+	xcrun instruments -w "iPhone 6s (10.0)" && true
 
 install-OSX:
 	true
 
 install-tvOS:
-	true
+	xcrun instruments -w "Apple TV 1080p (10.0)" && true
 
 install-watchOS:
 	true
@@ -23,7 +23,6 @@ install-cocoapods:
 # Run Tasks
 
 test-iOS:
-	xcrun instruments -w "iPhone 6s (10.0)"
 	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON iOS" -destination "name=iPhone 6s" -enableCodeCoverage YES test -configuration "Release" | xcpretty -ct
 	bash <(curl -s https://codecov.io/bash)
 
@@ -32,7 +31,6 @@ test-OSX:
 	bash <(curl -s https://codecov.io/bash)
 
 test-tvOS:
-	xcrun instruments -w "Apple TV 1080p (10.0)"
 	set -o pipefail && xcodebuild -project TRON.xcodeproj -scheme "TRON tvOS" -destination "name=Apple TV 1080p" -enableCodeCoverage YES test -configuration "Release" | xcpretty -ct
 	bash <(curl -s https://codecov.io/bash)
 
