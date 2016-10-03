@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.11'
   s.watchos.deployment_target = '2.0'
 
-  s.dependency 'Alamofire' , '~> 4.1'
+  s.dependency 'Alamofire' , '~> 4.0'
 
   s.subspec 'Core' do |core|
       core.ios.frameworks = 'UIKit'
