@@ -70,43 +70,48 @@ open class APIStub<Model, ErrorModel> {
     /// Loading error to be passed into request's `errorParser` if stub is failureful.
     open var loadingError : Error?
     
-    /// Response model for successful API stub
-    open var model : Model? {
-        if let request = request as? APIRequest<Model,ErrorModel> {
-            return request.responseParser(nil,nil,successData,nil).value
-        }
-        if let request = request as? UploadAPIRequest<Model,ErrorModel> {
-            return request.responseParser(nil,nil,successData,nil).value
-        }
-        if let request = request as? DownloadAPIRequest<Model,ErrorModel> {
-            return request.responseParser(nil, nil, successDownloadURL, nil).value
-        }
-        return nil
-    }
+    /// Response model closure for successful API stub
+    open var modelClosure : ((Void) -> Model?)!
     
-    /// Error model for unsuccessful API stub
-    open var error: APIError<ErrorModel>? {
-        if let request = request as? APIRequest<Model,ErrorModel> {
-            return request.errorParser(nil, errorRequest,errorResponse,errorData,loadingError)
-        }
-        if let request = request as? UploadAPIRequest<Model,ErrorModel> {
-            return request.errorParser(nil, errorRequest,errorResponse,nil,loadingError)
-        }
-        if let request = request as? DownloadAPIRequest<Model,ErrorModel> {
-            return request.errorParser(nil, errorRequest, errorResponse, nil, loadingError)
-        }
-        return nil
-    }
+    /// Error model closure for unsuccessful API stub
+    open var errorClosure: ((Void) -> APIError<ErrorModel>?)!
     
     /// Delay before stub is executed
     open var stubDelay = 0.1
     
-    /// Weak request property, that is used when executing stubs using request `errorParser` or `responseParser`.
-    open weak var request: BaseRequest<Model,ErrorModel>?
-    
     /// Creates `APIStub`, and configures it for `request`.
     init(request: BaseRequest<Model,ErrorModel>) {
-        self.request = request
+        if let request = request as? APIRequest<Model,ErrorModel>{
+            let serializer = request.responseParser
+            let errorSerializer = request.errorParser
+            modelClosure = { [unowned self] in
+                return serializer(nil,nil,self.successData,nil).value
+            }
+            errorClosure = { [unowned self] in
+                return errorSerializer(nil, self.errorRequest, self.errorResponse, self.errorData, self.loadingError)
+            }
+        } else if let request = request as? UploadAPIRequest<Model,ErrorModel> {
+            let serializer = request.responseParser
+            let errorSerializer = request.errorParser
+            modelClosure = { [unowned self] in
+                return serializer(nil,nil,self.successData,nil).value
+            }
+            errorClosure = { [unowned self] in
+                return errorSerializer(nil, self.errorRequest, self.errorResponse, self.errorData, self.loadingError)
+            }
+        } else if let request = request as? DownloadAPIRequest<Model,ErrorModel> {
+            let serializer = request.responseParser
+            let errorSerializer = request.errorParser
+            modelClosure = { [unowned self] in
+                return serializer(nil,nil,self.successDownloadURL,nil).value
+            }
+            errorClosure = { [unowned self] in
+                return errorSerializer(nil, self.errorRequest, self.errorResponse, nil, self.loadingError)
+            }
+        } else {
+            modelClosure = { return nil }
+            errorClosure = { return nil }
+        }
     }
     
     /**
@@ -117,19 +122,13 @@ open class APIStub<Model, ErrorModel> {
      - parameter failureBlock: Failure block to be executed if request fails. Nil by default.
      */
     open func performStub(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) {
-        delay(stubDelay) { [weak self] in
-            if self?.successful ?? false {
-                guard let model = self?.model else {
-                    print("Attempting to stub successful request, however successData is nil")
-                    return
-                }
+        performStub { (dataResponse:DataResponse<Model> ) -> Void in
+            switch dataResponse.result {
+            case .success(let model):
                 successBlock?(model)
-            } else {
-                guard let error = self?.error else {
-                    print("Attempting to stub failed request, however apiStub does not produce error")
-                    return
-                }
+            case .failure(let error as APIError<ErrorModel>):
                 failureBlock?(error)
+            default: ()
             }
         }
     }
@@ -140,16 +139,16 @@ open class APIStub<Model, ErrorModel> {
      - parameter completionBlock: Completion block to be executed when request is stubbed.
      */
     open func performStub(withCompletion completionBlock : @escaping ((Alamofire.DataResponse<Model>) -> Void)) {
-        delay(stubDelay) { [weak self] in
+        delay(stubDelay) {
             let result : Alamofire.Result<Model>
-            if self?.successful ?? false {
-                guard let model = self?.model else {
+            if self.successful {
+                guard let model = self.modelClosure?() else {
                     print("Attempting to stub successful request, however successData is nil")
                     return
                 }
                 result = Result.success(model)
             } else {
-                guard let error = self?.error else {
+                guard let error = self.errorClosure?() else {
                     print("Attempting to stub failed request, however apiStub does not produce error")
                     return
                 }
@@ -166,16 +165,16 @@ open class APIStub<Model, ErrorModel> {
      - parameter completionBlock: Completion block to be executed when request is stubbed.
      */
     open func performStub(withCompletion completionBlock : @escaping ((Alamofire.DownloadResponse<Model>) -> Void)) {
-        delay(stubDelay) { [weak self] in
+        delay(stubDelay) { 
             let result : Alamofire.Result<Model>
-            if self?.successful ?? false {
-                guard let model = self?.model else {
+            if self.successful {
+                guard let model = self.modelClosure?() else {
                     print("Attempting to stub successful download request, however successData is nil")
                     return
                 }
                 result = Result.success(model)
             } else {
-                guard let error = self?.error else {
+                guard let error = self.errorClosure?() else {
                     print("Attempting to stub failed download request, however apiStub does not produce error")
                     return
                 }

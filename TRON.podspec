@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'TRON'
-  s.version  = '2.0.0-beta.4'
+  s.version  = '2.0.0-beta.5'
   s.license  = 'MIT'
   s.summary  = 'Lightweight network abstraction layer, written on top of Alamofire'
   s.homepage = 'https://github.com/MLSDev/TRON'
@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'RxSwift' do |rxswift|
       rxswift.dependency 'TRON/Core'
-      rxswift.dependency 'RxSwift', '~> 3.0.0-beta.1'
+      rxswift.dependency 'RxSwift', '~> 3.0.0-beta.2'
       rxswift.source_files = 'Source/RxSwift/*.swift'
   end
 

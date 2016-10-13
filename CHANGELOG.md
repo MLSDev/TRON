@@ -1,7 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## Next
+## [2.0.0-beta.5](https://github.com/MLSDev/TRON/releases/tag/2.0.0-beta.5)
+
+* `APIStub` creation is deferred until `apiStub` property is called.
+* `APIStub` `model` and `error` properties have been replaced with `modelClosure` and `errorClosure`, that are created in `APIStub` constructor. This is done to allow `APIStub` to function even if `APIRequest` has been deallocated.
+
+## [2.0.0-beta.4](https://github.com/MLSDev/TRON/releases/tag/2.0.0-beta.4)
 
 * Plugin protocol was rewritten to contain generic methods and more information about what is happening in TRON ecosystem.
 * `ErrorHandlingDataResponseSerializerProtocol` and `ErrorHandlingDownloadResponseSerializerProtocol` now have protocol extensions for default SwiftyJSON error parsing.

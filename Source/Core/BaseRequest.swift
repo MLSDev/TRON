@@ -121,7 +121,11 @@ open class BaseRequest<Model, ErrorModel> {
     open var stubbingEnabled = false
     
     /// API stub to be used when stubbing this request
-    lazy open var apiStub : APIStub<Model, ErrorModel> = { return APIStub(request:self) }()
+    lazy open var apiStub : APIStub<Model, ErrorModel> = {
+        let stub = APIStub(request: self)
+        stub.successful = (self.tronDelegate as? TRON)?.stubbingShouldBeSuccessful ?? true
+        return stub
+    }()
     
     /// Queue, used to deliver result completion blocks. Defaults to TRON.resultDeliveryQueue queue.
     open var resultDeliveryQueue : DispatchQueue
@@ -145,7 +149,6 @@ open class BaseRequest<Model, ErrorModel> {
         self.urlBuilder = tron.urlBuilder
         self.resultDeliveryQueue = tron.resultDeliveryQueue
         self.parameterEncoding = tron.parameterEncoding
-        self.apiStub.successful = tron.stubbingShouldBeSuccessful
     }
     
     internal func alamofireRequest(from manager: Alamofire.SessionManager) -> Alamofire.Request? {

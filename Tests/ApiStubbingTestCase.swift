@@ -61,8 +61,8 @@ class ApiStubbingTestCase: XCTestCase {
         request.stubbingEnabled = true
         request.apiStub.buildModel(fromFileNamed: "user.json", inBundle: Bundle(for: type(of: self)))
         
-        expect(request.apiStub.model?.name) == "Alan Bradley"
-        expect(request.apiStub.model?.id) == 1
+        expect(request.apiStub.modelClosure()?.name) == "Alan Bradley"
+        expect(request.apiStub.modelClosure()?.id) == 1
     }
     
     func testMultipartStubbingSuccessWorks() {
@@ -103,5 +103,21 @@ class ApiStubbingTestCase: XCTestCase {
         request.performCollectingTimeline { response in
             expect((response.result.error as? APIError<Int>)?.errorModel) == 5
         }
+    }
+    
+    func testStubbingWorksAsynchronously() {
+        let request: APIRequest<Int,TronError> = tron.request("f00")
+        request.stubbingEnabled = true
+        request.apiStub.stubDelay = 0.2
+        request.apiStub.successData = String(5).data(using: .utf8)
+        
+        let exp = expectation(description: "Stubs success")
+        request.perform(withSuccess: { response in
+            expect(response) == 5
+            exp.fulfill()
+        }) { _ in
+            XCTFail()
+        }
+        waitForExpectations(timeout: 3, handler: nil)
     }
 }
