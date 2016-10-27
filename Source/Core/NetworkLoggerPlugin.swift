@@ -37,6 +37,9 @@ open class NetworkLoggerPlugin : Plugin {
     /// Log unsuccessful requests
     open var logFailures = true
     
+    /// Log failures produced when request is cancelled. This property only works, if logFailures property is set to true.
+    open var logCancelledRequests = true
+    
     public init() {}
     
     open func didSuccessfullyParseResponse<Model, ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?), creating result: Model, forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
@@ -47,6 +50,9 @@ open class NetworkLoggerPlugin : Plugin {
     
     open func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>, forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         if logFailures {
+            if (error.error as? NSError)?.code == NSURLErrorCancelled, !logCancelledRequests {
+                return
+            }
             print("Request error: \(error.error)")
             debugPrint(request)
         }

@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Next
+
+* `NetworkLoggerPlugin` now has `logCancelledRequests` property, that allows turning off logging of failing requests, that were explicitly cancelled by developer.
+
 ## [2.0.0-beta.5](https://github.com/MLSDev/TRON/releases/tag/2.0.0-beta.5)
 
 * `APIStub` creation is deferred until `apiStub` property is called.
