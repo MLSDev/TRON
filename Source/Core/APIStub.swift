@@ -45,6 +45,9 @@ public extension APIStub {
     }
 }
 
+/// Error, that will be thrown if model creation failed while stubbing network request.
+public struct APIStubConstructionError : Error {}
+
 /**
  `APIStub` instance that is used to represent stubbed successful or unsuccessful response value.
  */
@@ -74,7 +77,7 @@ open class APIStub<Model, ErrorModel> {
     open var modelClosure : ((Void) -> Model?)!
     
     /// Error model closure for unsuccessful API stub
-    open var errorClosure: ((Void) -> APIError<ErrorModel>?)!
+    open var errorClosure: (Void) -> APIError<ErrorModel> = { APIError(request: nil, response: nil, data: nil, error: nil) }
     
     /// Delay before stub is executed
     open var stubDelay = 0.1
@@ -110,7 +113,6 @@ open class APIStub<Model, ErrorModel> {
             }
         } else {
             modelClosure = { return nil }
-            errorClosure = { return nil }
         }
     }
     
@@ -122,13 +124,16 @@ open class APIStub<Model, ErrorModel> {
      - parameter failureBlock: Failure block to be executed if request fails. Nil by default.
      */
     open func performStub(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) {
-        performStub { (dataResponse:DataResponse<Model> ) -> Void in
+        performStub { (dataResponse:DataResponse<Model>) -> Void in
             switch dataResponse.result {
             case .success(let model):
                 successBlock?(model)
-            case .failure(let error as APIError<ErrorModel>):
-                failureBlock?(error)
-            default: ()
+            case .failure(let error):
+                if let error = error as? APIError<ErrorModel> {
+                    failureBlock?(error)
+                } else {
+                    failureBlock?(APIError(request: nil, response:nil,data: nil, error: error))
+                }
             }
         }
     }
@@ -142,17 +147,13 @@ open class APIStub<Model, ErrorModel> {
         delay(stubDelay) {
             let result : Alamofire.Result<Model>
             if self.successful {
-                guard let model = self.modelClosure?() else {
-                    print("Attempting to stub successful request, however successData is nil")
-                    return
+                if let model = self.modelClosure?() {
+                    result = Result.success(model)
+                } else {
+                    result = Result.failure(APIStubConstructionError())
                 }
-                result = Result.success(model)
             } else {
-                guard let error = self.errorClosure?() else {
-                    print("Attempting to stub failed request, however apiStub does not produce error")
-                    return
-                }
-                result = Result.failure(error)
+                result = Result.failure(self.errorClosure())
             }
             let response: Alamofire.DataResponse<Model> = Alamofire.DataResponse(request: nil, response: nil, data: nil, result: result)
             completionBlock(response)
@@ -165,20 +166,16 @@ open class APIStub<Model, ErrorModel> {
      - parameter completionBlock: Completion block to be executed when request is stubbed.
      */
     open func performStub(withCompletion completionBlock : @escaping ((Alamofire.DownloadResponse<Model>) -> Void)) {
-        delay(stubDelay) { 
+        delay(stubDelay) {
             let result : Alamofire.Result<Model>
             if self.successful {
-                guard let model = self.modelClosure?() else {
-                    print("Attempting to stub successful download request, however successData is nil")
-                    return
+                if let model = self.modelClosure?() {
+                    result = Result.success(model)
+                } else {
+                   result = .failure(APIStubConstructionError())
                 }
-                result = Result.success(model)
             } else {
-                guard let error = self.errorClosure?() else {
-                    print("Attempting to stub failed download request, however apiStub does not produce error")
-                    return
-                }
-                result = Result.failure(error)
+                result = Result.failure(self.errorClosure())
             }
             let response: DownloadResponse<Model> = DownloadResponse(request: nil, response: nil, temporaryURL: nil, destinationURL: nil, resumeData: nil, result: result)
             completionBlock(response)

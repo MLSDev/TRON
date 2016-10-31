@@ -21,6 +21,14 @@ struct TestUser : JSONDecodable {
     }
 }
 
+fileprivate struct ErrorThrow: Error {}
+
+fileprivate class ThrowingJSONDecodable : JSONDecodable {
+    required init(json: JSON) throws {
+        throw ErrorThrow()
+    }
+}
+
 class ApiStubbingTestCase: XCTestCase {
     
     let tron = TRON(baseURL: "https://github.com")
@@ -117,6 +125,32 @@ class ApiStubbingTestCase: XCTestCase {
             exp.fulfill()
         }) { _ in
             XCTFail()
+        }
+        waitForExpectations(timeout: 3, handler: nil)
+    }
+    
+    func testStubWithThrowingDataShouldCallFailureBlock() {
+        let request : APIRequest<ThrowingJSONDecodable,TronError> = tron.request("f00")
+        request.stubbingEnabled = true
+        let exp = expectation(description: "Stubs construction failure")
+        request.perform(withSuccess: { response in
+            XCTFail()
+        }) { _ in
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 3, handler: nil)
+    }
+    
+    func testStubWithThrowingDataShouldCallFailureCompletionBlock() {
+        let request : APIRequest<ThrowingJSONDecodable,TronError> = tron.request("f00")
+        request.stubbingEnabled = true
+        let exp = expectation(description: "Stubs construction failure")
+        request.performCollectingTimeline { result in
+            if result.result.isFailure {
+                exp.fulfill()
+            } else {
+                XCTFail()
+            }
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
