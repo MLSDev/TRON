@@ -51,25 +51,25 @@ request.perform(withSuccess: { user in
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 2.0.0-beta.1'
+pod 'TRON', '~> 2.0.0'
 ```
 
 Only Core subspec, without SwiftyJSON dependency:
 
 ```ruby
-pod 'TRON/Core', '~> 2.0.0-beta.1'
+pod 'TRON/Core', '~> 2.0.0'
 ```
 
 RxSwift extension for TRON:
 
 ```ruby
-pod 'TRON/RxSwift', '~> 2.0.0-beta.1'
+pod 'TRON/RxSwift', '~> 2.0.0'
 ```
 
 ### Carthage
 
 ```ruby
-github "MLSDev/TRON", ~> 2.0.0-beta.1
+github "MLSDev/TRON", ~> 2.0.0
 ```
 
 ## Migration Guides
@@ -161,17 +161,17 @@ Generic `APIRequest` implementation allows us to define expected response type b
 // Alamofire 4:
 
 public protocol DataResponseSerializerProtocol {
-associatedtype SerializedObject
+    associatedtype SerializedObject
 
-var serializeResponse: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<SerializedObject> { get }
+    var serializeResponse: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<SerializedObject> { get }
 }
 
 // TRON 2:
 
 public protocol ErrorHandlingDataResponseSerializerProtocol : DataResponseSerializerProtocol {
-associatedtype SerializedError
+    associatedtype SerializedError
 
-var serializeError: (Alamofire.Result<SerializedObject>?,URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> { get }
+    var serializeError: (Alamofire.Result<SerializedObject>?,URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> { get }
 }
 
 ```
@@ -216,7 +216,7 @@ request.perform(withSuccess: { status in
 })
 ```
 
-You can also use `EmptyResponse` struct in cases where you don't care about actual response. 
+You can also use `EmptyResponse` struct in cases where you don't care about actual response.
 
 There is also an array extension for `JSONDecodable`, however it's commented out due to [this](https://github.com/MLSDev/TRON/issues/17).
 
@@ -224,16 +224,16 @@ There is also an array extension for `JSONDecodable`, however it's commented out
 
 ```swift
 let request : APIRequest<Foo, MyError> = tron.request(path: "foo")
-_ = request.rxResult().subscribeNext { result in
+_ = request.rxResult().subscribe(onNext: { result in
     print(result)
-}
+})
 ```
 
 ```swift
 let multipartRequest : APIRequest<Foo,MyError> = tron.upload(path: "foo", formData: { _ in })
-multipartRequest.rxMultipartResult().subscribeNext { result in
+multipartRequest.rxMultipartResult().subscribe(onNext: { result in
     print(result)
-}
+})
 ```
 
 ### Error handling
@@ -241,12 +241,11 @@ multipartRequest.rxMultipartResult().subscribeNext { result in
 `TRON` includes built-in parsing for errors. `APIError` is a generic class, that includes several default properties, that can be fetched from unsuccessful request:
 
 ```swift
-struct APIError<T> {
+struct APIError<T> : Error {
     public let request : URLRequest?
-    public let response : NSHTTPURLResponse?
+    public let response : HTTPURLResponse?
     public let data : Data?
     public let error : Error?
-
     public var errorModel: T?
 }
 ```
@@ -272,14 +271,14 @@ This way, you only need to define how your errors are parsed, and not worry abou
 ```swift
 request.perform(withSuccess: { response in }, failure: { error in
     print(error.request) // Original URLRequest
-    print(error.response) // NSHTTPURLResponse
+    print(error.response) // HTTPURLResponse
     print(error.data) // Data of response
     print(error.error) // Error from Foundation Loading system
     print(error.errorModel.errors) // MyAppError parsed property
   })
 ```
 
-## Using Alamofire custom response serializers 
+## Using Alamofire custom response serializers
 
 Any custom response serializer for `Alamofire` can be used with TRON, you just need to specify error type, that will be used, for example, if `CustomError` is `JSONDecodable`:
 
@@ -399,7 +398,7 @@ request.apiStub.successful = false
 let request = tron.upload(path: "photo", fromFileAt: fileUrl)
 ```
 
-* NSData:
+* Data:
 
 ```swift
 let request = tron.upload(path: "photo", data: data)
@@ -415,7 +414,7 @@ let request = tron.upload(path: "photo", fromStream: stream)
 
 ```swift
 let request: MultipartAPIRequest<EmptyResponse,MyAppError> = tron.uploadMultipart(path: "form") { formData in
-    formData.appendBodyPart(data: data,name: "cat", mimeType: "image/jpeg")
+    formData.appendBodyPart(data: data, name: "cat", mimeType: "image/jpeg")
 }
 request.performMultipart(withSuccess: { result in
     print("form sent successfully")
@@ -438,12 +437,37 @@ let request = tron.download(path: "file", to: destination, resumingFrom: data)
 
 ## Plugins
 
-`TRON` includes simple plugin system, that allows reacting to some request events.
+`TRON` includes plugin system, that allows reacting to most of request events.
 
 ```swift
 public protocol Plugin {
-    func willSendRequest(request: URLRequest?)    
-    func requestDidReceiveResponse(response: (URLRequest?, NSHTTPURLResponse?, Data?, Error?))
+    func willSendRequest<Model,ErrorModel>(_ request: BaseRequest<Model,ErrorModel>)
+
+    func willSendAlamofireRequest<Model,ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+
+    func didSendAlamofireRequest<Model,ErrorModel>(_ request : Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+
+    func willProcessResponse<Model,ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
+                                                forRequest request: Request,
+                                                formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+
+    func didSuccessfullyParseResponse<Model,ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
+                                                        creating result: Model,
+                                                        forRequest request: Request,
+                                                        formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+
+    func didReceiveError<Model,ErrorModel>(_ error: APIError<ErrorModel>,
+                                        forResponse response : (URLRequest?, HTTPURLResponse?, Data?, Error?),
+                                        request: Alamofire.Request,
+                                        formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+
+    func didReceiveDataResponse<Model,ErrorModel>(_ response: DataResponse<Model>,
+                                        forRequest request: Alamofire.Request,
+                                        formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+
+    func didReceiveDownloadResponse<Model,ErrorModel>(_ response: DownloadResponse<Model>,
+                                                    forRequest request: Alamofire.DownloadRequest,
+                                                    formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
 }
 ```
 
