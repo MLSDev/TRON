@@ -913,7 +913,7 @@
 				9AEE0BA01C5A4E0A003222A8 /* Alamofire.framework */,
 				9AEE0BA21C5A4E0A003222A8 /* Alamofire iOS Tests.xctest */,
 				9AEE0BA41C5A4E0A003222A8 /* Alamofire.framework */,
-				9AEE0BA61C5A4E0A003222A8 /* Alamofire OSX Tests.xctest */,
+				9AEE0BA61C5A4E0A003222A8 /* Alamofire macOS Tests.xctest */,
 				9AEE0BA81C5A4E0A003222A8 /* Alamofire.framework */,
 				9AEE0BAA1C5A4E0A003222A8 /* Alamofire tvOS Tests.xctest */,
 				9AEE0BAC1C5A4E0A003222A8 /* Alamofire.framework */,
@@ -973,13 +973,13 @@
 				9AFAE5001CC52367002739B0 /* RxBlocking.framework */,
 				9AFAE5021CC52367002739B0 /* RxBlocking.framework */,
 				9AFAE5041CC52367002739B0 /* RxBlocking.framework */,
-				9AFAE5061CC52367002739B0 /* RxTests.framework */,
-				9AFAE5081CC52367002739B0 /* RxTests.framework */,
-				9AFAE50A1CC52367002739B0 /* RxTests.framework */,
-				9AFAE50C1CC52367002739B0 /* RxTests.framework */,
+				9AFAE5061CC52367002739B0 /* RxTest.framework */,
+				9AFAE5081CC52367002739B0 /* RxTest.framework */,
+				9AFAE50A1CC52367002739B0 /* RxTest.framework */,
+				9AFAE50C1CC52367002739B0 /* RxTest.framework */,
 				9AFAE50E1CC52367002739B0 /* AllTests-iOS.xctest */,
 				9AFAE5101CC52367002739B0 /* AllTests-tvOS.xctest */,
-				9AFAE5121CC52367002739B0 /* AllTests-OSX.xctest */,
+				9AFAE5121CC52367002739B0 /* AllTests-macOS.xctest */,
 				9AFAE5141CC52367002739B0 /* PerformanceTests.app */,
 			);
 			name = Products;
@@ -1289,10 +1289,10 @@
 			remoteRef = 9AEE0BA31C5A4E0A003222A8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9AEE0BA61C5A4E0A003222A8 /* Alamofire OSX Tests.xctest */ = {
+		9AEE0BA61C5A4E0A003222A8 /* Alamofire macOS Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "Alamofire OSX Tests.xctest";
+			path = "Alamofire macOS Tests.xctest";
 			remoteRef = 9AEE0BA51C5A4E0A003222A8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1492,31 +1492,31 @@
 			remoteRef = 9AFAE5031CC52367002739B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9AFAE5061CC52367002739B0 /* RxTests.framework */ = {
+		9AFAE5061CC52367002739B0 /* RxTest.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = RxTests.framework;
+			path = RxTest.framework;
 			remoteRef = 9AFAE5051CC52367002739B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9AFAE5081CC52367002739B0 /* RxTests.framework */ = {
+		9AFAE5081CC52367002739B0 /* RxTest.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = RxTests.framework;
+			path = RxTest.framework;
 			remoteRef = 9AFAE5071CC52367002739B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9AFAE50A1CC52367002739B0 /* RxTests.framework */ = {
+		9AFAE50A1CC52367002739B0 /* RxTest.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = RxTests.framework;
+			path = RxTest.framework;
 			remoteRef = 9AFAE5091CC52367002739B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9AFAE50C1CC52367002739B0 /* RxTests.framework */ = {
+		9AFAE50C1CC52367002739B0 /* RxTest.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = RxTests.framework;
+			path = RxTest.framework;
 			remoteRef = 9AFAE50B1CC52367002739B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1534,10 +1534,10 @@
 			remoteRef = 9AFAE50F1CC52367002739B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9AFAE5121CC52367002739B0 /* AllTests-OSX.xctest */ = {
+		9AFAE5121CC52367002739B0 /* AllTests-macOS.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "AllTests-OSX.xctest";
+			path = "AllTests-macOS.xctest";
 			remoteRef = 9AFAE5111CC52367002739B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -2184,8 +2184,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2231,8 +2231,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 3.0;

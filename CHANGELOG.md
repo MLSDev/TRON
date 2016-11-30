@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.0.1](https://github.com/MLSDev/TRON/releases/tag/2.0.1)
+
+Lowers deployment targets to iOS 8 / macOS 10.10
+
+Required dependencies: Alamofire 4.1 and higher.
+
 ## [2.0.0](https://github.com/MLSDev/TRON/releases/tag/2.0.0)
 
 * `NetworkLoggerPlugin` now has `logCancelledRequests` property, that allows turning off logging of failing requests, that were explicitly cancelled by developer.
