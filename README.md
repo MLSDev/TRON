@@ -224,14 +224,14 @@ There is also an array extension for `JSONDecodable`, however it's commented out
 
 ```swift
 let request : APIRequest<Foo, MyError> = tron.request(path: "foo")
-_ = request.rxResult().subscribe(onNext: { result in
+_ = request.rx.result().subscribe(onNext: { result in
     print(result)
 })
 ```
 
 ```swift
 let multipartRequest : APIRequest<Foo,MyError> = tron.upload(path: "foo", formData: { _ in })
-multipartRequest.rxMultipartResult().subscribe(onNext: { result in
+multipartRequest.rx.multipartResult().subscribe(onNext: { result in
     print(result)
 })
 ```
