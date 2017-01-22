@@ -23,7 +23,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
     func testRxResultSuccessfullyCompletes() {
         let request : APIRequest<String,TronError> = tron.request("get")
         let expectation = self.expectation(description: "200")
-        _ = request.rxResult().subscribe(onNext: { _ in
+        _ = request.rx.result().subscribe(onNext: { _ in
             expectation.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)
@@ -32,7 +32,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
     func testRxResultIsClosedAfterSuccessfulResponse() {
         let request : APIRequest<String,TronError> = tron.request("get")
         let expectation = self.expectation(description: "200")
-        _ = request.rxResult().subscribe(onCompleted: { _ in
+        _ = request.rx.result().subscribe(onCompleted: { _ in
             expectation.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)
@@ -41,7 +41,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
     func testRxResultCanBeFailed() {
         let request : APIRequest<Int,TronError> = tron.request("status/418")
         let expectation = self.expectation(description: "Teapot")
-        _ = request.rxResult().subscribe(onError: { _ in
+        _ = request.rx.result().subscribe(onError: { _ in
             expectation.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)
@@ -55,7 +55,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
         
         let expectation = self.expectation(description: "foo")
         
-        _ = request.rxMultipartResult().subscribe(onNext: { result in
+        _ = request.rx.multipartResult().subscribe(onNext: { result in
             if let dictionary = result.response["form"] as? [String:String] {
                 if dictionary["foo"] == "bar" {
                     expectation.fulfill()
@@ -72,7 +72,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
         request.method = .delete
         let expectation = self.expectation(description: "foo")
         
-        _ = request.rxMultipartResult().subscribe(onError: { error in
+        _ = request.rx.multipartResult().subscribe(onError: { error in
             expectation.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)

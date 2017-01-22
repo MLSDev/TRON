@@ -27,15 +27,14 @@ import Foundation
 import RxSwift
 import Alamofire
 
-extension APIRequest {
-
+extension Reactive where Base: APIRequest {
     /**
      Creates on Observable of success Model type. It starts a request each time it's subscribed to.
 
      - returns: Observable<Model>
      */
-    open func rxResult() -> Observable<Model> {
-        return Observable.create({ observer in
+    open func rx.result() -> Observable<Model> {
+        return Observable.create { observer in
             let token = self.perform(withSuccess: { result in
                 observer.onNext(result)
                 observer.onCompleted()
@@ -45,11 +44,11 @@ extension APIRequest {
             return Disposables.create {
                 token?.cancel()
             }
-        })
+        }
     }
 }
 
-extension UploadAPIRequest {
+extension Reactive where Base: UploadAPIRequest {
     /**
      Creates an Observable<Model> for multipart upload.
 
@@ -57,7 +56,7 @@ extension UploadAPIRequest {
 
      - returns: Observable<Model>
      */
-    open func rxMultipartResult(memoryThreshold threshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold,
+    open func rx.multipartResult(memoryThreshold threshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold,
                                 uploadProgress: (Request.ProgressHandler)? = nil) -> Observable<Model> {
         return Observable.create { observer in
             var request : Alamofire.Request?
