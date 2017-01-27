@@ -50,10 +50,10 @@ open class NetworkLoggerPlugin : Plugin {
     
     open func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>, forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         if logFailures {
-            if (error.error as? NSError)?.code == NSURLErrorCancelled, !logCancelledRequests {
+            if (error.error as NSError?)?.code == NSURLErrorCancelled, !logCancelledRequests {
                 return
             }
-            print("Request error: \(error.error)")
+            print("Request error: \(String(describing: error.error))")
             debugPrint(request)
         }
     }
