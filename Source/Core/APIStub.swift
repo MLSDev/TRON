@@ -41,6 +41,8 @@ public extension APIStub {
         if let filePath = bundle.path(forResource: fileName as String, ofType: nil)
         {
             successData = try? Data(contentsOf: URL(fileURLWithPath: filePath))
+        } else {
+            print("Failed to build model from \(fileName) in \(bundle)")
         }
     }
 }
