@@ -44,7 +44,8 @@ open class NetworkLoggerPlugin : Plugin {
     
     open func didSuccessfullyParseResponse<Model, ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?), creating result: Model, forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         if logSuccess {
-            debugPrint("Request success: \(request.debugDescription)")
+            debugPrint("Request success: ")
+            debugPrint(request)
         }
     }
     
