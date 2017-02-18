@@ -31,9 +31,6 @@ import Alamofire
  */
 public protocol Plugin {
     
-    /// Queue, on which all plugin calls will be performed
-    var dispatchQueue : DispatchQueue { get }
-    
     /// Notifies that `request` is about to be converted to Alamofire.Request
     ///
     /// - parameter request: TRON BaseRequest
@@ -100,11 +97,6 @@ public protocol Plugin {
 }
 
 public extension Plugin {
-    
-    var dispatchQueue: DispatchQueue {
-        return .main
-    }
-
     func willSendRequest<Model,ErrorModel>(_ request: BaseRequest<Model,ErrorModel>) {
         
     }

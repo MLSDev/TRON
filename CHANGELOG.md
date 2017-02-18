@@ -1,6 +1,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.0.0](https://github.com/MLSDev/TRON/releases/tag/3.0.0)
+
+### Breaking changes
+
+* `dispatchQueue` property was removed from `Plugin` protocol. All `Plugin` events are now called synchronously to allow write access to objects, expecially requests. If `Plugin` requires any specific dispatch queue to run on, it must implement this logic itself.
+
+### Bugfixes
+
+* `APIStub` will now print error to console, if it failed to build model from file.
+* `NetworkLoggerPlugin` will no longer double escape characters, when printing successful request cURL to console.
+
 ## [2.0.1](https://github.com/MLSDev/TRON/releases/tag/2.0.1)
 
 Lowers deployment targets to iOS 8 / macOS 10.10
