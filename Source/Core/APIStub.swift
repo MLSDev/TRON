@@ -85,7 +85,7 @@ open class APIStub<Model, ErrorModel> {
     open var stubDelay = 0.1
     
     /// Creates `APIStub`, and configures it for `request`.
-    init(request: BaseRequest<Model,ErrorModel>) {
+    public init(request: BaseRequest<Model,ErrorModel>) {
         if let request = request as? APIRequest<Model,ErrorModel>{
             let serializer = request.responseParser
             let errorSerializer = request.errorParser

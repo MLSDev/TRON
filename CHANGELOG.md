@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.0.1](https://github.com/MLSDev/TRON/releases/tag/3.0.1)
+
+* Constructors on `APIRequest`, `UploadAPIRequest`, `APIStub` are made public to allow overriding in subclasses.
+
 ## [3.0.0](https://github.com/MLSDev/TRON/releases/tag/3.0.0)
 
 ### Breaking changes
