@@ -55,6 +55,9 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
     /// Serializes received error into APIError<ErrorModel>
     open var errorParser : ErrorParser
     
+    /// Closure that is applied to request before it is sent.
+    open var validationClosure: (UploadRequest) -> UploadRequest = { $0.validate() }
+    
     // Creates `UploadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
     public init<Serializer : ErrorHandlingDataResponseSerializerProtocol>(type: UploadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
@@ -158,7 +161,7 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
                 failureBlock?(apiError)
             } else if case .success(let request, _, _) = completion {
                 self.willSendAlamofireRequest(request)
-                _ = request.validate().response(queue : self.resultDeliveryQueue,
+                _ = self.validationClosure(request).response(queue : self.resultDeliveryQueue,
                                                 responseSerializer: self.dataResponseSerializer(with: request))
                 {
                     self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
@@ -192,7 +195,7 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
             request.resume()
         }
         didSendAlamofireRequest(request)
-        return request.validate().response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(with: request), completionHandler: { dataResponse in
+        return validationClosure(request).response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(with: request), completionHandler: { dataResponse in
                 self.didReceiveDataResponse(dataResponse, forRequest: request)
                 completion(dataResponse)
         })

@@ -36,6 +36,9 @@ open class APIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
     /// Serializes received error into APIError<ErrorModel>
     open var errorParser : ErrorParser
     
+    /// Closure that is applied to request before it is sent.
+    open var validationClosure : (DataRequest) -> DataRequest = { $0.validate() }
+    
     /// Creates `APIRequest`, filling `responseParser` and `errorParser` properties
     public init<Serializer : ErrorHandlingDataResponseSerializerProtocol>(path: String, tron: TRON, responseSerializer: Serializer)
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
@@ -106,10 +109,10 @@ open class APIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
         }
         didSendAlamofireRequest(request)
         
-        return request.validate().response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(with: request), completionHandler: { dataResponse in
-                self.didReceiveDataResponse(dataResponse, forRequest: request)
-                completion(dataResponse)
-            })
+        return validationClosure(request).response(queue: resultDeliveryQueue,responseSerializer: dataResponseSerializer(with: request), completionHandler: { dataResponse in
+            self.didReceiveDataResponse(dataResponse, forRequest: request)
+            completion(dataResponse)
+        })
     }
     
     internal func dataResponseSerializer(with request: Request) -> Alamofire.DataResponseSerializer<Model> {

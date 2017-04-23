@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## Master
+
+* Added `validationClosure` properties on `APIRequest`, `DownloadAPIRequest` and `UploadAPIRequest` that allow customizing validation behaviour. Default behaviour, as before, is calling `validate()` method on `Request`.
+
 ## [3.0.1](https://github.com/MLSDev/TRON/releases/tag/3.0.1)
 
 * Constructors on `APIRequest`, `UploadAPIRequest`, `APIStub` are made public to allow overriding in subclasses.

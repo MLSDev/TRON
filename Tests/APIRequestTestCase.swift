@@ -183,4 +183,27 @@ class APIRequestTestCase: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
     
+    func testCustomValidationClosure() {
+        let request : APIRequest<Int,TronError> = tron.request("status/201")
+        request.validationClosure = { $0.validate(statusCode: (202..<203)) }
+        let expectation = self.expectation(description: "success")
+        request.perform(withSuccess: { _ in
+            XCTFail()
+        }) { error in
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testCustomValidationClosureOverridesError() {
+        let request : APIRequest<Int,TronError> = tron.request("status/418")
+        request.validationClosure = { $0.validate(statusCode: (418...420)) }
+        let expectation = self.expectation(description: "We like tea from this teapot")
+        request.perform(withSuccess: { _ in
+            expectation.fulfill()
+        }) { error in
+            XCTFail()
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+    }
 }
