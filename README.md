@@ -32,7 +32,7 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 We designed TRON to be simple to use and also very easy to customize. After initial setup, using TRON is very straightforward:
 
 ```swift
-let request: APIRequest<User,MyAppError> = tron.request(path: "me")
+let request: APIRequest<User,MyAppError> = tron.request("me")
 request.perform(withSuccess: { user in
   print("Received User: \(user)")
 }, failure: { error in
@@ -201,7 +201,7 @@ class User: JSONDecodable {
 And send a request:
 
 ```swift
-let request: APIRequest<User,MyAppError> = tron.request(path: "me")
+let request: APIRequest<User,MyAppError> = tron.request("me")
 request.perform(withSuccess: { user in
   print("Received user: \(user.name) with id: \(user.id)")
 })
@@ -210,7 +210,7 @@ request.perform(withSuccess: { user in
 There are also default implementations of `JSONDecodable` protocol for Swift built-in types like String, Int, Float, Double and Bool, so you can easily do something like this:
 
 ```swift
-let request : APIRequest<String,MyAppError> = tron.request(path: "status")
+let request : APIRequest<String,MyAppError> = tron.request("status")
 request.perform(withSuccess: { status in
     print("Server status: \(status)") //
 })
@@ -223,14 +223,14 @@ There is also an array extension for `JSONDecodable`, however it's commented out
 ## RxSwift
 
 ```swift
-let request : APIRequest<Foo, MyError> = tron.request(path: "foo")
+let request : APIRequest<Foo, MyError> = tron.request("foo")
 _ = request.rxResult().subscribe(onNext: { result in
     print(result)
 })
 ```
 
 ```swift
-let multipartRequest : APIRequest<Foo,MyError> = tron.upload(path: "foo", formData: { _ in })
+let multipartRequest : UploadAPIREquest<Foo,MyError> = tron.upload("foo", formData: { _ in })
 multipartRequest.rxMultipartResult().subscribe(onNext: { result in
     print(result)
 })
@@ -307,24 +307,24 @@ struct Users
     static let tron = TRON(baseURL: "https://api.myapp.com")
 
     static func create() -> APIRequest<User,MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.request(path: "users")
+        let request: APIRequest<User,MyAppError> = tron.request("users")
         request.method = .post
         return request
     }
 
     static func read(id: Int) -> APIRequest<User, MyAppError> {
-        return tron.request(path: "users/\(id)")
+        return tron.request("users/\(id)")
     }
 
     static func update(id: Int, parameters: [String:Any]) -> APIRequest<User, MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.request(path: "users/\(id)")
+        let request: APIRequest<User,MyAppError> = tron.request("users/\(id)")
         request.method = .put
         request.parameters = parameters
         return request
     }
 
     static func delete(id: Int) -> APIRequest<User,MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.request(path: "users/\(id)")
+        let request: APIRequest<User,MyAppError> = tron.request("users/\(id)")
         request.method = .delete
         return request
     }
@@ -395,26 +395,26 @@ request.apiStub.successful = false
 * From file:
 
 ```swift
-let request = tron.upload(path: "photo", fromFileAt: fileUrl)
+let request = tron.upload("photo", fromFileAt: fileUrl)
 ```
 
 * Data:
 
 ```swift
-let request = tron.upload(path: "photo", data: data)
+let request = tron.upload("photo", data: data)
 ```
 
 * Stream:
 
 ```swift
-let request = tron.upload(path: "photo", fromStream: stream)
+let request = tron.upload("photo", fromStream: stream)
 ```
 
 * Multipart-form data:
 
 ```swift
-let request: MultipartAPIRequest<EmptyResponse,MyAppError> = tron.uploadMultipart(path: "form") { formData in
-    formData.appendBodyPart(data: data, name: "cat", mimeType: "image/jpeg")
+let request: UploadAPIRequest<EmptyResponse,MyAppError> = tron.uploadMultipart("form") { formData in
+    formData.append(data, withName: "cat", mimeType: "image/jpeg")
 }
 request.performMultipart(withSuccess: { result in
     print("form sent successfully")
@@ -426,13 +426,13 @@ request.performMultipart(withSuccess: { result in
 ## Download
 
 ```swift
-let request = tron.download(path: "file", to: destination)
+let request = tron.download("file", to: destination)
 ```
 
 Resume downloads:
 
 ```swift
-let request = tron.download(path: "file", to: destination, resumingFrom: data)
+let request = tron.download("file", to: destination, resumingFrom: data)
 ```
 
 ## Plugins
