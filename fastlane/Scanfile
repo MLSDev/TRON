@@ -1,0 +1,4 @@
+clean true
+output_types ""
+skip_slack true
+xcargs "IDEBuildOperationMaxNumberOfConcurrentCompileTasks=`sysctl -n hw.ncpu`"

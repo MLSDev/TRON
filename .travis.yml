@@ -1,21 +1,25 @@
+language: objective-c
+sudo: false
+osx_image: xcode8.3
+
 matrix:
   include:
     - os: osx
-      env: ACTION=iOS
+      env: ACTION=test_ios10
     - os: osx
-      env: ACTION=OSX
+      env: ACTION=test_ios9
     - os: osx
-      env: ACTION=tvOS
+      env: ACTION=test_macos
     - os: osx
-      env: ACTION=watchOS
-    # - os: osx
-    #   env: ACTION=carthage
-    # - os: osx
-    #   env: ACTION=cocoapods
-
-language: objective-c
-osx_image: xcode8.1
+      env: ACTION=test_tvos10
+    - os: osx
+      env: ACTION=build_watchos
+    - os: osx
+      env: ACTION=pod_lint
+    - os: osx
+      env: ACTION=carthage_build
+    - os: osx
+      env: ACTION=spm_macos
 
 script:
-  - git submodule update --init --recursive
-  - make install-$ACTION && make test-$ACTION
+  - bundle exec fastlane $ACTION

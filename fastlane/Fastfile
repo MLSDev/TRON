@@ -1,0 +1,79 @@
+fastlane_version "1.98.0"
+
+lane :test_ios10 do
+  scan(devices: ["iPhone 7 (10.3)"], scheme: 'TRON iOS')
+end
+
+lane :test_ios9 do
+  scan(devices: ["iPhone 6s (9.3)"], scheme: 'TRON iOS')
+end
+
+lane :test_tvos10 do
+  scan(device: "Apple TV 1080p (10.2)", scheme: 'TRON tvOS')
+end
+
+lane :test_macos do
+  scan(destination: "arch=x86_64", scheme: 'TRON OSX')
+  sh "bash ../codecov.sh"
+end
+
+lane :build_watchos do
+  xcodebuild(
+    build: true,
+    destination: "OS=3.2,name=Apple Watch - 42mm"
+  )
+end
+
+lane :pod_lint do
+  pod_lib_lint(allow_warnings: true, verbose: true)
+end
+
+lane :carthage_build do
+  carthage(command: "build", no_skip_current: true, verbose: true)
+end
+
+lane :spm_macos do
+  sh "swift build"
+end
+
+lane :release do |params|
+  version = params[:version]
+
+  abort "You must specify a version in semver format." if version.nil? || version.scan(/\d+\.\d+\.\d+(-\w+\.\d+)?/).length == 0
+
+  puts "Setting Framework version"
+  increment_version_number(version_number: version)
+
+  Dir.chdir("..") do
+
+    puts "Updating podspec."
+    filename = "TRON.podspec"
+    contents = File.read(filename)
+    contents.gsub!(/s\.version\s*=\s"\d+\.\d+\.\d+(-\w+\.\d)?"/, "s.version      = \"#{version}\"")
+    File.open(filename, 'w') { |file| file.puts contents }
+
+    puts "Updating changelog."
+    changelog_filename = "CHANGELOG.md"
+    changelog = File.read(changelog_filename)
+    changelog.gsub!(/# Next/, "# Next\n\n## [#{version}](https://github.com/MLSDev/TRON/releases/tag/#{version})")
+    File.open(changelog_filename, 'w') { |file| file.puts changelog }
+
+    puts "Comitting, tagging, and pushing."
+    message = "Releasing version #{version}."
+    sh "git commit -am '#{message}'"
+    sh "git tag #{version} -m '#{message}'"
+    sh "git push --follow-tags"
+
+    puts "Pushing to CocoaPods trunk."
+    sh "bundle exec pod trunk push TRON.podspec --allow-warnings"
+
+    puts "Pushing as a GitHub Release."
+    fastlane_require 'octokit'
+    stripped_changelog = changelog.split(/^## /)[2].split("\n")[1..-1].join("\n").strip
+    Octokit::Client.new(netrc: true).
+      create_release('MLSDev/TRON',
+                     version,
+                     name: version,
+                     body: stripped_changelog)
+  end
+end
