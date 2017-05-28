@@ -20,7 +20,8 @@ end
 lane :build_watchos do
   xcodebuild(
     build: true,
-    destination: "OS=3.2,name=Apple Watch - 42mm"
+    destination: "OS=3.2,name=Apple Watch - 42mm",
+    scheme: 'TRON watchOS'
   )
 end
 
@@ -29,6 +30,8 @@ lane :pod_lint do
 end
 
 lane :carthage_build do
+  sh "brew update"
+  sh  "brew outdated carthage || brew upgrade carthage"
   carthage(command: "build", no_skip_current: true, verbose: true)
 end
 
