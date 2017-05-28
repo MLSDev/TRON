@@ -21,5 +21,9 @@ matrix:
     - os: osx
       env: ACTION=spm_macos
 
+before_script:
+  - brew update
+  - brew outdated carthage || brew upgrade carthage
+
 script:
   - bundle exec fastlane $ACTION

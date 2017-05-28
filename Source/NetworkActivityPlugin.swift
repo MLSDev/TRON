@@ -25,7 +25,7 @@
 
 import Foundation
 
-#if os(iOS) || os(tvOS)
+#if os(iOS)
 import UIKit
 import Alamofire
 

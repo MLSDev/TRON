@@ -30,8 +30,6 @@ lane :pod_lint do
 end
 
 lane :carthage_build do
-  sh "brew update"
-  sh  "brew outdated carthage || brew upgrade carthage"
   carthage(command: "build", no_skip_current: true, verbose: true)
 end
 
