@@ -70,7 +70,7 @@ lane :release do |params|
 
     puts "Pushing as a GitHub Release."
     fastlane_require 'octokit'
-    stripped_changelog = changelog.split(/^## /)[2].split("\n")[1..-1].join("\n").strip
+    stripped_changelog = changelog.split(/^## /)[1].split("\n")[1..-1].join("\n").strip
     Octokit::Client.new(netrc: true).
       create_release('MLSDev/TRON',
                      version,
