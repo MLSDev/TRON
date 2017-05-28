@@ -30,7 +30,7 @@ lane :pod_lint do
 end
 
 lane :carthage_build do
-  carthage(command: "build", no_skip_current: true, verbose: true)
+  carthage(command: "build", no_skip_current: true, verbose: false)
 end
 
 lane :spm_macos do
