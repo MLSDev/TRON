@@ -39,6 +39,14 @@ public enum UploadRequestType {
     
     // Depending on resulting size of the payload will either stream from disk or from memory
     case multipartFormData((MultipartFormData) -> Void)
+    
+    /// Returns whether current request type is .multipartFormData.
+    var isMultipartRequest: Bool {
+        switch self {
+        case .multipartFormData(_): return true
+        default: return false
+        }
+    }
 }
 
 /**
@@ -100,6 +108,10 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
     @discardableResult
     open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) -> UploadRequest?
     {
+        guard !type.isMultipartRequest else {
+            assertionFailure("TRON error: attempting to perform upload request, however current request type is UploadRequestType.multipartFormData. To send multipart requests, please use performMultipart(withSuccess:failure:encodingMemoryThreshold:encodingCompletion:) method.")
+            return nil
+        }
         if performStub(success: successBlock, failure: failureBlock) {
             return nil
         }
@@ -117,6 +129,10 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
      */
     @discardableResult
     open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> UploadRequest? {
+        guard !type.isMultipartRequest else {
+            assertionFailure("TRON error: attempting to perform upload request, however current request type is UploadRequestType.multipartFormData. To send multipart requests, please use performMultipart(withSuccess:failure:encodingMemoryThreshold:encodingCompletion:) method.")
+            return nil
+        }
         if performStub(completion: completion) {
             return nil
         }
@@ -141,6 +157,7 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
         }
         willSendRequest()
         guard case UploadRequestType.multipartFormData(let multipartFormDataBlock) = type else {
+            assertionFailure("TRON: attempting to perform multipart request, however current request type is \(type). To send upload requests, that are not multipart, please use either `perform(withSuccess:failure:)` or `performCollectingTimeline(withCompletion:) method` ")
             return
         }
         
