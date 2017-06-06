@@ -76,10 +76,10 @@ open class APIStub<Model, ErrorModel> {
     open var loadingError : Error?
     
     /// Response model closure for successful API stub
-    open var modelClosure : ((Void) -> Model?)!
+    open var modelClosure : (() -> Model?)!
     
     /// Error model closure for unsuccessful API stub
-    open var errorClosure: (Void) -> APIError<ErrorModel> = { APIError(request: nil, response: nil, data: nil, error: nil) }
+    open var errorClosure: () -> APIError<ErrorModel> = { APIError(request: nil, response: nil, data: nil, error: nil) }
     
     /// Delay before stub is executed
     open var stubDelay = 0.1
