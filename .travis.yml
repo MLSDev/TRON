@@ -1,17 +1,17 @@
 language: objective-c
 sudo: false
-osx_image: xcode8.3
+osx_image: xcode9
 
 matrix:
   include:
     - os: osx
-      env: ACTION=test_ios10
+      env: ACTION=test_ios11
     - os: osx
-      env: ACTION=test_ios9
+      env: ACTION=test_ios10
     - os: osx
       env: ACTION=test_macos
     - os: osx
-      env: ACTION=test_tvos10
+      env: ACTION=test_tvos11
     - os: osx
       env: ACTION=build_watchos
     - os: osx
@@ -20,6 +20,13 @@ matrix:
       env: ACTION=carthage_build
     - os: osx
       env: ACTION=spm_macos
+    - os: osx
+      osx_image: xcode8.3
+      env: ACTION=test_ios10_legacy
+    - os: osx
+      osx_image: xcode8.3
+      env: ACTION=test_macos_legacy
+
 
 before_script:
   - brew update

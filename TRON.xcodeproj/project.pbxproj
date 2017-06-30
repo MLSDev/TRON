@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E01C1951F06475200C47CB3 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01C1941F06475200C47CB3 /* TRONCodable.swift */; };
+		3E01C1961F06475200C47CB3 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01C1941F06475200C47CB3 /* TRONCodable.swift */; };
+		3E01C1971F06475200C47CB3 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01C1941F06475200C47CB3 /* TRONCodable.swift */; };
+		3E01C1981F06475200C47CB3 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01C1941F06475200C47CB3 /* TRONCodable.swift */; };
 		9A1024C21C5F80DD006E0163 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD51C5A4FB5003222A8 /* Nimble.framework */; };
 		9A1024D41C5F8169006E0163 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1024CA1C5F8169006E0163 /* TRON.framework */; };
 		9A1024EC1C5F817B006E0163 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA81C5A4E0A003222A8 /* Alamofire.framework */; };
@@ -629,11 +633,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3E01C1941F06475200C47CB3 /* TRONCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TRONCodable.swift; path = Source/TRONCodable.swift; sourceTree = "<group>"; };
 		9A05B1881D96BE1A00AC2B0B /* 2.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "2.0 Migration Guide.md"; path = "Docs/2.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9A1024921C5F806A006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A10249B1C5F806A006E0163 /* TRON OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A10249B1C5F806A006E0163 /* TRON macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1024CA1C5F8169006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A1024D31C5F8169006E0163 /* TRON tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A1024D31C5F8169006E0163 /* TRON tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A1024FF1C5F8240006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A148D081EDB1AB3002E610C /* APIRequestTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequestTestCase.swift; path = Tests/TRONTests/APIRequestTestCase.swift; sourceTree = "<group>"; };
 		9A148D091EDB1AB3002E610C /* ApiStubbingTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiStubbingTestCase.swift; path = Tests/TRONTests/ApiStubbingTestCase.swift; sourceTree = "<group>"; };
@@ -798,6 +803,7 @@
 				9A148D731EDB1BC5002E610C /* TRON.swift */,
 				9A148D751EDB1BC5002E610C /* UploadAPIRequest.swift */,
 				9A148D761EDB1BC5002E610C /* URLBuilder.swift */,
+				3E01C1941F06475200C47CB3 /* TRONCodable.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -855,9 +861,9 @@
 				9A722F541C5A49AE0087908D /* TRON iOS Tests.xctest */,
 				9A704E4F1C5D01B300392DE5 /* Example.app */,
 				9A1024921C5F806A006E0163 /* TRON.framework */,
-				9A10249B1C5F806A006E0163 /* TRON OSXTests.xctest */,
+				9A10249B1C5F806A006E0163 /* TRON macOS Tests.xctest */,
 				9A1024CA1C5F8169006E0163 /* TRON.framework */,
-				9A1024D31C5F8169006E0163 /* TRON tvOSTests.xctest */,
+				9A1024D31C5F8169006E0163 /* TRON tvOS Tests.xctest */,
 				9A1024FF1C5F8240006E0163 /* TRON.framework */,
 			);
 			name = Products;
@@ -1030,9 +1036,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		9A1024911C5F806A006E0163 /* TRON OSX */ = {
+		9A1024911C5F806A006E0163 /* TRON macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A1024A31C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON OSX" */;
+			buildConfigurationList = 9A1024A31C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON macOS" */;
 			buildPhases = (
 				9A10248D1C5F806A006E0163 /* Sources */,
 				9A10248E1C5F806A006E0163 /* Frameworks */,
@@ -1046,14 +1052,14 @@
 				9A90CCB81C5FBC3300472DB8 /* PBXTargetDependency */,
 				9A90CCB61C5FBC2E00472DB8 /* PBXTargetDependency */,
 			);
-			name = "TRON OSX";
+			name = "TRON macOS";
 			productName = "TRON OSX";
 			productReference = 9A1024921C5F806A006E0163 /* TRON.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		9A10249A1C5F806A006E0163 /* TRON OSXTests */ = {
+		9A10249A1C5F806A006E0163 /* TRON macOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A1024A61C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON OSXTests" */;
+			buildConfigurationList = 9A1024A61C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON macOS Tests" */;
 			buildPhases = (
 				9A1024971C5F806A006E0163 /* Sources */,
 				9A1024981C5F806A006E0163 /* Frameworks */,
@@ -1066,9 +1072,9 @@
 				9A90CCC41C5FBC6200472DB8 /* PBXTargetDependency */,
 				9A10249E1C5F806A006E0163 /* PBXTargetDependency */,
 			);
-			name = "TRON OSXTests";
+			name = "TRON macOS Tests";
 			productName = "TRON OSXTests";
-			productReference = 9A10249B1C5F806A006E0163 /* TRON OSXTests.xctest */;
+			productReference = 9A10249B1C5F806A006E0163 /* TRON macOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		9A1024C91C5F8169006E0163 /* TRON tvOS */ = {
@@ -1092,9 +1098,9 @@
 			productReference = 9A1024CA1C5F8169006E0163 /* TRON.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		9A1024D21C5F8169006E0163 /* TRON tvOSTests */ = {
+		9A1024D21C5F8169006E0163 /* TRON tvOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9A1024DE1C5F8169006E0163 /* Build configuration list for PBXNativeTarget "TRON tvOSTests" */;
+			buildConfigurationList = 9A1024DE1C5F8169006E0163 /* Build configuration list for PBXNativeTarget "TRON tvOS Tests" */;
 			buildPhases = (
 				9A1024CF1C5F8169006E0163 /* Sources */,
 				9A1024D01C5F8169006E0163 /* Frameworks */,
@@ -1107,9 +1113,9 @@
 				9A90CCC61C5FBC6800472DB8 /* PBXTargetDependency */,
 				9A1024D61C5F8169006E0163 /* PBXTargetDependency */,
 			);
-			name = "TRON tvOSTests";
+			name = "TRON tvOS Tests";
 			productName = "TRON tvOSTests";
-			productReference = 9A1024D31C5F8169006E0163 /* TRON tvOSTests.xctest */;
+			productReference = 9A1024D31C5F8169006E0163 /* TRON tvOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		9A1024FE1C5F8240006E0163 /* TRON watchOS */ = {
@@ -1269,10 +1275,10 @@
 				9A722F491C5A49AE0087908D /* TRON iOS */,
 				9A722F531C5A49AE0087908D /* TRON iOS Tests */,
 				9A704E4E1C5D01B300392DE5 /* Example */,
-				9A1024911C5F806A006E0163 /* TRON OSX */,
-				9A10249A1C5F806A006E0163 /* TRON OSXTests */,
+				9A1024911C5F806A006E0163 /* TRON macOS */,
+				9A10249A1C5F806A006E0163 /* TRON macOS Tests */,
 				9A1024C91C5F8169006E0163 /* TRON tvOS */,
-				9A1024D21C5F8169006E0163 /* TRON tvOSTests */,
+				9A1024D21C5F8169006E0163 /* TRON tvOS Tests */,
 				9A1024FE1C5F8240006E0163 /* TRON watchOS */,
 			);
 		};
@@ -1646,6 +1652,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A148DA41EDB1BC5002E610C /* SwiftyJSONDecodable.swift in Sources */,
+				3E01C1961F06475200C47CB3 /* TRONCodable.swift in Sources */,
 				9A148D901EDB1BC5002E610C /* HeaderBuilder.swift in Sources */,
 				9A148D881EDB1BC5002E610C /* DownloadAPIRequest.swift in Sources */,
 				9A148D941EDB1BC5002E610C /* NetworkActivityPlugin.swift in Sources */,
@@ -1689,6 +1696,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A148DA51EDB1BC5002E610C /* SwiftyJSONDecodable.swift in Sources */,
+				3E01C1971F06475200C47CB3 /* TRONCodable.swift in Sources */,
 				9A148D911EDB1BC5002E610C /* HeaderBuilder.swift in Sources */,
 				9A148D891EDB1BC5002E610C /* DownloadAPIRequest.swift in Sources */,
 				9A148D951EDB1BC5002E610C /* NetworkActivityPlugin.swift in Sources */,
@@ -1732,6 +1740,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A148DA61EDB1BC5002E610C /* SwiftyJSONDecodable.swift in Sources */,
+				3E01C1981F06475200C47CB3 /* TRONCodable.swift in Sources */,
 				9A148D921EDB1BC5002E610C /* HeaderBuilder.swift in Sources */,
 				9A148D8A1EDB1BC5002E610C /* DownloadAPIRequest.swift in Sources */,
 				9A148D961EDB1BC5002E610C /* NetworkActivityPlugin.swift in Sources */,
@@ -1765,6 +1774,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A148DA71EDB1BC5002E610C /* TRON.swift in Sources */,
+				3E01C1951F06475200C47CB3 /* TRONCodable.swift in Sources */,
 				9A148D831EDB1BC5002E610C /* BaseRequest.swift in Sources */,
 				9A148D9F1EDB1BC5002E610C /* Serialization.swift in Sources */,
 				9A148D871EDB1BC5002E610C /* DownloadAPIRequest.swift in Sources */,
@@ -1808,7 +1818,7 @@
 /* Begin PBXTargetDependency section */
 		9A10249E1C5F806A006E0163 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9A1024911C5F806A006E0163 /* TRON OSX */;
+			target = 9A1024911C5F806A006E0163 /* TRON macOS */;
 			targetProxy = 9A10249D1C5F806A006E0163 /* PBXContainerItemProxy */;
 		};
 		9A1024D61C5F8169006E0163 /* PBXTargetDependency */ = {
@@ -2346,7 +2356,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9A1024A31C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON OSX" */ = {
+		9A1024A31C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A1024A41C5F806A006E0163 /* Debug */,
@@ -2355,7 +2365,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A1024A61C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON OSXTests" */ = {
+		9A1024A61C5F806A006E0163 /* Build configuration list for PBXNativeTarget "TRON macOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A1024A71C5F806A006E0163 /* Debug */,
@@ -2373,7 +2383,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9A1024DE1C5F8169006E0163 /* Build configuration list for PBXNativeTarget "TRON tvOSTests" */ = {
+		9A1024DE1C5F8169006E0163 /* Build configuration list for PBXNativeTarget "TRON tvOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9A1024DF1C5F8169006E0163 /* Debug */,

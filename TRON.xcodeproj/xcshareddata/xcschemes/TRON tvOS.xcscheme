@@ -27,16 +27,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       language = ""
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9A1024D21C5F8169006E0163"
-               BuildableName = "TRON tvOSTests.xctest"
-               BlueprintName = "TRON tvOSTests"
+               BuildableName = "TRON tvOS Tests.xctest"
+               BlueprintName = "TRON tvOS Tests"
                ReferencedContainer = "container:TRON.xcodeproj">
             </BuildableReference>
          </TestableReference>
