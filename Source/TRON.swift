@@ -221,27 +221,3 @@ open class TRON : TronDelegate {
         return manager
     }
 }
-
-// DEPRECATED
-
-extension TRON {
-    @available(*,unavailable,renamed:"upload(_:fromFileAt:)")
-    open func upload<Model, ErrorModel>(_ path: String, file: URL) -> APIRequest<Model,ErrorModel> {
-        fatalError("UNAVAILABLE")
-    }
-    
-    @available(*,unavailable,renamed:"upload(_:from:)")
-    open func upload<Model, ErrorModel>(_ path: String, stream: InputStream) -> APIRequest<Model,ErrorModel> {
-        fatalError("UNAVAILABLE")
-    }
-    
-    @available(*,unavailable,renamed:"download(_:to:)")
-    open func download<Model, ErrorModel>(_ path: String, destination: DownloadRequest.DownloadFileDestination) -> APIRequest<Model,ErrorModel> {
-        fatalError("UNAVAILABLE")
-    }
-    
-    @available(*,unavailable,renamed:"download(_:to:resumingFrom:)")
-    open func download<Model, ErrorModel>(_ path: String, destination: DownloadRequest.DownloadFileDestination, resumingFromData: Data) -> APIRequest<Model,ErrorModel> {
-        fatalError("UNAVAILABLE")
-    }
-}

@@ -146,20 +146,3 @@ open class APIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
         }
     }
 }
-
-// DEPRECATED
-
-extension APIRequest {
-    @available(*,unavailable,renamed:"performCollectingTimeline")
-    @discardableResult
-    open func perform(_ completion: ((Alamofire.DataResponse<Model>) -> Void)) -> Alamofire.DataRequest? {
-        return nil
-    }
-    
-    @discardableResult
-    @available(*,unavailable,renamed:"perform(withSuccess:failure:)")
-    open func perform(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.Request?
-    {
-        fatalError("UNAVAILABLE")
-    }
-}

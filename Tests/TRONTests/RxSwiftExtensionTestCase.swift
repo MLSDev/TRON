@@ -32,7 +32,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
     func testRxResultIsClosedAfterSuccessfulResponse() {
         let request : APIRequest<String,TronError> = tron.request("get")
         let expectation = self.expectation(description: "200")
-        _ = request.rxResult().subscribe(onCompleted: { _ in
+        _ = request.rxResult().subscribe(onCompleted: { 
             expectation.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)
