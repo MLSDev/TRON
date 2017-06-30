@@ -15,7 +15,7 @@ class PluginTestCase: XCTestCase {
     func testGlobalPluginsAreCalledCorrectly() {
         let pluginTester = PluginTester()
         let tron = TRON(baseURL: "http://httpbin.org", plugins: [pluginTester])
-        let request : APIRequest<Int,Int> = tron.request("status/200")
+        let request : APIRequest<Int,Int> = tron.swiftyJSON.request("status/200")
         
         request.performCollectingTimeline(withCompletion: {_ in })
         
@@ -28,7 +28,7 @@ class PluginTestCase: XCTestCase {
     func testLocalPluginsAreCalledCorrectly() {
         let pluginTester = PluginTester()
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<String,Int> = tron.request("status/200")
+        let request: APIRequest<String,Int> = tron.swiftyJSON.request("status/200")
         let expectation = self.expectation(description: "PluginTester expectation")
         request.plugins.append(pluginTester)
         request.perform(withSuccess: { _ in
@@ -57,7 +57,7 @@ class PluginTestCase: XCTestCase {
         let localPluginTester = PluginTester()
         
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: UploadAPIRequest<String,Int> = tron.uploadMultipart("status/200") { formData in
+        let request: UploadAPIRequest<String,Int> = tron.swiftyJSON.uploadMultipart("status/200") { formData in
             
         }
         request.plugins.append(localPluginTester)

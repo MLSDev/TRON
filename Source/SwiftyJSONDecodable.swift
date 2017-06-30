@@ -126,7 +126,9 @@ extension JSON : JSONDecodable {
     }
 }
 
-extension TRON {
+public struct JSONDecodableSerializer
+{
+    public let tron: TRON
     
     /**
      Creates APIRequest with specified relative path and type RequestType.Default.
@@ -135,9 +137,9 @@ extension TRON {
      
      - returns: APIRequest instance.
      */
-    open func request<Model: JSONDecodable, ErrorModel:JSONDecodable>(_ path: String) -> APIRequest<Model,ErrorModel>
+    public func request<Model:JSONDecodable,ErrorModel:JSONDecodable>(_ path: String) -> APIRequest<Model,ErrorModel>
     {
-        return APIRequest(path: path, tron: self, responseSerializer: JSONDecodableParser())
+        return tron.request(path, responseSerializer: JSONDecodableParser())
     }
     
     /**
@@ -149,8 +151,9 @@ extension TRON {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .uploadFromFile(fileURL), path: path, tron: self, responseSerializer: JSONDecodableParser())
+    public func upload<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model,ErrorModel>
+    {
+        return tron.upload(path, fromFileAt: fileURL, responseSerializer: JSONDecodableParser())
     }
     
     /**
@@ -162,8 +165,9 @@ extension TRON {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, data: Data) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .uploadData(data), path: path, tron: self, responseSerializer: JSONDecodableParser())
+    public func upload<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, data: Data) -> UploadAPIRequest<Model,ErrorModel>
+    {
+        return tron.upload(path, data: data, responseSerializer: JSONDecodableParser())
     }
     
     /**
@@ -175,8 +179,9 @@ extension TRON {
      
      - returns: APIRequest instance.
      */
-    open func upload<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .uploadStream(stream), path: path, tron: self, responseSerializer: JSONDecodableParser())
+    public func upload<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model,ErrorModel>
+    {
+        return tron.upload(path, from: stream, responseSerializer: JSONDecodableParser())
     }
     
     /**
@@ -188,9 +193,12 @@ extension TRON {
      
      - returns: MultipartAPIRequest instance.
      */
-    open func uploadMultipart<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String,
-                              formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model,ErrorModel> {
-        return UploadAPIRequest(type: .multipartFormData(formData), path: path, tron: self, responseSerializer: JSONDecodableParser())
+    public func uploadMultipart<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String,
+                                                   formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model,ErrorModel>
+    {
+        return tron.uploadMultipart(path,
+                                    responseSerializer: JSONDecodableParser(),
+                                    formData: formData)
     }
     
     /**
@@ -204,8 +212,11 @@ extension TRON {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    open func download<Model: JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<Model, ErrorModel> {
-        return DownloadAPIRequest(type: .download(destination), path: path, tron: self, responseSerializer: JSONDecodableDownloadParser())
+    public func download<Model:JSONDecodable, ErrorModel:JSONDecodable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<Model, ErrorModel>
+    {
+        return tron.download(path,
+                             to: destination,
+                             responseSerializer: JSONDecodableDownloadParser())
     }
     
     /**
@@ -221,8 +232,15 @@ extension TRON {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    open func download<Model: JSONDecodable,ErrorModel:JSONDecodable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data) -> DownloadAPIRequest<Model, ErrorModel> {
-        return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self, responseSerializer: JSONDecodableDownloadParser())
+    public func download<Model:JSONDecodable,ErrorModel:JSONDecodable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data) -> DownloadAPIRequest<Model, ErrorModel>
+    {
+        return tron.download(path, to: destination, resumingFrom: resumingFrom, responseSerializer: JSONDecodableDownloadParser())
+    }
+}
+
+extension TRON {
+    open var swiftyJSON : JSONDecodableSerializer {
+        return JSONDecodableSerializer(tron: self)
     }
 }
 

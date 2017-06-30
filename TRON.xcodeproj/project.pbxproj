@@ -11,6 +11,9 @@
 		3E01C1961F06475200C47CB3 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01C1941F06475200C47CB3 /* TRONCodable.swift */; };
 		3E01C1971F06475200C47CB3 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01C1941F06475200C47CB3 /* TRONCodable.swift */; };
 		3E01C1981F06475200C47CB3 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01C1941F06475200C47CB3 /* TRONCodable.swift */; };
+		3EDCBBBD1F065CDD00B4D5DD /* CodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDCBBBC1F065CDD00B4D5DD /* CodableTestCase.swift */; };
+		3EDCBBBE1F065CDD00B4D5DD /* CodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDCBBBC1F065CDD00B4D5DD /* CodableTestCase.swift */; };
+		3EDCBBBF1F065CDD00B4D5DD /* CodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDCBBBC1F065CDD00B4D5DD /* CodableTestCase.swift */; };
 		9A1024C21C5F80DD006E0163 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BD51C5A4FB5003222A8 /* Nimble.framework */; };
 		9A1024D41C5F8169006E0163 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1024CA1C5F8169006E0163 /* TRON.framework */; };
 		9A1024EC1C5F817B006E0163 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AEE0BA81C5A4E0A003222A8 /* Alamofire.framework */; };
@@ -634,6 +637,7 @@
 
 /* Begin PBXFileReference section */
 		3E01C1941F06475200C47CB3 /* TRONCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TRONCodable.swift; path = Source/TRONCodable.swift; sourceTree = "<group>"; };
+		3EDCBBBC1F065CDD00B4D5DD /* CodableTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTestCase.swift; sourceTree = "<group>"; };
 		9A05B1881D96BE1A00AC2B0B /* 2.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "2.0 Migration Guide.md"; path = "Docs/2.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9A1024921C5F806A006E0163 /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A10249B1C5F806A006E0163 /* TRON macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TRON macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -900,6 +904,7 @@
 				9A148D0A1EDB1AB3002E610C /* DownloadTestCase.swift */,
 				9A148D0B1EDB1AB3002E610C /* HeaderBuilderTestCase.swift */,
 				9A148D0C1EDB1AB3002E610C /* JSONDecodableTestCase.swift */,
+				3EDCBBBC1F065CDD00B4D5DD /* CodableTestCase.swift */,
 				9A148D0D1EDB1AB3002E610C /* PluginTestCase.swift */,
 				9A148D0E1EDB1AB3002E610C /* PluginTester.swift */,
 				9A148D0F1EDB1AB3002E610C /* ResponseSerializationTestCase.swift */,
@@ -1677,6 +1682,7 @@
 			files = (
 				9A148D331EDB1AB3002E610C /* UploadTestCase.swift in Sources */,
 				9A148D151EDB1AB3002E610C /* APIRequestTestCase.swift in Sources */,
+				3EDCBBBE1F065CDD00B4D5DD /* CodableTestCase.swift in Sources */,
 				9A148D271EDB1AB3002E610C /* PluginTester.swift in Sources */,
 				9A148D1E1EDB1AB3002E610C /* HeaderBuilderTestCase.swift in Sources */,
 				9A148D241EDB1AB3002E610C /* PluginTestCase.swift in Sources */,
@@ -1721,6 +1727,7 @@
 			files = (
 				9A148D341EDB1AB3002E610C /* UploadTestCase.swift in Sources */,
 				9A148D161EDB1AB3002E610C /* APIRequestTestCase.swift in Sources */,
+				3EDCBBBF1F065CDD00B4D5DD /* CodableTestCase.swift in Sources */,
 				9A148D281EDB1AB3002E610C /* PluginTester.swift in Sources */,
 				9A148D1F1EDB1AB3002E610C /* HeaderBuilderTestCase.swift in Sources */,
 				9A148D251EDB1AB3002E610C /* PluginTestCase.swift in Sources */,
@@ -1799,6 +1806,7 @@
 			files = (
 				9A148D321EDB1AB3002E610C /* UploadTestCase.swift in Sources */,
 				9A148D141EDB1AB3002E610C /* APIRequestTestCase.swift in Sources */,
+				3EDCBBBD1F065CDD00B4D5DD /* CodableTestCase.swift in Sources */,
 				9A148D261EDB1AB3002E610C /* PluginTester.swift in Sources */,
 				9A148D1D1EDB1AB3002E610C /* HeaderBuilderTestCase.swift in Sources */,
 				9A148D231EDB1AB3002E610C /* PluginTestCase.swift in Sources */,
