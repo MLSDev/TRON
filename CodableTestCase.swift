@@ -12,6 +12,8 @@ import Nimble
 import SwiftyJSON
 import Alamofire
 
+#if swift (>=4.0)
+
 private struct HeadersResponse : Codable {
     
     let headers: Headers
@@ -26,8 +28,6 @@ private struct HeadersResponse : Codable {
 }
 
 class CodableTestCase: XCTestCase {
-    
-    #if swift (>=4.0)
     
     func testCodableParsing() {
         let tron = TRON(baseURL: "http://httpbin.org")
@@ -44,6 +44,6 @@ class CodableTestCase: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
     }
     
-    #endif
-    
 }
+
+#endif

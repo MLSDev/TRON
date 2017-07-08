@@ -18,8 +18,8 @@ matrix:
       env: ACTION=pod_lint
     - os: osx
       env: ACTION=carthage_build
-    - os: osx
-      env: ACTION=spm_macos
+    # - os: osx
+    #   env: ACTION=spm_macos
     - os: osx
       osx_image: xcode8.3
       env: ACTION=test_ios10_legacy
