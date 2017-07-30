@@ -263,7 +263,7 @@ extension TRON {
 
 extension String : JSONDecodable  {
     public init(json: JSON) {
-        self.init(json.stringValue)!
+        self.init(describing: json.stringValue)
     }
 }
 
