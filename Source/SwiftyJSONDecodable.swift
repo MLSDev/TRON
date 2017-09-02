@@ -245,7 +245,11 @@ extension TRON {
 
 extension String : JSONDecodable  {
     public init(json: JSON) {
-        self.init(json.stringValue)!
+        #if swift(>=4)
+            self.init(json.stringValue)
+        #else
+            self.init(json.stringValue)!
+        #endif
     }
 }
 
