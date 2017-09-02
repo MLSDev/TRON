@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [3.1.0](https://github.com/MLSDev/TRON/releases/tag/3.1.0)
+
 * Preliminary support for Swift 3.2 and Swift 4.
 
 ## [3.0.3](https://github.com/MLSDev/TRON/releases/tag/3.0.3)
