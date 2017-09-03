@@ -46,7 +46,9 @@ open class NetworkActivityPlugin : Plugin {
      */
     var networkActivityCount = 0 {
         didSet {
-            application.isNetworkActivityIndicatorVisible = networkActivityCount > 0
+            DispatchQueue.main.async { [unowned self] in
+                self.application.isNetworkActivityIndicatorVisible = self.networkActivityCount > 0
+            }
         }
     }
     
