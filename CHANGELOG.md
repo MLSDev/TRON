@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* `APIError` now takes it's localizedDescription from underlying `errorModel` if that model is `LocalizedError`, and from `error.localizedDescription` if not.
+
 ## [3.0.3](https://github.com/MLSDev/TRON/releases/tag/3.0.3)
 
 * Prevent upload requests from being sent using `performMultipart` method if they are not of .multipartFormData type and vice versa, add specific assertions and error messages.

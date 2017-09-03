@@ -26,7 +26,7 @@
 import Foundation
 
 /// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
-public struct APIError<T> : Error {
+public struct APIError<T> : Error, LocalizedError {
     
     /// URLRequest that was unsuccessful
     public let request : URLRequest?
@@ -69,5 +69,10 @@ public struct APIError<T> : Error {
         self.init(request: nil, response: nil, data: nil, error: nil)
         self.errorModel = errorModel
     }
+    
+    public var errorDescription: String? {
+        return (errorModel as? LocalizedError)?.localizedDescription ?? (error as? LocalizedError)?.localizedDescription
+    }
 }
+
 
