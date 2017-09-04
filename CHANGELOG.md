@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [3.1.1](https://github.com/MLSDev/TRON/releases/tag/3.1.1)
+
 * Makes `NetworkActivityPlugin` always use API from the main thread(thanks, @mgurreta)!
 
 ## [3.1.0](https://github.com/MLSDev/TRON/releases/tag/3.1.0)
