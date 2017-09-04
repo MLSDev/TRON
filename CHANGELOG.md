@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* Makes `NetworkActivityPlugin` always use API from the main thread(thanks, @mgurreta)!
+
 ## [3.1.0](https://github.com/MLSDev/TRON/releases/tag/3.1.0)
 
 * Preliminary support for Swift 3.2 and Swift 4(Xcode 9 beta 6).
