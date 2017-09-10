@@ -15,7 +15,7 @@ class HeaderBuilderTestCase: XCTestCase {
     
     func testTronRequestHeaderBuilderAppendsHeaders() {
         let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<Int,TronError> = tron.request("status/200")
+        let request: APIRequest<Int,TronError> = tron.swiftyJSON.request("status/200")
         request.headers = ["If-Modified-Since":"Sat, 29 Oct 1994 19:43:31 GMT"]
         
         let alamofireRequest = request.performCollectingTimeline(withCompletion: { _ in })

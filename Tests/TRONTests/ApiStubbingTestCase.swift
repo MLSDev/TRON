@@ -34,7 +34,7 @@ class ApiStubbingTestCase: XCTestCase {
     let tron = TRON(baseURL: "https://github.com")
     
     func testStubsSuccessWork() {
-        let request: APIRequest<Int,TronError> = tron.request("f00")
+        let request: APIRequest<Int,TronError> = tron.swiftyJSON.request("f00")
         request.stubbingEnabled = true
         request.apiStub.successData = String(5).data(using: .utf8)
         
@@ -49,7 +49,7 @@ class ApiStubbingTestCase: XCTestCase {
     }
 
     func testStubsFailureWorks() {
-        let request :APIRequest<Int,Int> = tron.request("f00")
+        let request :APIRequest<Int,Int> = tron.swiftyJSON.request("f00")
         request.stubbingEnabled = true
         request.apiStub.successful = false
         request.apiStub.errorData = String(5).data(using:  .utf8)
@@ -65,7 +65,7 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testBuildingFromFileWorks() {
-        let request :APIRequest<TestUser,TronError> = tron.request("f00")
+        let request :APIRequest<TestUser,TronError> = tron.swiftyJSON.request("f00")
         request.stubbingEnabled = true
         request.apiStub.buildModel(fromFileNamed: "user.json", inBundle: Bundle(for: type(of: self)))
         
@@ -74,7 +74,7 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testMultipartStubbingSuccessWorks() {
-        let request: UploadAPIRequest<Int,TronError> = tron.uploadMultipart("f00") { formData in
+        let request: UploadAPIRequest<Int,TronError> = tron.swiftyJSON.uploadMultipart("f00") { formData in
         }
         request.stubbingEnabled = true
         request.apiStub.successData = String(5).data(using: .utf8)
@@ -89,7 +89,7 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testStubbingSuccessfullyWorksWithCompletionHandler() {
-        let request :APIRequest<Int,Int> = tron.request("f00")
+        let request :APIRequest<Int,Int> = tron.swiftyJSON.request("f00")
         request.stubbingEnabled = true
         request.apiStub.successData = String(5).data(using: .utf8)
         
@@ -103,7 +103,7 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testStubbingFailurefullyWorksWithCompletionHandler() {
-        let request :APIRequest<Int,Int> = tron.request("f00")
+        let request :APIRequest<Int,Int> = tron.swiftyJSON.request("f00")
         request.stubbingEnabled = true
         request.apiStub.successful = false
         request.apiStub.errorData = String(5).data(using:  .utf8)
@@ -114,7 +114,7 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testStubbingWorksAsynchronously() {
-        let request: APIRequest<Int,TronError> = tron.request("f00")
+        let request: APIRequest<Int,TronError> = tron.swiftyJSON.request("f00")
         request.stubbingEnabled = true
         request.apiStub.stubDelay = 0.2
         request.apiStub.successData = String(5).data(using: .utf8)
@@ -130,7 +130,7 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testStubWithThrowingDataShouldCallFailureBlock() {
-        let request : APIRequest<ThrowingJSONDecodable,TronError> = tron.request("f00")
+        let request : APIRequest<ThrowingJSONDecodable,TronError> = tron.swiftyJSON.request("f00")
         request.stubbingEnabled = true
         let exp = expectation(description: "Stubs construction failure")
         request.perform(withSuccess: { response in
@@ -142,7 +142,7 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testStubWithThrowingDataShouldCallFailureCompletionBlock() {
-        let request : APIRequest<ThrowingJSONDecodable,TronError> = tron.request("f00")
+        let request : APIRequest<ThrowingJSONDecodable,TronError> = tron.swiftyJSON.request("f00")
         request.stubbingEnabled = true
         let exp = expectation(description: "Stubs construction failure")
         request.performCollectingTimeline { result in

@@ -247,22 +247,3 @@ open class BaseRequest<Model, ErrorModel> {
         }
     }
 }
-
-// DEPRECATED
-
-@available(*,unavailable,renamed:"URLBuildable")
-public protocol NSURLBuildable {}
-
-extension URLBuildable {
-    @available(*,unavailable,renamed:"url(forPath:)")
-    public func urlForPath(_ path: String) -> URL {
-        fatalError("UNAVAILABLE")
-    }
-}
-
-extension HeaderBuildable {
-    @available(*,unavailable,renamed:"headers(forAuthorizationRequirement:including:)")
-    public func headersForAuthorization(_ requirement: AuthorizationRequirement, headers: [String:String]) -> [String: String] {
-        fatalError("UNAVAILABLE")
-    }
-}

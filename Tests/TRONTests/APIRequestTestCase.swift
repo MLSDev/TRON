@@ -30,7 +30,7 @@ class APIRequestTestCase: XCTestCase {
     }
     
     func testErrorBuilding() {
-        let request: APIRequest<Int,TronError> = tron.request("status/418")
+        let request: APIRequest<Int,TronError> = tron.swiftyJSON.request("status/418")
         let expectation = self.expectation(description: "Teapot")
         request.perform(withSuccess: { _ in
             XCTFail()
@@ -43,7 +43,7 @@ class APIRequestTestCase: XCTestCase {
     }
     
     func testSuccessCallBackIsCalledOnMainThread() {
-        let request : APIRequest<String,TronError> = tron.request("get")
+        let request : APIRequest<String,TronError> = tron.swiftyJSON.request("get")
         let expectation = self.expectation(description: "200")
         request.perform(withSuccess: { _ in
             if Thread.isMainThread {
@@ -56,7 +56,7 @@ class APIRequestTestCase: XCTestCase {
     }
     
     func testFailureCallbackIsCalledOnMainThread() {
-        let request : APIRequest<Int,TronError> = tron.request("status/418")
+        let request : APIRequest<Int,TronError> = tron.swiftyJSON.request("status/418")
         let expectation = self.expectation(description: "Teapot")
         request.perform(withSuccess: { _ in
             XCTFail()
@@ -69,7 +69,7 @@ class APIRequestTestCase: XCTestCase {
     }
     
     func testParsingFailureCallbackIsCalledOnMainThread() {
-        let request : APIRequest<Int,TronError> = tron.request("html")
+        let request : APIRequest<Int,TronError> = tron.swiftyJSON.request("html")
         let expectation = self.expectation(description: "Parsing failure")
         request.perform(withSuccess: { _ in
             XCTFail()
@@ -83,7 +83,7 @@ class APIRequestTestCase: XCTestCase {
     
     func testSuccessBlockCanBeCalledOnBackgroundThread() {
         tron.resultDeliveryQueue = DispatchQueue.global(qos: .background)
-        let request : APIRequest<Int,TronError> = tron.request("get")
+        let request : APIRequest<Int,TronError> = tron.swiftyJSON.request("get")
         let expectation = self.expectation(description: "200")
         request.perform(withSuccess: { _ in
             if !Thread.isMainThread {
@@ -97,7 +97,7 @@ class APIRequestTestCase: XCTestCase {
     
     func testFailureCallbacksCanBeCalledOnBackgroundThread() {
         tron.resultDeliveryQueue = DispatchQueue.global(qos: .background)
-        let request : APIRequest<Int,TronError> = tron.request("html")
+        let request : APIRequest<Int,TronError> = tron.swiftyJSON.request("html")
         let expectation = self.expectation(description: "Parsing failure")
         request.perform(withSuccess: { _ in
             XCTFail()
@@ -110,7 +110,7 @@ class APIRequestTestCase: XCTestCase {
     }
     
     func testRequestWithCompletionIsCalledOnMainThread() {
-        let request : APIRequest<Int,TronError> = tron.request("get")
+        let request : APIRequest<Int,TronError> = tron.swiftyJSON.request("get")
         let expectation = self.expectation(description: "200")
         request.performCollectingTimeline { _ in
             if Thread.isMainThread { expectation.fulfill() }
@@ -119,7 +119,7 @@ class APIRequestTestCase: XCTestCase {
     }
     
     func testRequestWithCompletionCanBeCalledOnBackgroundThread() {
-        let request : APIRequest<Int,TronError> = tron.request("get")
+        let request : APIRequest<Int,TronError> = tron.swiftyJSON.request("get")
         request.resultDeliveryQueue = DispatchQueue.global(qos: .background)
         let expectation = self.expectation(description: "200")
         request.performCollectingTimeline { _ in
@@ -129,7 +129,7 @@ class APIRequestTestCase: XCTestCase {
     }
     
     func testEmptyResponseStillCallsSuccessBlock() {
-        let request : APIRequest<EmptyResponse, TronError> = tron.request("headers")
+        let request : APIRequest<EmptyResponse, TronError> = tron.swiftyJSON.request("headers")
         request.method = .head
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
@@ -148,7 +148,7 @@ class APIRequestTestCase: XCTestCase {
         let manager = SessionManager(configuration: configuration)
         manager.startRequestsImmediately = false
         let tron = TRON(baseURL: "http://httpbin.org", manager: manager)
-        let request : APIRequest<EmptyResponse, TronError> = tron.request("headers")
+        let request : APIRequest<EmptyResponse, TronError> = tron.swiftyJSON.request("headers")
         request.method = .head
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
@@ -166,7 +166,7 @@ class APIRequestTestCase: XCTestCase {
         let manager = SessionManager(configuration: configuration)
         manager.startRequestsImmediately = false
         let tron = TRON(baseURL: "http://httpbin.org", manager: manager)
-        let request: UploadAPIRequest<TestResponse,TronError> = tron.uploadMultipart("post") { formData in
+        let request: UploadAPIRequest<TestResponse,TronError> = tron.swiftyJSON.uploadMultipart("post") { formData in
             formData.append("bar".data(using: String.Encoding.utf8) ?? Data(), withName: "foo")
         }
         request.method = .post
@@ -184,7 +184,7 @@ class APIRequestTestCase: XCTestCase {
     }
     
     func testCustomValidationClosure() {
-        let request : APIRequest<Int,TronError> = tron.request("status/201")
+        let request : APIRequest<Int,TronError> = tron.swiftyJSON.request("status/201")
         request.validationClosure = { $0.validate(statusCode: (202..<203)) }
         let expectation = self.expectation(description: "success")
         request.perform(withSuccess: { _ in
@@ -196,7 +196,7 @@ class APIRequestTestCase: XCTestCase {
     }
     
     func testCustomValidationClosureOverridesError() {
-        let request : APIRequest<Int,TronError> = tron.request("status/418")
+        let request : APIRequest<Int,TronError> = tron.swiftyJSON.request("status/418")
         request.validationClosure = { $0.validate(statusCode: (418...420)) }
         let expectation = self.expectation(description: "We like tea from this teapot")
         request.perform(withSuccess: { _ in

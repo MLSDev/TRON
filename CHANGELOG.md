@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* `APIError` now takes it's localizedDescription from underlying `errorModel` if that model is `LocalizedError`, and from `error.localizedDescription` if not.
+
 ## [3.1.1](https://github.com/MLSDev/TRON/releases/tag/3.1.1)
 
 * Makes `NetworkActivityPlugin` always use API from the main thread(thanks, @mgurreta)!

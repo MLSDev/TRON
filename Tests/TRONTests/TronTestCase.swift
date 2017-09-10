@@ -21,7 +21,7 @@ class TronTestCase: XCTestCase {
     }
     
     func testTronRequestBuildables() {
-        let request: APIRequest<Int,TronError> = tron.request("/foo")
+        let request: APIRequest<Int,TronError> = tron.swiftyJSON.request("/foo")
         
         let tronBuilder = tron.urlBuilder as? URLBuilder
         let requestBuilder = request.urlBuilder as? URLBuilder
@@ -29,10 +29,10 @@ class TronTestCase: XCTestCase {
     }
     
     func testStubbingShouldBeSuccessfulPropertyPropogatesToStub() {
-        let request : APIRequest<Int,TronError> = tron.request("foo")
+        let request : APIRequest<Int,TronError> = tron.swiftyJSON.request("foo")
         expect(request.apiStub.successful).to(beTruthy())
         tron.stubbingShouldBeSuccessful = false
-        let request2 : APIRequest<Int,TronError> = tron.request("foo")
+        let request2 : APIRequest<Int,TronError> = tron.swiftyJSON.request("foo")
         expect(request2.apiStub.successful).toNot(beTruthy())
     }
     

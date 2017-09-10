@@ -184,22 +184,3 @@ open class APIStub<Model, ErrorModel> {
         }
     }
 }
-
-// DEPRECATED
-
-extension APIStub {
-    @available(*,unavailable,renamed:"buildModel(fromFileNamed:inBundle:)")
-    public func buildModelFromFile(_ fileName: String, inBundle bundle: Bundle = Bundle.main) {
-        fatalError("UNAVAILABLE")
-    }
-    
-    @available(*,unavailable,renamed:"performStub(withSuccess:failure:)")
-    open func performStubWithSuccess(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) {
-        fatalError("UNAVAILABLE")
-    }
-    
-    @available(*,unavailable,renamed:"performStub(withCompletion:)")
-    open func performStubWithCompletion(_ completion : ((Alamofire.DataResponse<Model>) -> Void)) {
-        fatalError("UNAVAILABLE")
-    }
-}

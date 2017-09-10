@@ -29,24 +29,29 @@ xcode-select --install
 </table>
 
 # Available Actions
+### test_ios11
+```
+fastlane test_ios11
+```
+
 ### test_ios10
 ```
 fastlane test_ios10
 ```
 
-### test_ios9
+### test_tvos11
 ```
-fastlane test_ios9
-```
-
-### test_tvos10
-```
-fastlane test_tvos10
+fastlane test_tvos11
 ```
 
 ### test_macos
 ```
 fastlane test_macos
+```
+
+### test_macos_legacy
+```
+fastlane test_macos_legacy
 ```
 
 ### build_watchos

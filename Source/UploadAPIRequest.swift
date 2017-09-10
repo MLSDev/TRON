@@ -166,7 +166,8 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
         }
         
         let multipartConstructionBlock: (MultipartFormData) -> Void = { requestFormData in
-            self.parameters.forEach { (key,value) in
+            self.parameters.forEach {
+                let (key,value) = $0
                 requestFormData.append(String(describing: value).data(using:.utf8) ?? Data(), withName: key)
             }
             multipartFormDataBlock(requestFormData)
@@ -247,6 +248,3 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
         }
     }
 }
-
-@available(*,unavailable,renamed: "UploadAPIRequest")
-class MultipartAPIRequest {}
