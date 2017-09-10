@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [4.0.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/4.0.0-beta.1)
+
 **This is major release, containing breaking API changes, please read [TRON 4.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/4.0%20Migration%20Guide.md)**
 
 * Implemented support for `Codable` protocol.

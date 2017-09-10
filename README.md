@@ -44,7 +44,7 @@ request.perform(withSuccess: { user in
 
 - Xcode 8.3/9.x
 - Swift 3/4
-- iOS 9 / macOS 10.11 / tvOS 9.0 / watchOS 2.0
+- iOS 8 / macOS 10.10 / tvOS 9.0 / watchOS 2.0
 
 ## Installation
 

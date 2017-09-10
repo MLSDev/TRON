@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'TRON'
-  s.version      = "3.1.1"
+  s.version      = "4.0.0-beta.1"
   s.license  = 'MIT'
   s.summary  = 'Lightweight network abstraction layer, written on top of Alamofire'
   s.homepage = 'https://github.com/MLSDev/TRON'
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.10'
   s.watchos.deployment_target = '2.0'
 
-  s.dependency 'Alamofire' , '~> 4.1'
+  s.dependency 'Alamofire' , '~> 4.5'
 
   s.subspec 'Core' do |core|
       core.ios.frameworks = 'UIKit'
@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'RxSwift' do |rxswift|
       rxswift.dependency 'TRON/Core'
-      rxswift.dependency 'RxSwift', '~> 3.0'
+      rxswift.dependency 'RxSwift', '~> 3.5'
       rxswift.source_files = 'Source/Tron+RxSwift.swift'
   end
 
