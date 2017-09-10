@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9A722F491C5A49AE0087908D"
                BuildableName = "TRON.framework"
-               BlueprintName = "TRON iOS"
+               BlueprintName = "TRON"
                ReferencedContainer = "container:TRON.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -35,8 +35,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9A722F531C5A49AE0087908D"
-               BuildableName = "TRON iOS Tests.xctest"
-               BlueprintName = "TRON iOS Tests"
+               BuildableName = "Tests.xctest"
+               BlueprintName = "Tests"
                ReferencedContainer = "container:TRON.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -46,7 +46,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9A722F491C5A49AE0087908D"
             BuildableName = "TRON.framework"
-            BlueprintName = "TRON iOS"
+            BlueprintName = "TRON"
             ReferencedContainer = "container:TRON.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -69,7 +69,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9A722F491C5A49AE0087908D"
             BuildableName = "TRON.framework"
-            BlueprintName = "TRON iOS"
+            BlueprintName = "TRON"
             ReferencedContainer = "container:TRON.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -87,7 +87,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9A722F491C5A49AE0087908D"
             BuildableName = "TRON.framework"
-            BlueprintName = "TRON iOS"
+            BlueprintName = "TRON"
             ReferencedContainer = "container:TRON.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
