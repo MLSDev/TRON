@@ -2,35 +2,38 @@ language: objective-c
 sudo: false
 osx_image: xcode9
 
+cache:
+  directories:
+  - Carthage
+  
 matrix:
   include:
-    - os: osx
-      env: ACTION=test_ios11
-    - os: osx
-      env: ACTION=test_ios10
-    - os: osx
-      env: ACTION=test_macos
-    - os: osx
-      env: ACTION=test_tvos11
-    - os: osx
-      env: ACTION=build_watchos
-    - os: osx
-      env: ACTION=pod_lint
-    - os: osx
-      env: ACTION=carthage_build
-    # - os: osx
-    #   env: ACTION=spm_macos
-    - os: osx
-      osx_image: xcode8.3
-      env: ACTION=test_ios10_legacy
-    - os: osx
-      osx_image: xcode8.3
-      env: ACTION=test_macos_legacy
-
-
+  - os: osx
+    env: ACTION=test_ios11
+  - os: osx
+    env: ACTION=test_ios10
+  - os: osx
+    env: ACTION=test_macos
+  - os: osx
+    env: ACTION=test_tvos11
+  - os: osx
+    env: ACTION=build_watchos
+  - os: osx
+    env: ACTION=pod_lint
+  - os: osx
+    env: ACTION=carthage_build
+  - os: osx
+    osx_image: xcode8.3
+    env: ACTION=test_ios10_legacy
+  - os: osx
+    osx_image: xcode8.3
+    env: ACTION=test_macos_legacy
 before_script:
-  - brew update
-  - brew outdated carthage || brew upgrade carthage
-
+- brew update
+- brew outdated carthage || brew upgrade carthage
+- carthage bootstrap --cache-builds
 script:
-  - bundle exec fastlane $ACTION
+- bundle exec fastlane $ACTION
+env:
+  global:
+    secure: rGUBq0izup9Lugpu2EY84ozovSAQsUe4Bw8HKDOGA+iNLJ7rnp3rNrc2EMa3Ncy5fjoC+zPWBcugvVCJo7uJZ0Vr8/tycjdiBN1X0GqZbfmyY012QAH4lzqESBTYRHIe2zHz/zuk7zvf1dtPeCbTj2+6Ffug49UnxrIaabKcAYm+yoS6YtIYqfZnxeC/zkV3yJoMaJzMAgZQWViy78uGTHz6+d+ONB8D2C2W4oSkn3tPB9MydkCovgjuXTzF0+FjZybNhOggi+Ca/bwvp7g26ta6ywabPCO9XV5yafR9BI7GmzYTXyYPMlfqiXV88xw2d4gbA2/AYszGfeRSRXtf+W564vnMkCAzmjFKVpvDs8rqFIV5C1pqhhUFd/Fbe8YLilrbbQPd2f4mkKBHHAXM+cDhcpVJOfInBo0LzrvgSnKnrtEjJ3943vCr0Nd605EV7LZEE5rxbkQq8Wnfh0fvZBKbyDZ9p7G+GkCoaEMO/EJHlQIgGPuMqDhQ8nnji6WdGwjBV5Vovv1Y1MWEaDCVlCLcviAgrEWJcA0tK1/5Uww/xOpkcJw+nCYqooqtjfSayHAsgBUOPEo9ejLY/kTmcggRjQjCFg4D4eNzeqM2pBvvVbsdh5qey7XgIzoSxsn/uHz7WiYr/QoJj2M/TBRLKjzxFav4f66Gtjp3dVHPf34=

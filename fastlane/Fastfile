@@ -1,35 +1,35 @@
 fastlane_version "1.98.0"
 
 lane :test_ios11 do
-  scan(devices: ["iPhone 7 (11.0)"], scheme: 'TRON iOS')
+  scan(devices: ["iPhone 7 (11.0)"])
 end
 
 lane :test_ios10 do
-  scan(devices: ["iPhone 6s (10.3)"], scheme: 'TRON iOS')
+  scan(devices: ["iPhone 6s (10.3)"])
 end
 
 lane :test_ios10_legacy do
-  scan(devices: ["iPhone 6s (10.3)"], scheme: 'TRON iOS', xcargs: "SWIFT_VERSION=3.0")
+  scan(devices: ["iPhone 6s (10.3)"], xcargs: "SWIFT_VERSION=3.0")
 end
 
 lane :test_tvos11 do
-  scan(device: "Apple TV 1080p (11.0)", scheme: 'TRON tvOS')
+  scan(device: "Apple TV 1080p (11.0)")
 end
 
 lane :test_macos do
-  scan(destination: "arch=x86_64", scheme: 'TRON macOS')
+  scan(destination: "arch=x86_64")
   sh "bash ../codecov.sh"
 end
 
 lane :test_macos_legacy do
-  scan(destination: "arch=x86_64", scheme: 'TRON macOS', xcargs: "SWIFT_VERSION=3.0")
+  scan(destination: "arch=x86_64", xcargs: "SWIFT_VERSION=3.0")
 end
 
 lane :build_watchos do
   xcodebuild(
     build: true,
     destination: "OS=4.0,name=Apple Watch - 42mm",
-    scheme: 'TRON watchOS'
+    scheme: 'TRON'
   )
 end
 
@@ -51,7 +51,10 @@ lane :release do |params|
   abort "You must specify a version in semver format." if version.nil? || version.scan(/\d+\.\d+\.\d+(-\w+\.\d+)?/).length == 0
 
   puts "Setting Framework version"
-  increment_version_number(version_number: version)
+  increment_version_number_in_plist(
+      version_number: version,
+      target: "TRON"
+  )
 
   Dir.chdir("..") do
 
@@ -79,10 +82,14 @@ lane :release do |params|
     puts "Pushing as a GitHub Release."
     fastlane_require 'octokit'
     stripped_changelog = changelog.split(/^## /)[1].split("\n")[1..-1].join("\n").strip
-    Octokit::Client.new(netrc: true).
-      create_release('MLSDev/TRON',
+    client = Octokit::Client.new(netrc: true)
+    client.create_release('MLSDev/TRON',
                      version,
                      name: version,
                      body: stripped_changelog)
+
+    puts "Attaching Carthage prebuilt binary to release."
+    releases = client.releases('MLSDev/TRON')
+    client.upload_asset(releases[0].url, 'TRON.framework.zip')
   end
 end
