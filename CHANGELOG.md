@@ -3,7 +3,21 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+**This is major release, containing breaking API changes, please read [TRON 4.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/4.0%20Migration%20Guide.md)**
+
+* Implemented support for `Codable` protocol.
 * `APIError` now takes it's localizedDescription from underlying `errorModel` if that model is `LocalizedError`, and from `error.localizedDescription` if not.
+
+# Breaking changes
+
+* `SwiftyJSONDecodable` methods are now prefixed with .swiftyJSON, like so:
+
+```swift
+// old
+let request = tron.request("path")
+// new
+let request = tron.swiftyJSON.request("path")
+```
 
 ## [3.1.1](https://github.com/MLSDev/TRON/releases/tag/3.1.1)
 

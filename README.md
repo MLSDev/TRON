@@ -17,7 +17,7 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 
 - [x] Generic, protocol-based implementation
 - [x] Built-in response and error parsing
-- [x] Support for any custom mapper. Defaults to [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON).
+- [x] Support for any custom mapper. Defaults to [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) and Codable protocol in Swift 4.
 - [x] Support for upload tasks
 - [x] Support for download tasks and resuming downloads
 - [x] Robust plugin system
@@ -32,7 +32,7 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 We designed TRON to be simple to use and also very easy to customize. After initial setup, using TRON is very straightforward:
 
 ```swift
-let request: APIRequest<User,MyAppError> = tron.request("me")
+let request: APIRequest<User,MyAppError> = tron.codable.request("me")
 request.perform(withSuccess: { user in
   print("Received User: \(user)")
 }, failure: { error in
@@ -42,8 +42,8 @@ request.perform(withSuccess: { user in
 
 ## Requirements
 
-- XCode 8
-- Swift 3
+- Xcode 8.3/9.x
+- Swift 3/4
 - iOS 9 / macOS 10.11 / tvOS 9.0 / watchOS 2.0
 
 ## Installation
@@ -51,39 +51,40 @@ request.perform(withSuccess: { user in
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 2.0.0'
+pod 'TRON', '~> 4.0'
 ```
 
 Only Core subspec, without SwiftyJSON dependency:
 
 ```ruby
-pod 'TRON/Core', '~> 2.0.0'
+pod 'TRON/Core', '~> 4.0'
 ```
 
 RxSwift extension for TRON:
 
 ```ruby
-pod 'TRON/RxSwift', '~> 2.0.0'
+pod 'TRON/RxSwift', '~> 4.0'
 ```
 
 ### Carthage
 
 ```ruby
-github "MLSDev/TRON", ~> 2.0.0
+github "MLSDev/TRON", ~> 4.0
 ```
 
 ## Migration Guides
 
+- [TRON 4.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/4.0%20Migration%20Guide.md)
 - [TRON 2.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/2.0%20Migration%20Guide.md)
 - [TRON 1.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/1.0%20Migration%20Guide.md)
 
 ## Project status
 
-`TRON` is under active development by MLSDev Inc. Pull requests and issues are welcome!
+`TRON` is under active development by MLSDev Inc. Pull requests are welcome!
 
 ## Request building
 
-`TRON` object serves as initial configurator for APIRequest, setting all base values and configuring to use with baseURL.
+`TRON` object serves as initial configurator for `APIRequest`, setting all base values and configuring to use with baseURL.
 
 ```swift
 let tron = TRON(baseURL: "https://api.myapp.com/")
@@ -166,7 +167,7 @@ public protocol DataResponseSerializerProtocol {
     var serializeResponse: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<SerializedObject> { get }
 }
 
-// TRON 2:
+// TRON:
 
 public protocol ErrorHandlingDataResponseSerializerProtocol : DataResponseSerializerProtocol {
     associatedtype SerializedError
@@ -201,7 +202,7 @@ class User: JSONDecodable {
 And send a request:
 
 ```swift
-let request: APIRequest<User,MyAppError> = tron.request("me")
+let request: APIRequest<User,MyAppError> = tron.swiftyJSON.request("me")
 request.perform(withSuccess: { user in
   print("Received user: \(user.name) with id: \(user.id)")
 })
@@ -210,7 +211,7 @@ request.perform(withSuccess: { user in
 There are also default implementations of `JSONDecodable` protocol for Swift built-in types like String, Int, Float, Double and Bool, so you can easily do something like this:
 
 ```swift
-let request : APIRequest<String,MyAppError> = tron.request("status")
+let request : APIRequest<String,MyAppError> = tron.swiftyJSON.request("status")
 request.perform(withSuccess: { status in
     print("Server status: \(status)") //
 })
@@ -218,19 +219,19 @@ request.perform(withSuccess: { status in
 
 You can also use `EmptyResponse` struct in cases where you don't care about actual response.
 
-There is also an array extension for `JSONDecodable`, however it's commented out due to [this](https://github.com/MLSDev/TRON/issues/17).
+Some concepts for response serialization, including array response serializer, are described in [Response Serializers document](https://github.com/MLSDev/TRON/blob/master/Docs/Response%20Serializers.md)
 
 ## RxSwift
 
 ```swift
-let request : APIRequest<Foo, MyError> = tron.request("foo")
+let request : APIRequest<Foo, MyError> = tron.codable.request("foo")
 _ = request.rxResult().subscribe(onNext: { result in
     print(result)
 })
 ```
 
 ```swift
-let multipartRequest : UploadAPIREquest<Foo,MyError> = tron.upload("foo", formData: { _ in })
+let multipartRequest : UploadAPIREquest<Foo,MyError> = tron.codable.upload("foo", formData: { _ in })
 multipartRequest.rxMultipartResult().subscribe(onNext: { result in
     print(result)
 })
@@ -307,24 +308,24 @@ struct Users
     static let tron = TRON(baseURL: "https://api.myapp.com")
 
     static func create() -> APIRequest<User,MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.request("users")
+        let request: APIRequest<User,MyAppError> = tron.codable.request("users")
         request.method = .post
         return request
     }
 
     static func read(id: Int) -> APIRequest<User, MyAppError> {
-        return tron.request("users/\(id)")
+        return tron.codable.request("users/\(id)")
     }
 
     static func update(id: Int, parameters: [String:Any]) -> APIRequest<User, MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.request("users/\(id)")
+        let request: APIRequest<User,MyAppError> = tron.codable.request("users/\(id)")
         request.method = .put
         request.parameters = parameters
         return request
     }
 
     static func delete(id: Int) -> APIRequest<User,MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.request("users/\(id)")
+        let request: APIRequest<User,MyAppError> = tron.codable.request("users/\(id)")
         request.method = .delete
         return request
     }
@@ -395,25 +396,25 @@ request.apiStub.successful = false
 * From file:
 
 ```swift
-let request = tron.upload("photo", fromFileAt: fileUrl)
+let request = tron.codable.upload("photo", fromFileAt: fileUrl)
 ```
 
 * Data:
 
 ```swift
-let request = tron.upload("photo", data: data)
+let request = tron.codable.upload("photo", data: data)
 ```
 
 * Stream:
 
 ```swift
-let request = tron.upload("photo", fromStream: stream)
+let request = tron.codable.upload("photo", fromStream: stream)
 ```
 
 * Multipart-form data:
 
 ```swift
-let request: UploadAPIRequest<EmptyResponse,MyAppError> = tron.uploadMultipart("form") { formData in
+let request: UploadAPIRequest<EmptyResponse,MyAppError> = tron.codable.uploadMultipart("form") { formData in
     formData.append(data, withName: "cat", mimeType: "image/jpeg")
 }
 request.performMultipart(withSuccess: { result in
@@ -426,13 +427,13 @@ request.performMultipart(withSuccess: { result in
 ## Download
 
 ```swift
-let request = tron.download("file", to: destination)
+let request = tron.codable.download("file", to: destination)
 ```
 
 Resume downloads:
 
 ```swift
-let request = tron.download("file", to: destination, resumingFrom: data)
+let request = tron.codable.download("file", to: destination, resumingFrom: data)
 ```
 
 ## Plugins

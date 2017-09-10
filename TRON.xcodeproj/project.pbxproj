@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3E01C1951F06475200C47CB3 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01C1941F06475200C47CB3 /* TRONCodable.swift */; };
-		3EDCBBBD1F065CDD00B4D5DD /* CodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDCBBBC1F065CDD00B4D5DD /* CodableTestCase.swift */; };
 		9A148D141EDB1AB3002E610C /* APIRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D081EDB1AB3002E610C /* APIRequestTestCase.swift */; };
 		9A148D171EDB1AB3002E610C /* ApiStubbingTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D091EDB1AB3002E610C /* ApiStubbingTestCase.swift */; };
 		9A148D1A1EDB1AB3002E610C /* DownloadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D0A1EDB1AB3002E610C /* DownloadTestCase.swift */; };
@@ -50,6 +49,11 @@
 		9A704E801C5D01EC00392DE5 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; };
 		9A704E811C5D01EC00392DE5 /* TRON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9A722F551C5A49AE0087908D /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; };
+		9AF2FE511F65A40C00B22CE1 /* CodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF2FE501F65A40C00B22CE1 /* CodableTestCase.swift */; };
+		9AF2FE541F65A51000B22CE1 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2FE521F65A51000B22CE1 /* Alamofire.framework */; };
+		9AF2FE551F65A51000B22CE1 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2FE521F65A51000B22CE1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9AF2FE561F65A51000B22CE1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */; };
+		9AF2FE571F65A51000B22CE1 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +81,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9A704E811C5D01EC00392DE5 /* TRON.framework in Embed Frameworks */,
+				9AF2FE551F65A51000B22CE1 /* Alamofire.framework in Embed Frameworks */,
+				9AF2FE571F65A51000B22CE1 /* SwiftyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,7 +91,6 @@
 
 /* Begin PBXFileReference section */
 		3E01C1941F06475200C47CB3 /* TRONCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TRONCodable.swift; path = Source/TRONCodable.swift; sourceTree = "<group>"; };
-		3EDCBBBC1F065CDD00B4D5DD /* CodableTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTestCase.swift; sourceTree = "<group>"; };
 		9A05B1881D96BE1A00AC2B0B /* 2.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "2.0 Migration Guide.md"; path = "Docs/2.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9A148D081EDB1AB3002E610C /* APIRequestTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequestTestCase.swift; path = Tests/TRONTests/APIRequestTestCase.swift; sourceTree = "<group>"; };
 		9A148D091EDB1AB3002E610C /* ApiStubbingTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiStubbingTestCase.swift; path = Tests/TRONTests/ApiStubbingTestCase.swift; sourceTree = "<group>"; };
@@ -131,6 +136,9 @@
 		9A722F541C5A49AE0087908D /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A722F651C5A4A610087908D /* Framework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Framework.plist; path = "Supporting files/Framework.plist"; sourceTree = "<group>"; };
 		9A722F661C5A4A610087908D /* Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Tests.plist; path = "Supporting files/Tests.plist"; sourceTree = "<group>"; };
+		9AF2FE501F65A40C00B22CE1 /* CodableTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CodableTestCase.swift; path = Tests/TRONTests/CodableTestCase.swift; sourceTree = "<group>"; };
+		9AF2FE521F65A51000B22CE1 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		9AFAE4D41CC5210F002739B0 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		9AFAE4D51CC52118002739B0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +149,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A704E801C5D01EC00392DE5 /* TRON.framework in Frameworks */,
+				9AF2FE541F65A51000B22CE1 /* Alamofire.framework in Frameworks */,
+				9AF2FE561F65A51000B22CE1 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +234,8 @@
 		9A722F401C5A49AE0087908D = {
 			isa = PBXGroup;
 			children = (
+				9AF2FE521F65A51000B22CE1 /* Alamofire.framework */,
+				9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */,
 				9AFAE4D31CC520F6002739B0 /* Documentation */,
 				9A90CC221C5FAB3000472DB8 /* Source */,
 				9A90CC231C5FAB3400472DB8 /* Tests */,
@@ -268,10 +280,11 @@
 			children = (
 				9A148D081EDB1AB3002E610C /* APIRequestTestCase.swift */,
 				9A148D091EDB1AB3002E610C /* ApiStubbingTestCase.swift */,
+				9AF2FE501F65A40C00B22CE1 /* CodableTestCase.swift */,
 				9A148D0A1EDB1AB3002E610C /* DownloadTestCase.swift */,
+				9A90CC8A1C5FABB200472DB8 /* Fixtures */,
 				9A148D0B1EDB1AB3002E610C /* HeaderBuilderTestCase.swift */,
 				9A148D0C1EDB1AB3002E610C /* JSONDecodableTestCase.swift */,
-				3EDCBBBC1F065CDD00B4D5DD /* CodableTestCase.swift */,
 				9A148D0D1EDB1AB3002E610C /* PluginTestCase.swift */,
 				9A148D0E1EDB1AB3002E610C /* PluginTester.swift */,
 				9A148D0F1EDB1AB3002E610C /* ResponseSerializationTestCase.swift */,
@@ -279,7 +292,6 @@
 				9A148D111EDB1AB3002E610C /* TronTestCase.swift */,
 				9A148D121EDB1AB3002E610C /* UploadTestCase.swift */,
 				9A148D131EDB1AB3002E610C /* URLBuilderTestCase.swift */,
-				9A90CC8A1C5FABB200472DB8 /* Fixtures */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -527,7 +539,6 @@
 			files = (
 				9A148D321EDB1AB3002E610C /* UploadTestCase.swift in Sources */,
 				9A148D141EDB1AB3002E610C /* APIRequestTestCase.swift in Sources */,
-				3EDCBBBD1F065CDD00B4D5DD /* CodableTestCase.swift in Sources */,
 				9A148D261EDB1AB3002E610C /* PluginTester.swift in Sources */,
 				9A148D1D1EDB1AB3002E610C /* HeaderBuilderTestCase.swift in Sources */,
 				9A148D231EDB1AB3002E610C /* PluginTestCase.swift in Sources */,
@@ -536,6 +547,7 @@
 				9A148D611EDB1ABF002E610C /* TronError.swift in Sources */,
 				9A148D351EDB1AB3002E610C /* URLBuilderTestCase.swift in Sources */,
 				9A148D2F1EDB1AB3002E610C /* TronTestCase.swift in Sources */,
+				9AF2FE511F65A40C00B22CE1 /* CodableTestCase.swift in Sources */,
 				9A148D1A1EDB1AB3002E610C /* DownloadTestCase.swift in Sources */,
 				9A148D2C1EDB1AB3002E610C /* RxSwiftExtensionTestCase.swift in Sources */,
 				9A148D171EDB1AB3002E610C /* ApiStubbingTestCase.swift in Sources */,
@@ -582,6 +594,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MLSDev.Example;
@@ -594,6 +610,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Example/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MLSDev.Example;

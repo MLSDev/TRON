@@ -27,24 +27,24 @@ class UserRequestFactory
     static let tron = TRON(baseURL: "https://api.myapp.com")
     
     class func create() -> APIRequest<User,MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.request("users")
+        let request: APIRequest<User,MyAppError> = tron.swiftyJSON.request("users")
         request.method = .post
         return request
     }
     
     class func read(id: Int) -> APIRequest<User, MyAppError> {
-        return tron.request("users/\(id)")
+        return tron.swiftyJSON.request("users/\(id)")
     }
     
     class func update(id: Int, parameters: [String:AnyObject]) -> APIRequest<User, MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.request("users/\(id)")
+        let request: APIRequest<User,MyAppError> = tron.swiftyJSON.request("users/\(id)")
         request.method = .put
         request.parameters = parameters
         return request
     }
     
     class func delete(id: Int) -> APIRequest<User,MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.request("users/\(id)")
+        let request: APIRequest<User,MyAppError> = tron.swiftyJSON.request("users/\(id)")
         request.method = .delete
         return request
     }
