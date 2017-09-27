@@ -26,6 +26,10 @@ private struct HeadersResponse : Codable {
         }
     }
 }
+    
+fileprivate struct CodableError: Codable {
+    
+}
 
 class CodableTestCase: XCTestCase {
     
@@ -42,6 +46,20 @@ class CodableTestCase: XCTestCase {
         })
         
         waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testCodableErrorParsing() {
+        let tron = TRON(baseURL: "http://httpbin.org")
+        let request: APIRequest<Int,CodableError> = tron.codable.request("status/418")
+        let expectation = self.expectation(description: "Teapot")
+        request.perform(withSuccess: { _ in
+            XCTFail()
+        }) { error in
+            if error.response?.statusCode == 418 {
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 5, handler: nil)
     }
     
 }
