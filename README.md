@@ -177,6 +177,28 @@ public protocol ErrorHandlingDataResponseSerializerProtocol : DataResponseSerial
 
 ```
 
+### Codable
+
+Parsing models using Swift4 `Codable` protocol is simple, implement `Codable` protocol:
+
+```swift
+struct User: Codable {
+  let name : String
+  let id: Int
+}
+```
+
+And send a request:
+
+```swift
+let request: APIRequest<User,MyAppError> = tron.codable.request("me")
+request.perform(withSuccess: { user in
+  print("Received user: \(user.name) with id: \(user.id)")
+})
+```
+
+### JSONDecodable
+
 `TRON` provides `JSONDecodable` protocol, that allows us to parse models using [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON):
 
 ```swift
