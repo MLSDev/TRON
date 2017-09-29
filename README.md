@@ -197,6 +197,17 @@ request.perform(withSuccess: { user in
 })
 ```
 
+It's possible to customize decoders for both model and error parsing:
+
+```swift
+let userDecoder = JSONDecoder()
+// Customization for user decoder...
+let errorDecoder = JSONDecoder()
+// Customization for error decoder...
+
+let request : APIRequest<User,MyAppError> = tron.codable(modelDecoder: userDecoder, errorDecoder: errorDecoder).request("me")
+```
+
 ### JSONDecodable
 
 `TRON` provides `JSONDecodable` protocol, that allows us to parse models using [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON):
@@ -242,6 +253,12 @@ request.perform(withSuccess: { status in
 You can also use `EmptyResponse` struct in cases where you don't care about actual response.
 
 Some concepts for response serialization, including array response serializer, are described in [Response Serializers document](https://github.com/MLSDev/TRON/blob/master/Docs/Response%20Serializers.md)
+
+It's possible to customize `JSONSerialization.ReadingOptions`, that are used by `SwiftyJSON.JSON` object while parsing data of the response:
+
+```swift
+let request : APIRequest<String, MyAppError> = tron.swiftyJSON(readingOptions: .allowFragments).request("status")
+```
 
 ## RxSwift
 

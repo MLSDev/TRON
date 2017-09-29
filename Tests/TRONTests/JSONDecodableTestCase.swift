@@ -75,7 +75,7 @@ class JSONDecodableTestCase: XCTestCase {
  
     func testVariousJSONDecodableTypes()
     {
-        let json = JSON(data: Data())
+        let json = JSON([])
         expect(Float.init(json: json)) == 0
         expect(Double.init(json: json)) == 0
         expect(Bool.init(json: json)) == false
