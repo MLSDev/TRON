@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [4.0.0-beta.2](https://github.com/MLSDev/TRON/releases/tag/4.0.0-beta.2)
+
+* RxSwift dependency is bumped up to 4.0.0-beta.0, SwiftyJSON dependency is bumped to `4.0.0-alpha.1`
+* Binary release is compiled with Xcode 9.0 Swift 4 compiler.
 * Added ability to customize `JSONSerialization.ReadingOptions` for `JSONDecodableSerializer`. Unlike previous releases, no options are specified by default(Previously SwiftyJSON used `allowFragments` option).
 
 To have old behavior that allows fragmented json, use:
