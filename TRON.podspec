@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'RxSwift' do |rxswift|
       rxswift.dependency 'TRON/Core'
-      rxswift.dependency 'RxSwift', '~> 4.0.0-beta.0'
+      rxswift.dependency 'RxSwift', '~> 4.0.0'
       rxswift.source_files = 'Source/Tron+RxSwift.swift'
   end
 
