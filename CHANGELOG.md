@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [4.0.0](https://github.com/MLSDev/TRON/releases/tag/4.0.0)
+
+* Compiled with Xcode 9.1 / Swift 4.0.2
+
 ## [4.0.0-beta.2](https://github.com/MLSDev/TRON/releases/tag/4.0.0-beta.2)
 
 * RxSwift dependency is bumped up to 4.0.0-beta.0, SwiftyJSON dependency is bumped to `4.0.0-alpha.1`

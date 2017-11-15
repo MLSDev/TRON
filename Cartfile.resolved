@@ -1,4 +1,4 @@
 github "Alamofire/Alamofire" "4.5.1"
 github "Quick/Nimble" "v7.0.2"
 github "ReactiveX/RxSwift" "4.0.0"
-github "SwiftyJSON/SwiftyJSON" "4.0.0-alpha.1"
+github "SwiftyJSON/SwiftyJSON" "4.0.0"

@@ -8,10 +8,6 @@ lane :test_ios10 do
   scan(devices: ["iPhone 6s (10.3)"])
 end
 
-lane :test_ios10_legacy do
-  scan(devices: ["iPhone 6s (10.3)"], xcargs: "SWIFT_VERSION=3.0")
-end
-
 lane :test_tvos11 do
   scan(device: "Apple TV 1080p (11.1)")
 end
@@ -19,10 +15,6 @@ end
 lane :test_macos do
   scan(destination: "arch=x86_64")
   sh "bash ../codecov.sh"
-end
-
-lane :test_macos_legacy do
-  scan(destination: "arch=x86_64", xcargs: "SWIFT_VERSION=3.0")
 end
 
 lane :build_watchos do

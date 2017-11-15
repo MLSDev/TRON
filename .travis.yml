@@ -22,12 +22,6 @@ matrix:
     env: ACTION=pod_lint
   - os: osx
     env: ACTION=carthage_build
-  - os: osx
-    osx_image: xcode8.3
-    env: ACTION=test_ios10_legacy
-  - os: osx
-    osx_image: xcode8.3
-    env: ACTION=test_macos_legacy
 before_script:
 - brew update
 - brew outdated carthage || brew upgrade carthage
