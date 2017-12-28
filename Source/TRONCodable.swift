@@ -28,7 +28,7 @@ import Alamofire
 
 #if swift (>=4.0)
 
-open class CodableParser<Model: Codable, ErrorModel: Codable> : ErrorHandlingDataResponseSerializerProtocol {
+open class CodableParser<Model: Decodable, ErrorModel: Decodable> : ErrorHandlingDataResponseSerializerProtocol {
         
     public typealias SerializedError = ErrorModel
     
@@ -70,7 +70,7 @@ public enum CodableDownloadSerializationError : Error {
 }
     
 /// `JSONDecodable` download response parser
-open class CodableDownloadParser<Model: Codable, ErrorModel: Codable> : ErrorHandlingDownloadResponseSerializerProtocol
+open class CodableDownloadParser<Model: Decodable, ErrorModel: Decodable> : ErrorHandlingDownloadResponseSerializerProtocol
 {
     public typealias SerializedError = ErrorModel
     
@@ -117,7 +117,7 @@ open class CodableDownloadParser<Model: Codable, ErrorModel: Codable> : ErrorHan
     }
 }
     
-// Serializer for objects, that conform to `Codable` protocol.
+// Serializer for objects, that conform to `Decodable` protocol.
 open class CodableSerializer {
     
     // `TRON` instance to be used to send requests
@@ -146,7 +146,7 @@ open class CodableSerializer {
      
      - returns: APIRequest instance.
      */
-    public func request<Model: Codable, ErrorModel:Codable>(_ path: String) -> APIRequest<Model,ErrorModel>
+    public func request<Model: Decodable, ErrorModel:Decodable>(_ path: String) -> APIRequest<Model,ErrorModel>
     {
         return tron.request(path,
                             responseSerializer: CodableParser(modelDecoder: modelDecoder,
@@ -163,7 +163,7 @@ open class CodableSerializer {
      
      - returns: APIRequest instance.
      */
-    public func upload<Model:Codable, ErrorModel:Codable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model,ErrorModel>
+    public func upload<Model:Decodable, ErrorModel:Decodable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model,ErrorModel>
     {
         return tron.upload(path, fromFileAt: fileURL,
                            responseSerializer: CodableParser(modelDecoder: modelDecoder,
@@ -179,7 +179,7 @@ open class CodableSerializer {
      
      - returns: APIRequest instance.
      */
-    public func upload<Model:Codable, ErrorModel:Codable>(_ path: String, data: Data) -> UploadAPIRequest<Model,ErrorModel>
+    public func upload<Model:Decodable, ErrorModel:Decodable>(_ path: String, data: Data) -> UploadAPIRequest<Model,ErrorModel>
     {
         return tron.upload(path, data: data, responseSerializer: CodableParser(modelDecoder: modelDecoder,
                                                                                errorDecoder: errorDecoder))
@@ -194,7 +194,7 @@ open class CodableSerializer {
      
      - returns: APIRequest instance.
      */
-    public func upload<Model:Codable, ErrorModel:Codable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model,ErrorModel>
+    public func upload<Model:Decodable, ErrorModel:Decodable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model,ErrorModel>
     {
         return tron.upload(path, from: stream, responseSerializer: CodableParser(modelDecoder: modelDecoder,
                                                                                  errorDecoder: errorDecoder))
@@ -209,7 +209,7 @@ open class CodableSerializer {
      
      - returns: MultipartAPIRequest instance.
      */
-    public func uploadMultipart<Model:Codable, ErrorModel:Codable>(_ path: String,
+    public func uploadMultipart<Model:Decodable, ErrorModel:Decodable>(_ path: String,
                                                                    formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model,ErrorModel>
     {
         return tron.uploadMultipart(path,
@@ -229,7 +229,7 @@ open class CodableSerializer {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    public func download<Model:Codable, ErrorModel:Codable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<Model, ErrorModel>
+    public func download<Model:Decodable, ErrorModel:Decodable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<Model, ErrorModel>
     {
         return tron.download(path,
                              to: destination,
@@ -250,7 +250,7 @@ open class CodableSerializer {
      
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
-    public func download<Model:Codable,ErrorModel:Codable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data) -> DownloadAPIRequest<Model, ErrorModel>
+    public func download<Model:Decodable,ErrorModel:Decodable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data) -> DownloadAPIRequest<Model, ErrorModel>
     {
         return tron.download(path, to: destination,
                              resumingFrom: resumingFrom,

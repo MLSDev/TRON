@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* Loosen CodableParser generic constraints to be able to work with `Decodable` protocol instead of `Codable`.
+
 ## [4.0.0](https://github.com/MLSDev/TRON/releases/tag/4.0.0)
 
 * Compiled with Xcode 9.1 / Swift 4.0.2
