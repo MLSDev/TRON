@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [4.1.0](https://github.com/MLSDev/TRON/releases/tag/4.1.0)
+
 * Deprecate TRON level headerBuilder in favor of Alamofire.requestAdapter.
 * Loosen CodableParser generic constraints to be able to work with `Decodable` protocol instead of `Codable`.
 
