@@ -34,6 +34,7 @@ import Alamofire
 open class TRON : TronDelegate {
     
     /// Header builder to be used by default in all requests. Can be overridden for specific requests.
+    @available(*, deprecated, message: "Global headerBuilder is deprecated and may be removed in future versions of the framework. To have global request customization, please use Alamofire.RequestAdapter - https://github.com/Alamofire/Alamofire/blob/master/Documentation/AdvancedUsage.md#requestadapter")
     open var headerBuilder : HeaderBuildable = HeaderBuilder(defaultHeaders: ["Accept":"application/json"])
     
     /// URL builder to be used by default in all requests. Can be overridden for specific requests.
