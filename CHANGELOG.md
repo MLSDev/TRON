@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* Allow `EmptyResponse` to be used with CodableParser when network response does not contain valid JSON.
+
 ## [4.1.0](https://github.com/MLSDev/TRON/releases/tag/4.1.0)
 
 * Deprecate TRON level headerBuilder in favor of Alamofire.requestAdapter.

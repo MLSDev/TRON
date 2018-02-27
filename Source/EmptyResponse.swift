@@ -27,8 +27,14 @@ import Foundation
 
 #if swift(>=4.0)
     /// Struct, that can be used as Model generic constraint in cases, where you don't care about response type.
-    public struct EmptyResponse: Codable {}
+    public struct EmptyResponse: Codable {
+        /// Creates `EmptyResponse`.
+        public init() {}
+    }
 #else
     /// Struct, that can be used as Model generic constraint in cases, where you don't care about response type.
-    public struct EmptyResponse {}
+    public struct EmptyResponse {
+        /// Creates `EmptyResponse`.
+        public init() {}
+    }
 #endif

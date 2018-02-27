@@ -62,6 +62,20 @@ class CodableTestCase: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
+    func testEmptyResponseStillCallsSuccessBlock() {
+        let tron = TRON(baseURL: "http://httpbin.org")
+        let request : APIRequest<EmptyResponse, CodableError> = tron.codable.request("headers")
+        request.method = .head
+        let expectation = self.expectation(description: "Empty response")
+        request.perform(withSuccess: { _ in
+            expectation.fulfill()
+        }, failure: { _ in
+            XCTFail()
+            }
+        )
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
 }
 
 #endif

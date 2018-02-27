@@ -49,6 +49,10 @@ open class CodableParser<Model: Decodable, ErrorModel: Decodable> : ErrorHandlin
     open var serializeResponse: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Model> {
         return { [weak self] request, response, data, error in
             do {
+                if Model.self is EmptyResponse.Type {
+                    // swiftlint:disable:next force_cast
+                    return Result.success(EmptyResponse() as! Model)
+                }
                 let model = try (self?.modelDecoder ?? JSONDecoder()).decode(Model.self, from: data ?? Data())
                 return Result.success(model)
             } catch {
@@ -96,6 +100,10 @@ open class CodableDownloadParser<Model: Decodable, ErrorModel: Decodable> : Erro
         return { [weak self] request, response, url, error in
             if let url = url, let data = try? Data(contentsOf: url) {
                 do {
+                    if Model.self is EmptyResponse.Type {
+                        // swiftlint:disable:next force_cast
+                        return Result.success(EmptyResponse() as! Model)
+                    }
                     let model = try (self?.modelDecoder ?? JSONDecoder()).decode(Model.self, from: data)
                     return Result.success(model)
                 } catch {
