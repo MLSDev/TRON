@@ -353,6 +353,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A722F5E1C5A49AE0087908D /* Build configuration list for PBXNativeTarget "TRON" */;
 			buildPhases = (
+				9A7FA1B71FBCBE6B00C80AED /* SwiftLint */,
 				9A722F451C5A49AE0087908D /* Sources */,
 				9A722F461C5A49AE0087908D /* Frameworks */,
 				9A722F471C5A49AE0087908D /* Headers */,
@@ -495,6 +496,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = " exec \"${SRCROOT}/scripts/copy-carthage-frameworks.sh\"";
+		};
+		9A7FA1B71FBCBE6B00C80AED /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint autocorrect --config \"${SRCROOT}/.swiftlint.yml\"\nswiftlint --config \"${SRCROOT}/.swiftlint.yml\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 

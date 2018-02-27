@@ -1,6 +1,6 @@
 //
 //  NetworkActivityPlugin.swift
-//  Hint
+//  TRON
 //
 //  Created by Denys Telezhkin on 20.01.16.
 //  Copyright © 2015 - present MLSDev. All rights reserved.
@@ -34,11 +34,11 @@ import Alamofire
  
  - Note: this plugin should be used globally by `TRON` instance. It also assumes, that you have only one `TRON` in your application.
  */
-open class NetworkActivityPlugin : Plugin {
-    
-    fileprivate let application : UIApplication
-    
-    required public init(application : UIApplication) {
+open class NetworkActivityPlugin: Plugin {
+
+    fileprivate let application: UIApplication
+
+    required public init(application: UIApplication) {
         self.application = application
     }
     /**
@@ -51,11 +51,13 @@ open class NetworkActivityPlugin : Plugin {
             }
         }
     }
-    
+
+    /// Called when network request was sent, increases networkActivityCount by 1
     open func didSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         DispatchQueue.main.async { [weak self] in self?.networkActivityCount += 1 }
     }
-    
+
+    /// Called when response for request was received, decreases networkActivityCount by 1
     open func willProcessResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         DispatchQueue.main.async { [weak self] in self?.networkActivityCount -= 1 }
     }

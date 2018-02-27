@@ -1,6 +1,6 @@
 //
 //  NetworkLoggerPlugin.swift
-//  Hint
+//  TRON
 //
 //  Created by Denys Telezhkin on 20.01.16.
 //  Copyright © 2015 - present MLSDev. All rights reserved.
@@ -29,26 +29,29 @@ import Alamofire
 /**
  Plugin, that can be used to log network success and failure responses.
  */
-open class NetworkLoggerPlugin : Plugin {
-    
+open class NetworkLoggerPlugin: Plugin {
+
     /// Log successful requests
     open var logSuccess = false
-    
+
     /// Log unsuccessful requests
     open var logFailures = true
-    
+
     /// Log failures produced when request is cancelled. This property only works, if logFailures property is set to true.
     open var logCancelledRequests = true
-    
+
+    /// Creates 'NetworkLoggerPlugin'
     public init() {}
-    
+
+    /// Called, when response was successfully parsed. If `logSuccess` property has been turned on, prints debug description of request.
     open func didSuccessfullyParseResponse<Model, ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?), creating result: Model, forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         if logSuccess {
             debugPrint("Request success: ")
             debugPrint(request)
         }
     }
-    
+
+    /// Called, when request received error. If `logFailures` has been turned on, prints debug description of request and error. If `logCancelledRequests` property is turned to true, they are also printed.
     open func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>, forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         if logFailures {
             if (error.error as NSError?)?.code == NSURLErrorCancelled, !logCancelledRequests {

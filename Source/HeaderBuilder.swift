@@ -1,6 +1,6 @@
 //
 //  HeaderBuilder.swift
-//  Hint
+//  TRON
 //
 //  Created by Denys Telezhkin on 11.12.15.
 //  Copyright © 2015 - present MLSDev. All rights reserved.
@@ -29,19 +29,19 @@ import Foundation
  `HeaderBuilder` class is used to construct HTTP headers for URLRequest.
  */
 open class HeaderBuilder: HeaderBuildable {
-    
+
     /// Default headers to be included in all requests
-    open let defaultHeaders : [String:String]
-    
+    open let defaultHeaders: [String: String]
+
     /**
      Initialize with defaultHeaders
      
      - parameter defaultHeaders: Default headers to be added.
      */
-    public init(defaultHeaders: [String:String]) {
+    public init(defaultHeaders: [String: String]) {
         self.defaultHeaders = defaultHeaders
     }
-    
+
     /**
      Construct headers for specific request.
      
@@ -51,12 +51,9 @@ open class HeaderBuilder: HeaderBuildable {
      
      - returns: HTTP headers for current request
      */
-    open func headers(forAuthorizationRequirement requirement: AuthorizationRequirement, including headers: [String : String]) -> [String : String] {
+    open func headers(forAuthorizationRequirement requirement: AuthorizationRequirement, including headers: [String: String]) -> [String: String] {
         var combinedHeaders = defaultHeaders
-        headers.forEach {
-            combinedHeaders[$0.0] = $0.1
-        }
+        headers.forEach { combinedHeaders[$0.0] = $0.1 }
         return combinedHeaders
     }
 }
-

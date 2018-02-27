@@ -26,10 +26,11 @@
 import Foundation
 import Alamofire
 
+/// Types of `DownloadAPIRequest`.
 public enum DownloadRequestType {
     /// Will create `NSURLSessionDownloadTask` using `downloadTaskWithRequest(_)` method
     case download(DownloadRequest.DownloadFileDestination)
-    
+
     /// Will create `NSURLSessionDownloadTask` using `downloadTaskWithResumeData(_)` method
     case downloadResuming(data: Data, destination: DownloadRequest.DownloadFileDestination)
 }
@@ -37,41 +38,39 @@ public enum DownloadRequestType {
 /**
  `DownloadAPIRequest` encapsulates download request creation logic, stubbing options, and response/error parsing.
  */
-open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> {
-    
+open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
+
     /// DownloadAPIREquest type
-    let type : DownloadRequestType
-    
+    let type: DownloadRequestType
+
     /// Serialize download response into `Result<Model>`.
     public typealias DownloadResponseParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> Result<Model>
-    
+
     /// Serializes received failed response into APIError<ErrorModel> object
     public typealias DownloadErrorParser = (Result<Model>?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> APIError<ErrorModel>
-    
-    
+
     /// Serializes received response into Result<Model>
-    open var responseParser : DownloadResponseParser
-    
+    open var responseParser: DownloadResponseParser
+
     /// Serializes received error into APIError<ErrorModel>
-    open var errorParser : DownloadErrorParser
-    
+    open var errorParser: DownloadErrorParser
+
     /// Closure that is applied to request before it is sent.
     open var validationClosure: (DownloadRequest) -> DownloadRequest = { $0.validate() }
-    
-    // Creates `DownloadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
-    public init<Serializer : ErrorHandlingDownloadResponseSerializerProtocol>(type: DownloadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
-        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel
-    {
+
+    /// Creates `DownloadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
+    public init<Serializer: ErrorHandlingDownloadResponseSerializerProtocol>(type: DownloadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
+        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
         self.type = type
-        self.responseParser = { request,response, data, error in
-            responseSerializer.serializeResponse(request,response,data,error)
+        self.responseParser = { request, response, data, error in
+            responseSerializer.serializeResponse(request, response, data, error)
         }
-        self.errorParser = { result, request,response, data, error in
-            return responseSerializer.serializeError(result,request, response, data, error)
+        self.errorParser = { result, request, response, data, error in
+            return responseSerializer.serializeError(result, request, response, data, error)
         }
         super.init(path: path, tron: tron)
     }
-    
+
     override func alamofireRequest(from manager: SessionManager) -> Request? {
         switch type {
         case .download(let destination):
@@ -79,12 +78,13 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> 
                                     encoding: parameterEncoding,
                                     headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers),
                                     to: destination)
-            
+
         case .downloadResuming(let data, let destination):
             return manager.download(resumingWith: data, to: destination)
         }
     }
-    
+
+    @discardableResult
     /**
      Perform current request with completion block, that contains Alamofire.Response.
      
@@ -92,16 +92,14 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> 
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    @discardableResult
     open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DownloadResponse<Model>) -> Void)) -> DownloadRequest? {
         if performStub(completion: completion) {
             return nil
         }
         return performAlamofireRequest(completion)
     }
-    
-    private func performAlamofireRequest(_ completion : @escaping (DownloadResponse<Model>) -> Void) -> DownloadRequest
-    {
+
+    private func performAlamofireRequest(_ completion : @escaping (DownloadResponse<Model>) -> Void) -> DownloadRequest {
         guard let manager = tronDelegate?.manager else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
@@ -110,27 +108,30 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> 
             fatalError("Failed to receive DataRequest")
         }
         willSendAlamofireRequest(request)
-        if !tronDelegate!.manager.startRequestsImmediately {
+        if !manager.startRequestsImmediately {
             request.resume()
         }
         didSendAlamofireRequest(request)
-        return validationClosure(request).response(queue: resultDeliveryQueue, responseSerializer: downloadResponseSerializer(with: request), completionHandler: { downloadResponse in
+        return validationClosure(request).response(queue: resultDeliveryQueue,
+                                                   responseSerializer: downloadResponseSerializer(with: request),
+                                                   completionHandler: { downloadResponse in
             self.didReceiveDownloadResponse(downloadResponse, forRequest: request)
             completion(downloadResponse)
         })
     }
-    
+
     internal func downloadResponseSerializer(with request: DownloadRequest) -> DownloadResponseSerializer<Model> {
         return DownloadResponseSerializer<Model> { urlRequest, response, url, error in
-            
-            self.willProcessResponse((urlRequest,response,nil,error), for: request)
-            
-            var result : Alamofire.Result<Model>
-            var apiError : APIError<ErrorModel>?
-            var parsedModel : Model?
-            
+
+            self.willProcessResponse((urlRequest, response, nil, error), for: request)
+
+            var result: Alamofire.Result<Model>
+            var apiError: APIError<ErrorModel>?
+            var parsedModel: Model?
+
             if let error = error {
                 apiError = self.errorParser(nil, urlRequest, response, url, error)
+                // swiftlint:disable:next force_unwrapping
                 result = .failure(apiError!)
             } else {
                 result = self.responseParser(urlRequest, response, url, error)
@@ -139,17 +140,17 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> 
                     result = .success(model)
                 } else {
                     apiError = self.errorParser(result, urlRequest, response, url, error)
+                    // swiftlint:disable:next force_unwrapping
                     result = .failure(apiError!)
                 }
             }
             if let error = apiError {
-                self.didReceiveError(error, for: (urlRequest,response,nil,error), request: request)
+                self.didReceiveError(error, for: (urlRequest, response, nil, error), request: request)
             } else if let model = parsedModel {
-                self.didSuccessfullyParseResponse((urlRequest,response,nil,error), creating: model, forRequest: request)
+                self.didSuccessfullyParseResponse((urlRequest, response, nil, error), creating: model, forRequest: request)
             }
-            
+
             return result
         }
     }
 }
-

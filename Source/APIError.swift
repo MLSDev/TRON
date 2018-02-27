@@ -1,6 +1,6 @@
 //
-//  ErrorBuilder.swift
-//  Hint
+//  APIError.swift
+//  TRON
 //
 //  Created by Denys Telezhkin on 11.12.15.
 //  Copyright © 2015 - present MLSDev. All rights reserved.
@@ -27,22 +27,22 @@ import Foundation
 
 /// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
 public struct APIError<T> : Error, LocalizedError {
-    
+
     /// URLRequest that was unsuccessful
-    public let request : URLRequest?
-    
+    public let request: URLRequest?
+
     /// Response received from web service
-    public let response : HTTPURLResponse?
-    
+    public let response: HTTPURLResponse?
+
     /// Data, contained in response
-    public let data : Data?
-    
+    public let data: Data?
+
     /// Error instance, created by Foundation Loading System or Alamofire.
-    public let error : Error?
-    
+    public let error: Error?
+
     /// Parsed Error model
-    public var errorModel : T?
-    
+    public var errorModel: T?
+
     /**
      Initialize `APIError` with unsuccessful request info.
      
@@ -54,14 +54,13 @@ public struct APIError<T> : Error, LocalizedError {
      
      - error: Error instance, created by Foundation Loading System or Alamofire.
      */
-    public init(request : URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?)
-    {
+    public init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
         self.request = request
         self.response = response
         self.data = data
         self.error = error
     }
-    
+
     /**
      Convenience initializer, that can be used to create fixtured `APIError`.
      */
@@ -69,10 +68,9 @@ public struct APIError<T> : Error, LocalizedError {
         self.init(request: nil, response: nil, data: nil, error: nil)
         self.errorModel = errorModel
     }
-    
+
+    /// Prints localized description of error inside
     public var errorDescription: String? {
         return (errorModel as? LocalizedError)?.localizedDescription ?? (error as? LocalizedError)?.localizedDescription
     }
 }
-
-

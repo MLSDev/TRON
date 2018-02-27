@@ -1,6 +1,6 @@
 //
 //  APIStub.swift
-//  Hint
+//  TRON
 //
 //  Created by Denys Telezhkin on 11.12.15.
 //  Copyright © 2015 - present MLSDev. All rights reserved.
@@ -26,11 +26,11 @@
 import Foundation
 import Alamofire
 
-private func delay(_ delay:Double, closure:@escaping ()->Void) {
+private func delay(_ delay: Double, closure:@escaping () -> Void) {
     DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: closure)
 }
 
-public extension APIStub {
+extension APIStub {
     /**
      Build stub model from file in specified bundle
      
@@ -38,8 +38,7 @@ public extension APIStub {
      - parameter bundle: bundle to look for file.
      */
     public func buildModel(fromFileNamed fileName: String, inBundle bundle: Bundle = Bundle.main) {
-        if let filePath = bundle.path(forResource: fileName as String, ofType: nil)
-        {
+        if let filePath = bundle.path(forResource: fileName as String, ofType: nil) {
             successData = try? Data(contentsOf: URL(fileURLWithPath: filePath))
         } else {
             print("Failed to build model from \(fileName) in \(bundle)")
@@ -48,67 +47,68 @@ public extension APIStub {
 }
 
 /// Error, that will be thrown if model creation failed while stubbing network request.
-public struct APIStubConstructionError : Error {}
+public struct APIStubConstructionError: Error {}
 
 /**
  `APIStub` instance that is used to represent stubbed successful or unsuccessful response value.
  */
 open class APIStub<Model, ErrorModel> {
-    
+
     /// Should the stub be successful. By default - true
     open var successful = true
-    
+
     /// Data to be passed to successful stub
-    open var successData : Data?
-    
-    open var successDownloadURL : URL?
-    
+    open var successData: Data?
+
+    /// Download URL to be used when working with DownloadAPIRequest stubs.
+    open var successDownloadURL: URL?
+
     /// Error to be passed into request's `errorParser` if stub is failureful.
-    open var errorRequest : URLRequest?
-    
+    open var errorRequest: URLRequest?
+
     /// HTTP response to be passed into request's `errorParser` if stub is failureful.
     open var errorResponse: HTTPURLResponse?
-    
+
     /// Error Data to be passed into request's `errorParser` if stub is failureful.
-    open var errorData : Data?
-    
+    open var errorData: Data?
+
     /// Loading error to be passed into request's `errorParser` if stub is failureful.
-    open var loadingError : Error?
-    
+    open var loadingError: Error?
+
     /// Response model closure for successful API stub
-    open var modelClosure : (() -> Model?)!
-    
+    open var modelClosure : (() -> Model?)?
+
     /// Error model closure for unsuccessful API stub
     open var errorClosure: () -> APIError<ErrorModel> = { APIError(request: nil, response: nil, data: nil, error: nil) }
-    
+
     /// Delay before stub is executed
     open var stubDelay = 0.1
-    
+
     /// Creates `APIStub`, and configures it for `request`.
-    public init(request: BaseRequest<Model,ErrorModel>) {
-        if let request = request as? APIRequest<Model,ErrorModel>{
+    public init(request: BaseRequest<Model, ErrorModel>) {
+        if let request = request as? APIRequest<Model, ErrorModel> {
             let serializer = request.responseParser
             let errorSerializer = request.errorParser
             modelClosure = { [unowned self] in
-                return serializer(nil,nil,self.successData,nil).value
+                return serializer(nil, nil, self.successData, nil).value
             }
             errorClosure = { [unowned self] in
                 return errorSerializer(nil, self.errorRequest, self.errorResponse, self.errorData, self.loadingError)
             }
-        } else if let request = request as? UploadAPIRequest<Model,ErrorModel> {
+        } else if let request = request as? UploadAPIRequest<Model, ErrorModel> {
             let serializer = request.responseParser
             let errorSerializer = request.errorParser
             modelClosure = { [unowned self] in
-                return serializer(nil,nil,self.successData,nil).value
+                return serializer(nil, nil, self.successData, nil).value
             }
             errorClosure = { [unowned self] in
                 return errorSerializer(nil, self.errorRequest, self.errorResponse, self.errorData, self.loadingError)
             }
-        } else if let request = request as? DownloadAPIRequest<Model,ErrorModel> {
+        } else if let request = request as? DownloadAPIRequest<Model, ErrorModel> {
             let serializer = request.responseParser
             let errorSerializer = request.errorParser
             modelClosure = { [unowned self] in
-                return serializer(nil,nil,self.successDownloadURL,nil).value
+                return serializer(nil, nil, self.successDownloadURL, nil).value
             }
             errorClosure = { [unowned self] in
                 return errorSerializer(nil, self.errorRequest, self.errorResponse, nil, self.loadingError)
@@ -117,7 +117,7 @@ open class APIStub<Model, ErrorModel> {
             modelClosure = { return nil }
         }
     }
-    
+
     /**
      Stub current request.
      
@@ -126,7 +126,7 @@ open class APIStub<Model, ErrorModel> {
      - parameter failureBlock: Failure block to be executed if request fails. Nil by default.
      */
     open func performStub(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) {
-        performStub { (dataResponse:DataResponse<Model>) -> Void in
+        performStub { (dataResponse: DataResponse<Model>) -> Void in
             switch dataResponse.result {
             case .success(let model):
                 successBlock?(model)
@@ -134,12 +134,12 @@ open class APIStub<Model, ErrorModel> {
                 if let error = error as? APIError<ErrorModel> {
                     failureBlock?(error)
                 } else {
-                    failureBlock?(APIError(request: nil, response:nil,data: nil, error: error))
+                    failureBlock?(APIError(request: nil, response: nil, data: nil, error: error))
                 }
             }
         }
     }
-    
+
     /**
      Stub current request.
      
@@ -147,7 +147,7 @@ open class APIStub<Model, ErrorModel> {
      */
     open func performStub(withCompletion completionBlock : @escaping ((Alamofire.DataResponse<Model>) -> Void)) {
         delay(stubDelay) {
-            let result : Alamofire.Result<Model>
+            let result: Alamofire.Result<Model>
             if self.successful {
                 if let model = self.modelClosure?() {
                     result = Result.success(model)
@@ -161,7 +161,7 @@ open class APIStub<Model, ErrorModel> {
             completionBlock(response)
         }
     }
-    
+
     /**
      Stub current download request.
      
@@ -169,7 +169,7 @@ open class APIStub<Model, ErrorModel> {
      */
     open func performStub(withCompletion completionBlock : @escaping ((Alamofire.DownloadResponse<Model>) -> Void)) {
         delay(stubDelay) {
-            let result : Alamofire.Result<Model>
+            let result: Alamofire.Result<Model>
             if self.successful {
                 if let model = self.modelClosure?() {
                     result = Result.success(model)

@@ -60,15 +60,15 @@ extension UploadAPIRequest {
     open func rxMultipartResult(memoryThreshold threshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold,
                                 uploadProgress: (Request.ProgressHandler)? = nil) -> Observable<Model> {
         return Observable.create { observer in
-            var request : Alamofire.Request?
+            var request: Alamofire.Request?
             self.performMultipart(withSuccess: { result in
                 observer.onNext(result)
                 observer.onCompleted()
                 }, failure: { error in
                     observer.onError(error)
                 },
-                encodingMemoryThreshold : threshold,
-                encodingCompletion : { completion in
+                encodingMemoryThreshold: threshold,
+                encodingCompletion: { completion in
                     if case let SessionManager.MultipartFormDataEncodingResult.success(originalRequest, _, _) = completion {
                         request = originalRequest
                         if let progressClosure = uploadProgress {

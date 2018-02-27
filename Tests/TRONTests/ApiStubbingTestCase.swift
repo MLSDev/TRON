@@ -73,8 +73,8 @@ class ApiStubbingTestCase: XCTestCase {
         request.stubbingEnabled = true
         request.apiStub.buildModel(fromFileNamed: "user.json", inBundle: Bundle(for: type(of: self)))
         
-        expect(request.apiStub.modelClosure()?.name) == "Alan Bradley"
-        expect(request.apiStub.modelClosure()?.id) == 1
+        expect(request.apiStub.modelClosure?()?.name) == "Alan Bradley"
+        expect(request.apiStub.modelClosure?()?.id) == 1
     }
     
     func testMultipartStubbingSuccessWorks() {

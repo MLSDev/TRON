@@ -1,6 +1,6 @@
 //
 //  Plugin.swift
-//  Hint
+//  TRON
 //
 //  Created by Denys Telezhkin on 20.01.16.
 //  Copyright © 2015 - present MLSDev. All rights reserved.
@@ -30,33 +30,32 @@ import Alamofire
  Protocol that serves to provide plugin functionality to `TRON`.
  */
 public protocol Plugin {
-    
+
     /// Notifies that `request` is about to be converted to Alamofire.Request
     ///
     /// - parameter request: TRON BaseRequest
-    func willSendRequest<Model,ErrorModel>(_ request: BaseRequest<Model,ErrorModel>)
-    
-    
+    func willSendRequest<Model, ErrorModel>(_ request: BaseRequest<Model, ErrorModel>)
+
     /// Notifies that `request` formed from `tronRequest`, is about to be sent.
     ///
     /// - parameter request: Alamofire.Request instance
     /// - parameter formedFrom: TRON.BaseRequest instance or one of the subclasses
-    func willSendAlamofireRequest<Model,ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-    
+    func willSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
+
     /// Notifies that `request`, formed from `tronRequest`, was sent.
     ///
     /// - parameter request:     Alamofire.Request instance
     /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
-    func didSendAlamofireRequest<Model,ErrorModel>(_ request : Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-    
+    func didSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
+
     /// Notifies that `response` was received for `request`, formed from `tronRequest`.
     ///
     /// - parameter response:    Tuple with (URLRequest?, HTTPURLResponse?, Data?, Error?)
     /// - parameter request:     Alamofire.Request instance
     /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
-    func willProcessResponse<Model,ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
-                             forRequest request: Request,
-                             formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+    func willProcessResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
+                                                forRequest request: Request,
+                                                formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
 
     /// Notifies that `response` for `request`, formed from `tronRequest`, was successfully parsed into `result`.
     ///
@@ -64,74 +63,58 @@ public protocol Plugin {
     /// - parameter result:      parsed Model
     /// - parameter request:     Alamofire.Request instance
     /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
-    func didSuccessfullyParseResponse<Model,ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
-                                        creating result: Model,
-                                        forRequest request: Request,
-                                        formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-    
+    func didSuccessfullyParseResponse<Model, ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
+                                                         creating result: Model,
+                                                         forRequest request: Request,
+                                                         formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
+
     /// Notifies that request processed response and created `APIError<ErrorModel>` instance.
     ///
     /// - parameter error:       parsed APIError<ErrorModel> instance
     /// - parameter response:    Tuple with (URLRequest?, HTTPURLResponse?, Data?, Error?)
     /// - parameter request:     Alamofire.Request instance
     /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
-    func didReceiveError<Model,ErrorModel>(_ error: APIError<ErrorModel>,
-                            forResponse response : (URLRequest?, HTTPURLResponse?, Data?, Error?),
-                                request: Alamofire.Request,
-                                formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-    
+    func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>,
+                                            forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
+                                            request: Alamofire.Request,
+                                            formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
+
     /// Notifies about data `response` that was received for `request`, formed from `tronRequest`. This method is called after parsing has completed.
     ///
     /// - parameter response:    DataResponse instance
     /// - parameter request:     Alamofire.Request instance
     /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
-    func didReceiveDataResponse<Model,ErrorModel>(_ response: DataResponse<Model>, forRequest request: Alamofire.Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-    
-    
+    func didReceiveDataResponse<Model, ErrorModel>(_ response: DataResponse<Model>, forRequest request: Alamofire.Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
+
     /// Notifies about download `response` that was received for `request`, formed from `tronRequest`. This method is called after parsing has completed.
     ///
     /// - parameter _response:   DownloadResponse instance
     /// - parameter request:     Alamofire.Request instance
     /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses.
-    func didReceiveDownloadResponse<Model,ErrorModel>(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
+    func didReceiveDownloadResponse<Model, ErrorModel>(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest, formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
 }
 
+/// Default empty methods for Plugin protocol
 public extension Plugin {
-    func willSendRequest<Model,ErrorModel>(_ request: BaseRequest<Model,ErrorModel>) {
-        
-    }
+    func willSendRequest<Model, ErrorModel>(_ request: BaseRequest<Model, ErrorModel>) {}
 
-    func willSendAlamofireRequest<Model,ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>) {
-        
-    }
+    func willSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
 
-    func didSendAlamofireRequest<Model,ErrorModel>(_ request : Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>) {
-        
-    }
+    func didSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
 
-    func willProcessResponse<Model,ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>) {
-        
-    }
-    
-    func didSuccessfullyParseResponse<Model,ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
-                                      creating result: Model,
-                                      forRequest request: Request,
-                                      formedFrom tronRequest: BaseRequest<Model,ErrorModel>){
-        
-    }
-    
-    func didReceiveError<Model,ErrorModel>(_ error: APIError<ErrorModel>,
-                         forResponse response : (URLRequest?, HTTPURLResponse?, Data?, Error?),
-                         request: Alamofire.Request,
-                         formedFrom tronRequest: BaseRequest<Model,ErrorModel>){
-        
-    }
-    
-    func didReceiveDataResponse<Model,ErrorModel>(_ response: DataResponse<Model>, forRequest request: Alamofire.Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>) {
-        
-    }
-    
-    func didReceiveDownloadResponse<Model,ErrorModel>(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest, formedFrom tronRequest: BaseRequest<Model,ErrorModel>) {
-        
-    }
+    func willProcessResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
+
+    func didSuccessfullyParseResponse<Model, ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
+                                                         creating result: Model,
+                                                         forRequest request: Request,
+                                                         formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
+
+    func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>,
+                                            forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
+                                            request: Alamofire.Request,
+                                            formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
+
+    func didReceiveDataResponse<Model, ErrorModel>(_ response: DataResponse<Model>, forRequest request: Alamofire.Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
+
+    func didReceiveDownloadResponse<Model, ErrorModel>(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
 }

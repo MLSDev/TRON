@@ -1,6 +1,6 @@
 //
 //  RequestBuilder.swift
-//  Hint
+//  TRON
 //
 //  Created by Denys Telezhkin on 11.12.15.
 //  Copyright © 2015 - present MLSDev. All rights reserved.
@@ -28,11 +28,11 @@ import Foundation
 /**
  `URLBuilder` constructs resulting URL by calling `URLByAppendingPathComponent` method on baseURL.
  */
-open class URLBuilder : URLBuildable {
-    
+open class URLBuilder: URLBuildable {
+
     /// Base URL string
-    open let baseURLString : String
-    
+    open let baseURLString: String
+
     /**
      Initialize URL builder with Base URL String
      
@@ -41,7 +41,7 @@ open class URLBuilder : URLBuildable {
     public init(baseURL: String) {
         self.baseURLString = baseURL
     }
-    
+
     /**
      Construct URL with given path
      

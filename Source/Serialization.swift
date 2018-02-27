@@ -1,6 +1,6 @@
 //
 //  ResponseBuilder.swift
-//  Hint
+//  TRON
 //
 //  Created by Denys Telezhkin on 11.12.15.
 //  Copyright © 2015 - present MLSDev. All rights reserved.
@@ -27,19 +27,19 @@ import Foundation
 import Alamofire
 
 /// The type in which all data and upload response serializers must conform to in order to serialize a response.
-public protocol ErrorHandlingDataResponseSerializerProtocol : DataResponseSerializerProtocol {
+public protocol ErrorHandlingDataResponseSerializerProtocol: DataResponseSerializerProtocol {
     /// The type of serialized object to be created by this `ErrorHandlingDataResponseSerializerProtocol`.
     associatedtype SerializedError
-    
+
     /// A closure used by response handlers that takes a parsed result, request, response, data and error and returns a serialized error.
-    var serializeError: (Alamofire.Result<SerializedObject>?,URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> { get }
+    var serializeError: (Alamofire.Result<SerializedObject>?, URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> { get }
 }
 
 /// The type in which all download response serializers must conform to in order to serialize a response.
-public protocol ErrorHandlingDownloadResponseSerializerProtocol : DownloadResponseSerializerProtocol {
+public protocol ErrorHandlingDownloadResponseSerializerProtocol: DownloadResponseSerializerProtocol {
     /// The type of serialized object to be created by this `ErrorHandlingDownloadResponseSerializerProtocol`.
     associatedtype SerializedError
-    
+
     /// A closure used by response handlers that takes a parsed result, request, response, url and error and returns a serialized error.
-    var serializeError: (Alamofire.Result<SerializedObject>?,URLRequest?, HTTPURLResponse?, URL?, Error?) -> APIError<SerializedError> { get }
+    var serializeError: (Alamofire.Result<SerializedObject>?, URLRequest?, HTTPURLResponse?, URL?, Error?) -> APIError<SerializedError> { get }
 }
