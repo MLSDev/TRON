@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* Improved output of `NetworkLoggerPlugin`, which now includes status codes, HTTP body contents, and some emojis 🚀
+
 ## [4.1.1](https://github.com/MLSDev/TRON/releases/tag/4.1.1)
 
 * Allow `EmptyResponse` to be used with CodableParser when network response does not contain valid JSON.

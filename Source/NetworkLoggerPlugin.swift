@@ -43,22 +43,34 @@ open class NetworkLoggerPlugin: Plugin {
     /// Creates 'NetworkLoggerPlugin'
     public init() {}
 
-    /// Called, when response was successfully parsed. If `logSuccess` property has been turned on, prints debug description of request.
+    /// Called, when response was successfully parsed. If `logSuccess` property has been turned on, prints cURL representation of request.
     open func didSuccessfullyParseResponse<Model, ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?), creating result: Model, forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         if logSuccess {
-            debugPrint("Request success: ")
             debugPrint(request)
+            print("Request success ✅")
         }
     }
 
-    /// Called, when request received error. If `logFailures` has been turned on, prints debug description of request and error. If `logCancelledRequests` property is turned to true, they are also printed.
+    /// Called, when request received error. If `logFailures` has been turned on, prints cURL representation of request and helpful debugging information such as status code, HTTP body contents and error message. If `logCancelledRequests` property is turned to true, they are also printed.
     open func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>, forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         if logFailures {
             if (error.error as NSError?)?.code == NSURLErrorCancelled, !logCancelledRequests {
                 return
             }
-            print("Request error: \(String(describing: error.error))")
             debugPrint(request)
+            print("❗️ Request errored, gathered debug information: ")
+            print("⚠️ Status code - \(response.1?.statusCode ?? 0)")
+            if let responseData = response.2 {
+                print("⚠️ HTTP Body contents: ")
+                if let json = try? JSONSerialization.jsonObject(with: responseData, options: .allowFragments) {
+                    debugPrint(json)
+                } else if let string = String(data: responseData, encoding: .utf8) {
+                    print("\(string)")
+                }
+            }
+            if let error = error.error {
+                print("⚠️ Error message: \(String(describing: error))")
+            }
         }
     }
 }
