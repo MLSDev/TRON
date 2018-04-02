@@ -90,7 +90,7 @@ open class TRON: TronDelegate {
      - returns: APIRequest instance.
      */
     open func request<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
-        (_ path: String, responseSerializer : Serializer) -> APIRequest<Model, ErrorModel>
+        (_ path: String, responseSerializer: Serializer) -> APIRequest<Model, ErrorModel>
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
         return APIRequest(path: path, tron: self, responseSerializer: responseSerializer)
     }
@@ -107,7 +107,7 @@ open class TRON: TronDelegate {
      - returns: APIRequest instance.
      */
     open func upload<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
-        (_ path: String, fromFileAt fileURL: URL, responseSerializer : Serializer) -> UploadAPIRequest<Model, ErrorModel>
+        (_ path: String, fromFileAt fileURL: URL, responseSerializer: Serializer) -> UploadAPIRequest<Model, ErrorModel>
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
         return UploadAPIRequest(type: .uploadFromFile(fileURL), path: path, tron: self, responseSerializer: responseSerializer)
     }
@@ -124,7 +124,7 @@ open class TRON: TronDelegate {
      - returns: APIRequest instance.
      */
     open func upload<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
-        (_ path: String, data: Data, responseSerializer : Serializer) -> UploadAPIRequest<Model, ErrorModel>
+        (_ path: String, data: Data, responseSerializer: Serializer) -> UploadAPIRequest<Model, ErrorModel>
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
         return UploadAPIRequest(type: .uploadData(data), path: path, tron: self, responseSerializer: responseSerializer)
     }
@@ -141,7 +141,7 @@ open class TRON: TronDelegate {
      - returns: APIRequest instance.
      */
     open func upload<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
-        (_ path: String, from stream: InputStream, responseSerializer : Serializer) -> UploadAPIRequest<Model, ErrorModel>
+        (_ path: String, from stream: InputStream, responseSerializer: Serializer) -> UploadAPIRequest<Model, ErrorModel>
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
         return UploadAPIRequest(type: .uploadStream(stream), path: path, tron: self, responseSerializer: responseSerializer)
     }
@@ -158,7 +158,7 @@ open class TRON: TronDelegate {
      - returns: MultipartAPIRequest instance.
      */
     open func uploadMultipart<Model, ErrorModel, Serializer: ErrorHandlingDataResponseSerializerProtocol>
-        (_ path: String, responseSerializer : Serializer, formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel>
+        (_ path: String, responseSerializer: Serializer, formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel>
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
         return UploadAPIRequest(type: .multipartFormData(formData), path: path, tron: self, responseSerializer: responseSerializer)
     }
@@ -177,7 +177,7 @@ open class TRON: TronDelegate {
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
     open func download<Model, ErrorModel, Serializer: ErrorHandlingDownloadResponseSerializerProtocol>
-        (_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, responseSerializer : Serializer) -> DownloadAPIRequest<Model, ErrorModel>
+        (_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, responseSerializer: Serializer) -> DownloadAPIRequest<Model, ErrorModel>
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
         return DownloadAPIRequest(type: .download(destination), path: path, tron: self, responseSerializer: responseSerializer)
     }
@@ -200,7 +200,7 @@ open class TRON: TronDelegate {
     open func download<Model, ErrorModel, Serializer: ErrorHandlingDownloadResponseSerializerProtocol>
         (_ path: String,
          to destination: @escaping DownloadRequest.DownloadFileDestination,
-         resumingFrom: Data, responseSerializer : Serializer) -> DownloadAPIRequest<Model, ErrorModel>
+         resumingFrom: Data, responseSerializer: Serializer) -> DownloadAPIRequest<Model, ErrorModel>
         where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
         return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self, responseSerializer: responseSerializer)
     }
