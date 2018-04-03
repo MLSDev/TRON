@@ -46,32 +46,13 @@ class Throwable : JSONDecodable {
 class JSONDecodableTestCase: XCTestCase {
     let tron = TRON(baseURL: "https://github.com")
     
-    // TODO - Implement parsing for collection types
-    
-//    func testDecodableArray() {
-//        let request: APIRequest<[Int],TronError> = tron.request(path: "foo")
-//        let json = [1,2,3,4]
-//        let parsedResponse = try! request.responseBuilder.buildResponseFromData(JSONSerialization.data(withJSONObject:json, options: []))
-//        
-//        expect(parsedResponse) == [1,2,3,4]
-//    }
-    
-//    func testDecodableSupportsThrowingErrors() {
-//        let data = try! JSONSerialization.data(withJSONObject: [1], options: [])
-//        let parsedResponse = try? Throwable.parse(data) as Throwable
-//        
-//        expect(parsedResponse).to(beNil())
-//    }
-
-    // TODO - implement this stuff when Swift 3.0 comes out
-    
-//    func testNonDecodableItemsAreThrownOut() {
-//        let request: APIRequest<[Int],TronError> = tron.request(path: "foo")
-//        let json = [1,2,3,4, "foo"]
-//        let parsedResponse = try! request.responseBuilder.buildResponseFromData(NSJSONSerialization.dataWithJSONObject(json, options: []))
-//        
-//        expect(parsedResponse) == [1,2,3,4]
-//    }
+    func testDecodableArray() throws {
+        let request: APIRequest<[Int],TronError> = tron.swiftyJSON.request("foo")
+        let json = [1,2,3,4]
+        let parsedResponse = try request.responseParser(nil, nil, JSONSerialization.data(withJSONObject:json, options: []), nil).unwrap()
+        
+        expect(parsedResponse) == [1,2,3,4]
+    }
  
     func testVariousJSONDecodableTypes()
     {

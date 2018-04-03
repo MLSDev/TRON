@@ -261,25 +261,14 @@ extension TRON {
     }
 }
 
-// This approach is bad, because it allows any JSONDecodable.Type to be created, not just specific one.
-// See https://github.com/MLSDev/TRON/issues/17 for details
-
-//extension Array : JSONDecodable {
-//    public init(json: JSON) {
-//        self.init(json.arrayValue.flatMap {
-//            if let type = Element.self as? JSONDecodable.Type {
-//                let element : Element?
-//                do {
-//                    element = try type.init(json: $0) as? Element
-//                } catch {
-//                    return nil
-//                }
-//                return element
-//            }
-//            return nil
-//        })
-//    }
-//}
+#if swift(>=4.1)
+extension Array: JSONDecodable where Element: JSONDecodable {
+    /// Creates Array from JSON container
+    public init(json: JSON) throws {
+        self.init(json.arrayValue.compactMap { try? Element(json: $0) })
+    }
+}
+#endif
 
 extension String: JSONDecodable {
     /// Creates String from JSON container
