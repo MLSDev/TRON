@@ -1,15 +1,15 @@
 fastlane_version "1.98.0"
 
 lane :test_ios11 do
-  scan(devices: ["iPhone 8 (11.1)"])
+  scan(devices: ["iPhone 8 (11.3)"])
 end
 
 lane :test_ios10 do
-  scan(devices: ["iPhone 6s (10.3)"])
+  scan(devices: ["iPhone 7 Plus (10.3.1)"])
 end
 
 lane :test_tvos11 do
-  scan(device: "Apple TV 1080p (11.1)")
+  scan(device: "Apple TV 4K")
 end
 
 lane :test_macos do
@@ -20,7 +20,7 @@ end
 lane :build_watchos do
   xcodebuild(
     build: true,
-    destination: "OS=4.1,name=Apple Watch - 42mm",
+    destination: "OS=4.3,name=Apple Watch - 42mm",
     scheme: 'TRON'
   )
 end
