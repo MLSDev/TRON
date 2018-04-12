@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [4.2.0](https://github.com/MLSDev/TRON/releases/tag/4.2.0)
+
 * Implemented `JSONDecodable` support for Arrays, whose Element is JSONDecodable. Requires Swift 4.1 to work.
 
 ## [4.1.2](https://github.com/MLSDev/TRON/releases/tag/4.1.2)
