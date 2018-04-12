@@ -27,6 +27,7 @@ before_script:
 - brew outdated carthage || brew upgrade carthage
 - carthage bootstrap --cache-builds
 script:
+- instruments -s devices # List all available simulators
 - bundle exec fastlane $ACTION
 env:
   global:
