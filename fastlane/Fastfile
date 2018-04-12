@@ -5,7 +5,7 @@ lane :test_ios11 do
 end
 
 lane :test_ios10 do
-  scan(devices: ["iPhone 7 Plus (10.3.1)"])
+  scan(devices: ["iPhone 7 Plus (10.3)"])
 end
 
 lane :test_tvos11 do
