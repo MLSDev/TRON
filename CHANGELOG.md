@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### Fixed
+
+* `UploadAPIRequest` now calls `didReceiveDataResponse` plugin methods when sending multipart-form requests. 
+
 ## [4.2.0](https://github.com/MLSDev/TRON/releases/tag/4.2.0)
 
 * Implemented `JSONDecodable` support for Arrays, whose Element is JSONDecodable. Requires Swift 4.1 to work.

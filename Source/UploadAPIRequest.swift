@@ -185,6 +185,7 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
                 self.willSendAlamofireRequest(request)
                 _ = self.validationClosure(request).response(queue: self.resultDeliveryQueue,
                                                              responseSerializer: self.dataResponseSerializer(with: request)) {
+                    self.didReceiveDataResponse($0, forRequest: request)
                     self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
                 }
                 if !(self.tronDelegate?.manager.startRequestsImmediately ?? false) {
