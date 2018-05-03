@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [4.2.1](https://github.com/MLSDev/TRON/releases/tag/4.2.1)
+
 ### Fixed
 
 * `UploadAPIRequest` now calls `didReceiveDataResponse` plugin methods when sending multipart-form requests. 
