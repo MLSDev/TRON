@@ -1,15 +1,44 @@
 fastlane_version "1.98.0"
 
-lane :test_ios11 do
-  scan(devices: ["iPhone 8 (11.3)"])
+lane :test_ios12 do
+  scan(devices: ["iPhone X (12.0)"])
+  sh "bash ../codecov.sh"
 end
 
-lane :test_ios10 do
-  scan(devices: ["iPhone 7 Plus (10.2)"])
+lane :test_ios11 do
+  scan(devices: ["iPhone X (11.4)"])
+end
+
+lane :test_tvos12 do
+  scan(device: "Apple TV")
 end
 
 lane :test_tvos11 do
-  scan(device: "Apple TV 4K")
+  scan(device: "Apple TV")
+end
+
+lane :test_ios_swift3 do
+  scan(devices: ["iPhone X (12.0)"], xcargs: "SWIFT_VERSION=3.0")
+end
+
+lane :test_ios_swift4 do
+  scan(devices: ["iPhone X (12.0)"], xcargs: "SWIFT_VERSION=4.0")
+end
+
+lane :test_tvos_swift3 do
+  scan(devices: ["Apple TV"], xcargs: "SWIFT_VERSION=3.0")
+end
+
+lane :test_tvos_swift4 do
+  scan(devices: ["Apple TV"], xcargs: "SWIFT_VERSION=4.0")
+end
+
+lane :test_xcode9_ios_swift3 do
+  scan(device: "iPhone X (11.4)", xcargs: "SWIFT_VERSION=3.0")
+end
+
+lane :test_xcode9_ios_swift4 do
+  scan(device: "iPhone X (11.4)", xcargs: "SWIFT_VERSION=4.0")
 end
 
 lane :test_macos do
@@ -20,7 +49,7 @@ end
 lane :build_watchos do
   xcodebuild(
     build: true,
-    destination: "OS=4.3,name=Apple Watch - 42mm",
+    destination: "OS=5.0,name=Apple Watch - 42mm",
     scheme: 'TRON'
   )
 end

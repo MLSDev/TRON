@@ -1,6 +1,7 @@
-language: objective-c
 sudo: false
-osx_image: xcode9.3
+language: objective-c
+os: osx
+osx_image: xcode10
 
 cache:
   directories:
@@ -8,24 +9,26 @@ cache:
 
 matrix:
   include:
-  - os: osx
-    env: ACTION=test_ios11
-  - os: osx
-    env: ACTION=test_ios10
-  - os: osx
-    env: ACTION=test_macos
-  - os: osx
-    env: ACTION=test_tvos11
-  - os: osx
-    env: ACTION=build_watchos
-  - os: osx
-    env: ACTION=pod_lint
-  - os: osx
-    env: ACTION=carthage_build
+    - env: ACTION=test_ios12 PLATFORM=iOS
+    - env: ACTION=test_ios11 PLATFORM=iOS
+    - env: ACTION=test_tvos12 PLATFORM=tvOS
+    - env: ACTION=test_tvos11 PLATFORM=tvOS
+    - env: ACTION=test_ios_swift3 PLATFORM=iOS
+    - env: ACTION=test_ios_swift4 PLATFORM=iOS
+    - env: ACTION=test_tvos_swift3 PLATFORM=tvOS
+    - env: ACTION=test_tvos_swift4 PLATFORM=tvOS
+    - osx_image: xcode9.4
+      env: ACTION=test_xcode9_ios_swift3 PLATFORM=iOS
+    - osx_image: xcode9.4
+      env: ACTION=test_xcode9_ios_swift4 PLATFORM=iOS
+    - env: ACTION=test_macos PLATFORM=macOS
+    - env: ACTION=build_watchos PLATFORM=watchOS
+    - env: ACTION=pod_lint PLATFORM=iOS
+    - env: ACTION=carthage_build PLATFORM=iOS
 before_script:
 - brew update
 - brew outdated carthage || brew upgrade carthage
-- carthage bootstrap --cache-builds
+- carthage bootstrap --cache-builds --platform $PLATFORM
 script:
 - instruments -s devices # List all available simulators
 - bundle exec fastlane $ACTION

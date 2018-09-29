@@ -31,7 +31,7 @@ import Foundation
 open class URLBuilder: URLBuildable {
 
     /// Base URL string
-    open let baseURLString: String
+    public let baseURLString: String
 
     /**
      Initialize URL builder with Base URL String

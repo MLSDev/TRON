@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var tron : TRON!
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
         let loggerPlugin = NetworkLoggerPlugin()
         loggerPlugin.logSuccess = true
         tron = TRON(baseURL: "https://api.github.com", plugins: [loggerPlugin])

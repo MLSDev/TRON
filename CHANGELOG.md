@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* Support for Xcode 10 and Swift 4.2
+
 ## [4.2.1](https://github.com/MLSDev/TRON/releases/tag/4.2.1)
 
 ### Fixed

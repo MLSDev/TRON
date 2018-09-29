@@ -31,7 +31,7 @@ import Foundation
 open class HeaderBuilder: HeaderBuildable {
 
     /// Default headers to be included in all requests
-    open let defaultHeaders: [String: String]
+    public let defaultHeaders: [String: String]
 
     /**
      Initialize with defaultHeaders

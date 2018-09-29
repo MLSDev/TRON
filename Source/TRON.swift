@@ -61,7 +61,7 @@ open class TRON: TronDelegate {
     open var resultDeliveryQueue = DispatchQueue.main
 
     /// Alamofire.Manager instance used to send network requests
-    open let manager: Alamofire.SessionManager
+    public let manager: Alamofire.SessionManager
 
     /**
      Initializes `TRON` with given base URL, Alamofire.Manager instance, and array of global plugins.
@@ -210,7 +210,7 @@ open class TRON: TronDelegate {
 
      - returns Alamofire.Manager instance initialized with NSURLSessionConfiguration.defaultSessionConfiguration().
      */
-    open static func defaultAlamofireManager() -> SessionManager {
+    open class func defaultAlamofireManager() -> SessionManager {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
         let manager = SessionManager(configuration: configuration)

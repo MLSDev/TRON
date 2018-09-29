@@ -93,7 +93,7 @@ open class BaseRequest<Model, ErrorModel> {
     public typealias ErrorParser = (Result<Model>?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> APIError<ErrorModel>
 
     /// Relative path of current request
-    open let path: String
+    public let path: String
 
     /// HTTP method
     open var method: Alamofire.HTTPMethod = .get

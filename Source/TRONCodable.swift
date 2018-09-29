@@ -136,10 +136,10 @@ open class CodableSerializer {
     let tron: TRON
 
     /// Decoder to be used while parsing model.
-    open let modelDecoder: JSONDecoder
+    public let modelDecoder: JSONDecoder
 
     /// Decoder to be used while parsing error.
-    open let errorDecoder: JSONDecoder
+    public let errorDecoder: JSONDecoder
 
     /// Creates `CodableSerializer` with `tron` instance to send requests, and `decoder` to be used while parsing response.
     init(_ tron: TRON,
