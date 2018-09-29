@@ -26,7 +26,11 @@ class APIRequestTestCase: XCTestCase {
     
     override func setUp() {
         super.setUp()
+//        let configuration = URLSessionConfiguration()
+//        configuration.protocolClasses = [StubbingURLProtocol.self] as [AnyClass]
         tron = TRON(baseURL: "http://httpbin.org")
+//            , manager: SessionManager(configuration: configuration))
+//        URLProtocol.registerClass(StubbingURLProtocol.self)
     }
     
     func testErrorBuilding() {

@@ -46,6 +46,7 @@ class Throwable : JSONDecodable {
 class JSONDecodableTestCase: XCTestCase {
     let tron = TRON(baseURL: "https://github.com")
     
+    #if swift(>=4.1)
     func testDecodableArray() throws {
         let request: APIRequest<[Int],TronError> = tron.swiftyJSON.request("foo")
         let json = [1,2,3,4]
@@ -53,6 +54,7 @@ class JSONDecodableTestCase: XCTestCase {
         
         expect(parsedResponse) == [1,2,3,4]
     }
+    #endif
  
     func testVariousJSONDecodableTypes()
     {
