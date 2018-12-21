@@ -28,7 +28,7 @@ import Alamofire
 /**
  `APIRequest` encapsulates request creation logic, stubbing options, and response/error parsing. 
  */
-open class APIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
+open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, ErrorModel> {
 
     /// Serializes received response into Result<Model>
     open var responseParser: ResponseParser
@@ -40,22 +40,22 @@ open class APIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
     open var validationClosure: (DataRequest) -> DataRequest = { $0.validate() }
 
     /// Creates `APIRequest`, filling `responseParser` and `errorParser` properties
-    public init<Serializer: ErrorHandlingDataResponseSerializerProtocol>(path: String, tron: TRON, responseSerializer: Serializer)
-        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
+    public init<Serializer: DataResponseSerializerProtocol>(path: String, tron: TRON, responseSerializer: Serializer)
+        where Serializer.SerializedObject == Model, Serializer.SerializedObject == ErrorModel.SerializedObject {
         self.responseParser = { request, response, data, error in
-            responseSerializer.serializeResponse(request, response, data, error)
+            try responseSerializer.serialize(request: request, response: response, data: data, error: error)
         }
-        self.errorParser = { result, request, response, data, error in
-            return responseSerializer.serializeError(result, request, response, data, error)
+        self.errorParser = { model, request, response, data, error in
+            ErrorModel(serializedObject: model, request: request, response: response, data: data, error: error)
         }
         super.init(path: path, tron: tron)
     }
 
-    override func alamofireRequest(from manager: SessionManager) -> Request {
-            return manager.request(urlBuilder.url(forPath: path), method: method,
-                                   parameters: parameters,
-                                   encoding: parameterEncoding,
-                                   headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
+    override func alamofireRequest(from manager: Session) -> Request {
+        return manager.request(urlBuilder.url(forPath: path), method: method,
+                               parameters: parameters,
+                               encoding: parameterEncoding,
+                               headers: headers)
     }
 
     @discardableResult
@@ -68,10 +68,7 @@ open class APIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) -> Alamofire.DataRequest? {
-        if performStub(success: successBlock, failure: failureBlock) {
-            return nil
-        }
+    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((ErrorModel) -> Void)? = nil) -> Alamofire.DataRequest? {
         return performAlamofireRequest {
             self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
         }
@@ -86,9 +83,6 @@ open class APIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
      - returns: Alamofire.Request or nil if request was stubbed.
      */
     open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> Alamofire.DataRequest? {
-        if performStub(completion: completion) {
-            return nil
-        }
         return performAlamofireRequest(completion)
     }
 
@@ -100,48 +94,49 @@ open class APIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
         guard let request = alamofireRequest(from: manager) as? DataRequest else {
             fatalError("Failed to receive DataRequest")
         }
+        if let stub = apiStub, stub.isEnabled {
+            request.tron_apiStub = stub
+        }
         willSendAlamofireRequest(request)
         if !manager.startRequestsImmediately {
             request.resume()
         }
         didSendAlamofireRequest(request)
 
-        return validationClosure(request).response(queue: resultDeliveryQueue, responseSerializer: dataResponseSerializer(with: request), completionHandler: { dataResponse in
+        return validationClosure(request)
+            .performResponseSerialization(queue: resultDeliveryQueue,
+                                          responseSerializer: dataResponseSerializer(with: request),
+                                          completionHandler: { dataResponse in
             self.didReceiveDataResponse(dataResponse, forRequest: request)
             completion(dataResponse)
         })
     }
 
-    internal func dataResponseSerializer(with request: Request) -> Alamofire.DataResponseSerializer<Model> {
-        return DataResponseSerializer<Model> { urlRequest, response, data, error in
-
+    internal func dataResponseSerializer(with request: Request) -> TRONDataResponseSerializer<Model> {
+        return TRONDataResponseSerializer { urlRequest, response, data, error in
             self.willProcessResponse((urlRequest, response, data, error), for: request)
-            var result: Alamofire.Result<Model>
-            var apiError: APIError<ErrorModel>?
-            var parsedModel: Model?
-
-            if let error = error {
-                apiError = self.errorParser(nil, urlRequest, response, data, error)
-                // swiftlint:disable:next force_unwrapping
-                result = .failure(apiError!)
+            let parsedModel: Model
+            let parsedError: ErrorModel?
+            do {
+                parsedModel = try self.responseParser(urlRequest, response, data, error)
+                parsedError = self.errorParser(parsedModel, urlRequest, response, data, error)
+            } catch let catchedError {
+                parsedError = self.errorParser(nil, urlRequest, response, data, catchedError)
+                throw parsedError ?? catchedError
+            }
+            if let nonNilError = parsedError {
+                self.didReceiveError(nonNilError, for: (urlRequest, response, data, error), request: request)
+                throw nonNilError
             } else {
-                result = self.responseParser(urlRequest, response, data, error)
-                if let model = result.value {
-                    parsedModel = model
-                    result = .success(model)
-                } else {
-                    apiError = self.errorParser(result, urlRequest, response, data, error)
-                    // swiftlint:disable:next force_unwrapping
-                    result = .failure(apiError!)
-                }
+                self.didSuccessfullyParseResponse((urlRequest, response, data, error), creating: parsedModel, forRequest: request)
+                return parsedModel
             }
-            if let error = apiError {
-                self.didReceiveError(error, for: (urlRequest, response, data, error), request: request)
-            } else if let model = parsedModel {
-                self.didSuccessfullyParseResponse((urlRequest, response, data, error), creating: model, forRequest: request)
-            }
+        }
+    }
 
-            return result
+    internal func didReceiveError(_ error: ErrorModel, for response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Alamofire.Request) {
+        allPlugins.forEach { plugin in
+            plugin.didReceiveError(error, forResponse: response, request: request, formedFrom: self)
         }
     }
 }

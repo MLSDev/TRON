@@ -29,25 +29,25 @@ import Alamofire
 /// Types of `DownloadAPIRequest`.
 public enum DownloadRequestType {
     /// Will create `NSURLSessionDownloadTask` using `downloadTaskWithRequest(_)` method
-    case download(DownloadRequest.DownloadFileDestination)
+    case download(DownloadRequest.Destination)
 
     /// Will create `NSURLSessionDownloadTask` using `downloadTaskWithResumeData(_)` method
-    case downloadResuming(data: Data, destination: DownloadRequest.DownloadFileDestination)
+    case downloadResuming(data: Data, destination: DownloadRequest.Destination)
 }
 
 /**
  `DownloadAPIRequest` encapsulates download request creation logic, stubbing options, and response/error parsing.
  */
-open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
+open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: BaseRequest<Model, ErrorModel> {
 
     /// DownloadAPIREquest type
     let type: DownloadRequestType
 
     /// Serialize download response into `Result<Model>`.
-    public typealias DownloadResponseParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> Result<Model>
+    public typealias DownloadResponseParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) throws -> Model
 
     /// Serializes received failed response into APIError<ErrorModel> object
-    public typealias DownloadErrorParser = (Result<Model>?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> APIError<ErrorModel>
+    public typealias DownloadErrorParser = (Model?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> ErrorModel?
 
     /// Serializes received response into Result<Model>
     open var responseParser: DownloadResponseParser
@@ -59,24 +59,24 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel>
     open var validationClosure: (DownloadRequest) -> DownloadRequest = { $0.validate() }
 
     /// Creates `DownloadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
-    public init<Serializer: ErrorHandlingDownloadResponseSerializerProtocol>(type: DownloadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
-        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
+    public init<Serializer: DownloadResponseSerializerProtocol>(type: DownloadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
+        where Serializer.SerializedObject == Model, Serializer.SerializedObject == ErrorModel.SerializedObject {
         self.type = type
-        self.responseParser = { request, response, data, error in
-            responseSerializer.serializeResponse(request, response, data, error)
+        self.responseParser = { request, response, fileURL, error in
+            try responseSerializer.serializeDownload(request: request, response: response, fileURL: fileURL, error: error)
         }
-        self.errorParser = { result, request, response, data, error in
-            return responseSerializer.serializeError(result, request, response, data, error)
+        self.errorParser = { serializedObject, request, response, fileURL, error in
+            ErrorModel(serializedObject: serializedObject, request: request, response: response, fileURL: fileURL, error: error)
         }
         super.init(path: path, tron: tron)
     }
 
-    override func alamofireRequest(from manager: SessionManager) -> Request? {
+    override func alamofireRequest(from manager: Session) -> Request? {
         switch type {
         case .download(let destination):
             return manager.download(urlBuilder.url(forPath: path), method: method, parameters: parameters,
                                     encoding: parameterEncoding,
-                                    headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers),
+                                    headers: headers,
                                     to: destination)
 
         case .downloadResuming(let data, let destination):
@@ -93,9 +93,6 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel>
      - returns: Alamofire.Request or nil if request was stubbed.
      */
     open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DownloadResponse<Model>) -> Void)) -> DownloadRequest? {
-        if performStub(completion: completion) {
-            return nil
-        }
         return performAlamofireRequest(completion)
     }
 
@@ -106,6 +103,9 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel>
         willSendRequest()
         guard let request = alamofireRequest(from: manager) as? DownloadRequest else {
             fatalError("Failed to receive DataRequest")
+        }
+        if let stub = apiStub, stub.isEnabled {
+            request.tron_apiStub = stub
         }
         willSendAlamofireRequest(request)
         if !manager.startRequestsImmediately {
@@ -120,37 +120,44 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel>
         })
     }
 
-    internal func downloadResponseSerializer(with request: DownloadRequest) -> DownloadResponseSerializer<Model> {
-        return DownloadResponseSerializer<Model> { urlRequest, response, url, error in
-
+    internal func downloadResponseSerializer(with request: DownloadRequest) -> TRONDownloadResponseSerializer<Model> {
+        return TRONDownloadResponseSerializer { urlRequest, response, url, error in
             self.willProcessResponse((urlRequest, response, nil, error), for: request)
+            let parsedModel: Model
+            let parsedError: ErrorModel?
 
-            var result: Alamofire.Result<Model>
-            var apiError: APIError<ErrorModel>?
-            var parsedModel: Model?
+            do {
+                parsedModel = try self.responseParser(urlRequest, response, url, error)
+                parsedError = self.errorParser(parsedModel, urlRequest, response, url, error)
+            } catch let catchedError {
+                parsedError = self.errorParser(nil, urlRequest, response, url, error)
+                throw parsedError ?? catchedError
+            }
 
-            if let error = error {
-                apiError = self.errorParser(nil, urlRequest, response, url, error)
-                // swiftlint:disable:next force_unwrapping
-                result = .failure(apiError!)
+            if let nonNilError = parsedError {
+                self.didReceiveError(nonNilError, for: (urlRequest, response, url, error), request: request)
+                throw nonNilError
             } else {
-                result = self.responseParser(urlRequest, response, url, error)
-                if let model = result.value {
-                    parsedModel = model
-                    result = .success(model)
-                } else {
-                    apiError = self.errorParser(result, urlRequest, response, url, error)
-                    // swiftlint:disable:next force_unwrapping
-                    result = .failure(apiError!)
+                self.allPlugins.forEach {
+                    $0.didSuccessfullyParseDownloadResponse((urlRequest, response, url, error),
+                                                            creating: parsedModel,
+                                                            forRequest: request,
+                                                            formedFrom: self)
                 }
+                return parsedModel
             }
-            if let error = apiError {
-                self.didReceiveError(error, for: (urlRequest, response, nil, error), request: request)
-            } else if let model = parsedModel {
-                self.didSuccessfullyParseResponse((urlRequest, response, nil, error), creating: model, forRequest: request)
-            }
+        }
+    }
 
-            return result
+    internal func didReceiveError(_ error: ErrorModel, for response: (URLRequest?, HTTPURLResponse?, URL?, Error?), request: Alamofire.Request) {
+        allPlugins.forEach { plugin in
+            plugin.didReceiveDownloadError(error, forResponse: response, request: request, formedFrom: self)
+        }
+    }
+
+    internal func didReceiveDownloadResponse(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest) {
+        allPlugins.forEach { plugin in
+            plugin.didReceiveDownloadResponse(response, forRequest: request, formedFrom: self)
         }
     }
 }

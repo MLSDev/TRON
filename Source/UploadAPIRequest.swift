@@ -39,21 +39,15 @@ public enum UploadRequestType {
     case uploadStream(InputStream)
 
     // Depending on resulting size of the payload will either stream from disk or from memory
-    case multipartFormData((MultipartFormData) -> Void)
-
-    /// Returns whether current request type is .multipartFormData.
-    var isMultipartRequest: Bool {
-        switch self {
-        case .multipartFormData: return true
-        default: return false
-        }
-    }
+    case multipartFormData(formData: (MultipartFormData) -> Void,
+                           memoryThreshold: UInt64,
+                           fileManager: FileManager)
 }
 
 /**
  `UploadAPIRequest` encapsulates upload request creation logic, stubbing options, and response/error parsing.
  */
-open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
+open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, ErrorModel> {
 
     /// UploadAPIRequest type
     let type: UploadRequestType
@@ -68,34 +62,47 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
     open var validationClosure: (UploadRequest) -> UploadRequest = { $0.validate() }
 
     /// Creates `UploadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
-    public init<Serializer: ErrorHandlingDataResponseSerializerProtocol>(type: UploadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
-        where Serializer.SerializedObject == Model, Serializer.SerializedError == ErrorModel {
+    public init<Serializer: DataResponseSerializerProtocol>(type: UploadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
+        where Serializer.SerializedObject == Model, Serializer.SerializedObject == ErrorModel.SerializedObject {
         self.type = type
         self.responseParser = { request, response, data, error in
-            responseSerializer.serializeResponse(request, response, data, error)
+            try responseSerializer.serialize(request: request, response: response, data: data, error: error)
         }
-        self.errorParser = { result, request, response, data, error in
-            return responseSerializer.serializeError(result, request, response, data, error)
+        self.errorParser = { object, request, response, data, error in
+            ErrorModel(serializedObject: object, request: request, response: response, data: data, error: error)
         }
         super.init(path: path, tron: tron)
     }
 
-    override func alamofireRequest(from manager: SessionManager) -> Request? {
+    override func alamofireRequest(from manager: Session) -> Request? {
         switch type {
         case .uploadFromFile(let url):
             return manager.upload(url, to: urlBuilder.url(forPath: path), method: method,
-                                  headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
+                                  headers: headers)
 
         case .uploadData(let data):
             return manager.upload(data, to: urlBuilder.url(forPath: path), method: method,
-                                  headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
+                                  headers: headers)
 
         case .uploadStream(let stream):
             return manager.upload(stream, to: urlBuilder.url(forPath: path), method: method,
-                                  headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers))
+                                  headers: headers)
 
-        case .multipartFormData:
-            return nil
+        case .multipartFormData(let constructionBlock, let memoryThreshold, let fileManager):
+            return manager.upload(multipartFormData: appendParametersToMultipartFormDataBlock(constructionBlock),
+                                  usingThreshold: memoryThreshold,
+                                  fileManager: fileManager,
+                                  to: urlBuilder.url(forPath: path),
+                                  method: method,
+                                  headers: headers)
+        }
+    }
+
+    private func appendParametersToMultipartFormDataBlock(_ block: (MultipartFormData) -> Void) -> (MultipartFormData) -> Void {
+        return { formData in
+            self.parameters.forEach { key, value in
+                formData.append(String(describing: value).data(using: .utf8) ?? Data(), withName: key)
+            }
         }
     }
 
@@ -109,15 +116,7 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) -> UploadRequest? {
-        guard !type.isMultipartRequest else {
-            // swiftlint:disable:next line_length
-            assertionFailure("TRON error: attempting to perform upload request, however current request type is UploadRequestType.multipartFormData. To send multipart requests, please use performMultipart(withSuccess:failure:encodingMemoryThreshold:encodingCompletion:) method.")
-            return nil
-        }
-        if performStub(success: successBlock, failure: failureBlock) {
-            return nil
-        }
+    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((ErrorModel) -> Void)? = nil) -> UploadRequest? {
         return performAlamofireRequest {
             self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
         }
@@ -132,75 +131,7 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
      - returns: Alamofire.Request or nil if request was stubbed.
      */
     open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> UploadRequest? {
-        guard !type.isMultipartRequest else {
-            // swiftlint:disable:next line_length
-            assertionFailure("TRON error: attempting to perform upload request, however current request type is UploadRequestType.multipartFormData. To send multipart requests, please use performMultipart(withSuccess:failure:encodingMemoryThreshold:encodingCompletion:) method.")
-            return nil
-        }
-        if performStub(completion: completion) {
-            return nil
-        }
         return performAlamofireRequest(completion)
-    }
-
-    /**
-     Perform multipart form data upload.
-     
-     - parameter success: Success block to be executed when request finished
-     
-     - parameter failure: Failure block to be executed if request fails. Nil by default.
-     
-     - parameter encodingMemoryThreshold: If data size is less than `encodingMemoryThreshold` request will be streamed from memory, otherwise - from disk.
-     
-     - parameter encodingCompletion: Encoding completion block, that can be used to inspect encoding result. No action is required by default,  default value for this block is nil.
-     */
-    open func performMultipart(withSuccess successBlock: @escaping (Model) -> Void, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil, encodingMemoryThreshold: UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)? = nil) {
-        guard let manager = tronDelegate?.manager else {
-            fatalError("Manager cannot be nil while performing APIRequest")
-        }
-        willSendRequest()
-        guard case UploadRequestType.multipartFormData(let multipartFormDataBlock) = type else {
-            // swiftlint:disable:next line_length
-            assertionFailure("TRON: attempting to perform multipart request, however current request type is \(type). To send upload requests, that are not multipart, please use either `perform(withSuccess:failure:)` or `performCollectingTimeline(withCompletion:) method` ")
-            return
-        }
-
-        if performStub(success: successBlock, failure: failureBlock) {
-            return
-        }
-
-        let multipartConstructionBlock: (MultipartFormData) -> Void = { requestFormData in
-            self.parameters.forEach {
-                let (key, value) = $0
-                requestFormData.append(String(describing: value).data(using: .utf8) ?? Data(), withName: key)
-            }
-            multipartFormDataBlock(requestFormData)
-        }
-
-        let encodingCompletion: (SessionManager.MultipartFormDataEncodingResult) -> Void = { completion in
-            if case .failure(let error) = completion {
-                let apiError = APIError<ErrorModel>(request: nil, response: nil, data: nil, error: error)
-                failureBlock?(apiError)
-            } else if case .success(let request, _, _) = completion {
-                self.willSendAlamofireRequest(request)
-                _ = self.validationClosure(request).response(queue: self.resultDeliveryQueue,
-                                                             responseSerializer: self.dataResponseSerializer(with: request)) {
-                    self.didReceiveDataResponse($0, forRequest: request)
-                    self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
-                }
-                if !(self.tronDelegate?.manager.startRequestsImmediately ?? false) {
-                    request.resume()
-                }
-                self.didSendAlamofireRequest(request)
-                encodingCompletion?(completion)
-            }
-        }
-
-        manager.upload(multipartFormData: multipartConstructionBlock, usingThreshold: encodingMemoryThreshold,
-                       to: urlBuilder.url(forPath: path),
-                       method: method,
-                       headers: headerBuilder.headers(forAuthorizationRequirement: authorizationRequirement, including: headers),
-                       encodingCompletion: encodingCompletion)
     }
 
     private func performAlamofireRequest(_ completion : @escaping (DataResponse<Model>) -> Void) -> UploadRequest {
@@ -210,6 +141,9 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
         willSendRequest()
         guard let request = alamofireRequest(from: manager) as? UploadRequest else {
             fatalError("Failed to receive UploadRequest")
+        }
+        if let stub = apiStub, stub.isEnabled {
+            request.tron_apiStub = stub
         }
         willSendAlamofireRequest(request)
         if !manager.startRequestsImmediately {
@@ -222,34 +156,31 @@ open class UploadAPIRequest<Model, ErrorModel>: BaseRequest<Model, ErrorModel> {
         })
     }
 
-    internal func dataResponseSerializer(with request: Request) -> Alamofire.DataResponseSerializer<Model> {
-        return DataResponseSerializer<Model> { urlRequest, response, data, error in
+    internal func dataResponseSerializer(with request: Request) -> TRONDataResponseSerializer<Model> {
+        return TRONDataResponseSerializer { urlRequest, response, data, error in
             self.willProcessResponse((urlRequest, response, data, error), for: request)
-            var result: Alamofire.Result<Model>
-            var apiError: APIError<ErrorModel>?
-            var parsedModel: Model?
-
-            if let error = error {
-                apiError = self.errorParser(nil, urlRequest, response, data, error)
-                //swiftlint:disable:next force_unwrapping
-                result = .failure(apiError!)
+            let parsedModel: Model
+            let parsedError: ErrorModel?
+            do {
+                parsedModel = try self.responseParser(urlRequest, response, data, error)
+                parsedError = self.errorParser(parsedModel, urlRequest, response, data, error)
+            } catch let catchedError {
+                parsedError = self.errorParser(nil, urlRequest, response, data, catchedError)
+                throw parsedError ?? catchedError
+            }
+            if let nonNilError = parsedError {
+                self.didReceiveError(nonNilError, for: (urlRequest, response, data, error), request: request)
+                throw nonNilError
             } else {
-                result = self.responseParser(urlRequest, response, data, error)
-                if let model = result.value {
-                    parsedModel = model
-                    result = .success(model)
-                } else {
-                    apiError = self.errorParser(result, urlRequest, response, data, error)
-                    //swiftlint:disable:next force_unwrapping
-                    result = .failure(apiError!)
-                }
+                self.didSuccessfullyParseResponse((urlRequest, response, data, error), creating: parsedModel, forRequest: request)
+                return parsedModel
             }
-            if let error = apiError {
-                self.didReceiveError(error, for: (urlRequest, response, data, error), request: request)
-            } else if let model = parsedModel {
-                self.didSuccessfullyParseResponse((urlRequest, response, data, error), creating: model, forRequest: request)
-            }
-            return result
+        }
+    }
+
+    internal func didReceiveError(_ error: ErrorModel, for response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Alamofire.Request) {
+        allPlugins.forEach { plugin in
+            plugin.didReceiveError(error, forResponse: response, request: request, formedFrom: self)
         }
     }
 }

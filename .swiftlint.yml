@@ -19,6 +19,7 @@ disabled_rules:
 - redundant_string_enum_value
 - superfluous_disable_command
 - large_tuple
+- identifier_name
 
 included:
 - Source

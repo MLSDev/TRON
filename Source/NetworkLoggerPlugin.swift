@@ -52,9 +52,9 @@ open class NetworkLoggerPlugin: Plugin {
     }
 
     /// Called, when request received error. If `logFailures` has been turned on, prints cURL representation of request and helpful debugging information such as status code, HTTP body contents and error message. If `logCancelledRequests` property is turned to true, they are also printed.
-    open func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>, forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
+    open func didReceiveError<Model, ErrorModel>(_ error: ErrorModel, forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) where ErrorModel: ErrorSerializable {
         if logFailures {
-            if (error.error as NSError?)?.code == NSURLErrorCancelled, !logCancelledRequests {
+            if (error as NSError?)?.code == NSURLErrorCancelled, !logCancelledRequests {
                 return
             }
             debugPrint(request)
@@ -67,9 +67,6 @@ open class NetworkLoggerPlugin: Plugin {
                 } else if let string = String(data: responseData, encoding: .utf8) {
                     print("\(string)")
                 }
-            }
-            if let error = error.error {
-                print("⚠️ Error message: \(String(describing: error))")
             }
         }
     }

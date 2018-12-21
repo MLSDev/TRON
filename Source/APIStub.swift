@@ -26,161 +26,125 @@
 import Foundation
 import Alamofire
 
-private func delay(_ delay: Double, closure:@escaping () -> Void) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: closure)
+// This protocol is only needed to work around bogus warning message when casting Alamofire.Request below.
+// For example this line
+//        if let stubbedRequest = self as? UploadRequest
+// produces a warning "Cast from `Self` to unrelated type `UploadRequest` always fails".
+// This is wrong as the cast actually succeeds at runtime, and the only reason why it exists
+// apparently is returning Self from method, which somehow affects this warning.
+protocol DataRequestResponseSerialization {}
+extension DataRequest: DataRequestResponseSerialization {}
+
+extension DataRequestResponseSerialization {
+    func performResponseSerialization<Serializer>(queue: DispatchQueue?,
+                                                  responseSerializer: Serializer,
+                                                  completionHandler: @escaping (DataResponse<Serializer.SerializedObject>) -> Void) -> Self
+        where Serializer: DataResponseSerializerProtocol {
+            if let stubbedRequest = self as? DataRequest, let stub = stubbedRequest.tron_apiStub, stub.isEnabled {
+                let start = CFAbsoluteTimeGetCurrent()
+                let result = Result {
+                    try responseSerializer.serialize(request: stub.request, response: stub.response, data: stub.data, error: stub.error)
+                }
+                let end = CFAbsoluteTimeGetCurrent()
+                let response = DataResponse(request: stub.request,
+                                            response: stub.response,
+                                            data: stub.data,
+                                            metrics: nil,
+                                            serializationDuration: (end - start),
+                                            result: result)
+                (queue ?? .main).asyncAfter(deadline: .now() + stub.stubDelay) {
+                    completionHandler(response)
+                }
+                return self
+            } else if let uploadRequest = self as? UploadRequest {
+                //swiftlint:disable:next force_cast
+                return uploadRequest.response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler) as! Self
+            } else if let dataRequest = self as? DataRequest {
+                //swiftlint:disable:next force_cast
+                return dataRequest.response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler) as! Self
+            } else {
+                fatalError("\(type(of: self)) is not supported")
+            }
+    }
 }
 
-extension APIStub {
-    /**
-     Build stub model from file in specified bundle
-     
-     - parameter fileName: Name of the file to build response from
-     - parameter bundle: bundle to look for file.
-     */
-    public func buildModel(fromFileNamed fileName: String, inBundle bundle: Bundle = Bundle.main) {
-        if let filePath = bundle.path(forResource: fileName as String, ofType: nil) {
-            successData = try? Data(contentsOf: URL(fileURLWithPath: filePath))
+extension DownloadRequest {
+    func performResponseSerialization<Serializer>(queue: DispatchQueue?,
+                                                  responseSerializer: Serializer,
+                                                  completionHandler: @escaping (DownloadResponse<Serializer.SerializedObject>) -> Void) -> Self
+        where Serializer: DownloadResponseSerializerProtocol {
+        if let stub = tron_apiStub, stub.isEnabled {
+            let start = CFAbsoluteTimeGetCurrent()
+            let result = Result {
+                try responseSerializer.serializeDownload(request: stub.request, response: stub.response, fileURL: stub.fileURL, error: stub.error)
+            }
+            let end = CFAbsoluteTimeGetCurrent()
+            let response = DownloadResponse(request: stub.request,
+                                            response: stub.response,
+                                            fileURL: stub.fileURL,
+                                            resumeData: resumeData,
+                                            metrics: nil,
+                                            serializationDuration: (end - start),
+                                            result: result)
+            (queue ?? .main).asyncAfter(deadline: .now() + stub.stubDelay) {
+                completionHandler(response)
+            }
+            return self
         } else {
-            print("Failed to build model from \(fileName) in \(bundle)")
+            return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
         }
     }
 }
 
-/// Error, that will be thrown if model creation failed while stubbing network request.
-public struct APIStubConstructionError: Error {}
+private var TRONAPIStubAssociatedKey = "TRON APIStub Associated Key"
+extension Request {
+    var tron_apiStub: APIStub? {
+        get {
+            return objc_getAssociatedObject(self, &TRONAPIStubAssociatedKey) as? APIStub
+        }
+        set {
+            objc_setAssociatedObject(self, &TRONAPIStubAssociatedKey, tron_apiStub, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+}
 
 /**
  `APIStub` instance that is used to represent stubbed successful or unsuccessful response value.
  */
-open class APIStub<Model, ErrorModel> {
+open class APIStub {
 
-    /// Should the stub be successful. By default - true
-    open var successful = true
+    open var request: URLRequest?
 
-    /// Data to be passed to successful stub
-    open var successData: Data?
+    open var response: HTTPURLResponse?
 
-    /// Download URL to be used when working with DownloadAPIRequest stubs.
-    open var successDownloadURL: URL?
+    open var data: Data?
 
-    /// Error to be passed into request's `errorParser` if stub is failureful.
-    open var errorRequest: URLRequest?
+    open var error: Error?
 
-    /// HTTP response to be passed into request's `errorParser` if stub is failureful.
-    open var errorResponse: HTTPURLResponse?
-
-    /// Error Data to be passed into request's `errorParser` if stub is failureful.
-    open var errorData: Data?
-
-    /// Loading error to be passed into request's `errorParser` if stub is failureful.
-    open var loadingError: Error?
-
-    /// Response model closure for successful API stub
-    open var modelClosure : (() -> Model?)?
-
-    /// Error model closure for unsuccessful API stub
-    open var errorClosure: () -> APIError<ErrorModel> = { APIError(request: nil, response: nil, data: nil, error: nil) }
+    open var fileURL: URL?
 
     /// Delay before stub is executed
-    open var stubDelay = 0.1
+    open var stubDelay: Double = 0
 
-    /// Creates `APIStub`, and configures it for `request`.
-    public init(request: BaseRequest<Model, ErrorModel>) {
-        if let request = request as? APIRequest<Model, ErrorModel> {
-            let serializer = request.responseParser
-            let errorSerializer = request.errorParser
-            modelClosure = { [unowned self] in
-                return serializer(nil, nil, self.successData, nil).value
-            }
-            errorClosure = { [unowned self] in
-                return errorSerializer(nil, self.errorRequest, self.errorResponse, self.errorData, self.loadingError)
-            }
-        } else if let request = request as? UploadAPIRequest<Model, ErrorModel> {
-            let serializer = request.responseParser
-            let errorSerializer = request.errorParser
-            modelClosure = { [unowned self] in
-                return serializer(nil, nil, self.successData, nil).value
-            }
-            errorClosure = { [unowned self] in
-                return errorSerializer(nil, self.errorRequest, self.errorResponse, self.errorData, self.loadingError)
-            }
-        } else if let request = request as? DownloadAPIRequest<Model, ErrorModel> {
-            let serializer = request.responseParser
-            let errorSerializer = request.errorParser
-            modelClosure = { [unowned self] in
-                return serializer(nil, nil, self.successDownloadURL, nil).value
-            }
-            errorClosure = { [unowned self] in
-                return errorSerializer(nil, self.errorRequest, self.errorResponse, nil, self.loadingError)
-            }
-        } else {
-            modelClosure = { return nil }
-        }
+    open var isEnabled: Bool = false
+
+    public init(request: URLRequest? = nil,
+         response: HTTPURLResponse? = nil,
+         data: Data? = nil,
+         error: Error? = nil) {
+        self.request = request
+        self.response = response
+        self.data = data
+        self.error = error
     }
 
-    /**
-     Stub current request.
-     
-     - parameter successBlock: Success block to be executed when request finished
-     
-     - parameter failureBlock: Failure block to be executed if request fails. Nil by default.
-     */
-    open func performStub(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((APIError<ErrorModel>) -> Void)? = nil) {
-        performStub { (dataResponse: DataResponse<Model>) -> Void in
-            switch dataResponse.result {
-            case .success(let model):
-                successBlock?(model)
-            case .failure(let error):
-                if let error = error as? APIError<ErrorModel> {
-                    failureBlock?(error)
-                } else {
-                    failureBlock?(APIError(request: nil, response: nil, data: nil, error: error))
-                }
-            }
-        }
-    }
-
-    /**
-     Stub current request.
-     
-     - parameter completionBlock: Completion block to be executed when request is stubbed.
-     */
-    open func performStub(withCompletion completionBlock : @escaping ((Alamofire.DataResponse<Model>) -> Void)) {
-        delay(stubDelay) {
-            let result: Alamofire.Result<Model>
-            if self.successful {
-                if let model = self.modelClosure?() {
-                    result = Result.success(model)
-                } else {
-                    result = Result.failure(APIStubConstructionError())
-                }
-            } else {
-                result = Result.failure(self.errorClosure())
-            }
-            let response: Alamofire.DataResponse<Model> = Alamofire.DataResponse(request: nil, response: nil, data: nil, result: result)
-            completionBlock(response)
-        }
-    }
-
-    /**
-     Stub current download request.
-     
-     - parameter completionBlock: Completion block to be executed when request is stubbed.
-     */
-    open func performStub(withCompletion completionBlock : @escaping ((Alamofire.DownloadResponse<Model>) -> Void)) {
-        delay(stubDelay) {
-            let result: Alamofire.Result<Model>
-            if self.successful {
-                if let model = self.modelClosure?() {
-                    result = Result.success(model)
-                } else {
-                   result = .failure(APIStubConstructionError())
-                }
-            } else {
-                result = Result.failure(self.errorClosure())
-            }
-            let response: DownloadResponse<Model> = DownloadResponse(request: nil, response: nil, temporaryURL: nil, destinationURL: nil, resumeData: nil, result: result)
-            completionBlock(response)
-        }
+    public init(request: URLRequest? = nil,
+                response: HTTPURLResponse? = nil,
+                fileURL: URL? = nil,
+                error: Error? = nil) {
+        self.request = request
+        self.response = response
+        self.fileURL = fileURL
+        self.error = error
     }
 }

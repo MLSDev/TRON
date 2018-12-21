@@ -29,7 +29,7 @@ class APIRequestTestCase: XCTestCase {
 //        let configuration = URLSessionConfiguration()
 //        configuration.protocolClasses = [StubbingURLProtocol.self] as [AnyClass]
         tron = TRON(baseURL: "http://httpbin.org")
-//            , manager: SessionManager(configuration: configuration))
+//            , manager: Session(configuration: configuration))
 //        URLProtocol.registerClass(StubbingURLProtocol.self)
     }
     
@@ -148,8 +148,8 @@ class APIRequestTestCase: XCTestCase {
     func testRequestWillStartEvenIfStartAutomaticallyIsFalse()
     {
         let configuration = URLSessionConfiguration.default
-        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
-        let manager = SessionManager(configuration: configuration)
+        configuration.httpAdditionalHeaders = Session.defaultHTTPHeaders
+        let manager = Session(configuration: configuration)
         manager.startRequestsImmediately = false
         let tron = TRON(baseURL: "http://httpbin.org", manager: manager)
         let request : APIRequest<EmptyResponse, TronError> = tron.swiftyJSON.request("headers")
@@ -166,8 +166,8 @@ class APIRequestTestCase: XCTestCase {
     
     func testMultipartUploadWillStartEvenIfStartAutomaticallyIsFalse() {
         let configuration = URLSessionConfiguration.default
-        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
-        let manager = SessionManager(configuration: configuration)
+        configuration.httpAdditionalHeaders = Session.defaultHTTPHeaders
+        let manager = Session(configuration: configuration)
         manager.startRequestsImmediately = false
         let tron = TRON(baseURL: "http://httpbin.org", manager: manager)
         let request: UploadAPIRequest<TestResponse,TronError> = tron.swiftyJSON.uploadMultipart("post") { formData in
