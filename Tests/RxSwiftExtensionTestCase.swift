@@ -17,11 +17,11 @@ class RxSwiftExtensionTestCase: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        tron = TRON(baseURL: "http://httpbin.org")
+        tron = TRON(baseURL: "https://httpbin.org")
     }
     
     func testRxResultSuccessfullyCompletes() {
-        let request : APIRequest<String,TronError> = tron.swiftyJSON.request("get")
+        let request : APIRequest<String,APIError> = tron.swiftyJSON.request("get")
         let expectation = self.expectation(description: "200")
         _ = request.rxResult().subscribe(onNext: { _ in
             expectation.fulfill()
@@ -30,7 +30,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
     }
     
     func testRxResultIsClosedAfterSuccessfulResponse() {
-        let request : APIRequest<String,TronError> = tron.swiftyJSON.request("get")
+        let request : APIRequest<String,APIError> = tron.swiftyJSON.request("get")
         let expectation = self.expectation(description: "200")
         _ = request.rxResult().subscribe(onCompleted: { 
             expectation.fulfill()
@@ -39,7 +39,7 @@ class RxSwiftExtensionTestCase: XCTestCase {
     }
     
     func testRxResultCanBeFailed() {
-        let request : APIRequest<Int,TronError> = tron.swiftyJSON.request("status/418")
+        let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("status/418")
         let expectation = self.expectation(description: "Teapot")
         _ = request.rxResult().subscribe(onError: { _ in
             expectation.fulfill()
@@ -48,31 +48,28 @@ class RxSwiftExtensionTestCase: XCTestCase {
     }
     
     func testMultipartRxCanBeSuccessful() {
-        let request: UploadAPIRequest<TestResponse,TronError> = tron.swiftyJSON.uploadMultipart("post") { formData in
+        let request: UploadAPIRequest<TestResponse,APIError> = tron.swiftyJSON.uploadMultipart("post") { formData in
             formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
         }
         request.method = .post
         
         let expectation = self.expectation(description: "foo")
         
-        _ = request.rxMultipartResult().subscribe(onNext: { result in
-            if let dictionary = result.response["form"] as? [String:String] {
-                if dictionary["foo"] == "bar" {
-                    expectation.fulfill()
-                }
-            }
+        _ = request.rxResult().subscribe(onNext: { result in
+            XCTAssertNotNil(result.response["data"])
+            expectation.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)
     }
     
     func testMultipartRxCanBeFailureful() {
-        let request: UploadAPIRequest<TestResponse,TronError> = tron.swiftyJSON.uploadMultipart("post") { formData in
+        let request: UploadAPIRequest<TestResponse,APIError> = tron.swiftyJSON.uploadMultipart("post") { formData in
             formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
         }
         request.method = .delete
         let expectation = self.expectation(description: "foo")
         
-        _ = request.rxMultipartResult().subscribe(onError: { error in
+        _ = request.rxResult().subscribe(onError: { error in
             expectation.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)

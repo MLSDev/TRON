@@ -20,7 +20,7 @@ class DownloadTestCase: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        tron = TRON(baseURL: "http://httpbin.org")
+        tron = TRON(baseURL: "https://httpbin.org")
     }
     
     func testDownloadRequest() {
@@ -30,7 +30,12 @@ class DownloadTestCase: XCTestCase {
             for: searchPathDirectory,
             in: searchPathDomain
         )
-        let request: DownloadAPIRequest<EmptyResponse, TronError> = tron.swiftyJSON.download("/stream/100", to: destination)
+        let responseSerializer = TRONDownloadResponseSerializer { _,_,_,_ in
+            try EmptyResponse(json: .null)
+        }
+        let request: DownloadAPIRequest<EmptyResponse, APIError> = tron.download("/stream/100",
+                                                                                 to: destination,
+                                                                                 responseSerializer: responseSerializer)
         let expectation = self.expectation(description: "Download expectation")
         request.performCollectingTimeline(withCompletion: { result in
             expectation.fulfill()
@@ -92,7 +97,12 @@ class DownloadTestCase: XCTestCase {
             in: searchPathDomain
         )
         let path = "/wikipedia/commons/thumb/a/ab/Olympiastadion_at_dusk.JPG/2560px-Olympiastadion_at_dusk.JPG"
-        let request: DownloadAPIRequest<EmptyResponse, TronError> = tron.swiftyJSON.download(path, to: destination)
+        let responseSerializer = TRONDownloadResponseSerializer { _,_,_,_ in
+            try EmptyResponse(json: .null)
+        }
+        let request: DownloadAPIRequest<EmptyResponse, APIError> = tron.download(path,
+                                                                                 to: destination,
+                                                                                 responseSerializer: responseSerializer)
         let expectation = self.expectation(description: "Download expectation")
         let alamofireRequest = request.performCollectingTimeline(withCompletion: { result in
             expectation.fulfill()
@@ -110,7 +120,10 @@ class DownloadTestCase: XCTestCase {
             return
         }
         
-        let continueDownloadRequest : DownloadAPIRequest<EmptyResponse, TronError> = tron.swiftyJSON.download(path, to: destination, resumingFrom : resumeData)
+        let continueDownloadRequest : DownloadAPIRequest<EmptyResponse, APIError> = tron!.download(path,
+                                                                                                   to: destination,
+                                                                                                   resumingFrom: resumeData,
+                                                                                                   responseSerializer: responseSerializer)
         let continueExpectation = self.expectation(description: "Continue download expectation")
         continueDownloadRequest.performCollectingTimeline(withCompletion: { result in
             continueExpectation.fulfill()

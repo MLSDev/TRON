@@ -150,7 +150,10 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
             request.resume()
         }
         didSendAlamofireRequest(request)
-        return validationClosure(request).response(queue: resultDeliveryQueue, responseSerializer: dataResponseSerializer(with: request), completionHandler: { dataResponse in
+        return validationClosure(request)
+            .performResponseSerialization(queue: resultDeliveryQueue,
+                                          responseSerializer: dataResponseSerializer(with: request),
+                                          completionHandler: { dataResponse in
                 self.didReceiveDataResponse(dataResponse, forRequest: request)
                 completion(dataResponse)
         })

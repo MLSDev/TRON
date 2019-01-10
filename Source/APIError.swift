@@ -38,7 +38,7 @@ public protocol DownloadErrorSerializable: Error {
 }
 
 /// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
-open class APIError<T, U> : Error, LocalizedError, ErrorSerializable, DownloadErrorSerializable {
+open class APIError<T> : Error, LocalizedError, ErrorSerializable, DownloadErrorSerializable {
 
     /// URLRequest that was unsuccessful
     public let request: URLRequest?

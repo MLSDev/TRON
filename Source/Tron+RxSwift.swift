@@ -48,3 +48,55 @@ extension APIRequest {
         })
     }
 }
+
+extension UploadAPIRequest {
+    /**
+     Creates on Observable of success Model type. It starts a request each time it's subscribed to.
+     
+     - returns: Observable<Model>
+     */
+    open func rxResult() -> Observable<Model> {
+        return Observable.create({ observer in
+            let token = self.perform(withSuccess: { result in
+                observer.onNext(result)
+                observer.onCompleted()
+            }, failure: { error in
+                observer.onError(error)
+            })
+            return Disposables.create {
+                token?.cancel()
+            }
+        })
+    }
+}
+
+public struct DownloadError<T> : Error {
+    public let response: DownloadResponse<T>
+
+    public init(_ response: DownloadResponse<T>) {
+        self.response = response
+    }
+}
+
+extension DownloadAPIRequest {
+    /**
+     Creates on Observable of success Model type. It starts a request each time it's subscribed to.
+     
+     - returns: Observable<Model>
+     */
+    open func rxResult() -> Observable<URL> {
+        return Observable.create({ observer in
+            let token = self.performCollectingTimeline(withCompletion: { response in
+                if let url = response.fileURL {
+                    observer.onNext(url)
+                    observer.onCompleted()
+                } else {
+                    observer.onError(response.error ?? DownloadError(response))
+                }
+            })
+            return Disposables.create {
+                token?.cancel()
+            }
+        })
+    }
+}

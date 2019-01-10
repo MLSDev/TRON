@@ -26,16 +26,12 @@ private struct HeadersResponse : Codable {
         }
     }
 }
-    
-fileprivate struct CodableError: Codable {
-    
-}
 
 class CodableTestCase: XCTestCase {
     
     func testCodableParsing() {
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<HeadersResponse,Int> = tron.codable.request("headers")
+        let tron = TRON(baseURL: "https://httpbin.org")
+        let request: APIRequest<HeadersResponse,APIError> = tron.codable.request("headers")
         let expectation = self.expectation(description: "Parsing headers response")
         request.perform(withSuccess:  { headers in
             if headers.headers.host == "httpbin.org" {
@@ -49,8 +45,8 @@ class CodableTestCase: XCTestCase {
     }
     
     func testCodableErrorParsing() {
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<Int,CodableError> = tron.codable.request("status/418")
+        let tron = TRON(baseURL: "https://httpbin.org")
+        let request: APIRequest<Int,APIError> = tron.codable.request("status/418")
         let expectation = self.expectation(description: "Teapot")
         request.perform(withSuccess: { _ in
             XCTFail()
@@ -63,8 +59,8 @@ class CodableTestCase: XCTestCase {
     }
     
     func testEmptyResponseStillCallsSuccessBlock() {
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request : APIRequest<EmptyResponse, CodableError> = tron.codable.request("headers")
+        let tron = TRON(baseURL: "https://httpbin.org")
+        let request : APIRequest<EmptyResponse, APIError> = tron.codable.request("headers")
         request.method = .head
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in

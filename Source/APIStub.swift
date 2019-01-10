@@ -103,7 +103,9 @@ extension Request {
             return objc_getAssociatedObject(self, &TRONAPIStubAssociatedKey) as? APIStub
         }
         set {
-            objc_setAssociatedObject(self, &TRONAPIStubAssociatedKey, tron_apiStub, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            if let stub = newValue {
+                objc_setAssociatedObject(self, &TRONAPIStubAssociatedKey, stub, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
         }
     }
 }

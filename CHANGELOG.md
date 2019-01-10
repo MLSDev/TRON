@@ -3,7 +3,10 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
-* Support for Xcode 10 and Swift 4.2
+TRON now requires: 
+* iOS/tvOS 10 and higher
+* watchOS 2 and higher
+* macOS 10.12 and higher
 
 ### Added
 
@@ -22,7 +25,7 @@ All notable changes to this project will be documented in this file.
 * `JSONDecodableParser` and `CodableParser` now have only one generic argument - `Model`, since `ErrorModel` is now moved to `ErrorSerializable` protocol, that does not depend on any particular serializer.
 * Convenience download methods on `CodableSerializer` and `JSONDecodableSerializer` have been removed.
 * `APIStub` has been rewritten from scratch to allow injecting only results of network request(`URLRequest`, `HTTPURLResponse`, `Data`, `Error` and `fileURL`) as opposed to actual `Model` and `errorModel` as well as definition of successful/unsuccessful requests. `APIStub` now is been attached to  `Alamofire.Request` when stubbing for this particular request has been enabled. Rewrite also allows plugin callbacks to be called more consistently for both stubbed and unstubbed cases.
-* `rxMultipartResult` method on `UploadRequest` method was removed since `UploadRequest` for multipart requests in Alamofire 5 is now synchronous and now does not require special handling. To create multipart upload request, call `tron.multipartUpload` method that now has additional arguments
+* `rxMultipartResult` method on `UploadRequest` method was removed since `UploadRequest` for multipart requests in Alamofire 5 is now synchronous and now does not require special handling. You can now call `rxResult` replacement method instead.
 
 
 ## [4.2.1](https://github.com/MLSDev/TRON/releases/tag/4.2.1)
@@ -215,7 +218,7 @@ If you haven't been following beta releases, please read [1.0.0 Migration Guide]
 
 ### Added
 
-* Ability to create APIRequest with Array generic constraint, for example - `APIRequest<[Int],TronError>`
+* Ability to create APIRequest with Array generic constraint, for example - `APIRequest<[Int],APIError>`
 
 ### Changed
 
@@ -364,8 +367,8 @@ Current architecture does not support having more than one mapper in your projec
 Currently, there's no way to extend CollectionType or Array with `JSONDecodable` or `ResponseParseable` protocol, so creating request with ModelType of array(APIRequest<[Foo],Bar>) is not possible.
 
 Blocking radars:
-http://www.openradar.me/23433955
-http://www.openradar.me/23196859
+https://www.openradar.me/23433955
+https://www.openradar.me/23196859
 
 ## [0.1.0](https://github.com/MLSDev/TRON/releases/tag/0.1.0)
 

@@ -14,15 +14,15 @@ import Alamofire
 class HeaderBuilderTestCase: XCTestCase {
     
     func testTronRequestHeaderBuilderAppendsHeaders() {
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<Int,TronError> = tron.swiftyJSON.request("status/200")
+        let tron = TRON(baseURL: "https://httpbin.org")
+        let request: APIRequest<Int,APIError> = tron.swiftyJSON.request("status/200")
         request.headers = ["If-Modified-Since":"Sat, 29 Oct 1994 19:43:31 GMT"]
         
         let alamofireRequest = request.performCollectingTimeline(withCompletion: { _ in })
         
+        expect(alamofireRequest?.request).toEventuallyNot(beNil())
         let headers = alamofireRequest?.request?.allHTTPHeaderFields
         
-        expect(headers?["Accept"]) == "application/json"
         expect(headers?["If-Modified-Since"]) == "Sat, 29 Oct 1994 19:43:31 GMT"
     }
     

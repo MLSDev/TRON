@@ -14,8 +14,8 @@ class PluginTestCase: XCTestCase {
     
     func testGlobalPluginsAreCalledCorrectly() {
         let pluginTester = PluginTester()
-        let tron = TRON(baseURL: "http://httpbin.org", plugins: [pluginTester])
-        let request : APIRequest<Int,Int> = tron.swiftyJSON.request("status/200")
+        let tron = TRON(baseURL: "https://httpbin.org", plugins: [pluginTester])
+        let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("status/200")
         
         request.performCollectingTimeline(withCompletion: {_ in })
         
@@ -27,8 +27,8 @@ class PluginTestCase: XCTestCase {
     
     func testLocalPluginsAreCalledCorrectly() {
         let pluginTester = PluginTester()
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<String,Int> = tron.swiftyJSON.request("status/200")
+        let tron = TRON(baseURL: "https://httpbin.org")
+        let request: APIRequest<String,APIError> = tron.swiftyJSON.request("status/200")
         let expectation = self.expectation(description: "PluginTester expectation")
         request.plugins.append(pluginTester)
         request.perform(withSuccess: { _ in
@@ -56,14 +56,14 @@ class PluginTestCase: XCTestCase {
         let globalPluginTester = PluginTester()
         let localPluginTester = PluginTester()
         
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request: UploadAPIRequest<String,Int> = tron.swiftyJSON.uploadMultipart("status/200") { formData in
+        let tron = TRON(baseURL: "https://httpbin.org")
+        let request: UploadAPIRequest<String,APIError> = tron.swiftyJSON.uploadMultipart("status/200") { formData in
             
         }
         request.plugins.append(localPluginTester)
         tron.plugins.append(globalPluginTester)
         
-        request.performMultipart(withSuccess: { _ = $0 })
+        request.perform(withSuccess: { _ = $0 })
         
         expect(localPluginTester.willSendCalled).toEventually(equal(true))
         expect(globalPluginTester.willSendCalled).toEventually(equal(true))

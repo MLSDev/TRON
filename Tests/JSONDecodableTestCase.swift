@@ -48,10 +48,11 @@ class JSONDecodableTestCase: XCTestCase {
     
     #if swift(>=4.1)
     func testDecodableArray() throws {
-        let request: APIRequest<[Int],TronError> = tron.swiftyJSON.request("foo")
+        let request: APIRequest<[Int],APIError> = tron.swiftyJSON.request("foo")
         let json = [1,2,3,4]
-        let parsedResponse = try request.responseParser(nil, nil, JSONSerialization.data(withJSONObject:json, options: []), nil).unwrap()
-        
+        let parsedResponse = try request.responseParser(nil, nil, JSONSerialization.data(withJSONObject: json,
+                                                                                          options: []),
+                                                         nil)
         expect(parsedResponse) == [1,2,3,4]
     }
     #endif
@@ -66,8 +67,8 @@ class JSONDecodableTestCase: XCTestCase {
     }
 
     func testJSONDecodableParsing() {
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<Headers,Int> = tron.swiftyJSON.request("headers")
+        let tron = TRON(baseURL: "https://httpbin.org")
+        let request: APIRequest<Headers,APIError> = tron.swiftyJSON.request("headers")
         let expectation = self.expectation(description: "Parsing headers response")
         request.perform(withSuccess:  { headers in
             if headers.host == "httpbin.org" {
@@ -79,8 +80,8 @@ class JSONDecodableTestCase: XCTestCase {
     }
     
     func testJSONDecodableWorksWithSiblings() {
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<Sibling,Int> = tron.swiftyJSON.request("headers")
+        let tron = TRON(baseURL: "https://httpbin.org")
+        let request: APIRequest<Sibling,APIError> = tron.swiftyJSON.request("headers")
         let expectation = self.expectation(description: "Parsing headers response")
         request.perform(withSuccess:  { sibling in
             if sibling.foo == "4" {
@@ -92,7 +93,7 @@ class JSONDecodableTestCase: XCTestCase {
     }
     
 //    func testJSONDecodableParsingEmptyResponse() {
-//        let tron = TRON(baseURL: "http://httpbin.org")
+//        let tron = TRON(baseURL: "https://httpbin.org")
 //        let request: APIRequest<Headers,Int> = tron.request("headers")
 //        let responseSerializer = request.dataResponseSerializer(with: [])
 //        let result = responseSerializer.serializeResponse(nil,nil, nil,nil)

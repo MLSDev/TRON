@@ -39,7 +39,7 @@ class PluginTester : Plugin
         didReceiveSuccess = true
     }
     
-    func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>, forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
+    func didReceiveError<Model, ErrorModel>(_ error: ErrorModel, forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) where ErrorModel : ErrorSerializable {
         didReceiveError = true
     }
 }
