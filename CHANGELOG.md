@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 TRON now requires: 
 * Xcode 10
 * iOS/tvOS 10 and higher
-* watchOS 2 and higher
+* watchOS 3 and higher
 * macOS 10.12 and higher
 
 ### Added
