@@ -25,10 +25,12 @@
 
 import Foundation
 
+/// Protocol used to serialize errors received from sending `APIRequest` or `UploadAPIRequest`.
 public protocol ErrorSerializable: Error {
     init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?)
 }
 
+/// Protocol used to serialize errors received from sending `DownloadAPIRequest`.
 public protocol DownloadErrorSerializable: Error {
     init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?)
 }
@@ -51,6 +53,7 @@ open class APIError: Error, LocalizedError, ErrorSerializable, DownloadErrorSeri
     /// Error instance, created by Foundation Loading System or Alamofire.
     public let error: Error?
 
+    /// Serialized object, created by parsing response from API/Download/UploadRequest.
     public let serializedObject: Any?
 
     required public init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
@@ -78,6 +81,7 @@ open class APIError: Error, LocalizedError, ErrorSerializable, DownloadErrorSeri
         return error?.localizedDescription
     }
 
+    /// Description of underlying error.
     public var description: String {
         return errorDescription ?? ""
     }

@@ -111,35 +111,55 @@ extension Request {
 }
 
 /**
- `APIStub` instance that is used to represent stubbed successful or unsuccessful response value.
+ `APIStub` instance that is used to represent stubbed response. Any properties of this class is presented to serialization classes as if they would be received by URL loading system.
  */
 open class APIStub {
 
+    /// `URLRequest` object to use when request is being stubbed.
     open var request: URLRequest?
 
+    /// `HTTPURLResponse` to use when request is being stubbed.
     open var response: HTTPURLResponse?
 
+    /// `Data` to use when request is being stubbed. This property is ignored for `DownloadAPIRequest`.
     open var data: Data?
 
+    /// Error to use when request is being stubbed.
     open var error: Error?
 
+    /// File URL to use when stubbing `DownloadAPIRequest`. This property is ignored for `APIRequest` and `UploadAPIRequest`.
     open var fileURL: URL?
 
     /// Delay before stub is executed
     open var stubDelay: Double = 0
 
+    /// When this property is set to true, stub will be activated. Defaults to false.
     open var isEnabled: Bool = false
 
+    /// Creates `APIStub` instance for `APIRequest` and `UploadAPIRequest`.
+    ///
+    /// - Parameters:
+    ///   - request: `URLRequest` object ot use when request is being stubbed. Defaults to nil.
+    ///   - response: `HTTPURLResponse` object to use when request is being stubbed. Defaults to nil.
+    ///   - data: `Data` object to use when request is being stubbed. Defaults to nil.
+    ///   - error: `Error` to use when request is being stubbed. Defaults to nil.
     public init(request: URLRequest? = nil,
-         response: HTTPURLResponse? = nil,
-         data: Data? = nil,
-         error: Error? = nil) {
+                response: HTTPURLResponse? = nil,
+                data: Data? = nil,
+                error: Error? = nil) {
         self.request = request
         self.response = response
         self.data = data
         self.error = error
     }
 
+    /// Creates `APIStub` instance for `DownloadAPIRequest`.
+    ///
+    /// - Parameters:
+    ///   - request: `URLRequest` object ot use when request is being stubbed. Defaults to nil.
+    ///   - response: `HTTPURLResponse` object to use when request is being stubbed. Defaults to nil.
+    ///   - fileURL: File URL of downloaded file to use when request is being stubbed. Defaults to nil.
+    ///   - error: `Error` to use when request is being stubbed. Defaults to nil.
     public init(request: URLRequest? = nil,
                 response: HTTPURLResponse? = nil,
                 fileURL: URL? = nil,

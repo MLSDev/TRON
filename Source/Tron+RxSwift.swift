@@ -70,9 +70,16 @@ extension UploadAPIRequest {
     }
 }
 
+/// Error that is created in case `DownloadAPIRequest` errors out, but Alamofire and URL loading system report error as nil.
+/// Practically, this should never happen ¯\_(ツ)_/¯ .
 public struct DownloadError<T> : Error {
+
+    /// Reported `DownloadResponse`
     public let response: DownloadResponse<T>
 
+    /// Creates `DownloadError` for `DownloadAPIRequest`.
+    ///
+    /// - Parameter response: response created by `Alamofire`.
     public init(_ response: DownloadResponse<T>) {
         self.response = response
     }
