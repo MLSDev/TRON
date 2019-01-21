@@ -26,19 +26,15 @@
 import Foundation
 
 public protocol ErrorSerializable: Error {
-    associatedtype SerializedObject
-
-    init?(serializedObject: SerializedObject?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?)
+    init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?)
 }
 
 public protocol DownloadErrorSerializable: Error {
-    associatedtype SerializedObject
-
-    init?(serializedObject: SerializedObject?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?)
+    init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?)
 }
 
-/// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
-open class APIError<T> : Error, LocalizedError, ErrorSerializable, DownloadErrorSerializable {
+/// `APIError` is used as a generic wrapper for all kinds of API errors.
+open class APIError: Error, LocalizedError, ErrorSerializable, DownloadErrorSerializable, CustomStringConvertible {
 
     /// URLRequest that was unsuccessful
     public let request: URLRequest?
@@ -55,9 +51,9 @@ open class APIError<T> : Error, LocalizedError, ErrorSerializable, DownloadError
     /// Error instance, created by Foundation Loading System or Alamofire.
     public let error: Error?
 
-    public let serializedObject: T?
+    public let serializedObject: Any?
 
-    required public init?(serializedObject: T?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
+    required public init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
         guard let receivedError = error else { return nil }
         self.serializedObject = serializedObject
         self.request = request
@@ -67,7 +63,7 @@ open class APIError<T> : Error, LocalizedError, ErrorSerializable, DownloadError
         fileURL = nil
     }
 
-    required public init?(serializedObject: T?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
+    required public init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
         guard let receivedError = error else { return nil }
         self.serializedObject = serializedObject
         self.request = request
@@ -80,5 +76,9 @@ open class APIError<T> : Error, LocalizedError, ErrorSerializable, DownloadError
     /// Prints localized description of error inside
     public var errorDescription: String? {
         return error?.localizedDescription
+    }
+
+    public var description: String {
+        return errorDescription ?? ""
     }
 }

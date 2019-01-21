@@ -10,10 +10,10 @@ import Foundation
 import TRON
 import SwiftyJSON
 
-public class CodableError<Model, ErrorModel: Codable> : APIError<Model> {
+public class CodableError<Model, ErrorModel: Codable> : APIError {
     let errorModel: ErrorModel?
     
-    public required init?(serializedObject: Model?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
+    public required init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
         if let data = data {
             errorModel = try? JSONDecoder().decode(ErrorModel.self, from: data)
         } else {
@@ -26,7 +26,7 @@ public class CodableError<Model, ErrorModel: Codable> : APIError<Model> {
                    error: error)
     }
     
-    public required init?(serializedObject: Model?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
+    public required init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
         errorModel = nil
         super.init(serializedObject: serializedObject,
                    request: request,
@@ -36,10 +36,10 @@ public class CodableError<Model, ErrorModel: Codable> : APIError<Model> {
     }
 }
 
-public class JSONDecodableError<Model, ErrorModel: JSONDecodable> : APIError<Model> {
+public class JSONDecodableError<Model, ErrorModel: JSONDecodable> : APIError {
     let errorModel: ErrorModel?
     
-    public required init?(serializedObject: Model?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
+    public required init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
         if let data = data, let json = try? JSON(data: data) {
             errorModel = try? ErrorModel(json: json)
         } else {
@@ -52,7 +52,7 @@ public class JSONDecodableError<Model, ErrorModel: JSONDecodable> : APIError<Mod
                    error: error)
     }
     
-    public required init?(serializedObject: Model?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
+    public required init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
         errorModel = nil
         super.init(serializedObject: serializedObject,
                    request: request,

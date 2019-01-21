@@ -63,7 +63,7 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
 
     /// Creates `UploadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
     public init<Serializer: DataResponseSerializerProtocol>(type: UploadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
-        where Serializer.SerializedObject == Model, Serializer.SerializedObject == ErrorModel.SerializedObject {
+        where Serializer.SerializedObject == Model {
         self.type = type
         self.responseParser = { request, response, data, error in
             try responseSerializer.serialize(request: request, response: response, data: data, error: error)

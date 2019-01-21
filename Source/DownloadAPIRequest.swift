@@ -60,7 +60,7 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
 
     /// Creates `DownloadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
     public init<Serializer: DownloadResponseSerializerProtocol>(type: DownloadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
-        where Serializer.SerializedObject == Model, Serializer.SerializedObject == ErrorModel.SerializedObject {
+        where Serializer.SerializedObject == Model {
         self.type = type
         self.responseParser = { request, response, fileURL, error in
             try responseSerializer.serializeDownload(request: request, response: response, fileURL: fileURL, error: error)

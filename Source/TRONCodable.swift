@@ -73,8 +73,7 @@ open class CodableSerializer {
 
      - returns: APIRequest instance.
      */
-    public func request<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String) -> APIRequest<Model, ErrorModel>
-        where Model == ErrorModel.SerializedObject {
+    public func request<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String) -> APIRequest<Model, ErrorModel> {
         return tron.request(path, responseSerializer: CodableParser(modelDecoder: modelDecoder))
     }
 
@@ -87,8 +86,7 @@ open class CodableSerializer {
 
      - returns: APIRequest instance.
      */
-    public func upload<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model, ErrorModel>
-        where Model == ErrorModel.SerializedObject {
+    public func upload<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model, ErrorModel> {
         return tron.upload(path, fromFileAt: fileURL,
                            responseSerializer: CodableParser(modelDecoder: modelDecoder))
     }
@@ -102,8 +100,7 @@ open class CodableSerializer {
 
      - returns: APIRequest instance.
      */
-    public func upload<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String, data: Data) -> UploadAPIRequest<Model, ErrorModel>
-        where Model == ErrorModel.SerializedObject {
+    public func upload<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String, data: Data) -> UploadAPIRequest<Model, ErrorModel> {
         return tron.upload(path, data: data, responseSerializer: CodableParser(modelDecoder: modelDecoder))
     }
 
@@ -116,8 +113,7 @@ open class CodableSerializer {
 
      - returns: APIRequest instance.
      */
-    public func upload<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model, ErrorModel>
-        where Model == ErrorModel.SerializedObject {
+    public func upload<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model, ErrorModel> {
         return tron.upload(path, from: stream, responseSerializer: CodableParser(modelDecoder: modelDecoder))
     }
 
@@ -133,8 +129,7 @@ open class CodableSerializer {
     public func uploadMultipart<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String,
                                                                                  encodingMemoryThreshold: UInt64 = MultipartUpload.encodingMemoryThreshold,
                                                                                  fileManager: FileManager = .default,
-                                                                                 formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel>
-        where Model == ErrorModel.SerializedObject {
+                                                                                 formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel> {
         return tron.uploadMultipart(path, responseSerializer: CodableParser(modelDecoder: modelDecoder),
                                     encodingMemoryThreshold: encodingMemoryThreshold,
                                     fileManager: fileManager,

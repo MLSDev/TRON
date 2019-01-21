@@ -16,35 +16,29 @@ class User: JSONDecodable {
     }
 }
 
-class MyAppError: JSONDecodable {
-    required init(json: JSON) {
-        
-    }
-}
-
 class UserRequestFactory
 {
     static let tron = TRON(baseURL: "https://api.myapp.com")
     
-    class func create() -> APIRequest<User,MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.swiftyJSON.request("users")
+    class func create() -> APIRequest<User,APIError> {
+        let request: APIRequest<User,APIError> = tron.swiftyJSON.request("users")
         request.method = .post
         return request
     }
     
-    class func read(id: Int) -> APIRequest<User, MyAppError> {
+    class func read(id: Int) -> APIRequest<User, APIError> {
         return tron.swiftyJSON.request("users/\(id)")
     }
     
-    class func update(id: Int, parameters: [String:AnyObject]) -> APIRequest<User, MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.swiftyJSON.request("users/\(id)")
+    class func update(id: Int, parameters: [String:AnyObject]) -> APIRequest<User, APIError> {
+        let request: APIRequest<User,APIError> = tron.swiftyJSON.request("users/\(id)")
         request.method = .put
         request.parameters = parameters
         return request
     }
     
-    class func delete(id: Int) -> APIRequest<User,MyAppError> {
-        let request: APIRequest<User,MyAppError> = tron.swiftyJSON.request("users/\(id)")
+    class func delete(id: Int) -> APIRequest<User,APIError> {
+        let request: APIRequest<User,APIError> = tron.swiftyJSON.request("users/\(id)")
         request.method = .delete
         return request
     }

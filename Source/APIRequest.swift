@@ -41,7 +41,7 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
 
     /// Creates `APIRequest`, filling `responseParser` and `errorParser` properties
     public init<Serializer: DataResponseSerializerProtocol>(path: String, tron: TRON, responseSerializer: Serializer)
-        where Serializer.SerializedObject == Model, Serializer.SerializedObject == ErrorModel.SerializedObject {
+        where Serializer.SerializedObject == Model {
         self.responseParser = { request, response, data, error in
             try responseSerializer.serialize(request: request, response: response, data: data, error: error)
         }

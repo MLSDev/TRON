@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 # Next
 
 TRON now requires: 
+* Xcode 10
 * iOS/tvOS 10 and higher
 * watchOS 2 and higher
 * macOS 10.12 and higher
@@ -16,7 +17,7 @@ TRON now requires:
 
 * `AuthorizationRequirement` enum was removed. Please use `Alamofire.RequestAdapter` and  `Session.adapter` property to adapt request, when additional headers are needed.
 * `HeaderBuildable` protocol and `HeaderBuilder` types were removed. Please use `BaseRequest.headers` property of type `Alamofire.HTTPHeaders` directly.
-* `headers` property of `BaseRequest` now contains `HTTPHeaders` type instead of `[String: String]`.
+* `headers` property of `BaseRequest` now contains `HTTPHeaders` type instead of `[String: String]`. Please note that along with `HeaderBuilder` removal TRON no longer sends 'Accept':'application/json' header by default.
 * `APIError` is changed to be able to accept `SerializedObject` and is now a class with nullable initializer. Also, `DownloadAPIError` type has been introduced for download errors, that do not have `Data` in them, but have `fileURL` instead.
 * `ErrorHandlingDataResponseSerializerProtocol` and `ErrorHandlingDownloadResponseSerializer` protocol have been removed. Now, `ErrorModel` on all requests conforms to `ErrorSerializable` protocol, that contains initializer that allows to create it directly.
 * `Plugin` methods that previously accepted `APIError<ErrorModel>` now accept  `ErrorModel` directly. Added `didSuccessfullyParseDownloadResponse` and `didReceiveDownloadResponse` methods.
