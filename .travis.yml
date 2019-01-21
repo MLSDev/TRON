@@ -1,7 +1,7 @@
 sudo: false
 language: objective-c
 os: osx
-osx_image: xcode10
+osx_image: xcode10.1
 
 cache:
   directories:
@@ -17,10 +17,6 @@ matrix:
     - env: ACTION=test_ios_swift4 PLATFORM=iOS
     - env: ACTION=test_tvos_swift3 PLATFORM=tvOS
     - env: ACTION=test_tvos_swift4 PLATFORM=tvOS
-    - osx_image: xcode9.4
-      env: ACTION=test_xcode9_ios_swift3 PLATFORM=iOS
-    - osx_image: xcode9.4
-      env: ACTION=test_xcode9_ios_swift4 PLATFORM=iOS
     - env: ACTION=test_macos PLATFORM=macOS
     - env: ACTION=build_watchos PLATFORM=watchOS
     - env: ACTION=pod_lint PLATFORM=iOS
