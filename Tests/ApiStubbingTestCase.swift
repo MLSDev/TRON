@@ -62,7 +62,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.perform(withSuccess: { response in
             XCTFail()
             }) { error in
-                XCTAssertEqual(error.data?.toString, "5")
+                XCTAssertEqual(error.data?.asString, "5")
                 exp.fulfill()
         }
         waitForExpectations(timeout: 1, handler: nil)
