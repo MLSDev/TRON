@@ -10,6 +10,7 @@ import XCTest
 @testable import TRON
 import Nimble
 import SwiftyJSON
+import Alamofire
 
 struct TestUser : JSONDecodable {
     let name: String
@@ -81,6 +82,23 @@ class ApiStubbingTestCase: XCTestCase {
                 XCTFail()
         })
         waitForExpectations(timeout: 3, handler: nil)
+    }
+    
+    func testDownloadStubbingWorks() {
+        let destination = Alamofire.DownloadRequest.suggestedDownloadDestination()
+        let serializer = TRONDownloadResponseSerializer { (_, _, url, _) -> Int in
+            if url?.absoluteString == "expected.pkg" { return 0 }
+            return 1
+        }
+        let request: DownloadAPIRequest<Int, APIError> = tron.download("path", to: destination, responseSerializer: serializer)
+        request.apiStub = APIStub(fileURL: URL(string: "expected.pkg"))
+        request.apiStub?.isEnabled = true
+        let exp = expectation(description: "stub with completion handler")
+        request.performCollectingTimeline(withCompletion: { response in
+            XCTAssertEqual(response.result.value, 0)
+            exp.fulfill()
+        })
+        waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testStubbingSuccessfullyWorksWithCompletionHandler() {

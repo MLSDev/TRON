@@ -14,18 +14,44 @@ private func identifier(from request: URLRequest?) -> UUID? {
     return UUID(uuidString: identifierString)
 }
 
+class URLProtocolClientCommunicator {
+    enum Message {
+        case complete
+        case error(Error)
+        case response(HTTPURLResponse)
+        case data(Data)
+    }
+    
+    let messages : [Message]
+    
+    init(_ messages: [Message]) {
+        self.messages = messages
+    }
+    
+    func communicate(using protokol: URLProtocol, client: URLProtocolClient?) {
+        for message in messages {
+            switch message {
+            case .complete: client?.urlProtocolDidFinishLoading(protokol)
+            case .error(let error): client?.urlProtocol(protokol, didFailWithError: error)
+            case .response(let response): client?.urlProtocol(protokol,
+                                                             didReceive: response,
+                                                             cacheStoragePolicy: .allowed)
+            case .data(let data): client?.urlProtocol(protokol, didLoad: data)
+            }
+        }
+    }
+}
+
 class StubbingURLProtocol : URLProtocol {
     enum Constants {
         static let HeaderIdentifier = "TRON Stub Header Identifier"
     }
     
-    static var successResponses = [UUID:Data]()
-    static var failureResponses = [UUID:Error]()
-    static var responseCodes = [UUID:Int]()
+    static var communicators = [UUID:URLProtocolClientCommunicator]()
     
     override class func canInit(with request: URLRequest) -> Bool {
         guard let identifier = identifier(from: request) else { return false }
-        return successResponses[identifier] != nil || failureResponses[identifier] != nil
+        return communicators[identifier] != nil
     }
     
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -36,56 +62,56 @@ class StubbingURLProtocol : URLProtocol {
         guard let identifier = identifier(from: request) else {
             return
         }
-        if let successData = StubbingURLProtocol.successResponses[identifier] {
-            if let code = StubbingURLProtocol.responseCodes[identifier] {
-                client?.urlProtocol(self, didReceive: HTTPURLResponse(url: NSURL() as URL,
-                                                                      statusCode: code,
-                                                                      httpVersion: "HTTP/1.1",
-                                                                      headerFields: nil)!,
-                                    cacheStoragePolicy: .allowed)
-            }
-            client?.urlProtocol(self, didLoad: successData)
-            client?.urlProtocolDidFinishLoading(self)
-        } else if let failure = StubbingURLProtocol.failureResponses[identifier] {
-            if let code = StubbingURLProtocol.responseCodes[identifier] {
-                client?.urlProtocol(self, didReceive: HTTPURLResponse(url: NSURL() as URL,
-                                                                      statusCode: code,
-                                                                      httpVersion: "HTTP/1.1",
-                                                                      headerFields: nil)!,
-                                    cacheStoragePolicy: .allowed)
-            }
-            client?.urlProtocol(self, didFailWithError: failure)
+        if let communicator = StubbingURLProtocol.communicators[identifier] {
+            communicator.communicate(using: self, client: client)
+        } else {
             client?.urlProtocolDidFinishLoading(self)
         }
     }
     
     override func stopLoading() {
         guard let identifier = identifier(from: request) else { return }
-        StubbingURLProtocol.successResponses[identifier] = nil
-        StubbingURLProtocol.failureResponses[identifier] = nil
-        StubbingURLProtocol.responseCodes[identifier] = nil
+        StubbingURLProtocol.communicators[identifier] = nil
     }
     
 }
 
 struct DummyError : Error {}
 
+private extension HTTPURLResponse {
+    static func withStatus(_ statusCode: Int) -> HTTPURLResponse {
+        return HTTPURLResponse(url: NSURL() as URL, statusCode: statusCode, httpVersion: "HTTP/1.1", headerFields: nil)!
+    }
+}
+
 extension BaseRequest {
     func stubSuccess(_ data: Data, statusCode: Int? = nil) {
         let identifier = UUID()
         headers.add(name: StubbingURLProtocol.Constants.HeaderIdentifier, value: identifier.uuidString)
-        StubbingURLProtocol.successResponses[identifier] = data
-        if let code = statusCode {
-            StubbingURLProtocol.responseCodes[identifier] = code
+        var messages = [URLProtocolClientCommunicator.Message]()
+        if let statusCode = statusCode {
+            messages.append(.response(HTTPURLResponse.withStatus(statusCode)))
         }
+        messages.append(.data(data))
+        messages.append(.complete)
+        StubbingURLProtocol.communicators[identifier] = URLProtocolClientCommunicator(messages)
     }
     
-    func stubFailure(_ error: Error = DummyError(), statusCode: Int? = nil) {
+    func stubStatusCode(_ statusCode: Int) {
         let identifier = UUID()
         headers.add(name: StubbingURLProtocol.Constants.HeaderIdentifier, value: identifier.uuidString)
-        StubbingURLProtocol.failureResponses[identifier] = error
-        if let code = statusCode {
-            StubbingURLProtocol.responseCodes[identifier] = code
-        }
+        var messages = [URLProtocolClientCommunicator.Message]()
+        messages.append(.response(HTTPURLResponse.withStatus(statusCode)))
+        messages.append(.complete)
+        StubbingURLProtocol.communicators[identifier] = URLProtocolClientCommunicator(messages)
+    }
+    
+    func stubFailure(_ error: Error = DummyError()) {
+        let identifier = UUID()
+        headers.add(name: StubbingURLProtocol.Constants.HeaderIdentifier, value: identifier.uuidString)
+        var messages = [URLProtocolClientCommunicator.Message]()
+        messages.append(.error(error))
+        messages.append(.complete)
+        StubbingURLProtocol.communicators[identifier] = URLProtocolClientCommunicator(messages)
     }
 }

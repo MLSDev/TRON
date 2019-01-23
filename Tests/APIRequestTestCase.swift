@@ -30,25 +30,7 @@ extension Dictionary {
     }
 }
 
-class TestResponse : JSONDecodable {
-    let response : [String:AnyObject]
-    
-    required init(json: JSON) throws {
-        response = json.dictionaryObject as [String : AnyObject]? ?? [:]
-    }
-}
-
-class APIRequestTestCase: XCTestCase {
-    
-    var tron: TRON!
-    
-    override func setUp() {
-        super.setUp()
-        let configuration = URLSessionConfiguration.default
-        configuration.protocolClasses = [StubbingURLProtocol.self]
-        tron = TRON(baseURL: "https://httpbin.org", manager: Session(configuration: configuration))
-        URLProtocol.registerClass(StubbingURLProtocol.self)
-    }
+class APIRequestTestCase: ProtocolStubbedTestCase {
     
     func testErrorBuilding() {
         let request: APIRequest<Int,APIError> = tron.swiftyJSON.request("status/418")
@@ -182,7 +164,7 @@ class APIRequestTestCase: XCTestCase {
                 XCTFail()
             }
         )
-        waitForExpectations(timeout: 5, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testMultipartUploadWillStartEvenIfStartAutomaticallyIsFalse() {
@@ -191,20 +173,20 @@ class APIRequestTestCase: XCTestCase {
         configuration.protocolClasses = [StubbingURLProtocol.self]
         let manager = Session(startRequestsImmediately: false, configuration: configuration)
         let tron = TRON(baseURL: "https://httpbin.org", manager: manager)
-        let request: UploadAPIRequest<TestResponse,APIError> = tron.swiftyJSON.uploadMultipart("post") { formData in
+        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON.uploadMultipart("post") { formData in
             formData.append("bar".data(using: String.Encoding.utf8) ?? Data(), withName: "foo")
         }
         request.method = .post
-        request.stubSuccess(["data":"not empty"].asData)
+        request.stubSuccess(["title":"not empty"].asData)
         let expectation = self.expectation(description: "foo")
         
         request.perform(withSuccess: { result in
-            XCTAssertNotNil(result.response["data"])
+            XCTAssertEqual(result.title, "not empty")
             expectation.fulfill()
         }, failure: { error in
             XCTFail("Successful request failed")
         })
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testCustomValidationClosure() {

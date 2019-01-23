@@ -12,13 +12,11 @@ import Nimble
 import SwiftyJSON
 import Alamofire
 
-private struct Headers : JSONDecodable {
+struct JSONDecodableResponse : JSONDecodable {
+    let title : String
     
-    let host : String
-    
-    init(json: JSON) {
-        let headers = json["headers"].dictionaryValue
-        host = headers["Host"]?.stringValue ?? ""
+    init(json: JSON) throws {
+        self.title = json["title"].stringValue
     }
 }
 
@@ -43,65 +41,48 @@ class Throwable : JSONDecodable {
     }
 }
 
-class JSONDecodableTestCase: XCTestCase {
-    let tron = TRON(baseURL: "https://github.com")
-    
-    #if swift(>=4.1)
-    func testDecodableArray() throws {
-        let request: APIRequest<[Int],APIError> = tron.swiftyJSON.request("foo")
-        let json = [1,2,3,4]
-        let parsedResponse = try request.responseParser(nil, nil, JSONSerialization.data(withJSONObject: json,
-                                                                                          options: []),
-                                                         nil)
-        expect(parsedResponse) == [1,2,3,4]
-    }
-    #endif
+class JSONDecodableTestCase: ProtocolStubbedTestCase {
  
     func testVariousJSONDecodableTypes()
     {
         let json = JSON([])
-        expect(Float.init(json: json)) == 0
-        expect(Double.init(json: json)) == 0
-        expect(Bool.init(json: json)) == false
+        expect(Float.init(json: JSON(4.5))).to(beCloseTo(4.5))
+        expect(Double.init(json: JSON(3.5))).to(beCloseTo(3.5))
+        expect(Bool.init(json: JSON(true))) == true
         expect(try! JSON.init(json: json)) == json
+        XCTAssertEqual(String(json: JSON("foo")), "foo")
+        XCTAssertEqual(Int8(json: JSON(3)), 3)
+        XCTAssertEqual(Int16(json: JSON(3)), 3)
+        XCTAssertEqual(Int32(json: JSON(3)), 3)
+        XCTAssertEqual(Int64(json: JSON(3)), 3)
+        XCTAssertEqual(UInt(json: JSON(3)), 3)
+        XCTAssertEqual(UInt8(json: JSON(3)), 3)
+        XCTAssertEqual(UInt16(json: JSON(3)), 3)
+        XCTAssertEqual(UInt32(json: JSON(3)), 3)
+        XCTAssertEqual(UInt64(json: JSON(3)), 3)
     }
 
     func testJSONDecodableParsing() {
-        let tron = TRON(baseURL: "https://httpbin.org")
-        let request: APIRequest<Headers,APIError> = tron.swiftyJSON.request("headers")
+        let request: APIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON.request("response")
+        request.stubSuccess(["title":"Foo"].asData)
         let expectation = self.expectation(description: "Parsing headers response")
-        request.perform(withSuccess:  { headers in
-            if headers.host == "httpbin.org" {
-                expectation.fulfill()
-            }
+        request.perform(withSuccess:  { response in
+            XCTAssertEqual(response.title, "Foo")
+            expectation.fulfill()
         })
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testJSONDecodableWorksWithSiblings() {
-        let tron = TRON(baseURL: "https://httpbin.org")
         let request: APIRequest<Sibling,APIError> = tron.swiftyJSON.request("headers")
+        request.stubSuccess([:].asData)
         let expectation = self.expectation(description: "Parsing headers response")
         request.perform(withSuccess:  { sibling in
-            if sibling.foo == "4" {
-                expectation.fulfill()
-            }
+            XCTAssertEqual(sibling.foo, "4")
+            expectation.fulfill()
         })
         
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
     }
-    
-//    func testJSONDecodableParsingEmptyResponse() {
-//        let tron = TRON(baseURL: "https://httpbin.org")
-//        let request: APIRequest<Headers,Int> = tron.request("headers")
-//        let responseSerializer = request.dataResponseSerializer(with: [])
-//        let result = responseSerializer.serializeResponse(nil,nil, nil,nil)
-//        
-//        if case Alamofire.Result.success(_) = result {
-//            
-//        } else {
-//            XCTFail()
-//        }
-//    }
 }

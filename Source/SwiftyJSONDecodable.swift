@@ -164,15 +164,6 @@ extension TRON {
     }
 }
 
-#if swift(>=4.1)
-extension Array: JSONDecodable where Element: JSONDecodable {
-    /// Creates Array from JSON container
-    public init(json: JSON) throws {
-        self.init(json.arrayValue.compactMap { try? Element(json: $0) })
-    }
-}
-#endif
-
 extension String: JSONDecodable {
     /// Creates String from JSON container
     public init(json: JSON) {
@@ -190,6 +181,78 @@ extension Int: JSONDecodable  {
     /// Creates Int from JSON container
     public init(json: JSON) {
         self.init(json.intValue)
+    }
+}
+
+extension Int8: JSONDecodable {
+
+    /// Creates Int8 from JSON container
+    public init(json: JSON) {
+        self.init(json.int8Value)
+    }
+}
+
+extension Int16: JSONDecodable {
+
+    /// Creates Int16 from JSON container
+    public init(json: JSON) {
+        self.init(json.int16Value)
+    }
+}
+
+extension Int32: JSONDecodable {
+
+    /// Creates Int32 from JSON container
+    public init(json: JSON) {
+        self.init(json.int32Value)
+    }
+}
+
+extension Int64: JSONDecodable {
+
+    /// Creates Int64 from JSON container
+    public init(json: JSON) {
+        self.init(json.int64Value)
+    }
+}
+
+extension UInt: JSONDecodable {
+
+    /// Creates UInt from JSON container
+    public init(json: JSON) {
+        self.init(json.uIntValue)
+    }
+}
+
+extension UInt8: JSONDecodable {
+
+    /// Creates UInt8 from JSON container
+    public init(json: JSON) {
+        self.init(json.uInt8Value)
+    }
+}
+
+extension UInt16: JSONDecodable {
+
+    /// Creates UInt16 from JSON container
+    public init(json: JSON) {
+        self.init(json.uInt16Value)
+    }
+}
+
+extension UInt32: JSONDecodable {
+
+    /// Creates UInt32 from JSON container
+    public init(json: JSON) {
+        self.init(json.uInt32Value)
+    }
+}
+
+extension UInt64: JSONDecodable {
+
+    /// Creates UInt64 from JSON container
+    public init(json: JSON) {
+        self.init(json.uInt64Value)
     }
 }
 
@@ -216,5 +279,5 @@ extension Bool: JSONDecodable {
 
 extension EmptyResponse: JSONDecodable {
     /// Creates EmptyResponse from JSON container
-    public init(json: JSON) throws {}
+    public init(json: JSON) {}
 }

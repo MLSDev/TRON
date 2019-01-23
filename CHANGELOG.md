@@ -12,6 +12,7 @@ TRON now requires:
 ### Added
 
 * `TRONDataResponseSerializer` and `TRONDownloadResponseSerializer` structs to encapsulate serialization of responses using closure.
+* All test suite now uses `StubbingURLProtocol` to stop tests from sending network requests. Closes #21.
 
 ### Breaking
 
@@ -27,6 +28,8 @@ TRON now requires:
 * Convenience download methods on `CodableSerializer` and `JSONDecodableSerializer` have been removed.
 * `APIStub` has been rewritten from scratch to allow injecting only results of network request(`URLRequest`, `HTTPURLResponse`, `Data`, `Error` and `fileURL`) as opposed to actual `Model` and `errorModel` as well as definition of successful/unsuccessful requests. `APIStub` now is been attached to  `Alamofire.Request` when stubbing for this particular request has been enabled. Rewrite also allows plugin callbacks to be called more consistently for both stubbed and unstubbed cases.
 * `rxMultipartResult` method on `UploadRequest` method was removed since `UploadRequest` for multipart requests in Alamofire 5 is now synchronous and now does not require special handling. You can now call `rxResult` replacement method instead.
+* Conditional conformance of `Array` to `JSONDecodable` has been removed, as there might be several ways in which `Array` may conform, and current extension was covering only one.
+* Additional `JSONDecodable` conformances have been added for arithmetic types such as `Int8...Int64`, `UInt8...64`.
 
 
 ## [4.2.1](https://github.com/MLSDev/TRON/releases/tag/4.2.1)

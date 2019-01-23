@@ -112,9 +112,10 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
             request.resume()
         }
         didSendAlamofireRequest(request)
-        return validationClosure(request).response(queue: resultDeliveryQueue,
-                                                   responseSerializer: downloadResponseSerializer(with: request),
-                                                   completionHandler: { downloadResponse in
+        return validationClosure(request)
+            .performResponseSerialization(queue: resultDeliveryQueue,
+                                          responseSerializer: downloadResponseSerializer(with: request),
+                                          completionHandler: { downloadResponse in
             self.didReceiveDownloadResponse(downloadResponse, forRequest: request)
             completion(downloadResponse)
         })
