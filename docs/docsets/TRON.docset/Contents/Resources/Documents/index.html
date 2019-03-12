@@ -211,7 +211,7 @@
           <div class="section-content">
             
             <p align="center">
-  <img src="https://github.com/MLSDev/TRON/blob/master/TRON.png" />
+  <img src="https://github.com/MLSDev/TRON/raw/master/TRON.png" />
 </p>
 
 <p><img src="https://travis-ci.org/MLSDev/TRON.svg?branch=master" alt="Build Status"> &nbsp;
@@ -227,7 +227,7 @@
 <ul>
 <li>[x] Generic, protocol-based implementation</li>
 <li>[x] Built-in response and error parsing</li>
-<li>[x] Support for any custom mapper. Defaults to <a href="https://github.com/SwiftyJSON/SwiftyJSON">SwiftyJSON</a> and Codable protocol in Swift 4.</li>
+<li>[x] Support for any custom mapper (<a href="https://github.com/SwiftyJSON/SwiftyJSON">SwiftyJSON</a> implementation provided). Defaults to <code>Codable</code> protocol.</li>
 <li>[x] Support for upload tasks</li>
 <li>[x] Support for download tasks and resuming downloads</li>
 <li>[x] Robust plugin system</li>
@@ -241,7 +241,7 @@
 <h2 id='overview' class='heading'>Overview</h2>
 
 <p>We designed TRON to be simple to use and also very easy to customize. After initial setup, using TRON is very straightforward:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"me"</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">APIError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"me"</span><span class="p">)</span>
 <span class="n">request</span><span class="o">.</span><span class="nf">perform</span><span class="p">(</span><span class="nv">withSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">user</span> <span class="k">in</span>
   <span class="nf">print</span><span class="p">(</span><span class="s">"Received User: </span><span class="se">\(</span><span class="n">user</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
 <span class="p">},</span> <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
@@ -316,24 +316,16 @@
 </code></pre>
 <h2 id='response-parsing' class='heading'>Response parsing</h2>
 
-<p>Generic <code><a href="Classes/APIRequest.html">APIRequest</a></code> implementation allows us to define expected response type before request is even sent. We use <code>Alamofire</code> <code>DataResponseSerializerProtocol</code>, and are adding to it <code>ErrorHandlingDataResponseSerializerProtocol</code>, which basically allows us to have two generics for both success and error values.</p>
-<pre class="highlight swift"><code>
-<span class="c1">// Alamofire 4:</span>
-
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DataResponseSerializerProtocol</span> <span class="p">{</span>
+<p>Generic <code><a href="Classes/APIRequest.html">APIRequest</a></code> implementation allows us to define expected response type before request is even sent. On top of <code>Alamofire</code> <code>DataResponseSerializerProtocol</code>, we are adding one additional protocol for error-handling.</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">DataResponseSerializerProtocol</span> <span class="p">{</span>
     <span class="kd">associatedtype</span> <span class="kt">SerializedObject</span>
 
-    <span class="k">var</span> <span class="nv">serializeResponse</span><span class="p">:</span> <span class="p">(</span><span class="kt">URLRequest</span><span class="p">?,</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="kt">Data</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">SerializedObject</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">serialize</span><span class="p">(</span><span class="nv">request</span><span class="p">:</span> <span class="kt">URLRequest</span><span class="p">?,</span> <span class="nv">response</span><span class="p">:</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">?)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="k">Self</span><span class="o">.</span><span class="kt">SerializedObject</span>
 <span class="p">}</span>
 
-<span class="c1">// TRON:</span>
-
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ErrorHandlingDataResponseSerializerProtocol</span> <span class="p">:</span> <span class="kt">DataResponseSerializerProtocol</span> <span class="p">{</span>
-    <span class="kd">associatedtype</span> <span class="kt">SerializedError</span>
-
-    <span class="k">var</span> <span class="nv">serializeError</span><span class="p">:</span> <span class="p">(</span><span class="kt">Alamofire</span><span class="o">.</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">SerializedObject</span><span class="o">&gt;</span><span class="p">?,</span><span class="kt">URLRequest</span><span class="p">?,</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="kt">Data</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">APIError</span><span class="o">&lt;</span><span class="kt">SerializedError</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ErrorSerializable</span><span class="p">:</span> <span class="kt">Error</span> <span class="p">{</span>
+    <span class="nf">init</span><span class="p">?(</span><span class="nv">serializedObject</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?,</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">URLRequest</span><span class="p">?,</span> <span class="nv">response</span><span class="p">:</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">?)</span>
 <span class="p">}</span>
-
 </code></pre>
 <h3 id='codable' class='heading'>Codable</h3>
 
@@ -345,7 +337,7 @@
 </code></pre>
 
 <p>And send a request:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"me"</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">APIError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"me"</span><span class="p">)</span>
 <span class="n">request</span><span class="o">.</span><span class="nf">perform</span><span class="p">(</span><span class="nv">withSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">user</span> <span class="k">in</span>
   <span class="nf">print</span><span class="p">(</span><span class="s">"Received user: </span><span class="se">\(</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="se">)</span><span class="s"> with id: </span><span class="se">\(</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
 <span class="p">})</span>
@@ -353,11 +345,8 @@
 
 <p>It&rsquo;s possible to customize decoders for both model and error parsing:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">userDecoder</span> <span class="o">=</span> <span class="kt">JSONDecoder</span><span class="p">()</span>
-<span class="c1">// Customization for user decoder...</span>
-<span class="k">let</span> <span class="nv">errorDecoder</span> <span class="o">=</span> <span class="kt">JSONDecoder</span><span class="p">()</span>
-<span class="c1">// Customization for error decoder...</span>
 
-<span class="k">let</span> <span class="nv">request</span> <span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="nf">codable</span><span class="p">(</span><span class="nv">modelDecoder</span><span class="p">:</span> <span class="n">userDecoder</span><span class="p">,</span> <span class="nv">errorDecoder</span><span class="p">:</span> <span class="n">errorDecoder</span><span class="p">)</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"me"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">request</span> <span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">APIError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="nf">codable</span><span class="p">(</span><span class="nv">modelDecoder</span><span class="p">:</span> <span class="n">userDecoder</span><span class="p">)</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"me"</span><span class="p">)</span>
 </code></pre>
 <h3 id='jsondecodable' class='heading'>JSONDecodable</h3>
 
@@ -387,106 +376,65 @@
 </code></pre>
 
 <p>There are also default implementations of <code><a href="Protocols/JSONDecodable.html">JSONDecodable</a></code> protocol for Swift built-in types like String, Int, Float, Double and Bool, so you can easily do something like this:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span><span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">swiftyJSON</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"status"</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span><span class="kt">APIError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">swiftyJSON</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"status"</span><span class="p">)</span>
 <span class="n">request</span><span class="o">.</span><span class="nf">perform</span><span class="p">(</span><span class="nv">withSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">status</span> <span class="k">in</span>
     <span class="nf">print</span><span class="p">(</span><span class="s">"Server status: </span><span class="se">\(</span><span class="n">status</span><span class="se">)</span><span class="s">"</span><span class="p">)</span> <span class="c1">//</span>
 <span class="p">})</span>
 </code></pre>
 
-<p>You can also use <code>EmptyResponse</code> struct in cases where you don&rsquo;t care about actual response.</p>
+<p>You can also use <code>Alamofire.Empty</code> struct in cases where you don&rsquo;t care about actual response.</p>
 
 <p>Some concepts for response serialization, including array response serializer, are described in <a href="https://github.com/MLSDev/TRON/blob/master/Docs/Response%20Serializers.md">Response Serializers document</a></p>
 
 <p>It&rsquo;s possible to customize <code>JSONSerialization.ReadingOptions</code>, that are used by <code>SwiftyJSON.JSON</code> object while parsing data of the response:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="nf">swiftyJSON</span><span class="p">(</span><span class="nv">readingOptions</span><span class="p">:</span> <span class="o">.</span><span class="n">allowFragments</span><span class="p">)</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"status"</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">APIError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="nf">swiftyJSON</span><span class="p">(</span><span class="nv">readingOptions</span><span class="p">:</span> <span class="o">.</span><span class="n">allowFragments</span><span class="p">)</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"status"</span><span class="p">)</span>
 </code></pre>
 <h2 id='rxswift' class='heading'>RxSwift</h2>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">Foo</span><span class="p">,</span> <span class="kt">MyError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"foo"</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">Foo</span><span class="p">,</span> <span class="kt">APIError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"foo"</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="nf">rxResult</span><span class="p">()</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
     <span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">multipartRequest</span> <span class="p">:</span> <span class="kt">UploadAPIREquest</span><span class="o">&lt;</span><span class="kt">Foo</span><span class="p">,</span><span class="kt">MyError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">upload</span><span class="p">(</span><span class="s">"foo"</span><span class="p">,</span> <span class="nv">formData</span><span class="p">:</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span> <span class="p">})</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">multipartRequest</span> <span class="p">:</span> <span class="kt">UploadAPIREquest</span><span class="o">&lt;</span><span class="kt">Foo</span><span class="p">,</span><span class="kt">APIError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">upload</span><span class="p">(</span><span class="s">"foo"</span><span class="p">,</span> <span class="nv">formData</span><span class="p">:</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span> <span class="p">})</span>
 <span class="n">multipartRequest</span><span class="o">.</span><span class="nf">rxMultipartResult</span><span class="p">()</span><span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">onNext</span><span class="p">:</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
     <span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre>
 <h3 id='error-handling' class='heading'>Error handling</h3>
 
-<p><code><a href="Classes/TRON.html">TRON</a></code> includes built-in parsing for errors. <code><a href="Classes/APIError.html">APIError</a></code> is a generic class, that includes several default properties, that can be fetched from unsuccessful request:</p>
-<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">APIError</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">Error</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="k">let</span> <span class="nv">request</span> <span class="p">:</span> <span class="kt">URLRequest</span><span class="p">?</span>
-    <span class="kd">public</span> <span class="k">let</span> <span class="nv">response</span> <span class="p">:</span> <span class="kt">HTTPURLResponse</span><span class="p">?</span>
-    <span class="kd">public</span> <span class="k">let</span> <span class="nv">data</span> <span class="p">:</span> <span class="kt">Data</span><span class="p">?</span>
-    <span class="kd">public</span> <span class="k">let</span> <span class="nv">error</span> <span class="p">:</span> <span class="kt">Error</span><span class="p">?</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">errorModel</span><span class="p">:</span> <span class="kt">T</span><span class="p">?</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>When <code><a href="Classes/APIRequest.html">APIRequest</a></code> fails, you receive concrete APIError instance, for example, let&rsquo;s define <code>MyAppError</code> we have been talking about:</p>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">MyAppError</span> <span class="p">:</span> <span class="kt">JSONDecodable</span> <span class="p">{</span>
-  <span class="k">var</span> <span class="nv">errors</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:[</span><span class="kt">String</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[:]</span>
-
-  <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="nv">json</span><span class="p">:</span> <span class="kt">JSON</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="k">let</span> <span class="nv">dictionary</span> <span class="o">=</span> <span class="n">json</span><span class="p">[</span><span class="s">"errors"</span><span class="p">]</span><span class="o">.</span><span class="n">dictionary</span> <span class="p">{</span>
-      <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span> <span class="k">in</span> <span class="n">dictionary</span> <span class="p">{</span>
-          <span class="n">errors</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">arrayValue</span><span class="o">.</span><span class="nf">map</span><span class="p">(</span> <span class="p">{</span> <span class="k">return</span> <span class="nv">$0</span><span class="o">.</span><span class="n">stringValue</span> <span class="p">}</span> <span class="p">)</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>This way, you only need to define how your errors are parsed, and not worry about other failure details like response code, because they are already included:</p>
+<p><code><a href="Classes/TRON.html">TRON</a></code> includes built-in parsing for errors. <code><a href="Classes/APIError.html">APIError</a></code> is an implementation of <code><a href="Protocols/ErrorSerializable.html">ErrorSerializable</a></code> protocol, that includes several useful properties, that can be fetched from unsuccessful request:</p>
 <pre class="highlight swift"><code><span class="n">request</span><span class="o">.</span><span class="nf">perform</span><span class="p">(</span><span class="nv">withSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">response</span> <span class="k">in</span> <span class="p">},</span> <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
     <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">request</span><span class="p">)</span> <span class="c1">// Original URLRequest</span>
     <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">response</span><span class="p">)</span> <span class="c1">// HTTPURLResponse</span>
     <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="c1">// Data of response</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">fileURL</span><span class="p">)</span> <span class="c1">// Downloaded file url, if this was a download request</span>
     <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">error</span><span class="p">)</span> <span class="c1">// Error from Foundation Loading system</span>
-    <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">errorModel</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span> <span class="c1">// MyAppError parsed property</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">serializedObject</span><span class="p">)</span> <span class="c1">// Object that was serialized from network response</span>
   <span class="p">})</span>
-</code></pre>
-<h2 id='using-alamofire-custom-response-serializers' class='heading'>Using Alamofire custom response serializers</h2>
-
-<p>Any custom response serializer for <code>Alamofire</code> can be used with TRON, you just need to specify error type, that will be used, for example, if <code>CustomError</code> is <code><a href="Protocols/JSONDecodable.html">JSONDecodable</a></code>:</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Alamofire</span><span class="o">.</span><span class="kt">DataResponseSerializer</span> <span class="p">:</span> <span class="kt">ErrorHandlingDataResponseSerializerProtocol</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">SerializedError</span> <span class="o">=</span> <span class="kt">CustomError</span>
-
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">serializeError</span><span class="p">:</span> <span class="p">(</span><span class="kt">Result</span><span class="o">&lt;</span><span class="kt">SerializedObject</span><span class="o">&gt;</span><span class="p">?,</span> <span class="kt">URLRequest</span><span class="p">?,</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="kt">Data</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">APIError</span><span class="o">&lt;</span><span class="kt">SerializedError</span><span class="o">&gt;</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="p">{</span> <span class="n">erroredResponse</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
-            <span class="k">let</span> <span class="nv">serializationError</span> <span class="p">:</span> <span class="kt">Error</span><span class="p">?</span> <span class="o">=</span> <span class="n">erroredResponse</span><span class="p">?</span><span class="o">.</span><span class="n">error</span> <span class="p">??</span> <span class="n">error</span>
-            <span class="k">var</span> <span class="nv">error</span> <span class="o">=</span> <span class="kt">APIError</span><span class="o">&lt;</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">request</span><span class="p">:</span> <span class="n">request</span><span class="p">,</span> <span class="nv">response</span><span class="p">:</span> <span class="n">response</span><span class="p">,</span><span class="nv">data</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="nv">error</span><span class="p">:</span> <span class="n">serializationError</span><span class="p">)</span>
-
-            <span class="c1">// Here you can define, how error needs to be parsed</span>
-            <span class="n">error</span><span class="o">.</span><span class="n">errorModel</span> <span class="o">=</span>  <span class="k">try</span><span class="p">?</span> <span class="kt">ErrorModel</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">json</span><span class="p">:</span> <span class="kt">JSON</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="n">data</span> <span class="p">??</span> <span class="kt">Data</span><span class="p">()))</span>
-            <span class="k">return</span> <span class="n">error</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
 </code></pre>
 <h2 id='crud' class='heading'>CRUD</h2>
 <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Users</span>
 <span class="p">{</span>
     <span class="kd">static</span> <span class="k">let</span> <span class="nv">tron</span> <span class="o">=</span> <span class="kt">TRON</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="s">"https://api.myapp.com"</span><span class="p">)</span>
 
-    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">APIError</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"users"</span><span class="p">)</span>
         <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="o">.</span><span class="n">post</span>
         <span class="k">return</span> <span class="n">request</span>
     <span class="p">}</span>
 
-    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">read</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span> <span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">read</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span> <span class="kt">APIError</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"users/</span><span class="se">\(</span><span class="n">id</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
     <span class="p">}</span>
 
-    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">parameters</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span> <span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">parameters</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span><span class="kt">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span> <span class="kt">APIError</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"users/</span><span class="se">\(</span><span class="n">id</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
         <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="o">.</span><span class="n">put</span>
         <span class="n">request</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
         <span class="k">return</span> <span class="n">request</span>
     <span class="p">}</span>
 
-    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">APIError</span><span class="o">&gt;</span> <span class="p">{</span>
         <span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">APIRequest</span><span class="o">&lt;</span><span class="kt">User</span><span class="p">,</span><span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">request</span><span class="p">(</span><span class="s">"users/</span><span class="se">\(</span><span class="n">id</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
         <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="o">.</span><span class="n">delete</span>
         <span class="k">return</span> <span class="n">request</span>
@@ -516,10 +464,10 @@
 </code></pre>
 <h2 id='stubbing' class='heading'>Stubbing</h2>
 
-<p>Stubbing is built right into APIRequest itself. All you need to stub a successful request is to set apiStub property and turn stubbingEnabled on:</p>
+<p>Stubbing is built right into <code><a href="Classes/APIRequest.html">APIRequest</a></code> itself. All you need to stub a successful request is to set apiStub property and turn stubbingEnabled on:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="o">=</span> <span class="kt">API</span><span class="o">.</span><span class="kt">Users</span><span class="o">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">56</span><span class="p">)</span>
-<span class="n">request</span><span class="o">.</span><span class="n">stubbingEnabled</span> <span class="o">=</span> <span class="kc">true</span>
-<span class="n">request</span><span class="o">.</span><span class="n">apiStub</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kt">User</span><span class="o">.</span><span class="nf">fixture</span><span class="p">()</span>
+<span class="n">request</span><span class="o">.</span><span class="n">apiStub</span> <span class="o">=</span> <span class="kt">APIStub</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt">User</span><span class="o">.</span><span class="nf">fixture</span><span class="p">()</span><span class="o">.</span><span class="n">asData</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">apiStub</span><span class="o">.</span><span class="n">isEnabled</span> <span class="o">=</span> <span class="kc">true</span>
 
 <span class="n">request</span><span class="o">.</span><span class="nf">perform</span><span class="p">(</span><span class="nv">withSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">stubbedUser</span> <span class="k">in</span>
   <span class="nf">print</span><span class="p">(</span><span class="s">"received stubbed User model: </span><span class="se">\(</span><span class="n">stubbedUser</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
@@ -528,16 +476,14 @@
 
 <p>Stubbing can be enabled globally on <code><a href="Classes/TRON.html">TRON</a></code> object or locally for a single <code><a href="Classes/APIRequest.html">APIRequest</a></code>. Stubbing unsuccessful requests is easy as well:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="o">=</span> <span class="kt">API</span><span class="o">.</span><span class="kt">Users</span><span class="o">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">56</span><span class="p">)</span>
-<span class="n">request</span><span class="o">.</span><span class="n">stubbingEnabled</span> <span class="o">=</span> <span class="kc">true</span>
-<span class="n">request</span><span class="o">.</span><span class="n">apiStub</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="kt">APIError</span><span class="o">&lt;</span><span class="kt">MyAppError</span><span class="o">&gt;.</span><span class="nf">fixtureError</span><span class="p">()</span>
+<span class="n">request</span><span class="o">.</span><span class="n">apiStub</span> <span class="o">=</span> <span class="kt">APIStub</span><span class="p">(</span><span class="nv">error</span><span class="p">:</span> <span class="kt">CustomError</span><span class="p">())</span>
 <span class="n">request</span><span class="o">.</span><span class="nf">perform</span><span class="p">(</span><span class="nv">withSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span> <span class="p">},</span> <span class="nv">failure</span><span class="p">:</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
   <span class="nf">print</span><span class="p">(</span><span class="s">"received stubbed api error"</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre>
 
-<p>You can also optionally delay stubbing time or explicitly set that api stub should fail:</p>
+<p>You can also optionally delay stubbing time:</p>
 <pre class="highlight swift"><code><span class="n">request</span><span class="o">.</span><span class="n">apiStub</span><span class="o">.</span><span class="n">stubDelay</span> <span class="o">=</span> <span class="mf">1.5</span>
-<span class="n">request</span><span class="o">.</span><span class="n">apiStub</span><span class="o">.</span><span class="n">successful</span> <span class="o">=</span> <span class="kc">false</span>
 </code></pre>
 <h2 id='upload' class='heading'>Upload</h2>
 
@@ -565,52 +511,19 @@
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">UploadAPIRequest</span><span class="o">&lt;</span><span class="kt">EmptyResponse</span><span class="p">,</span><span class="kt">MyAppError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">uploadMultipart</span><span class="p">(</span><span class="s">"form"</span><span class="p">)</span> <span class="p">{</span> <span class="n">formData</span> <span class="k">in</span>
     <span class="n">formData</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nv">withName</span><span class="p">:</span> <span class="s">"cat"</span><span class="p">,</span> <span class="nv">mimeType</span><span class="p">:</span> <span class="s">"image/jpeg"</span><span class="p">)</span>
 <span class="p">}</span>
-<span class="n">request</span><span class="o">.</span><span class="nf">performMultipart</span><span class="p">(</span><span class="nv">withSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
+<span class="n">request</span><span class="o">.</span><span class="nf">perform</span><span class="p">(</span><span class="nv">withSuccess</span><span class="p">:</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
     <span class="nf">print</span><span class="p">(</span><span class="s">"form sent successfully"</span><span class="p">)</span>
 <span class="p">})</span>
 </code></pre>
-
-<p><strong>Note</strong> Multipart form data uploads use <code>MultipartAPIRequest</code> class instead of <code><a href="Classes/APIRequest.html">APIRequest</a></code> and have different perform method.</p>
 <h2 id='download' class='heading'>Download</h2>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">download</span><span class="p">(</span><span class="s">"file"</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">destination</span><span class="p">)</span>
-</code></pre>
-
-<p>Resume downloads:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">request</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="n">codable</span><span class="o">.</span><span class="nf">download</span><span class="p">(</span><span class="s">"file"</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">destination</span><span class="p">,</span> <span class="nv">resumingFrom</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">responseSerializer</span> <span class="o">=</span> <span class="kt">TRONDownloadResponseSerializer</span> <span class="p">{</span> <span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span><span class="n">_</span> <span class="k">in</span> <span class="n">url</span> <span class="p">}</span>
+<span class="k">let</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">DownloadAPIRequest</span><span class="o">&lt;</span><span class="kt">URL</span><span class="p">?,</span> <span class="kt">APIError</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">tron</span><span class="o">.</span><span class="nf">download</span><span class="p">(</span><span class="s">"file"</span><span class="p">,</span>
+                                                                <span class="nv">to</span><span class="p">:</span> <span class="n">destination</span><span class="p">,</span>
+                                                                <span class="nv">responseSerializer</span><span class="p">:</span> <span class="n">responseSerializer</span><span class="p">)</span>
 </code></pre>
 <h2 id='plugins' class='heading'>Plugins</h2>
 
 <p><code><a href="Classes/TRON.html">TRON</a></code> includes plugin system, that allows reacting to most of request events.</p>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Plugin</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="n">willSendRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">BaseRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span>
-
-    <span class="kd">func</span> <span class="n">willSendAlamofireRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">Request</span><span class="p">,</span> <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt">BaseRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span>
-
-    <span class="kd">func</span> <span class="n">didSendAlamofireRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span> <span class="p">:</span> <span class="kt">Request</span><span class="p">,</span> <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt">BaseRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span>
-
-    <span class="kd">func</span> <span class="n">willProcessResponse</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span> <span class="p">(</span><span class="kt">URLRequest</span><span class="p">?,</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="kt">Data</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?),</span>
-                                                <span class="n">forRequest</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">Request</span><span class="p">,</span>
-                                                <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt">BaseRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span>
-
-    <span class="kd">func</span> <span class="n">didSuccessfullyParseResponse</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">response</span><span class="p">:</span> <span class="p">(</span><span class="kt">URLRequest</span><span class="p">?,</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="kt">Data</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?),</span>
-                                                        <span class="n">creating</span> <span class="nv">result</span><span class="p">:</span> <span class="kt">Model</span><span class="p">,</span>
-                                                        <span class="n">forRequest</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">Request</span><span class="p">,</span>
-                                                        <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt">BaseRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span>
-
-    <span class="kd">func</span> <span class="n">didReceiveError</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">APIError</span><span class="o">&lt;</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">,</span>
-                                        <span class="n">forResponse</span> <span class="nv">response</span> <span class="p">:</span> <span class="p">(</span><span class="kt">URLRequest</span><span class="p">?,</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="kt">Data</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?),</span>
-                                        <span class="nv">request</span><span class="p">:</span> <span class="kt">Alamofire</span><span class="o">.</span><span class="kt">Request</span><span class="p">,</span>
-                                        <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt">BaseRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span>
-
-    <span class="kd">func</span> <span class="n">didReceiveDataResponse</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">response</span><span class="p">:</span> <span class="kt">DataResponse</span><span class="o">&lt;</span><span class="kt">Model</span><span class="o">&gt;</span><span class="p">,</span>
-                                        <span class="n">forRequest</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">Alamofire</span><span class="o">.</span><span class="kt">Request</span><span class="p">,</span>
-                                        <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt">BaseRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span>
-
-    <span class="kd">func</span> <span class="n">didReceiveDownloadResponse</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">response</span><span class="p">:</span> <span class="kt">DownloadResponse</span><span class="o">&lt;</span><span class="kt">Model</span><span class="o">&gt;</span><span class="p">,</span>
-                                                    <span class="n">forRequest</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">Alamofire</span><span class="o">.</span><span class="kt">DownloadRequest</span><span class="p">,</span>
-                                                    <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt">BaseRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span><span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre>
 
 <p>Plugins can be used globally, on <code><a href="Classes/TRON.html">TRON</a></code> instance itself, or locally, on concrete <code><a href="Classes/APIRequest.html">APIRequest</a></code>. Keep in mind, that plugins that are added to <code><a href="Classes/TRON.html">TRON</a></code> instance, will be called for each request. There are some really cool use-cases for global and local plugins.</p>
 

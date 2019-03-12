@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.0.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.1)
+
 TRON now requires: 
 * Xcode 10
 * Swift 4 and higher
