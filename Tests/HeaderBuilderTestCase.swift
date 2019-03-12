@@ -19,8 +19,8 @@ class HeaderBuilderTestCase: ProtocolStubbedTestCase {
         request.stubStatusCode(200)
         let alamofireRequest = request.performCollectingTimeline(withCompletion: { _ in })
         
-        expect(alamofireRequest?.request).toEventuallyNot(beNil())
-        let headers = alamofireRequest?.request?.allHTTPHeaderFields
+        expect(alamofireRequest.request).toEventuallyNot(beNil())
+        let headers = alamofireRequest.request?.allHTTPHeaderFields
         
         expect(headers?["If-Modified-Since"]) == "Sat, 29 Oct 1994 19:43:31 GMT"
     }

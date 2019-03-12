@@ -68,7 +68,7 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((ErrorModel) -> Void)? = nil) -> Alamofire.DataRequest? {
+    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((ErrorModel) -> Void)? = nil) -> Alamofire.DataRequest {
         return performAlamofireRequest {
             self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
         }
@@ -82,7 +82,7 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> Alamofire.DataRequest? {
+    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> Alamofire.DataRequest {
         return performAlamofireRequest(completion)
     }
 

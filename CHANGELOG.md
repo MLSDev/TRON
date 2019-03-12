@@ -19,6 +19,7 @@ TRON now requires:
 ### Removed
 
 * `EmptyResponse` type was replaced with `Alamofire.Empty` struct to not interfere with `Alamofire.EmptyResponse` protocol. 
+* `TRON.stubbingShouldBeSuccessful` property since now each stub directly defines it's behavior instead of global setting
 
 ### Breaking
 

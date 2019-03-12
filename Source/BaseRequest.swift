@@ -108,7 +108,7 @@ open class BaseRequest<Model, ErrorModel> {
         self.parameterEncoding = tron.parameterEncoding
     }
 
-    internal func alamofireRequest(from manager: Alamofire.Session) -> Alamofire.Request? {
+    internal func alamofireRequest(from manager: Alamofire.Session) -> Alamofire.Request {
         fatalError("Needs to be implemented in subclasses")
     }
 

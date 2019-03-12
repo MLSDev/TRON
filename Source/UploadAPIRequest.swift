@@ -74,7 +74,7 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
         super.init(path: path, tron: tron)
     }
 
-    override func alamofireRequest(from manager: Session) -> Request? {
+    override func alamofireRequest(from manager: Session) -> Request {
         switch type {
         case .uploadFromFile(let url):
             return manager.upload(url, to: urlBuilder.url(forPath: path), method: method,

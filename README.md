@@ -33,7 +33,7 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 We designed TRON to be simple to use and also very easy to customize. After initial setup, using TRON is very straightforward:
 
 ```swift
-let request: APIRequest<User,MyAppError> = tron.codable.request("me")
+let request: APIRequest<User,APIError> = tron.codable.request("me")
 request.perform(withSuccess: { user in
   print("Received User: \(user)")
 }, failure: { error in
@@ -132,26 +132,18 @@ request.perform(withSuccess: { result in }, failure: { error in }).progress { by
 
 ## Response parsing
 
-Generic `APIRequest` implementation allows us to define expected response type before request is even sent. We use `Alamofire` `DataResponseSerializerProtocol`, and are adding to it `ErrorHandlingDataResponseSerializerProtocol`, which basically allows us to have two generics for both success and error values.
+Generic `APIRequest` implementation allows us to define expected response type before request is even sent. On top of `Alamofire` `DataResponseSerializerProtocol`, we are adding one additional protocol for error-handling.
 
 ```swift
-
-// Alamofire 4:
-
 public protocol DataResponseSerializerProtocol {
     associatedtype SerializedObject
 
-    var serializeResponse: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<SerializedObject> { get }
+    public func serialize(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) throws -> Self.SerializedObject
 }
 
-// TRON:
-
-public protocol ErrorHandlingDataResponseSerializerProtocol : DataResponseSerializerProtocol {
-    associatedtype SerializedError
-
-    var serializeError: (Alamofire.Result<SerializedObject>?,URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> { get }
+public protocol ErrorSerializable: Error {
+    init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?)
 }
-
 ```
 
 ### Codable
@@ -168,7 +160,7 @@ struct User: Codable {
 And send a request:
 
 ```swift
-let request: APIRequest<User,MyAppError> = tron.codable.request("me")
+let request: APIRequest<User,APIError> = tron.codable.request("me")
 request.perform(withSuccess: { user in
   print("Received user: \(user.name) with id: \(user.id)")
 })
@@ -178,11 +170,8 @@ It's possible to customize decoders for both model and error parsing:
 
 ```swift
 let userDecoder = JSONDecoder()
-// Customization for user decoder...
-let errorDecoder = JSONDecoder()
-// Customization for error decoder...
 
-let request : APIRequest<User,MyAppError> = tron.codable(modelDecoder: userDecoder, errorDecoder: errorDecoder).request("me")
+let request : APIRequest<User,APIError> = tron.codable(modelDecoder: userDecoder).request("me")
 ```
 
 ### JSONDecodable
@@ -221,33 +210,33 @@ request.perform(withSuccess: { user in
 There are also default implementations of `JSONDecodable` protocol for Swift built-in types like String, Int, Float, Double and Bool, so you can easily do something like this:
 
 ```swift
-let request : APIRequest<String,MyAppError> = tron.swiftyJSON.request("status")
+let request : APIRequest<String,APIError> = tron.swiftyJSON.request("status")
 request.perform(withSuccess: { status in
     print("Server status: \(status)") //
 })
 ```
 
-You can also use `EmptyResponse` struct in cases where you don't care about actual response.
+You can also use `Alamofire.Empty` struct in cases where you don't care about actual response.
 
 Some concepts for response serialization, including array response serializer, are described in [Response Serializers document](https://github.com/MLSDev/TRON/blob/master/Docs/Response%20Serializers.md)
 
 It's possible to customize `JSONSerialization.ReadingOptions`, that are used by `SwiftyJSON.JSON` object while parsing data of the response:
 
 ```swift
-let request : APIRequest<String, MyAppError> = tron.swiftyJSON(readingOptions: .allowFragments).request("status")
+let request : APIRequest<String, APIError> = tron.swiftyJSON(readingOptions: .allowFragments).request("status")
 ```
 
 ## RxSwift
 
 ```swift
-let request : APIRequest<Foo, MyError> = tron.codable.request("foo")
+let request : APIRequest<Foo, APIError> = tron.codable.request("foo")
 _ = request.rxResult().subscribe(onNext: { result in
     print(result)
 })
 ```
 
 ```swift
-let multipartRequest : UploadAPIREquest<Foo,MyError> = tron.codable.upload("foo", formData: { _ in })
+let multipartRequest : UploadAPIREquest<Foo,APIError> = tron.codable.upload("foo", formData: { _ in })
 multipartRequest.rxMultipartResult().subscribe(onNext: { result in
     print(result)
 })
@@ -255,65 +244,17 @@ multipartRequest.rxMultipartResult().subscribe(onNext: { result in
 
 ### Error handling
 
-`TRON` includes built-in parsing for errors. `APIError` is a generic class, that includes several default properties, that can be fetched from unsuccessful request:
-
-```swift
-struct APIError<T> : Error {
-    public let request : URLRequest?
-    public let response : HTTPURLResponse?
-    public let data : Data?
-    public let error : Error?
-    public var errorModel: T?
-}
-```
-
-When `APIRequest` fails, you receive concrete APIError instance, for example, let's define `MyAppError` we have been talking about:
-
-```swift
-class MyAppError : JSONDecodable {
-  var errors: [String:[String]] = [:]
-
-  required init(json: JSON) {
-    if let dictionary = json["errors"].dictionary {
-      for (key,value) in dictionary {
-          errors[key] = value.arrayValue.map( { return $0.stringValue } )
-      }
-    }
-  }
-}
-```
-
-This way, you only need to define how your errors are parsed, and not worry about other failure details like response code, because they are already included:
+`TRON` includes built-in parsing for errors. `APIError` is an implementation of `ErrorSerializable` protocol, that includes several useful properties, that can be fetched from unsuccessful request:
 
 ```swift
 request.perform(withSuccess: { response in }, failure: { error in
     print(error.request) // Original URLRequest
     print(error.response) // HTTPURLResponse
     print(error.data) // Data of response
+    print(error.fileURL) // Downloaded file url, if this was a download request
     print(error.error) // Error from Foundation Loading system
-    print(error.errorModel.errors) // MyAppError parsed property
+    print(error.serializedObject) // Object that was serialized from network response
   })
-```
-
-## Using Alamofire custom response serializers
-
-Any custom response serializer for `Alamofire` can be used with TRON, you just need to specify error type, that will be used, for example, if `CustomError` is `JSONDecodable`:
-
-```swift
-extension Alamofire.DataResponseSerializer : ErrorHandlingDataResponseSerializerProtocol {
-    public typealias SerializedError = CustomError
-
-    public var serializeError: (Result<SerializedObject>?, URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> {
-        return { erroredResponse, request, response, data, error in
-            let serializationError : Error? = erroredResponse?.error ?? error
-            var error = APIError<ErrorModel>(request: request, response: response,data: data, error: serializationError)
-
-            // Here you can define, how error needs to be parsed
-            error.errorModel =  try? ErrorModel.init(json: JSON(data: data ?? Data()))
-            return error
-        }
-    }
-}
 ```
 
 ## CRUD
@@ -323,24 +264,24 @@ struct Users
 {
     static let tron = TRON(baseURL: "https://api.myapp.com")
 
-    static func create() -> APIRequest<User,MyAppError> {
+    static func create() -> APIRequest<User,APIError> {
         let request: APIRequest<User,MyAppError> = tron.codable.request("users")
         request.method = .post
         return request
     }
 
-    static func read(id: Int) -> APIRequest<User, MyAppError> {
+    static func read(id: Int) -> APIRequest<User, APIError> {
         return tron.codable.request("users/\(id)")
     }
 
-    static func update(id: Int, parameters: [String:Any]) -> APIRequest<User, MyAppError> {
+    static func update(id: Int, parameters: [String:Any]) -> APIRequest<User, APIError> {
         let request: APIRequest<User,MyAppError> = tron.codable.request("users/\(id)")
         request.method = .put
         request.parameters = parameters
         return request
     }
 
-    static func delete(id: Int) -> APIRequest<User,MyAppError> {
+    static func delete(id: Int) -> APIRequest<User,APIError> {
         let request: APIRequest<User,MyAppError> = tron.codable.request("users/\(id)")
         request.method = .delete
         return request
@@ -377,12 +318,12 @@ API.Users.delete(56).perform(withSuccess: { user in
 
 ## Stubbing
 
-Stubbing is built right into APIRequest itself. All you need to stub a successful request is to set apiStub property and turn stubbingEnabled on:
+Stubbing is built right into `APIRequest` itself. All you need to stub a successful request is to set apiStub property and turn stubbingEnabled on:
 
 ```swift
 let request = API.Users.get(56)
-request.stubbingEnabled = true
-request.apiStub.model = User.fixture()
+request.apiStub = APIStub(data: User.fixture().asData)
+request.apiStub.isEnabled = true
 
 request.perform(withSuccess: { stubbedUser in
   print("received stubbed User model: \(stubbedUser)")
@@ -393,18 +334,16 @@ Stubbing can be enabled globally on `TRON` object or locally for a single `APIRe
 
 ```swift
 let request = API.Users.get(56)
-request.stubbingEnabled = true
-request.apiStub.error = APIError<MyAppError>.fixtureError()
+request.apiStub = APIStub(error: CustomError())
 request.perform(withSuccess: { _ in }, failure: { error in
   print("received stubbed api error")
 })
 ```
 
-You can also optionally delay stubbing time or explicitly set that api stub should fail:
+You can also optionally delay stubbing time:
 
 ```swift
 request.apiStub.stubDelay = 1.5
-request.apiStub.successful = false
 ```
 
 ## Upload
@@ -433,60 +372,23 @@ let request = tron.codable.upload("photo", fromStream: stream)
 let request: UploadAPIRequest<EmptyResponse,MyAppError> = tron.codable.uploadMultipart("form") { formData in
     formData.append(data, withName: "cat", mimeType: "image/jpeg")
 }
-request.performMultipart(withSuccess: { result in
+request.perform(withSuccess: { result in
     print("form sent successfully")
 })
 ```
 
-**Note** Multipart form data uploads use `MultipartAPIRequest` class instead of `APIRequest` and have different perform method.
-
 ## Download
 
 ```swift
-let request = tron.codable.download("file", to: destination)
-```
-
-Resume downloads:
-
-```swift
-let request = tron.codable.download("file", to: destination, resumingFrom: data)
+let responseSerializer = TRONDownloadResponseSerializer { _,_, url,_ in url }
+let request: DownloadAPIRequest<URL?, APIError> = tron.download("file",
+                                                                to: destination,
+                                                                responseSerializer: responseSerializer)
 ```
 
 ## Plugins
 
 `TRON` includes plugin system, that allows reacting to most of request events.
-
-```swift
-public protocol Plugin {
-    func willSendRequest<Model,ErrorModel>(_ request: BaseRequest<Model,ErrorModel>)
-
-    func willSendAlamofireRequest<Model,ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-
-    func didSendAlamofireRequest<Model,ErrorModel>(_ request : Request, formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-
-    func willProcessResponse<Model,ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
-                                                forRequest request: Request,
-                                                formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-
-    func didSuccessfullyParseResponse<Model,ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
-                                                        creating result: Model,
-                                                        forRequest request: Request,
-                                                        formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-
-    func didReceiveError<Model,ErrorModel>(_ error: APIError<ErrorModel>,
-                                        forResponse response : (URLRequest?, HTTPURLResponse?, Data?, Error?),
-                                        request: Alamofire.Request,
-                                        formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-
-    func didReceiveDataResponse<Model,ErrorModel>(_ response: DataResponse<Model>,
-                                        forRequest request: Alamofire.Request,
-                                        formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-
-    func didReceiveDownloadResponse<Model,ErrorModel>(_ response: DownloadResponse<Model>,
-                                                    forRequest request: Alamofire.DownloadRequest,
-                                                    formedFrom tronRequest: BaseRequest<Model,ErrorModel>)
-}
-```
 
 Plugins can be used globally, on `TRON` instance itself, or locally, on concrete `APIRequest`. Keep in mind, that plugins that are added to `TRON` instance, will be called for each request. There are some really cool use-cases for global and local plugins.
 

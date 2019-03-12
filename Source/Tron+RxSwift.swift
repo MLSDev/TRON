@@ -43,7 +43,7 @@ extension APIRequest {
                 observer.onError(error)
             })
             return Disposables.create {
-                token?.cancel()
+                token.cancel()
             }
         })
     }
@@ -102,7 +102,7 @@ extension DownloadAPIRequest {
                 }
             })
             return Disposables.create {
-                token?.cancel()
+                token.cancel()
             }
         })
     }
