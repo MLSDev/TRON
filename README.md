@@ -1,7 +1,7 @@
 
 
 <p align="center">
-  <img src="https://github.com/MLSDev/TRON/blob/master/TRON.png" />
+  <img src="https://github.com/MLSDev/TRON/raw/master/TRON.png" />
 </p>
 
 ![Build Status](https://travis-ci.org/MLSDev/TRON.svg?branch=master) &nbsp;
@@ -17,7 +17,7 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 
 - [x] Generic, protocol-based implementation
 - [x] Built-in response and error parsing
-- [x] Support for any custom mapper. Defaults to [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) and Codable protocol in Swift 4.
+- [x] Support for any custom mapper ([SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) implementation provided). Defaults to `Codable` protocol.
 - [x] Support for upload tasks
 - [x] Support for download tasks and resuming downloads
 - [x] Robust plugin system
