@@ -21,7 +21,7 @@ Thank you for helping out and remember, no contribution is too small.
 
 The main function of the issue tracker is to record bug reports and feature
 requests.
-For general questions you can look at the [documentation] and [project README](https://github.com/MLSDev/TRON) to learn more about
+For general questions you can look at the [documentation], [guides] and [project README](https://github.com/MLSDev/TRON) to learn more about
 the project and find some examples.
 If you still have questions please consider using [Stack Overflow].
 
@@ -81,7 +81,7 @@ Create a new branch. Use its name to identify the issue your addressing.
 
 ### Step 3: Code
 
-- **Follow the code conventions**: Make sure that new code does not produce any warnings 
+- **Follow the code conventions**: Make sure that new code does not produce any warnings
 from automatic linter using SwiftLint.
 
 - **Document your changes**: Add or update the relevant entries for your change
@@ -133,8 +133,9 @@ at the end of the PR message, where ### is the number of the issue.
 
 ## Additional notes
 
-TRON heavily relies on Foundation URL loading system and [Alamofire](https://github.com/Alamofire/Alamofire), 
+TRON heavily relies on Foundation URL loading system and [Alamofire](https://github.com/Alamofire/Alamofire),
 so you may need to dig into documentation of those on specific topic you are encountering issues with or want to improve.
 
-[documentation]: https://github.com/MLSDev/TRON/tree/master/Docs
+[documentation]: https://mlsdev.github.io/TRON/
+[guides]: https://github.com/MLSDev/TRON/tree/master/Docs
 [Stack Overflow]: http://stackoverflow.com/
