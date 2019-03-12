@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## [5.0.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.1)
 
-TRON now requires: 
+TRON now requires:
 * Xcode 10
 * Swift 4 and higher
 * iOS/tvOS 10 and higher
@@ -17,35 +17,34 @@ TRON now requires:
 * [Complete documentation](https://mlsdev.github.io/TRON/)
 * `TRONDataResponseSerializer` and `TRONDownloadResponseSerializer` structs to encapsulate serialization of responses using closure.
 * All test suite now uses `StubbingURLProtocol` to stop tests from sending network requests. Closes #21.
+* Additional `JSONDecodable` conformances have been added for arithmetic types such as `Int8...Int64`, `UInt8...64`.
 
 ### Removed
 
-* `EmptyResponse` type was replaced with `Alamofire.Empty` struct to not interfere with `Alamofire.EmptyResponse` protocol. 
+* `EmptyResponse` type was replaced with `Alamofire.Empty` struct to not interfere with `Alamofire.EmptyResponse` protocol.
 * `TRON.stubbingShouldBeSuccessful` property since now each stub directly defines it's behavior instead of global setting
+* Conditional conformance of `Array` to `JSONDecodable`
+* Convenience download methods on `CodableSerializer` and `JSONDecodableSerializer`
+* `AuthorizationRequirement` enum. Please use `Alamofire.RequestAdapter` and  `Session.adapter` property to adapt request, when additional headers are needed.
+* `HeaderBuildable` protocol and `HeaderBuilder` types. Please use `BaseRequest.headers` property of type `Alamofire.HTTPHeaders` directly.
+* `ErrorHandlingDataResponseSerializerProtocol` and `ErrorHandlingDownloadResponseSerializer` protocol. Now, `ErrorModel` on all requests conforms to `ErrorSerializable` protocol, that contains initializer that allows to create it directly.
+* `CodableDownloadParser` and `JSONDecodableDownloadParser`, replacement class `DownloadSerializer` has been introduced, it allows to create a data model by implementing `DownloadResponseSerializerProtocol`
 
 ### Breaking
 
-* `AuthorizationRequirement` enum was removed. Please use `Alamofire.RequestAdapter` and  `Session.adapter` property to adapt request, when additional headers are needed.
-* `HeaderBuildable` protocol and `HeaderBuilder` types were removed. Please use `BaseRequest.headers` property of type `Alamofire.HTTPHeaders` directly.
 * `headers` property of `BaseRequest` now contains `HTTPHeaders` type instead of `[String: String]`. Please note that along with `HeaderBuilder` removal TRON no longer sends 'Accept':'application/json' header by default.
 * `APIError` is changed to be able to accept `SerializedObject` and is now a class with nullable initializer. Also, `DownloadAPIError` type has been introduced for download errors, that do not have `Data` in them, but have `fileURL` instead.
-* `ErrorHandlingDataResponseSerializerProtocol` and `ErrorHandlingDownloadResponseSerializer` protocol have been removed. Now, `ErrorModel` on all requests conforms to `ErrorSerializable` protocol, that contains initializer that allows to create it directly.
 * `Plugin` methods that previously accepted `APIError<ErrorModel>` now accept  `ErrorModel` directly. Added `didSuccessfullyParseDownloadResponse` and `didReceiveDownloadResponse` methods.
 * All concrete implementations of `DataResponseSerializerProtocol` such as `CodableParser` and  `JSONDecodableParser` now have only one generic argument - `Model` and are only parsing model type.
-* `CodableDownloadParser` and `JSONDecodableDownloadParser` have been removed, replacement class `DownloadSerializer` has been introduced, it allows to create a data model by implementing `DownloadResponseSerializerProtocol`
 * `JSONDecodableParser` and `CodableParser` now have only one generic argument - `Model`, since `ErrorModel` is now moved to `ErrorSerializable` protocol, that does not depend on any particular serializer.
-* Convenience download methods on `CodableSerializer` and `JSONDecodableSerializer` have been removed.
 * `APIStub` has been rewritten from scratch to allow injecting only results of network request(`URLRequest`, `HTTPURLResponse`, `Data`, `Error` and `fileURL`) as opposed to actual `Model` and `errorModel` as well as definition of successful/unsuccessful requests. `APIStub` now is been attached to  `Alamofire.Request` when stubbing for this particular request has been enabled. Rewrite also allows plugin callbacks to be called more consistently for both stubbed and unstubbed cases.
 * `rxMultipartResult` method on `UploadRequest` method was removed since `UploadRequest` for multipart requests in Alamofire 5 is now synchronous and now does not require special handling. You can now call `rxResult` replacement method instead.
-* Conditional conformance of `Array` to `JSONDecodable` has been removed, as there might be several ways in which `Array` may conform, and current extension was covering only one.
-* Additional `JSONDecodable` conformances have been added for arithmetic types such as `Int8...Int64`, `UInt8...64`.
-
 
 ## [4.2.1](https://github.com/MLSDev/TRON/releases/tag/4.2.1)
 
 ### Fixed
 
-* `UploadAPIRequest` now calls `didReceiveDataResponse` plugin methods when sending multipart-form requests. 
+* `UploadAPIRequest` now calls `didReceiveDataResponse` plugin methods when sending multipart-form requests.
 
 ## [4.2.0](https://github.com/MLSDev/TRON/releases/tag/4.2.0)
 
