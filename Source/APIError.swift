@@ -25,8 +25,18 @@
 
 import Foundation
 
-/// `APIError<T>` is used as a generic wrapper for all kinds of APIErrors.
-public struct APIError<T> : Error, LocalizedError {
+/// Protocol used to serialize errors received from sending `APIRequest` or `UploadAPIRequest`.
+public protocol ErrorSerializable: Error {
+    init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?)
+}
+
+/// Protocol used to serialize errors received from sending `DownloadAPIRequest`.
+public protocol DownloadErrorSerializable: Error {
+    init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?)
+}
+
+/// `APIError` is used as a generic wrapper for all kinds of API errors.
+open class APIError: Error, LocalizedError, ErrorSerializable, DownloadErrorSerializable, CustomStringConvertible {
 
     /// URLRequest that was unsuccessful
     public let request: URLRequest?
@@ -34,43 +44,45 @@ public struct APIError<T> : Error, LocalizedError {
     /// Response received from web service
     public let response: HTTPURLResponse?
 
-    /// Data, contained in response
+    /// Data, contained in response. Nil, if this error is coming from a download request.
     public let data: Data?
+
+    /// Downloaded fileURL. Nil, if used with upload or data requests.
+    public let fileURL: URL?
 
     /// Error instance, created by Foundation Loading System or Alamofire.
     public let error: Error?
 
-    /// Parsed Error model
-    public var errorModel: T?
+    /// Serialized object, created by parsing response from API/Download/UploadRequest.
+    public let serializedObject: Any?
 
-    /**
-     Initialize `APIError` with unsuccessful request info.
-     
-     - parameter request: URLRequest that was unsuccessful
-     
-     - parameter response: response received from web service
-     
-     - parameter data: data, contained in response
-     
-     - error: Error instance, created by Foundation Loading System or Alamofire.
-     */
-    public init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
+    required public init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
+        guard let receivedError = error else { return nil }
+        self.serializedObject = serializedObject
         self.request = request
         self.response = response
         self.data = data
-        self.error = error
+        self.error = receivedError
+        fileURL = nil
     }
 
-    /**
-     Convenience initializer, that can be used to create fixtured `APIError`.
-     */
-    public init(errorModel: T) {
-        self.init(request: nil, response: nil, data: nil, error: nil)
-        self.errorModel = errorModel
+    required public init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
+        guard let receivedError = error else { return nil }
+        self.serializedObject = serializedObject
+        self.request = request
+        self.response = response
+        self.error = receivedError
+        self.fileURL = fileURL
+        data = nil
     }
 
     /// Prints localized description of error inside
     public var errorDescription: String? {
-        return (errorModel as? LocalizedError)?.localizedDescription ?? (error as? LocalizedError)?.localizedDescription
+        return error?.localizedDescription
+    }
+
+    /// Description of underlying error.
+    public var description: String {
+        return errorDescription ?? ""
     }
 }

@@ -41,43 +41,11 @@ public protocol URLBuildable {
     func url(forPath path: String) -> URL
 }
 
-/**
- Protocol, that defines how headers should be constructed by consumer.
- */
-public protocol HeaderBuildable {
-
-    /**
-     Construct headers for specific request.
-     
-     - parameter requirement: Authorization requirement of current request
-     
-     - parameter headers : headers to be included in this specific request
-     
-     - returns: HTTP headers for current request
-     */
-    func headers(forAuthorizationRequirement requirement: AuthorizationRequirement, including headers: [String: String]) -> [String: String]
-}
-
-/**
- Authorization requirement for current request.
- */
-public enum AuthorizationRequirement {
-
-    /// Request does not need authorization
-    case none
-
-    /// Request can have authorization, and may receive additional fields in response
-    case allowed
-
-    /// Request requires authorization
-    case required
-}
-
 /// Protocol used to allow `APIRequest` to communicate with `TRON` instance.
 public protocol TronDelegate: class {
 
     /// Alamofire.Manager used to send requests
-    var manager: Alamofire.SessionManager { get }
+    var manager: Alamofire.Session { get }
 
     /// Global array of plugins on `TRON` instance
     var plugins: [Plugin] { get }
@@ -87,10 +55,10 @@ public protocol TronDelegate: class {
 open class BaseRequest<Model, ErrorModel> {
 
     /// Serializes Data into Model
-    public typealias ResponseParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> Result<Model>
+    public typealias ResponseParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) throws -> Model
 
     /// Serializes received failed response into APIError<ErrorModel> object
-    public typealias ErrorParser = (Result<Model>?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> APIError<ErrorModel>
+    public typealias ErrorParser = (Model?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> ErrorModel?
 
     /// Relative path of current request
     public let path: String
@@ -106,26 +74,17 @@ open class BaseRequest<Model, ErrorModel> {
 
     /// Headers, that should be used for current request.
     /// - Note: Resulting headers may include global headers from `TRON` instance and `Alamofire.Manager` defaultHTTPHeaders.
-    open var headers: [String: String] = [:]
-
-    /// Authorization requirement for current request
-    open var authorizationRequirement = AuthorizationRequirement.none
-
-    /// Header builder for current request
-    open var headerBuilder: HeaderBuildable
+    open var headers: HTTPHeaders = .init()
 
     /// URL builder for current request
     open var urlBuilder: URLBuildable
 
-    /// Is stubbing enabled for current request?
-    open var stubbingEnabled = false
-
     /// API stub to be used when stubbing this request
-    lazy open var apiStub: APIStub<Model, ErrorModel> = {
-        let stub = APIStub(request: self)
-        stub.successful = (self.tronDelegate as? TRON)?.stubbingShouldBeSuccessful ?? true
-        return stub
-    }()
+    open var apiStub: APIStub? {
+        didSet {
+            apiStub?.isEnabled = (tronDelegate as? TRON)?.stubbingEnabled ?? false
+        }
+    }
 
     /// Queue, used to deliver result completion blocks. Defaults to TRON.resultDeliveryQueue queue.
     open var resultDeliveryQueue: DispatchQueue
@@ -136,7 +95,7 @@ open class BaseRequest<Model, ErrorModel> {
     /// Array of plugins for current `APIRequest`.
     open var plugins: [Plugin] = []
 
-    private var allPlugins: [Plugin] {
+    internal var allPlugins: [Plugin] {
         return plugins + (tronDelegate?.plugins ?? [])
     }
 
@@ -144,43 +103,17 @@ open class BaseRequest<Model, ErrorModel> {
     public init(path: String, tron: TRON) {
         self.path = path
         self.tronDelegate = tron
-        self.stubbingEnabled = tron.stubbingEnabled
-        self.headerBuilder = tron.headerBuilder
         self.urlBuilder = tron.urlBuilder
         self.resultDeliveryQueue = tron.resultDeliveryQueue
         self.parameterEncoding = tron.parameterEncoding
     }
 
-    internal func alamofireRequest(from manager: Alamofire.SessionManager) -> Alamofire.Request? {
+    internal func alamofireRequest(from manager: Alamofire.Session) -> Alamofire.Request? {
         fatalError("Needs to be implemented in subclasses")
     }
 
-    internal func performStub(success: ((Model) -> Void)?, failure: ((APIError<ErrorModel>) -> Void)?) -> Bool {
-        if stubbingEnabled {
-            apiStub.performStub(withSuccess: success, failure: failure)
-            return true
-        }
-        return false
-    }
-
-    internal func performStub(completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> Bool {
-        if stubbingEnabled {
-            apiStub.performStub(withCompletion: completion)
-            return true
-        }
-        return false
-    }
-
-    internal func performStub(completion: @escaping ((Alamofire.DownloadResponse<Model>) -> Void)) -> Bool {
-        if stubbingEnabled {
-            apiStub.performStub(withCompletion: completion)
-            return true
-        }
-        return false
-    }
-
     internal func callSuccessFailureBlocks(_ success: ((Model) -> Void)?,
-                                           failure: ((APIError<ErrorModel>) -> Void)?,
+                                           failure: ((ErrorModel) -> Void)?,
                                            response: Alamofire.DataResponse<Model>) {
         switch response.result {
         case .success(let value):
@@ -189,7 +122,7 @@ open class BaseRequest<Model, ErrorModel> {
             }
         case .failure(let error):
             resultDeliveryQueue.async {
-                guard let error = error as? APIError<ErrorModel> else {
+                guard let error = error as? ErrorModel else {
                     return
                 }
                 failure?(error)
@@ -227,21 +160,9 @@ open class BaseRequest<Model, ErrorModel> {
         }
     }
 
-    internal func didReceiveError(_ error: APIError<ErrorModel>, for response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Alamofire.Request) {
-        allPlugins.forEach { plugin in
-            plugin.didReceiveError(error, forResponse: response, request: request, formedFrom: self)
-        }
-    }
-
     internal func didReceiveDataResponse(_ response: DataResponse<Model>, forRequest request: Alamofire.Request) {
         allPlugins.forEach { plugin in
             plugin.didReceiveDataResponse(response, forRequest: request, formedFrom: self)
-        }
-    }
-
-    internal func didReceiveDownloadResponse(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest) {
-        allPlugins.forEach { plugin in
-            plugin.didReceiveDownloadResponse(response, forRequest: request, formedFrom: self)
         }
     }
 }

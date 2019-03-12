@@ -9,6 +9,7 @@
 import UIKit
 import TRON
 import SwiftyJSON
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,12 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loggerPlugin = NetworkLoggerPlugin()
         loggerPlugin.logSuccess = true
         tron = TRON(baseURL: "https://api.github.com", plugins: [loggerPlugin])
-        tron.headerBuilder = HeaderBuilder(defaultHeaders: [:])
-        let request : APIRequest<String,Int> = tron.swiftyJSON.request("zen")
+        let request : APIRequest<String,APIError> = tron.request("zen", responseSerializer: StringResponseSerializer(encoding: .utf8))
         let token = request.perform(withSuccess: { zen in
-            print(zen)
+                print(zen)
             }, failure: { error in
-        })
+                print(error)
+            })
         debugPrint(token ?? "")
         // Override point for customization after application launch.
         return true

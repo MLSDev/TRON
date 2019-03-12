@@ -10,6 +10,7 @@ import XCTest
 @testable import TRON
 import Nimble
 import SwiftyJSON
+import Alamofire
 
 struct TestUser : JSONDecodable {
     let name: String
@@ -19,6 +20,10 @@ struct TestUser : JSONDecodable {
         id = json["id"].intValue
         name = json["name"].stringValue
     }
+}
+
+private func userData(id: Int, name: String) -> Data {
+    return try! JSONSerialization.data(withJSONObject: ["id": id, "name": name], options: [.prettyPrinted])
 }
 
 fileprivate struct ErrorThrow: Error {}
@@ -34,72 +39,74 @@ class ApiStubbingTestCase: XCTestCase {
     let tron = TRON(baseURL: "https://github.com")
     
     func testStubsSuccessWork() {
-        let parser = tron.swiftyJSON
-        parser.options = .allowFragments
-        let request: APIRequest<Int,TronError> = parser.request("f00")
-        request.stubbingEnabled = true
-        request.apiStub.successData = String(5).data(using: .utf8)
+        let request: APIRequest<TestUser,APIError> = tron.swiftyJSON.request("f00")
+        request.apiStub = APIStub(data: userData(id: 5, name: "Foo"))
+        request.apiStub?.isEnabled = true
         
         let exp = expectation(description: "Stubs success")
         request.perform(withSuccess: { response in
-            expect(response) == 5
+            XCTAssertEqual(response.id, 5)
+            XCTAssertEqual(response.name, "Foo")
             exp.fulfill()
-            }) { _ in
+            }) { error in
                 XCTFail()
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
 
     func testStubsFailureWorks() {
-        let parser = tron.swiftyJSON
-        parser.options = .allowFragments
-        let request :APIRequest<Int,Int> = parser.request("f00")
-        request.stubbingEnabled = true
-        request.apiStub.successful = false
-        request.apiStub.errorData = String(5).data(using:  .utf8)
+        let request : APIRequest<ThrowingJSONDecodable,APIError> = tron.swiftyJSON.request("f00")
+        request.apiStub = APIStub(data: String(5).data(using:  .utf8))
+        request.apiStub?.isEnabled = true
         
         let exp = expectation(description: "Stubs fails")
         request.perform(withSuccess: { response in
             XCTFail()
             }) { error in
-             expect(error.errorModel) == 5
+                XCTAssertEqual(error.data?.asString, "5")
                 exp.fulfill()
         }
         waitForExpectations(timeout: 1, handler: nil)
     }
     
-    func testBuildingFromFileWorks() {
-        let request :APIRequest<TestUser,TronError> = tron.swiftyJSON.request("f00")
-        request.stubbingEnabled = true
-        request.apiStub.buildModel(fromFileNamed: "user.json", inBundle: Bundle(for: type(of: self)))
-        
-        expect(request.apiStub.modelClosure?()?.name) == "Alan Bradley"
-        expect(request.apiStub.modelClosure?()?.id) == 1
-    }
-    
     func testMultipartStubbingSuccessWorks() {
-        let parser = tron.swiftyJSON
-        parser.options = .allowFragments
-        let request: UploadAPIRequest<Int,TronError> = parser.uploadMultipart("f00") { formData in
+        let request: UploadAPIRequest<TestUser,APIError> = tron.swiftyJSON.uploadMultipart("f00") { formData in
         }
-        request.stubbingEnabled = true
-        request.apiStub.successData = String(5).data(using: .utf8)
+        request.apiStub = APIStub(data: userData(id: 3, name: "Bar"))
+        request.apiStub?.isEnabled = true
         
         let exp = expectation(description: "multipart stubbing success")
-        request.performMultipart(withSuccess: { model in
-            if model == 5 { exp.fulfill() }
-            }, failure: { _ in
+        request.perform(withSuccess: { model in
+            if model.id == 3, model.name == "Bar" { exp.fulfill() }
+            }, failure: { error in
                 XCTFail()
         })
         waitForExpectations(timeout: 3, handler: nil)
     }
     
+    func testDownloadStubbingWorks() {
+        let destination = Alamofire.DownloadRequest.suggestedDownloadDestination()
+        let serializer = TRONDownloadResponseSerializer { (_, _, url, _) -> Int in
+            if url?.absoluteString == "expected.pkg" { return 0 }
+            return 1
+        }
+        let request: DownloadAPIRequest<Int, APIError> = tron.download("path", to: destination, responseSerializer: serializer)
+        request.apiStub = APIStub(fileURL: URL(string: "expected.pkg"))
+        request.apiStub?.isEnabled = true
+        let exp = expectation(description: "stub with completion handler")
+        request.performCollectingTimeline(withCompletion: { response in
+            XCTAssertEqual(response.result.value, 0)
+            exp.fulfill()
+        })
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
     func testStubbingSuccessfullyWorksWithCompletionHandler() {
         let parser = tron.swiftyJSON
         parser.options = .allowFragments
-        let request :APIRequest<Int,Int> = parser.request("f00")
-        request.stubbingEnabled = true
-        request.apiStub.successData = String(5).data(using: .utf8)
+        let request: APIRequest<Int,JSONDecodableError<Int,Int>> = parser.request("f00")
+        request.apiStub = APIStub(data: String(5).data(using: .utf8))
+        request.apiStub?.isEnabled = true
         
         let exp = expectation(description: "stub with completion handler")
         request.performCollectingTimeline(withCompletion: { response in
@@ -110,59 +117,24 @@ class ApiStubbingTestCase: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testStubbingFailurefullyWorksWithCompletionHandler() {
-        let parser = tron.swiftyJSON
-        parser.options = .allowFragments
-        let request :APIRequest<Int,Int> = parser.request("f00")
-        request.stubbingEnabled = true
-        request.apiStub.successful = false
-        request.apiStub.errorData = String(5).data(using:  .utf8)
-        
-        request.performCollectingTimeline { response in
-            expect((response.result.error as? APIError<Int>)?.errorModel) == 5
-        }
-    }
-    
     func testStubbingWorksAsynchronously() {
         let parser = tron.swiftyJSON
         parser.options = .allowFragments
-        let request: APIRequest<Int,TronError> = parser.request("f00")
-        request.stubbingEnabled = true
-        request.apiStub.stubDelay = 0.2
-        request.apiStub.successData = String(5).data(using: .utf8)
-        
+        let request: APIRequest<Int,APIError> = parser.request("f00")
+        request.apiStub = APIStub(data: String(5).data(using: .utf8))
+        request.apiStub?.isEnabled = true
+        request.apiStub?.stubDelay = 0.2
+        var intResponse: Int? = nil
         let exp = expectation(description: "Stubs success")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            XCTAssertNil(intResponse)
+        }
         request.perform(withSuccess: { response in
+            intResponse = response
             expect(response) == 5
             exp.fulfill()
         }) { _ in
             XCTFail()
-        }
-        waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testStubWithThrowingDataShouldCallFailureBlock() {
-        let request : APIRequest<ThrowingJSONDecodable,TronError> = tron.swiftyJSON.request("f00")
-        request.stubbingEnabled = true
-        let exp = expectation(description: "Stubs construction failure")
-        request.perform(withSuccess: { response in
-            XCTFail()
-        }) { _ in
-            exp.fulfill()
-        }
-        waitForExpectations(timeout: 3, handler: nil)
-    }
-    
-    func testStubWithThrowingDataShouldCallFailureCompletionBlock() {
-        let request : APIRequest<ThrowingJSONDecodable,TronError> = tron.swiftyJSON.request("f00")
-        request.stubbingEnabled = true
-        let exp = expectation(description: "Stubs construction failure")
-        request.performCollectingTimeline { result in
-            if result.result.isFailure {
-                exp.fulfill()
-            } else {
-                XCTFail()
-            }
         }
         waitForExpectations(timeout: 3, handler: nil)
     }

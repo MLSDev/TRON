@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E01C1951F06475200C47CB3 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01C1941F06475200C47CB3 /* TRONCodable.swift */; };
+		3E601DCA21F8BBE40062E095 /* ProtocolStubbedTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E601DC921F8BBE40062E095 /* ProtocolStubbedTestCase.swift */; };
 		3E74A618215F8AEA00091078 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A60B215F8AE900091078 /* TronTestCase.swift */; };
 		3E74A619215F8AEA00091078 /* PluginTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A60C215F8AE900091078 /* PluginTestCase.swift */; };
 		3E74A61A215F8AEA00091078 /* DownloadTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A60D215F8AE900091078 /* DownloadTestCase.swift */; };
@@ -22,6 +23,7 @@
 		3E74A623215F8AEA00091078 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A616215F8AEA00091078 /* JSONDecodableTestCase.swift */; };
 		3E74A624215F8AEA00091078 /* ResponseSerializationTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A617215F8AEA00091078 /* ResponseSerializationTestCase.swift */; };
 		3E74A627215F8B5800091078 /* StubbingURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A626215F8B5800091078 /* StubbingURLProtocol.swift */; };
+		3E7FB48821CD56D600094CD9 /* Serialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7FB48721CD56D600094CD9 /* Serialization.swift */; };
 		9A148D5B1EDB1ABF002E610C /* cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9A148D571EDB1ABF002E610C /* cat.jpg */; };
 		9A148D5E1EDB1ABF002E610C /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A148D581EDB1ABF002E610C /* invalid.json */; };
 		9A148D611EDB1ABF002E610C /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D591EDB1ABF002E610C /* TronError.swift */; };
@@ -31,12 +33,9 @@
 		9A148D7F1EDB1BC5002E610C /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D691EDB1BC5002E610C /* APIStub.swift */; };
 		9A148D831EDB1BC5002E610C /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6A1EDB1BC5002E610C /* BaseRequest.swift */; };
 		9A148D871EDB1BC5002E610C /* DownloadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6B1EDB1BC5002E610C /* DownloadAPIRequest.swift */; };
-		9A148D8B1EDB1BC5002E610C /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6C1EDB1BC5002E610C /* EmptyResponse.swift */; };
-		9A148D8F1EDB1BC5002E610C /* HeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6D1EDB1BC5002E610C /* HeaderBuilder.swift */; };
 		9A148D931EDB1BC5002E610C /* NetworkActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6E1EDB1BC5002E610C /* NetworkActivityPlugin.swift */; };
 		9A148D971EDB1BC5002E610C /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6F1EDB1BC5002E610C /* NetworkLoggerPlugin.swift */; };
 		9A148D9B1EDB1BC5002E610C /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D701EDB1BC5002E610C /* Plugin.swift */; };
-		9A148D9F1EDB1BC5002E610C /* Serialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D711EDB1BC5002E610C /* Serialization.swift */; };
 		9A148DA31EDB1BC5002E610C /* SwiftyJSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D721EDB1BC5002E610C /* SwiftyJSONDecodable.swift */; };
 		9A148DA71EDB1BC5002E610C /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D731EDB1BC5002E610C /* TRON.swift */; };
 		9A148DAB1EDB1BC5002E610C /* Tron+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D741EDB1BC5002E610C /* Tron+RxSwift.swift */; };
@@ -92,6 +91,7 @@
 
 /* Begin PBXFileReference section */
 		3E01C1941F06475200C47CB3 /* TRONCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TRONCodable.swift; path = Source/TRONCodable.swift; sourceTree = "<group>"; };
+		3E601DC921F8BBE40062E095 /* ProtocolStubbedTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolStubbedTestCase.swift; sourceTree = "<group>"; };
 		3E74A60B215F8AE900091078 /* TronTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TronTestCase.swift; sourceTree = "<group>"; };
 		3E74A60C215F8AE900091078 /* PluginTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginTestCase.swift; sourceTree = "<group>"; };
 		3E74A60D215F8AE900091078 /* DownloadTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadTestCase.swift; sourceTree = "<group>"; };
@@ -106,6 +106,7 @@
 		3E74A616215F8AEA00091078 /* JSONDecodableTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDecodableTestCase.swift; sourceTree = "<group>"; };
 		3E74A617215F8AEA00091078 /* ResponseSerializationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerializationTestCase.swift; sourceTree = "<group>"; };
 		3E74A626215F8B5800091078 /* StubbingURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbingURLProtocol.swift; sourceTree = "<group>"; };
+		3E7FB48721CD56D600094CD9 /* Serialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Serialization.swift; path = Source/Serialization.swift; sourceTree = "<group>"; };
 		9A05B1881D96BE1A00AC2B0B /* 2.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "2.0 Migration Guide.md"; path = "Docs/2.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9A148D571EDB1ABF002E610C /* cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cat.jpg; sourceTree = "<group>"; };
 		9A148D581EDB1ABF002E610C /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = invalid.json; sourceTree = "<group>"; };
@@ -116,12 +117,9 @@
 		9A148D691EDB1BC5002E610C /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIStub.swift; path = Source/APIStub.swift; sourceTree = "<group>"; };
 		9A148D6A1EDB1BC5002E610C /* BaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseRequest.swift; path = Source/BaseRequest.swift; sourceTree = "<group>"; };
 		9A148D6B1EDB1BC5002E610C /* DownloadAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadAPIRequest.swift; path = Source/DownloadAPIRequest.swift; sourceTree = "<group>"; };
-		9A148D6C1EDB1BC5002E610C /* EmptyResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyResponse.swift; path = Source/EmptyResponse.swift; sourceTree = "<group>"; };
-		9A148D6D1EDB1BC5002E610C /* HeaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderBuilder.swift; path = Source/HeaderBuilder.swift; sourceTree = "<group>"; };
 		9A148D6E1EDB1BC5002E610C /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkActivityPlugin.swift; path = Source/NetworkActivityPlugin.swift; sourceTree = "<group>"; };
 		9A148D6F1EDB1BC5002E610C /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPlugin.swift; path = Source/NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		9A148D701EDB1BC5002E610C /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plugin.swift; path = Source/Plugin.swift; sourceTree = "<group>"; };
-		9A148D711EDB1BC5002E610C /* Serialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Serialization.swift; path = Source/Serialization.swift; sourceTree = "<group>"; };
 		9A148D721EDB1BC5002E610C /* SwiftyJSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSONDecodable.swift; path = Source/SwiftyJSONDecodable.swift; sourceTree = "<group>"; };
 		9A148D731EDB1BC5002E610C /* TRON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRON.swift; path = Source/TRON.swift; sourceTree = "<group>"; };
 		9A148D741EDB1BC5002E610C /* Tron+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tron+RxSwift.swift"; path = "Source/Tron+RxSwift.swift"; sourceTree = "<group>"; };
@@ -258,21 +256,19 @@
 		9A90CC221C5FAB3000472DB8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				9A148D711EDB1BC5002E610C /* Serialization.swift */,
 				9A148D671EDB1BC5002E610C /* APIError.swift */,
 				9A148D681EDB1BC5002E610C /* APIRequest.swift */,
 				9A148D691EDB1BC5002E610C /* APIStub.swift */,
 				9A148D6A1EDB1BC5002E610C /* BaseRequest.swift */,
 				9A148D6B1EDB1BC5002E610C /* DownloadAPIRequest.swift */,
-				9A148D6C1EDB1BC5002E610C /* EmptyResponse.swift */,
-				9A148D6D1EDB1BC5002E610C /* HeaderBuilder.swift */,
-				9A148D731EDB1BC5002E610C /* TRON.swift */,
-				9A148D751EDB1BC5002E610C /* UploadAPIRequest.swift */,
-				9A148D761EDB1BC5002E610C /* URLBuilder.swift */,
-				3E01C1941F06475200C47CB3 /* TRONCodable.swift */,
 				9A148DB71EDB1CCC002E610C /* Plugins */,
 				9A148DBA1EDB1CFA002E610C /* Rx */,
+				3E7FB48721CD56D600094CD9 /* Serialization.swift */,
 				9A148DB91EDB1CF3002E610C /* SwiftyJSON */,
+				9A148D731EDB1BC5002E610C /* TRON.swift */,
+				3E01C1941F06475200C47CB3 /* TRONCodable.swift */,
+				9A148D751EDB1BC5002E610C /* UploadAPIRequest.swift */,
+				9A148D761EDB1BC5002E610C /* URLBuilder.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -295,6 +291,7 @@
 				3E74A60B215F8AE900091078 /* TronTestCase.swift */,
 				3E74A60F215F8AE900091078 /* UploadTestCase.swift */,
 				3E74A615215F8AEA00091078 /* URLBuilderTestCase.swift */,
+				3E601DC921F8BBE40062E095 /* ProtocolStubbedTestCase.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -403,6 +400,8 @@
 				TargetAttributes = {
 					9A704E4E1C5D01B300392DE5 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = L94VC9ZZXC;
+						ProvisioningStyle = Automatic;
 					};
 					9A722F491C5A49AE0087908D = {
 						CreatedOnToolsVersion = 7.2;
@@ -534,7 +533,6 @@
 				9A148DA71EDB1BC5002E610C /* TRON.swift in Sources */,
 				3E01C1951F06475200C47CB3 /* TRONCodable.swift in Sources */,
 				9A148D831EDB1BC5002E610C /* BaseRequest.swift in Sources */,
-				9A148D9F1EDB1BC5002E610C /* Serialization.swift in Sources */,
 				9A148D871EDB1BC5002E610C /* DownloadAPIRequest.swift in Sources */,
 				9A148D971EDB1BC5002E610C /* NetworkLoggerPlugin.swift in Sources */,
 				9A148DB31EDB1BC5002E610C /* URLBuilder.swift in Sources */,
@@ -543,11 +541,10 @@
 				9A148D9B1EDB1BC5002E610C /* Plugin.swift in Sources */,
 				9A148DAF1EDB1BC5002E610C /* UploadAPIRequest.swift in Sources */,
 				9A148DA31EDB1BC5002E610C /* SwiftyJSONDecodable.swift in Sources */,
-				9A148D8B1EDB1BC5002E610C /* EmptyResponse.swift in Sources */,
+				3E7FB48821CD56D600094CD9 /* Serialization.swift in Sources */,
 				9A148D7F1EDB1BC5002E610C /* APIStub.swift in Sources */,
 				9A148D931EDB1BC5002E610C /* NetworkActivityPlugin.swift in Sources */,
 				9A148D7B1EDB1BC5002E610C /* APIRequest.swift in Sources */,
-				9A148D8F1EDB1BC5002E610C /* HeaderBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +567,7 @@
 				3E74A61B215F8AEA00091078 /* HeaderBuilderTestCase.swift in Sources */,
 				3E74A621215F8AEA00091078 /* PluginTester.swift in Sources */,
 				3E74A623215F8AEA00091078 /* JSONDecodableTestCase.swift in Sources */,
+				3E601DCA21F8BBE40062E095 /* ProtocolStubbedTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +611,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L94VC9ZZXC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -621,6 +622,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MLSDev.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
 		};
@@ -629,6 +633,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L94VC9ZZXC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -637,6 +644,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MLSDev.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Release;
 		};
@@ -701,19 +711,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
@@ -773,19 +782,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2,3,4";
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};

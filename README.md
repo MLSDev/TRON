@@ -5,7 +5,7 @@
 </p>
 
 ![Build Status](https://travis-ci.org/MLSDev/TRON.svg?branch=master) &nbsp;
-[![codecov.io](http://codecov.io/github/MLSDev/TRON/coverage.svg?branch=master)](http://codecov.io/github/MLSDev/TRON?branch=master)
+[![codecov.io](https://codecov.io/github/MLSDev/TRON/coverage.svg?branch=master)](https://codecov.io/github/MLSDev/TRON?branch=master)
 ![CocoaPod platform](https://cocoapod-badges.herokuapp.com/p/TRON/badge.png) &nbsp;
 ![CocoaPod version](https://cocoapod-badges.herokuapp.com/v/TRON/badge.png) &nbsp;
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)

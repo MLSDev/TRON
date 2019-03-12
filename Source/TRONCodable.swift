@@ -26,106 +26,26 @@
 import Foundation
 import Alamofire
 
-#if swift (>=4.0)
 /// `CodableParser` is a wrapper around `modelDecoder` and `errorDecoder` JSONDecoders to be used when decoding JSON response.
-open class CodableParser<Model: Decodable, ErrorModel: Decodable> : ErrorHandlingDataResponseSerializerProtocol {
-
-    /// Type of serialized error
-    public typealias SerializedError = ErrorModel
+open class CodableParser<Model: Decodable> : DataResponseSerializerProtocol {
 
     /// Decoder used for decoding model object
     public let modelDecoder: JSONDecoder
 
-    /// Decoder used for decoding error object
-    public let errorDecoder: JSONDecoder
-
     /// Creates `CodableParser` with model and error decoders
-    public init(modelDecoder: JSONDecoder, errorDecoder: JSONDecoder) {
+    public init(modelDecoder: JSONDecoder) {
         self.modelDecoder = modelDecoder
-        self.errorDecoder = errorDecoder
     }
 
-    /// A closure used by response handlers that takes a request, response, data and error and returns a result.
-    open var serializeResponse: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Model> {
-        return { [weak self] request, response, data, error in
-            do {
-                if Model.self is EmptyResponse.Type {
-                    // swiftlint:disable:next force_cast
-                    return Result.success(EmptyResponse() as! Model)
-                }
-                let model = try (self?.modelDecoder ?? JSONDecoder()).decode(Model.self, from: data ?? Data())
-                return Result.success(model)
-            } catch {
-                return .failure(error)
-            }
+    /// Method used by response handlers that takes a request, response, data and error and returns a result.
+    open func serialize(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) throws -> Model {
+        if let error = error {
+            throw error
         }
-    }
-
-    /// A closure used by response handlers that takes a parsed result, request, response, data and error and returns a serialized error.
-    open var serializeError: (Result<SerializedObject>?, URLRequest?, HTTPURLResponse?, Data?, Error?) -> APIError<SerializedError> {
-        return { [weak self] erroredResponse, request, response, data, error in
-            let serializationError: Error? = erroredResponse?.error ?? error
-            var error = APIError<SerializedError>(request: request, response: response, data: data, error: serializationError)
-            error.errorModel = try? (self?.errorDecoder ?? JSONDecoder()).decode(SerializedError.self, from: data ?? Data())
-            return error
+        if let type = Model.self as? EmptyResponse.Type, let emptyValue = type.emptyValue() as? Model {
+            return emptyValue
         }
-    }
-}
-
-/// Error that is thrown, if after successful download, passed URL or Data with contents of that URL are nil.
-public enum CodableDownloadSerializationError: Error {
-    case failedToCreateJSONResponse
-}
-
-/// `JSONDecodable` download response parser
-open class CodableDownloadParser<Model: Decodable, ErrorModel: Decodable> : ErrorHandlingDownloadResponseSerializerProtocol {
-
-    /// Type of serialized error for DownloadAPIRequest
-    public typealias SerializedError = ErrorModel
-
-    /// Decoder to be used when decoding `Model`.
-    public let modelDecoder: JSONDecoder
-
-    /// Decoder to be used when decoding `ErrorModel`.
-    public let errorDecoder: JSONDecoder
-
-    /// Creates parser with `modelDecoder` and `errorDecoder`.
-    public init(modelDecoder: JSONDecoder, errorDecoder: JSONDecoder) {
-        self.modelDecoder = modelDecoder
-        self.errorDecoder = errorDecoder
-    }
-
-    /// A closure used by response handlers that takes a request, response, url and error and returns a result.
-    open var serializeResponse: (URLRequest?, HTTPURLResponse?, URL?, Error?) -> Result<Model> {
-        return { [weak self] request, response, url, error in
-            if let url = url, let data = try? Data(contentsOf: url) {
-                do {
-                    if Model.self is EmptyResponse.Type {
-                        // swiftlint:disable:next force_cast
-                        return Result.success(EmptyResponse() as! Model)
-                    }
-                    let model = try (self?.modelDecoder ?? JSONDecoder()).decode(Model.self, from: data)
-                    return Result.success(model)
-                } catch {
-                    return .failure(error)
-                }
-            }
-            return .failure(CodableDownloadSerializationError.failedToCreateJSONResponse)
-        }
-    }
-
-    /// A closure used by response handlers that takes a parsed result, request, response, url and error and returns a serialized error.
-    open var serializeError: (Result<SerializedObject>?, URLRequest?, HTTPURLResponse?, URL?, Error?) -> APIError<SerializedError> {
-        return { [weak self] erroredResponse, request, response, url, error in
-            let serializationError: Error? = erroredResponse?.error ?? error
-            var data: Data?
-            if let url = url {
-                data = try? Data(contentsOf: url)
-            }
-            var error = APIError<SerializedError>(request: request, response: response, data: data, error: serializationError)
-            error.errorModel = try? (self?.errorDecoder ?? JSONDecoder()).decode(SerializedError.self, from: data ?? Data())
-            return error
-        }
+        return try modelDecoder.decode(Model.self, from: data ?? Data())
     }
 }
 
@@ -138,16 +58,10 @@ open class CodableSerializer {
     /// Decoder to be used while parsing model.
     public let modelDecoder: JSONDecoder
 
-    /// Decoder to be used while parsing error.
-    public let errorDecoder: JSONDecoder
-
     /// Creates `CodableSerializer` with `tron` instance to send requests, and `decoder` to be used while parsing response.
-    init(_ tron: TRON,
-         modelDecoder: JSONDecoder = JSONDecoder(),
-         errorDecoder: JSONDecoder = JSONDecoder()) {
+    init(_ tron: TRON, modelDecoder: JSONDecoder = JSONDecoder()) {
         self.tron = tron
         self.modelDecoder = modelDecoder
-        self.errorDecoder = errorDecoder
     }
 
     /**
@@ -157,10 +71,8 @@ open class CodableSerializer {
 
      - returns: APIRequest instance.
      */
-    public func request<Model: Decodable, ErrorModel: Decodable>(_ path: String) -> APIRequest<Model, ErrorModel> {
-        return tron.request(path,
-                            responseSerializer: CodableParser(modelDecoder: modelDecoder,
-                                                              errorDecoder: errorDecoder))
+    public func request<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String) -> APIRequest<Model, ErrorModel> {
+        return tron.request(path, responseSerializer: CodableParser(modelDecoder: modelDecoder))
     }
 
     /**
@@ -172,10 +84,9 @@ open class CodableSerializer {
 
      - returns: APIRequest instance.
      */
-    public func upload<Model: Decodable, ErrorModel: Decodable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model, ErrorModel> {
+    public func upload<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model, ErrorModel> {
         return tron.upload(path, fromFileAt: fileURL,
-                           responseSerializer: CodableParser(modelDecoder: modelDecoder,
-                                                             errorDecoder: errorDecoder))
+                           responseSerializer: CodableParser(modelDecoder: modelDecoder))
     }
 
     /**
@@ -187,9 +98,8 @@ open class CodableSerializer {
 
      - returns: APIRequest instance.
      */
-    public func upload<Model: Decodable, ErrorModel: Decodable>(_ path: String, data: Data) -> UploadAPIRequest<Model, ErrorModel> {
-        return tron.upload(path, data: data, responseSerializer: CodableParser(modelDecoder: modelDecoder,
-                                                                               errorDecoder: errorDecoder))
+    public func upload<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String, data: Data) -> UploadAPIRequest<Model, ErrorModel> {
+        return tron.upload(path, data: data, responseSerializer: CodableParser(modelDecoder: modelDecoder))
     }
 
     /**
@@ -201,9 +111,8 @@ open class CodableSerializer {
 
      - returns: APIRequest instance.
      */
-    public func upload<Model: Decodable, ErrorModel: Decodable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model, ErrorModel> {
-        return tron.upload(path, from: stream, responseSerializer: CodableParser(modelDecoder: modelDecoder,
-                                                                                 errorDecoder: errorDecoder))
+    public func upload<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model, ErrorModel> {
+        return tron.upload(path, from: stream, responseSerializer: CodableParser(modelDecoder: modelDecoder))
     }
 
     /**
@@ -215,50 +124,14 @@ open class CodableSerializer {
 
      - returns: MultipartAPIRequest instance.
      */
-    public func uploadMultipart<Model: Decodable, ErrorModel: Decodable>(_ path: String,
-                                                                         formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel> {
-        return tron.uploadMultipart(path,
-                                    responseSerializer: CodableParser(modelDecoder: modelDecoder,
-                                                                      errorDecoder: errorDecoder),
+    public func uploadMultipart<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String,
+                                                                                 encodingMemoryThreshold: UInt64 = MultipartUpload.encodingMemoryThreshold,
+                                                                                 fileManager: FileManager = .default,
+                                                                                 formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel> {
+        return tron.uploadMultipart(path, responseSerializer: CodableParser(modelDecoder: modelDecoder),
+                                    encodingMemoryThreshold: encodingMemoryThreshold,
+                                    fileManager: fileManager,
                                     formData: formData)
-    }
-
-    /**
-     Creates APIRequest with specified relative path and type RequestType.Download.
-
-     - parameter path: Path, that will be appended to current `baseURL`.
-
-     - parameter destination: Destination for downloading.
-
-     - returns: APIRequest instance.
-
-     - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
-     */
-    public func download<Model: Decodable, ErrorModel: Decodable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<Model, ErrorModel> {
-        return tron.download(path,
-                             to: destination,
-                             responseSerializer: CodableDownloadParser(modelDecoder: modelDecoder,
-                                                                       errorDecoder: errorDecoder))
-    }
-
-    /**
-     Creates APIRequest with specified relative path and type RequestType.DownloadResuming.
-
-     - parameter path: Path, that will be appended to current `baseURL`.
-
-     - parameter destination: Destination to download to.
-
-     - parameter resumingFrom: Resume data for current request.
-
-     - returns: APIRequest instance.
-
-     - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
-     */
-    public func download<Model: Decodable, ErrorModel: Decodable>(_ path: String, to destination: @escaping DownloadRequest.DownloadFileDestination, resumingFrom: Data) -> DownloadAPIRequest<Model, ErrorModel> {
-        return tron.download(path, to: destination,
-                             resumingFrom: resumingFrom,
-                             responseSerializer: CodableDownloadParser(modelDecoder: modelDecoder,
-                                                                       errorDecoder: errorDecoder))
     }
 }
 
@@ -270,9 +143,7 @@ extension TRON {
 
     /// Creates `CodableSerializer` with current `TRON` instance, specific `modelDecoder` and `errorDecoder`.
     /// Note: `modelDecoder` and `errorDecoder` are allowed to be the same object.
-    open func codable(modelDecoder: JSONDecoder, errorDecoder: JSONDecoder) -> CodableSerializer {
-        return CodableSerializer(self, modelDecoder: modelDecoder, errorDecoder: errorDecoder)
+    open func codable(modelDecoder: JSONDecoder) -> CodableSerializer {
+        return CodableSerializer(self, modelDecoder: modelDecoder)
     }
 }
-
-#endif

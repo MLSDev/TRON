@@ -74,10 +74,21 @@ public protocol Plugin {
     /// - parameter response:    Tuple with (URLRequest?, HTTPURLResponse?, Data?, Error?)
     /// - parameter request:     Alamofire.Request instance
     /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
-    func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>,
-                                            forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
-                                            request: Alamofire.Request,
-                                            formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
+    func didReceiveError<Model, ErrorModel: ErrorSerializable>(_ error: ErrorModel,
+                                                               forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
+                                                               request: Alamofire.Request,
+                                                               formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
+
+    /// Notifies that request processed response and created `APIError<ErrorModel>` instance.
+    ///
+    /// - parameter error:       parsed APIError<ErrorModel> instance
+    /// - parameter response:    Tuple with (URLRequest?, HTTPURLResponse?, URL?, Error?)
+    /// - parameter request:     Alamofire.Request instance
+    /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
+    func didReceiveDownloadError<Model, ErrorModel: DownloadErrorSerializable>(_ error: ErrorModel,
+                                                                               forResponse response: (URLRequest?, HTTPURLResponse?, URL?, Error?),
+                                                                               request: Alamofire.Request,
+                                                                               formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
 
     /// Notifies about data `response` that was received for `request`, formed from `tronRequest`. This method is called after parsing has completed.
     ///
@@ -91,7 +102,20 @@ public protocol Plugin {
     /// - parameter _response:   DownloadResponse instance
     /// - parameter request:     Alamofire.Request instance
     /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses.
-    func didReceiveDownloadResponse<Model, ErrorModel>(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest, formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
+    func didReceiveDownloadResponse<Model, ErrorModel: DownloadErrorSerializable>(_ response: DownloadResponse<Model>,
+                                                                                  forRequest request: Alamofire.DownloadRequest,
+                                                                                  formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
+
+    /// Notifies that `response` for `request`, formed from `tronRequest`, was successfully parsed into `result`.
+    ///
+    /// - parameter response:    Tuple with (URLRequest?, HTTPURLResponse?, URL?, Error?)
+    /// - parameter result:      parsed Model
+    /// - parameter request:     Alamofire.Request instance
+    /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
+    func didSuccessfullyParseDownloadResponse<Model, ErrorModel: DownloadErrorSerializable>(_ response: (URLRequest?, HTTPURLResponse?, URL?, Error?),
+                                                                                            creating result: Model,
+                                                                                            forRequest request: Request,
+                                                                                            formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
 }
 
 /// Default empty methods for Plugin protocol
@@ -109,12 +133,22 @@ public extension Plugin {
                                                          forRequest request: Request,
                                                          formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
 
-    func didReceiveError<Model, ErrorModel>(_ error: APIError<ErrorModel>,
-                                            forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
-                                            request: Alamofire.Request,
-                                            formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
+    func didReceiveError<Model, ErrorModel: ErrorSerializable>(_ error: ErrorModel,
+                                                               forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
+                                                               request: Alamofire.Request,
+                                                               formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
 
     func didReceiveDataResponse<Model, ErrorModel>(_ response: DataResponse<Model>, forRequest request: Alamofire.Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
 
-    func didReceiveDownloadResponse<Model, ErrorModel>(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
+    func didReceiveDownloadResponse<Model, ErrorModel: DownloadErrorSerializable>(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
+
+    func didReceiveDownloadError<Model, ErrorModel: DownloadErrorSerializable>(_ error: ErrorModel,
+                                                                               forResponse response: (URLRequest?, HTTPURLResponse?, URL?, Error?),
+                                                                               request: Alamofire.Request,
+                                                                               formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
+
+    func didSuccessfullyParseDownloadResponse<Model, ErrorModel: DownloadErrorSerializable>(_ response: (URLRequest?, HTTPURLResponse?, URL?, Error?),
+                                                                                            creating result: Model,
+                                                                                            forRequest request: Request,
+                                                                                            formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
 }

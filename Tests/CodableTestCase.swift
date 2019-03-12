@@ -12,35 +12,19 @@ import Nimble
 import SwiftyJSON
 import Alamofire
 
-#if swift (>=4.0)
-
-private struct HeadersResponse : Codable {
-    
-    let headers: Headers
-    
-    struct Headers : Codable {
-        let host: String
-        
-        enum CodingKeys : String, CodingKey {
-            case host = "Host"
-        }
-    }
-}
-    
-fileprivate struct CodableError: Codable {
-    
+private struct CodableResponse : Codable {
+    let title: String
 }
 
-class CodableTestCase: XCTestCase {
+class CodableTestCase: ProtocolStubbedTestCase {
     
     func testCodableParsing() {
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<HeadersResponse,Int> = tron.codable.request("headers")
+        let request: APIRequest<CodableResponse,APIError> = tron.codable.request("test")
         let expectation = self.expectation(description: "Parsing headers response")
-        request.perform(withSuccess:  { headers in
-            if headers.headers.host == "httpbin.org" {
-                expectation.fulfill()
-            }
+        request.stubSuccess(["title":"Foo"].asData)
+        request.perform(withSuccess: { response in
+            XCTAssertEqual(response.title, "Foo")
+            expectation.fulfill()
         }, failure: { error in
             print(error)
         })
@@ -49,33 +33,28 @@ class CodableTestCase: XCTestCase {
     }
     
     func testCodableErrorParsing() {
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request: APIRequest<Int,CodableError> = tron.codable.request("status/418")
+        let request: APIRequest<Int,APIError> = tron.codable.request("status/418")
         let expectation = self.expectation(description: "Teapot")
+        request.stubStatusCode(418)
         request.perform(withSuccess: { _ in
             XCTFail()
         }) { error in
-            if error.response?.statusCode == 418 {
-                expectation.fulfill()
-            }
+            XCTAssertEqual(error.response?.statusCode, 418)
+            expectation.fulfill()
         }
-        waitForExpectations(timeout: 5, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testEmptyResponseStillCallsSuccessBlock() {
-        let tron = TRON(baseURL: "http://httpbin.org")
-        let request : APIRequest<EmptyResponse, CodableError> = tron.codable.request("headers")
-        request.method = .head
+        let request : APIRequest<Empty, APIError> = tron.codable.request("headers")
+        request.stubSuccess(.init())
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
             expectation.fulfill()
         }, failure: { _ in
             XCTFail()
-            }
-        )
+            })
         waitForExpectations(timeout: 1, handler: nil)
     }
     
 }
-
-#endif
