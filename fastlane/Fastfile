@@ -17,16 +17,8 @@ lane :test_tvos11 do
   scan(device: "Apple TV")
 end
 
-lane :test_ios_swift3 do
-  scan(devices: ["iPhone X (12.1)"], xcargs: "SWIFT_VERSION=3.0")
-end
-
 lane :test_ios_swift4 do
   scan(devices: ["iPhone X (12.1)"], xcargs: "SWIFT_VERSION=4.0")
-end
-
-lane :test_tvos_swift3 do
-  scan(devices: ["Apple TV"], xcargs: "SWIFT_VERSION=3.0")
 end
 
 lane :test_tvos_swift4 do
@@ -112,5 +104,6 @@ lane :release do |params|
     puts "Attaching Carthage prebuilt binary to release."
     releases = client.releases('MLSDev/TRON')
     client.upload_asset(releases[0].url, 'TRON.framework.zip')
+    sh "rm -rf ../TRON.framework.zip"
   end
 end

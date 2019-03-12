@@ -13,9 +13,7 @@ matrix:
     - env: ACTION=test_ios11 PLATFORM=iOS
     - env: ACTION=test_tvos12 PLATFORM=tvOS
     - env: ACTION=test_tvos11 PLATFORM=tvOS
-    - env: ACTION=test_ios_swift3 PLATFORM=iOS
     - env: ACTION=test_ios_swift4 PLATFORM=iOS
-    - env: ACTION=test_tvos_swift3 PLATFORM=tvOS
     - env: ACTION=test_tvos_swift4 PLATFORM=tvOS
     - env: ACTION=test_macos PLATFORM=macOS
     - env: ACTION=build_watchos PLATFORM=watchOS
