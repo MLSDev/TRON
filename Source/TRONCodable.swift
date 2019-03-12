@@ -26,7 +26,6 @@
 import Foundation
 import Alamofire
 
-#if swift (>=4.0)
 /// `CodableParser` is a wrapper around `modelDecoder` and `errorDecoder` JSONDecoders to be used when decoding JSON response.
 open class CodableParser<Model: Decodable> : DataResponseSerializerProtocol {
 
@@ -43,9 +42,8 @@ open class CodableParser<Model: Decodable> : DataResponseSerializerProtocol {
         if let error = error {
             throw error
         }
-        if Model.self is EmptyResponse.Type {
-            // swiftlint:disable:next force_cast
-            return EmptyResponse() as! Model
+        if let type = Model.self as? EmptyResponse.Type, let emptyValue = type.emptyValue() as? Model {
+            return emptyValue
         }
         return try modelDecoder.decode(Model.self, from: data ?? Data())
     }
@@ -149,5 +147,3 @@ extension TRON {
         return CodableSerializer(self, modelDecoder: modelDecoder)
     }
 }
-
-#endif

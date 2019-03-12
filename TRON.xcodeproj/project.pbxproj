@@ -33,7 +33,6 @@
 		9A148D7F1EDB1BC5002E610C /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D691EDB1BC5002E610C /* APIStub.swift */; };
 		9A148D831EDB1BC5002E610C /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6A1EDB1BC5002E610C /* BaseRequest.swift */; };
 		9A148D871EDB1BC5002E610C /* DownloadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6B1EDB1BC5002E610C /* DownloadAPIRequest.swift */; };
-		9A148D8B1EDB1BC5002E610C /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6C1EDB1BC5002E610C /* EmptyResponse.swift */; };
 		9A148D931EDB1BC5002E610C /* NetworkActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6E1EDB1BC5002E610C /* NetworkActivityPlugin.swift */; };
 		9A148D971EDB1BC5002E610C /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6F1EDB1BC5002E610C /* NetworkLoggerPlugin.swift */; };
 		9A148D9B1EDB1BC5002E610C /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D701EDB1BC5002E610C /* Plugin.swift */; };
@@ -118,7 +117,6 @@
 		9A148D691EDB1BC5002E610C /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIStub.swift; path = Source/APIStub.swift; sourceTree = "<group>"; };
 		9A148D6A1EDB1BC5002E610C /* BaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseRequest.swift; path = Source/BaseRequest.swift; sourceTree = "<group>"; };
 		9A148D6B1EDB1BC5002E610C /* DownloadAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadAPIRequest.swift; path = Source/DownloadAPIRequest.swift; sourceTree = "<group>"; };
-		9A148D6C1EDB1BC5002E610C /* EmptyResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyResponse.swift; path = Source/EmptyResponse.swift; sourceTree = "<group>"; };
 		9A148D6E1EDB1BC5002E610C /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkActivityPlugin.swift; path = Source/NetworkActivityPlugin.swift; sourceTree = "<group>"; };
 		9A148D6F1EDB1BC5002E610C /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPlugin.swift; path = Source/NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		9A148D701EDB1BC5002E610C /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plugin.swift; path = Source/Plugin.swift; sourceTree = "<group>"; };
@@ -263,7 +261,6 @@
 				9A148D691EDB1BC5002E610C /* APIStub.swift */,
 				9A148D6A1EDB1BC5002E610C /* BaseRequest.swift */,
 				9A148D6B1EDB1BC5002E610C /* DownloadAPIRequest.swift */,
-				9A148D6C1EDB1BC5002E610C /* EmptyResponse.swift */,
 				9A148DB71EDB1CCC002E610C /* Plugins */,
 				9A148DBA1EDB1CFA002E610C /* Rx */,
 				3E7FB48721CD56D600094CD9 /* Serialization.swift */,
@@ -544,7 +541,6 @@
 				9A148D9B1EDB1BC5002E610C /* Plugin.swift in Sources */,
 				9A148DAF1EDB1BC5002E610C /* UploadAPIRequest.swift in Sources */,
 				9A148DA31EDB1BC5002E610C /* SwiftyJSONDecodable.swift in Sources */,
-				9A148D8B1EDB1BC5002E610C /* EmptyResponse.swift in Sources */,
 				3E7FB48821CD56D600094CD9 /* Serialization.swift in Sources */,
 				9A148D7F1EDB1BC5002E610C /* APIStub.swift in Sources */,
 				9A148D931EDB1BC5002E610C /* NetworkActivityPlugin.swift in Sources */,

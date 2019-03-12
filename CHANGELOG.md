@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 TRON now requires: 
 * Xcode 10
+* Swift 4 and higher
 * iOS/tvOS 10 and higher
 * watchOS 3 and higher
 * macOS 10.12 and higher
@@ -13,6 +14,10 @@ TRON now requires:
 
 * `TRONDataResponseSerializer` and `TRONDownloadResponseSerializer` structs to encapsulate serialization of responses using closure.
 * All test suite now uses `StubbingURLProtocol` to stop tests from sending network requests. Closes #21.
+
+### Removed
+
+* `EmptyResponse` type was replaced with `Alamofire.Empty` struct to not interfere with `Alamofire.EmptyResponse` protocol. 
 
 ### Breaking
 

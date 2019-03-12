@@ -136,7 +136,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     }
     
     func testEmptyResponseStillCallsSuccessBlock() {
-        let request : APIRequest<EmptyResponse, APIError> = tron.swiftyJSON.request("headers")
+        let request : APIRequest<Empty, APIError> = tron.swiftyJSON.request("headers")
         request.stubSuccess(.init())
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
@@ -153,9 +153,9 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let configuration = URLSessionConfiguration.default
         configuration.httpHeaders = .default
         configuration.protocolClasses = [StubbingURLProtocol.self]
-        let manager = Session(startRequestsImmediately: false, configuration: configuration)
+        let manager = Session(configuration: configuration, startRequestsImmediately: false)
         let tron = TRON(baseURL: "https://httpbin.org", manager: manager)
-        let request : APIRequest<EmptyResponse, APIError> = tron.swiftyJSON.request("headers")
+        let request : APIRequest<Empty, APIError> = tron.swiftyJSON.request("headers")
         request.stubSuccess(.init())
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
@@ -171,7 +171,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let configuration = URLSessionConfiguration.default
         configuration.httpHeaders = .default
         configuration.protocolClasses = [StubbingURLProtocol.self]
-        let manager = Session(startRequestsImmediately: false, configuration: configuration)
+        let manager = Session(configuration: configuration, startRequestsImmediately: false)
         let tron = TRON(baseURL: "https://httpbin.org", manager: manager)
         let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON.uploadMultipart("post") { formData in
             formData.append("bar".data(using: String.Encoding.utf8) ?? Data(), withName: "foo")
@@ -203,7 +203,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     }
     
     func testCustomValidationClosureOverridesError() {
-        let request : APIRequest<EmptyResponse,APIError> = tron.swiftyJSON.request("status/418")
+        let request : APIRequest<Empty,APIError> = tron.swiftyJSON.request("status/418")
         request.validationClosure = { $0.validate(statusCode: (418...420)) }
         let expectation = self.expectation(description: "We like tea from this teapot")
         request.stubSuccess([:].asData, statusCode: 418)

@@ -51,9 +51,8 @@ open class JSONDecodableParser<Model: JSONDecodable> : DataResponseSerializerPro
         if let error = error {
             throw error
         }
-        if Model.self is EmptyResponse.Type {
-            // swiftlint:disable:next force_cast
-            return EmptyResponse() as! Model
+        if let type = Model.self as? EmptyResponse.Type, let emptyValue = type.emptyValue() as? Model {
+            return emptyValue
         }
         let json = try JSON(data: data ?? Data(), options: options)
         return try Model(json: json)
@@ -167,16 +166,11 @@ extension TRON {
 extension String: JSONDecodable {
     /// Creates String from JSON container
     public init(json: JSON) {
-        #if swift(>=4)
-            self.init(json.stringValue)
-        #else
-            // swiftlint:disable:next force_unwrapping
-            self.init(json.stringValue)!
-        #endif
+        self.init(json.stringValue)
     }
 }
 
-extension Int: JSONDecodable  {
+extension Int: JSONDecodable {
 
     /// Creates Int from JSON container
     public init(json: JSON) {
@@ -277,7 +271,9 @@ extension Bool: JSONDecodable {
     }
 }
 
-extension EmptyResponse: JSONDecodable {
+extension Empty: JSONDecodable {
     /// Creates EmptyResponse from JSON container
-    public init(json: JSON) {}
+    public init(json: JSON) {
+        self = Empty.value
+    }
 }

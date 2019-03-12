@@ -12,8 +12,6 @@ import Nimble
 import SwiftyJSON
 import Alamofire
 
-#if swift (>=4.0)
-
 private struct CodableResponse : Codable {
     let title: String
 }
@@ -48,7 +46,7 @@ class CodableTestCase: ProtocolStubbedTestCase {
     }
     
     func testEmptyResponseStillCallsSuccessBlock() {
-        let request : APIRequest<EmptyResponse, APIError> = tron.codable.request("headers")
+        let request : APIRequest<Empty, APIError> = tron.codable.request("headers")
         request.stubSuccess(.init())
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
@@ -60,5 +58,3 @@ class CodableTestCase: ProtocolStubbedTestCase {
     }
     
 }
-
-#endif
