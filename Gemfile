@@ -4,6 +4,7 @@ source "https://rubygems.org"
 gem "fastlane"
 gem 'octokit'
 gem 'netrc'
+gem 'jazzy'
 gem 'cocoapods', '~> 1.0'
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')

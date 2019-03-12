@@ -1,0 +1,7 @@
+author: Denys Telezhkin
+author_url: https://github.com/DenTelezhkin
+github_url: https://github.com/MLSDev/TRON
+root_url: https://mlsdev.github.io/TRON/
+module: TRON
+output: docs
+theme: fullwidth

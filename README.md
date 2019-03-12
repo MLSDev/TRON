@@ -26,6 +26,7 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 - [x] Support for iOS/Mac OS X/tvOS/watchOS/Linux
 - [x] Support for CocoaPods/Carthage/Swift Package Manager
 - [x] RxSwift extension
+- [x] [Complete documentation](https://mlsdev.github.io/TRON/)
 
 ## Overview
 
@@ -42,34 +43,34 @@ request.perform(withSuccess: { user in
 
 ## Requirements
 
-- Xcode 8.3/9.x
-- Swift 3/4
-- iOS 8 / macOS 10.10 / tvOS 9.0 / watchOS 2.0
+- Xcode 10 and higher
+- Swift 4 and higher
+- iOS 10 / macOS 10.12 / tvOS 10.0 / watchOS 3.0
 
 ## Installation
 
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 4.0'
+pod 'TRON', '~> 5.0.0-beta.1'
 ```
 
 Only Core subspec, without SwiftyJSON dependency:
 
 ```ruby
-pod 'TRON/Core', '~> 4.0'
+pod 'TRON/Core', '~> 5.0.0-beta.1'
 ```
 
 RxSwift extension for TRON:
 
 ```ruby
-pod 'TRON/RxSwift', '~> 4.0'
+pod 'TRON/RxSwift', '~> 5.0.0-beta.1'
 ```
 
 ### Carthage
 
 ```ruby
-github "MLSDev/TRON", ~> 4.0
+github "MLSDev/TRON", ~> 5.0.0-beta.1
 ```
 
 ## Migration Guides
@@ -104,28 +105,6 @@ public protocol URLBuildable {
 
 By default, `TRON` uses `URLBuilder` class, that simply appends relative path to base URL, which is sufficient in most cases. You can customize url building process globally by changing `urlBuilder` property on `TRON` or locally, for a single request by modifying `urlBuilder` property on `APIRequest`.
 
-### HeaderBuildable
-
-`HeaderBuildable` protocol is used to configure HTTP headers on your request.
-
-```swift
-public protocol HeaderBuildable {
-    func headers(forAuthorizationRequirement requirement: AuthorizationRequirement, including headers: [String:String]) -> [String: String]
-}
-```
-
-`AuthorizationRequirement` is an enum with three values:
-
-```swift
-public enum AuthorizationRequirement {
-    case none, allowed, required
-}
-```
-
-It represents scenarios where user is not authorized, user is authorized, but authorization is not required, and a case, where request requires authorization.
-
-By default, `TRON` uses `HeaderBuilder` class, which adds "Accept":"application/json" header to your requests.
-
 ## Sending requests
 
 To send `APIRequest`, call `perform(withSuccess:failure:)` method on `APIRequest`:
@@ -133,8 +112,6 @@ To send `APIRequest`, call `perform(withSuccess:failure:)` method on `APIRequest
 ```swift
 let alamofireRequest = request.perform(withSuccess: { result in }, failure: { error in})
 ```
-
-Notice that `alamofireRequest` variable returned from this method is an Alamofire.Request?, that will be nil if request is stubbed.
 
 Alternatively, you can use `performCollectingTimeline(withCompletion:)` method that contains `Alamofire.Response` inside completion closure:
 
@@ -148,7 +125,7 @@ request.performCollectingTimeline(withCompletion: { response in
 In both cases, you can additionally chain `Alamofire.Request` methods, if you need:
 
 ```swift
-request.perform(withSuccess: { result in }, failure: { error in })?.progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
+request.perform(withSuccess: { result in }, failure: { error in }).progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
     print(bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
 }
 ```

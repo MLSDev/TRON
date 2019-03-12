@@ -12,6 +12,7 @@ TRON now requires:
 
 ### Added
 
+* [Complete documentation](https://mlsdev.github.io/TRON/)
 * `TRONDataResponseSerializer` and `TRONDownloadResponseSerializer` structs to encapsulate serialization of responses using closure.
 * All test suite now uses `StubbingURLProtocol` to stop tests from sending network requests. Closes #21.
 
