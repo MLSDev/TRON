@@ -15,19 +15,34 @@ Install _fastlane_ using
 or alternatively using `brew cask install fastlane`
 
 # Available Actions
+### test_ios12
+```
+fastlane test_ios12
+```
+
 ### test_ios11
 ```
 fastlane test_ios11
 ```
 
-### test_ios10
+### test_tvos12
 ```
-fastlane test_ios10
+fastlane test_tvos12
 ```
 
 ### test_tvos11
 ```
 fastlane test_tvos11
+```
+
+### test_ios_swift4
+```
+fastlane test_ios_swift4
+```
+
+### test_tvos_swift4
+```
+fastlane test_tvos_swift4
 ```
 
 ### test_macos
