@@ -3,7 +3,14 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### Changed
+
 * `codable` is now a lazy stored property instead of computed property.
+* `CodableSerializer` API has been made open to allow easy customization in subclasses.
+
+### Removed
+
+* `TRON.processingQueue` property
 
 ## [5.0.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.1)
 

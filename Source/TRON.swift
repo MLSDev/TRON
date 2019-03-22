@@ -46,9 +46,6 @@ open class TRON: TronDelegate {
     /// Default value - URLEncoding.default
     open var parameterEncoding: Alamofire.ParameterEncoding = URLEncoding.default
 
-    /// Queue, used for processing response, received from the server. Defaults to QOS_CLASS_USER_INITIATED queue
-    open var processingQueue = DispatchQueue.global(qos: .userInitiated)
-
     /// Queue, used to deliver result completion blocks. Defaults to dispatch_get_main_queue().
     open var resultDeliveryQueue = DispatchQueue.main
 
