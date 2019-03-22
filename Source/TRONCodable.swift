@@ -125,9 +125,9 @@ open class CodableSerializer {
      - returns: MultipartAPIRequest instance.
      */
     open func uploadMultipart<Model: Decodable, ErrorModel: ErrorSerializable>(_ path: String,
-                                                                                 encodingMemoryThreshold: UInt64 = MultipartUpload.encodingMemoryThreshold,
-                                                                                 fileManager: FileManager = .default,
-                                                                                 formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel> {
+                                                                               encodingMemoryThreshold: UInt64 = MultipartUpload.encodingMemoryThreshold,
+                                                                               fileManager: FileManager = .default,
+                                                                               formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel> {
         return tron.uploadMultipart(path, responseSerializer: CodableParser(modelDecoder: modelDecoder),
                                     encodingMemoryThreshold: encodingMemoryThreshold,
                                     fileManager: fileManager,
