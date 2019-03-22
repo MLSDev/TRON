@@ -107,7 +107,6 @@
 		3E74A617215F8AEA00091078 /* ResponseSerializationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerializationTestCase.swift; sourceTree = "<group>"; };
 		3E74A626215F8B5800091078 /* StubbingURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbingURLProtocol.swift; sourceTree = "<group>"; };
 		3E7FB48721CD56D600094CD9 /* Serialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Serialization.swift; path = Source/Serialization.swift; sourceTree = "<group>"; };
-		9A05B1881D96BE1A00AC2B0B /* 2.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "2.0 Migration Guide.md"; path = "Docs/2.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9A148D571EDB1ABF002E610C /* cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cat.jpg; sourceTree = "<group>"; };
 		9A148D581EDB1ABF002E610C /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = invalid.json; sourceTree = "<group>"; };
 		9A148D591EDB1ABF002E610C /* TronError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TronError.swift; sourceTree = "<group>"; };
@@ -310,7 +309,6 @@
 		9AFAE4D31CC520F6002739B0 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
-				9A05B1881D96BE1A00AC2B0B /* 2.0 Migration Guide.md */,
 				9AFAE4D51CC52118002739B0 /* README.md */,
 				9AFAE4D41CC5210F002739B0 /* CHANGELOG.md */,
 			);

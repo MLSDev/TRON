@@ -136,13 +136,7 @@ open class CodableSerializer {
 }
 
 extension TRON {
-    /// Creates `CodableSerializer` with current `TRON` instance.
-    open var codable: CodableSerializer {
-        return CodableSerializer(self)
-    }
-
-    /// Creates `CodableSerializer` with current `TRON` instance, specific `modelDecoder` and `errorDecoder`.
-    /// Note: `modelDecoder` and `errorDecoder` are allowed to be the same object.
+    /// Creates `CodableSerializer` with current `TRON` instance and specific `modelDecoder`.
     open func codable(modelDecoder: JSONDecoder) -> CodableSerializer {
         return CodableSerializer(self, modelDecoder: modelDecoder)
     }
