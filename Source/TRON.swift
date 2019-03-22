@@ -52,6 +52,9 @@ open class TRON: TronDelegate {
     /// Queue, used to deliver result completion blocks. Defaults to dispatch_get_main_queue().
     open var resultDeliveryQueue = DispatchQueue.main
 
+    /// `CodableSerializer` for current `TRON` instance.
+    open lazy var codable: CodableSerializer = { CodableSerializer(self) }()
+
     /// Alamofire.Manager instance used to send network requests
     public let manager: Alamofire.Session
 
