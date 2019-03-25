@@ -65,7 +65,7 @@ open class TRON: TronDelegate {
      - parameter plugins: Array of plugins, that will receive events from requests, created and managed by current `TRON` instance.
      */
     public init(baseURL: String,
-                manager: Alamofire.Session = TRON.defaultAlamofireManager(),
+                manager: Alamofire.Session = .default,
                 plugins: [Plugin] = []) {
         self.urlBuilder = URLBuilder(baseURL: baseURL)
         self.plugins = plugins
@@ -205,17 +205,5 @@ open class TRON: TronDelegate {
          resumingFrom: Data, responseSerializer: Serializer) -> DownloadAPIRequest<Model, ErrorModel>
         where Serializer.SerializedObject == Model {
         return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self, responseSerializer: responseSerializer)
-    }
-
-    /**
-     Default Alamofire.Manager instance to be used by `TRON`.
-
-     - returns Alamofire.Manager instance initialized with NSURLSessionConfiguration.defaultSessionConfiguration().
-     */
-    open class func defaultAlamofireManager() -> Session {
-        let configuration = URLSessionConfiguration.default
-        configuration.httpHeaders = .default
-        let manager = Session(configuration: configuration)
-        return manager
     }
 }

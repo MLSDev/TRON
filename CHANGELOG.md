@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 
+* `TRON.defaultAlamofireManager()` method. TRON initializer now uses `Alamofire.Session.default` as a replacement.
 * `TRON.processingQueue` property
 
 ## [5.0.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.1)
