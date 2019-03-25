@@ -10,15 +10,11 @@ import Foundation
 import TRON
 import SwiftyJSON
 
-public class CodableError<Model, ErrorModel: Codable> : APIError {
+public class CodableError<ErrorModel: Codable> : APIError {
     let errorModel: ErrorModel?
     
     public required init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
-        if let data = data {
-            errorModel = try? JSONDecoder().decode(ErrorModel.self, from: data)
-        } else {
-            errorModel = nil
-        }
+        errorModel = data.flatMap { try? JSONDecoder().decode(ErrorModel.self, from: $0) }
         super.init(serializedObject: serializedObject,
                    request: request,
                    response: response,
@@ -36,15 +32,14 @@ public class CodableError<Model, ErrorModel: Codable> : APIError {
     }
 }
 
-public class JSONDecodableError<Model, ErrorModel: JSONDecodable> : APIError {
+public class JSONDecodableError<ErrorModel: JSONDecodable> : APIError {
     let errorModel: ErrorModel?
     
     public required init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
-        if let data = data, let json = try? JSON(data: data) {
-            errorModel = try? ErrorModel(json: json)
-        } else {
-            errorModel = nil
-        }
+        errorModel = data
+            .flatMap { try? JSON(data: $0) }
+            .flatMap { try? ErrorModel(json: $0) }
+        
         super.init(serializedObject: serializedObject,
                    request: request,
                    response: response,

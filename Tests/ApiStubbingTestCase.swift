@@ -104,7 +104,7 @@ class ApiStubbingTestCase: XCTestCase {
     func testStubbingSuccessfullyWorksWithCompletionHandler() {
         let parser = tron.swiftyJSON
         parser.options = .allowFragments
-        let request: APIRequest<Int,JSONDecodableError<Int,Int>> = parser.request("f00")
+        let request: APIRequest<Int,JSONDecodableError<Int>> = parser.request("f00")
         request.apiStub = APIStub(data: String(5).data(using: .utf8))
         request.apiStub?.isEnabled = true
         
