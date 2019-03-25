@@ -135,18 +135,18 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
     }
 
     private func performAlamofireRequest(_ completion : @escaping (DataResponse<Model>) -> Void) -> UploadRequest {
-        guard let manager = tronDelegate?.manager else {
+        guard let session = tronDelegate?.session else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
         willSendRequest()
-        guard let request = alamofireRequest(from: manager) as? UploadRequest else {
+        guard let request = alamofireRequest(from: session) as? UploadRequest else {
             fatalError("Failed to receive UploadRequest")
         }
         if let stub = apiStub, stub.isEnabled {
             request.tron_apiStub = stub
         }
         willSendAlamofireRequest(request)
-        if !manager.startRequestsImmediately {
+        if !session.startRequestsImmediately {
             request.resume()
         }
         didSendAlamofireRequest(request)

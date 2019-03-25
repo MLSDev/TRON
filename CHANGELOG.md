@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 * `codable` is now a lazy stored property instead of computed property.
 * `CodableSerializer` API has been made open to allow easy customization in subclasses.
 
+### Breaking 
+
+* Properties that worked with `Alamofire.SessionManager` have been renamed to `session` to be in line with `Alamofire` renaming of `SessionManager` to `Session`.
+
 ### Removed
 
 * `TRON.defaultAlamofireManager()` method. TRON initializer now uses `Alamofire.Session.default` as a replacement.

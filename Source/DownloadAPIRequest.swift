@@ -97,18 +97,18 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
     }
 
     private func performAlamofireRequest(_ completion : @escaping (DownloadResponse<Model>) -> Void) -> DownloadRequest {
-        guard let manager = tronDelegate?.manager else {
+        guard let session = tronDelegate?.session else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
         willSendRequest()
-        guard let request = alamofireRequest(from: manager) as? DownloadRequest else {
+        guard let request = alamofireRequest(from: session) as? DownloadRequest else {
             fatalError("Failed to receive DataRequest")
         }
         if let stub = apiStub, stub.isEnabled {
             request.tron_apiStub = stub
         }
         willSendAlamofireRequest(request)
-        if !manager.startRequestsImmediately {
+        if !session.startRequestsImmediately {
             request.resume()
         }
         didSendAlamofireRequest(request)

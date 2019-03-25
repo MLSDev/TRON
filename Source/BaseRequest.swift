@@ -45,7 +45,7 @@ public protocol URLBuildable {
 public protocol TronDelegate: class {
 
     /// Alamofire.Manager used to send requests
-    var manager: Alamofire.Session { get }
+    var session: Alamofire.Session { get }
 
     /// Global array of plugins on `TRON` instance
     var plugins: [Plugin] { get }

@@ -60,7 +60,7 @@ class PluginTestCase: ProtocolStubbedTestCase {
         
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [StubbingURLProtocol.self]
-        tron = TRON(baseURL: "https://httpbin.org", manager: Session(configuration: configuration))
+        tron = TRON(baseURL: "https://httpbin.org", session: Session(configuration: configuration))
         let request: UploadAPIRequest<String,APIError> = tron.swiftyJSON.uploadMultipart("status/200") { formData in }
         request.stubStatusCode(200)
         request.plugins.append(localPluginTester)

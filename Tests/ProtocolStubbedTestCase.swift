@@ -18,7 +18,7 @@ class ProtocolStubbedTestCase: XCTestCase {
         super.setUp()
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [StubbingURLProtocol.self]
-        tron = TRON(baseURL: "https://httpbin.org", manager: Session(configuration: configuration))
+        tron = TRON(baseURL: "https://httpbin.org", session: Session(configuration: configuration))
         URLProtocol.registerClass(StubbingURLProtocol.self)
     }
 
