@@ -59,7 +59,7 @@ open class CodableSerializer {
     public let modelDecoder: JSONDecoder
 
     /// Creates `CodableSerializer` with `tron` instance to send requests, and `decoder` to be used while parsing response.
-    init(_ tron: TRON, modelDecoder: JSONDecoder = JSONDecoder()) {
+    public init(_ tron: TRON, modelDecoder: JSONDecoder = JSONDecoder()) {
         self.tron = tron
         self.modelDecoder = modelDecoder
     }
