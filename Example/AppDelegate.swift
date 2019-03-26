@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }, failure: { error in
                 print(error)
             })
-        debugPrint(token ?? "")
+        debugPrint(token)
         // Override point for customization after application launch.
         return true
     }
