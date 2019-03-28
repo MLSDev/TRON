@@ -132,7 +132,7 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
                 parsedError = self.errorParser(parsedModel, urlRequest, response, url, error)
             } catch let catchedError {
                 parsedError = self.errorParser(nil, urlRequest, response, url, error)
-                self.didReceiveError(parsedError, for: (urlRequest, response, data, error), request: request)
+                self.didReceiveError(parsedError, for: (urlRequest, response, url, error), request: request)
                 throw parsedError ?? catchedError
             }
 
