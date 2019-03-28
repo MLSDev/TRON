@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### Breaking 
 
 * Properties that worked with `Alamofire.SessionManager` have been renamed to `session` to be in line with `Alamofire` renaming of `SessionManager` to `Session`.
+* `Plugin.didReceiveError` and `Plugin.didReceiveDownloadError` methods now accept optional `ErrorModel` argument due to a fact that `ErrorModel` creation could fail, for example due to validation errors, but error should still be propagated.
 
 ### Removed
 

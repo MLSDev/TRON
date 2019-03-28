@@ -168,7 +168,9 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
                 parsedModel = try self.responseParser(urlRequest, response, data, error)
                 parsedError = self.errorParser(parsedModel, urlRequest, response, data, error)
             } catch let catchedError {
-                parsedError = self.errorParser(nil, urlRequest, response, data, catchedError) ?? catchedError
+                parsedError = self.errorParser(nil, urlRequest, response, data, catchedError)
+                self.didReceiveError(parsedError, for: (urlRequest, response, data, error), request: request)
+                throw parsedError ?? catchedError
             }
             if let nonNilError = parsedError {
                 self.didReceiveError(nonNilError, for: (urlRequest, response, data, error), request: request)
@@ -180,7 +182,7 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
         }
     }
 
-    internal func didReceiveError(_ error: ErrorModel, for response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Alamofire.Request) {
+    internal func didReceiveError(_ error: ErrorModel?, for response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Alamofire.Request) {
         allPlugins.forEach { plugin in
             plugin.didReceiveError(error, forResponse: response, request: request, formedFrom: self)
         }
