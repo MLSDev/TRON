@@ -121,8 +121,7 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
                 parsedModel = try self.responseParser(urlRequest, response, data, error)
                 parsedError = self.errorParser(parsedModel, urlRequest, response, data, error)
             } catch let catchedError {
-                parsedError = self.errorParser(nil, urlRequest, response, data, catchedError)
-                throw parsedError ?? catchedError
+                parsedError = self.errorParser(nil, urlRequest, response, data, catchedError) ?? catchedError
             }
             if let nonNilError = parsedError {
                 self.didReceiveError(nonNilError, for: (urlRequest, response, data, error), request: request)
