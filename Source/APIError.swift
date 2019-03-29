@@ -77,12 +77,12 @@ open class APIError: Error, LocalizedError, ErrorSerializable, DownloadErrorSeri
     }
 
     /// Prints localized description of error inside
-    public var errorDescription: String? {
+    open var errorDescription: String? {
         return error?.localizedDescription
     }
 
     /// Description of underlying error.
-    public var description: String {
+    open var description: String {
         return errorDescription ?? ""
     }
 }
