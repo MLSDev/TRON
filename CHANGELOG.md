@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 * `codable` is now a lazy stored property instead of computed property.
 * `CodableSerializer` API has been made open to allow easy customization in subclasses.
+* `NetworkLoggerPlugin` now has a constructor that allows to easily configure it's behavior.
 
 ### Breaking 
 

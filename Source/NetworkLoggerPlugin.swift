@@ -32,16 +32,24 @@ import Alamofire
 open class NetworkLoggerPlugin: Plugin {
 
     /// Log successful requests
-    open var logSuccess = false
+    open var logSuccess: Bool
 
     /// Log unsuccessful requests
-    open var logFailures = true
+    open var logFailures : Bool
 
     /// Log failures produced when request is cancelled. This property only works, if logFailures property is set to true.
-    open var logCancelledRequests = true
+    open var logCancelledRequests : Bool
 
     /// Creates 'NetworkLoggerPlugin'
-    public init() {}
+    public init(
+        logSuccess: Bool = false,
+        logFailures: Bool = true,
+        logCancelledRequests: Bool = false
+        ) {
+        self.logSuccess = logSuccess
+        self.logFailures = logFailures
+        self.logCancelledRequests = logCancelledRequests
+    }
 
     /// Called, when response was successfully parsed. If `logSuccess` property has been turned on, prints cURL representation of request.
     open func didSuccessfullyParseResponse<Model, ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?), creating result: Model, forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
