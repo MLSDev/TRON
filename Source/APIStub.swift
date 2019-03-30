@@ -36,7 +36,7 @@ protocol DataRequestResponseSerialization {}
 extension DataRequest: DataRequestResponseSerialization {}
 
 extension DataRequestResponseSerialization {
-    func performResponseSerialization<Serializer>(queue: DispatchQueue?,
+    func performResponseSerialization<Serializer>(queue: DispatchQueue,
                                                   responseSerializer: Serializer,
                                                   completionHandler: @escaping (DataResponse<Serializer.SerializedObject>) -> Void) -> Self
         where Serializer: DataResponseSerializerProtocol {
@@ -52,7 +52,7 @@ extension DataRequestResponseSerialization {
                                             metrics: nil,
                                             serializationDuration: (end - start),
                                             result: result)
-                (queue ?? .main).asyncAfter(deadline: .now() + stub.stubDelay) {
+                queue.asyncAfter(deadline: .now() + stub.stubDelay) {
                     completionHandler(response)
                 }
                 return self
@@ -69,7 +69,7 @@ extension DataRequestResponseSerialization {
 }
 
 extension DownloadRequest {
-    func performResponseSerialization<Serializer>(queue: DispatchQueue?,
+    func performResponseSerialization<Serializer>(queue: DispatchQueue,
                                                   responseSerializer: Serializer,
                                                   completionHandler: @escaping (DownloadResponse<Serializer.SerializedObject>) -> Void) -> Self
         where Serializer: DownloadResponseSerializerProtocol {
@@ -86,7 +86,7 @@ extension DownloadRequest {
                                             metrics: nil,
                                             serializationDuration: (end - start),
                                             result: result)
-            (queue ?? .main).asyncAfter(deadline: .now() + stub.stubDelay) {
+            queue.asyncAfter(deadline: .now() + stub.stubDelay) {
                 completionHandler(response)
             }
             return self

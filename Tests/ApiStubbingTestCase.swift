@@ -84,7 +84,7 @@ class ApiStubbingTestCase: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    func testDownloadStubbingWorks() {
+    func testDownloadStubbingWorks() throws {
         let destination = Alamofire.DownloadRequest.suggestedDownloadDestination()
         let serializer = TRONDownloadResponseSerializer { (_, _, url, _) -> Int in
             if url?.absoluteString == "expected.pkg" { return 0 }
@@ -95,7 +95,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.apiStub?.isEnabled = true
         let exp = expectation(description: "stub with completion handler")
         request.performCollectingTimeline(withCompletion: { response in
-            XCTAssertEqual(response.result.value, 0)
+            XCTAssertEqual(try? response.result.get(), 0)
             exp.fulfill()
         })
         waitForExpectations(timeout: 1, handler: nil)
@@ -110,7 +110,7 @@ class ApiStubbingTestCase: XCTestCase {
         
         let exp = expectation(description: "stub with completion handler")
         request.performCollectingTimeline(withCompletion: { response in
-            if response.result.value == 5 {
+            if (try? response.result.get()) == 5 {
                 exp.fulfill()
             }
         })

@@ -35,10 +35,10 @@ open class NetworkLoggerPlugin: Plugin {
     open var logSuccess: Bool
 
     /// Log unsuccessful requests
-    open var logFailures : Bool
+    open var logFailures: Bool
 
     /// Log failures produced when request is cancelled. This property only works, if logFailures property is set to true.
-    open var logCancelledRequests : Bool
+    open var logCancelledRequests: Bool
 
     /// Creates 'NetworkLoggerPlugin'
     public init(
