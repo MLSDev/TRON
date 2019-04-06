@@ -74,7 +74,7 @@ public protocol Plugin {
     /// - parameter response:    Tuple with (URLRequest?, HTTPURLResponse?, Data?, Error?)
     /// - parameter request:     Alamofire.Request instance
     /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
-    func didReceiveError<Model, ErrorModel: ErrorSerializable>(_ error: ErrorModel?,
+    func didReceiveError<Model, ErrorModel: ErrorSerializable>(_ error: ErrorModel,
                                                                forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
                                                                request: Alamofire.Request,
                                                                formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
@@ -85,7 +85,7 @@ public protocol Plugin {
     /// - parameter response:    Tuple with (URLRequest?, HTTPURLResponse?, URL?, Error?)
     /// - parameter request:     Alamofire.Request instance
     /// - parameter tronRequest: TRON.BaseRequest or one of the subclasses
-    func didReceiveDownloadError<Model, ErrorModel: DownloadErrorSerializable>(_ error: ErrorModel?,
+    func didReceiveDownloadError<Model, ErrorModel: DownloadErrorSerializable>(_ error: ErrorModel,
                                                                                forResponse response: (URLRequest?, HTTPURLResponse?, URL?, Error?),
                                                                                request: Alamofire.Request,
                                                                                formedFrom tronRequest: BaseRequest<Model, ErrorModel>)
@@ -133,7 +133,7 @@ public extension Plugin {
                                                          forRequest request: Request,
                                                          formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
 
-    func didReceiveError<Model, ErrorModel: ErrorSerializable>(_ error: ErrorModel?,
+    func didReceiveError<Model, ErrorModel: ErrorSerializable>(_ error: ErrorModel,
                                                                forResponse response: (URLRequest?, HTTPURLResponse?, Data?, Error?),
                                                                request: Alamofire.Request,
                                                                formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
@@ -142,7 +142,7 @@ public extension Plugin {
 
     func didReceiveDownloadResponse<Model, ErrorModel: DownloadErrorSerializable>(_ response: DownloadResponse<Model>, forRequest request: Alamofire.DownloadRequest, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}
 
-    func didReceiveDownloadError<Model, ErrorModel: DownloadErrorSerializable>(_ error: ErrorModel?,
+    func didReceiveDownloadError<Model, ErrorModel: DownloadErrorSerializable>(_ error: ErrorModel,
                                                                                forResponse response: (URLRequest?, HTTPURLResponse?, URL?, Error?),
                                                                                request: Alamofire.Request,
                                                                                formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {}

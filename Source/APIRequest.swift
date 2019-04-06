@@ -128,7 +128,7 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
         }
     }
 
-    internal func didReceiveError(_ error: ErrorModel?, for response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Alamofire.Request) {
+    internal func didReceiveError(_ error: ErrorModel, for response: (URLRequest?, HTTPURLResponse?, Data?, Error?), request: Alamofire.Request) {
         allPlugins.forEach { plugin in
             plugin.didReceiveError(error, forResponse: response, request: request, formedFrom: self)
         }

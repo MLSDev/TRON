@@ -142,7 +142,7 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
         }
     }
 
-    internal func didReceiveError(_ error: ErrorModel?, for response: (URLRequest?, HTTPURLResponse?, URL?, Error?), request: Alamofire.Request) {
+    internal func didReceiveError(_ error: ErrorModel, for response: (URLRequest?, HTTPURLResponse?, URL?, Error?), request: Alamofire.Request) {
         allPlugins.forEach { plugin in
             plugin.didReceiveDownloadError(error, forResponse: response, request: request, formedFrom: self)
         }
