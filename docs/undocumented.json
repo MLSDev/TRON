@@ -3,28 +3,28 @@
     {
       "file": "/Users/denystelezkin/Developer/TRON/Source/APIError.swift",
       "line": 30,
-      "symbol": "ErrorSerializable.init(serializedObject:request:response:data:error:)",
+      "symbol": "ErrorSerializable.init(request:response:data:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/denystelezkin/Developer/TRON/Source/APIError.swift",
       "line": 35,
-      "symbol": "DownloadErrorSerializable.init(serializedObject:request:response:fileURL:error:)",
+      "symbol": "DownloadErrorSerializable.init(request:response:fileURL:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/denystelezkin/Developer/TRON/Source/APIError.swift",
-      "line": 59,
-      "symbol": "APIError.init(serializedObject:request:response:data:error:)",
+      "line": 56,
+      "symbol": "APIError.init(request:response:data:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/denystelezkin/Developer/TRON/Source/APIError.swift",
-      "line": 69,
-      "symbol": "APIError.init(serializedObject:request:response:fileURL:error:)",
+      "line": 64,
+      "symbol": "APIError.init(request:response:fileURL:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },

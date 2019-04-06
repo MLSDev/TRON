@@ -310,9 +310,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON19NetworkLoggerPluginCACycfc"></a>
-                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON19NetworkLoggerPluginCACycfc">init()</a>
+                    <a name="/s:4TRON19NetworkLoggerPluginC10logSuccess0E8Failures0E17CancelledRequestsACSb_S2btcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(logSuccess:logFailures:logCancelledRequests:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON19NetworkLoggerPluginC10logSuccess0E8Failures0E17CancelledRequestsACSb_S2btcfc">init(logSuccess:logFailures:logCancelledRequests:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -327,7 +327,11 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span>
+    <span class="nv">logSuccess</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nv">logFailures</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nv">logCancelledRequests</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -364,9 +368,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON19NetworkLoggerPluginC15didReceiveError_11forResponse7request10formedFromyq__10Foundation10URLRequestVSg_So17NSHTTPURLResponseCSgAH4DataVSgs0G0_pSgt9Alamofire7RequestCAA04BaseR0Cyxq_GtAA0G12SerializableR_r0_lF"></a>
+                    <a name="/s:4TRON19NetworkLoggerPluginC15didReceiveError_11forResponse7request10formedFromyq_Sg_10Foundation10URLRequestVSg_So17NSHTTPURLResponseCSgAI4DataVSgs0G0_pSgt9Alamofire7RequestCAA04BaseR0Cyxq_GtAA0G12SerializableR_r0_lF"></a>
                     <a name="//apple_ref/swift/Method/didReceiveError(_:forResponse:request:formedFrom:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON19NetworkLoggerPluginC15didReceiveError_11forResponse7request10formedFromyq__10Foundation10URLRequestVSg_So17NSHTTPURLResponseCSgAH4DataVSgs0G0_pSgt9Alamofire7RequestCAA04BaseR0Cyxq_GtAA0G12SerializableR_r0_lF">didReceiveError(_:forResponse:request:formedFrom:)</a>
+                    <a class="token" href="#/s:4TRON19NetworkLoggerPluginC15didReceiveError_11forResponse7request10formedFromyq_Sg_10Foundation10URLRequestVSg_So17NSHTTPURLResponseCSgAI4DataVSgs0G0_pSgt9Alamofire7RequestCAA04BaseR0Cyxq_GtAA0G12SerializableR_r0_lF">didReceiveError(_:forResponse:request:formedFrom:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -381,7 +385,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="n">didReceiveError</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">ErrorModel</span><span class="p">,</span> <span class="n">forResponse</span> <span class="nv">response</span><span class="p">:</span> <span class="p">(</span><span class="kt">URLRequest</span><span class="p">?,</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="kt">Data</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?),</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">Request</span><span class="p">,</span> <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt"><a href="../Classes/BaseRequest.html">BaseRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">where</span> <span class="kt">ErrorModel</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="n">didReceiveError</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">ErrorModel</span><span class="p">?,</span> <span class="n">forResponse</span> <span class="nv">response</span><span class="p">:</span> <span class="p">(</span><span class="kt">URLRequest</span><span class="p">?,</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="kt">Data</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?),</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">Request</span><span class="p">,</span> <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt"><a href="../Classes/BaseRequest.html">BaseRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">where</span> <span class="kt">ErrorModel</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -396,7 +400,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-03-12)</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-04-06)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

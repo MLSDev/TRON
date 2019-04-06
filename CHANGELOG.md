@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.0.0-beta.2](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.2)
+
 ### Changed
 
 * `ErrorSerializable` protocol changed to have non-optional initializer and to not accept `serializedObject`. It no longer can be used for additional object validation, but behavior should be more predictable and straightforward - `ErrorSerializable` should only be created if somebody (URL loading system, Alamofire or Model serialization) actually reported error.

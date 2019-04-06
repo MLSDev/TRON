@@ -340,33 +340,6 @@ Default value - URLEncoding.default</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRONAAC15processingQueueSo17OS_dispatch_queueCvp"></a>
-                    <a name="//apple_ref/swift/Property/processingQueue" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRONAAC15processingQueueSo17OS_dispatch_queueCvp">processingQueue</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Queue, used for processing response, received from the server. Defaults to QOS_CLASS_USER_INITIATED queue</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">processingQueue</span><span class="p">:</span> <span class="kt">DispatchQueue</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:4TRONAAC19resultDeliveryQueueSo17OS_dispatch_queueCvp"></a>
                     <a name="//apple_ref/swift/Property/resultDeliveryQueue" class="dashAnchor"></a>
                     <a class="token" href="#/s:4TRONAAC19resultDeliveryQueueSo17OS_dispatch_queueCvp">resultDeliveryQueue</a>
@@ -394,9 +367,36 @@ Default value - URLEncoding.default</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRONAAC7manager9Alamofire7SessionCvp"></a>
-                    <a name="//apple_ref/swift/Property/manager" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRONAAC7manager9Alamofire7SessionCvp">manager</a>
+                    <a name="/s:4TRONAAC7codableAA17CodableSerializerCvp"></a>
+                    <a name="//apple_ref/swift/Property/codable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRONAAC7codableAA17CodableSerializerCvp">codable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code><a href="../Classes/CodableSerializer.html">CodableSerializer</a></code> for current <code>TRON</code> instance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">codable</span><span class="p">:</span> <span class="kt"><a href="../Classes/CodableSerializer.html">CodableSerializer</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4TRONAAC7session9Alamofire7SessionCvp"></a>
+                    <a name="//apple_ref/swift/Property/session" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRONAAC7session9Alamofire7SessionCvp">session</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -411,7 +411,7 @@ Default value - URLEncoding.default</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">Alamofire</span><span class="o">.</span><span class="kt">Session</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">session</span><span class="p">:</span> <span class="kt">Alamofire</span><span class="o">.</span><span class="kt">Session</span></code></pre>
 
                         </div>
                       </div>
@@ -421,9 +421,9 @@ Default value - URLEncoding.default</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRONAAC7baseURL7manager7pluginsABSS_9Alamofire7SessionCSayAA6Plugin_pGtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(baseURL:manager:plugins:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRONAAC7baseURL7manager7pluginsABSS_9Alamofire7SessionCSayAA6Plugin_pGtcfc">init(baseURL:manager:plugins:)</a>
+                    <a name="/s:4TRONAAC7baseURL7session7pluginsABSS_9Alamofire7SessionCSayAA6Plugin_pGtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(baseURL:session:plugins:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRONAAC7baseURL7session7pluginsABSS_9Alamofire7SessionCSayAA6Plugin_pGtcfc">init(baseURL:session:plugins:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -439,7 +439,7 @@ Default value - URLEncoding.default</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
-            <span class="nv">manager</span><span class="p">:</span> <span class="kt">Alamofire</span><span class="o">.</span><span class="kt">Session</span> <span class="o">=</span> <span class="kt">TRON</span><span class="o">.</span><span class="nf">defaultAlamofireManager</span><span class="p">(),</span>
+            <span class="nv">session</span><span class="p">:</span> <span class="kt">Alamofire</span><span class="o">.</span><span class="kt">Session</span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
             <span class="nv">plugins</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/Plugin.html">Plugin</a></span><span class="p">]</span> <span class="o">=</span> <span class="p">[])</span></code></pre>
 
                         </div>
@@ -1039,33 +1039,6 @@ Default value - URLEncoding.default</p>
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:4TRONAAC23defaultAlamofireManager0C07SessionCyFZ"></a>
-                    <a name="//apple_ref/swift/Method/defaultAlamofireManager()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRONAAC23defaultAlamofireManager0C07SessionCyFZ">defaultAlamofireManager()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Default Alamofire.Manager instance to be used by <code>TRON</code>.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">defaultAlamofireManager</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Session</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -1131,33 +1104,6 @@ Default value - URLEncoding.default</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRONAAC7codableAA17CodableSerializerCvp"></a>
-                    <a name="//apple_ref/swift/Property/codable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRONAAC7codableAA17CodableSerializerCvp">codable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Creates <code><a href="../Classes/CodableSerializer.html">CodableSerializer</a></code> with current <code>TRON</code> instance.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">codable</span><span class="p">:</span> <span class="kt"><a href="../Classes/CodableSerializer.html">CodableSerializer</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:4TRONAAC7codable12modelDecoderAA17CodableSerializerC10Foundation11JSONDecoderC_tF"></a>
                     <a name="//apple_ref/swift/Method/codable(modelDecoder:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:4TRONAAC7codable12modelDecoderAA17CodableSerializerC10Foundation11JSONDecoderC_tF">codable(modelDecoder:)</a>
@@ -1168,8 +1114,7 @@ Default value - URLEncoding.default</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Creates <code><a href="../Classes/CodableSerializer.html">CodableSerializer</a></code> with current <code>TRON</code> instance, specific <code>modelDecoder</code> and <code>errorDecoder</code>.
-Note: <code>modelDecoder</code> and <code>errorDecoder</code> are allowed to be the same object.</p>
+                        <p>Creates <code><a href="../Classes/CodableSerializer.html">CodableSerializer</a></code> with current <code>TRON</code> instance and specific <code>modelDecoder</code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -1191,7 +1136,7 @@ Note: <code>modelDecoder</code> and <code>errorDecoder</code> are allowed to be 
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-03-12)</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-04-06)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

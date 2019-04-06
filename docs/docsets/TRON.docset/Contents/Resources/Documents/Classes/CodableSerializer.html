@@ -256,6 +256,33 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:4TRON17CodableSerializerC_12modelDecoderAc2AC_10Foundation11JSONDecoderCtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:modelDecoder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON17CodableSerializerC_12modelDecoderAc2AC_10Foundation11JSONDecoderCtcfc">init(_:modelDecoder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates <code>CodableSerializer</code> with <code>tron</code> instance to send requests, and <code>decoder</code> to be used while parsing response.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">tron</span><span class="p">:</span> <span class="kt"><a href="../Classes/TRON.html">TRON</a></span><span class="p">,</span> <span class="nv">modelDecoder</span><span class="p">:</span> <span class="kt">JSONDecoder</span> <span class="o">=</span> <span class="kt">JSONDecoder</span><span class="p">())</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:4TRON17CodableSerializerC7requestyAA10APIRequestCyxq_GSSSeRzAA17ErrorSerializableR_r0_lF"></a>
                     <a name="//apple_ref/swift/Method/request(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:4TRON17CodableSerializerC7requestyAA10APIRequestCyxq_GSSSeRzAA17ErrorSerializableR_r0_lF">request(_:)</a>
@@ -273,7 +300,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">request</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/APIRequest.html">APIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Model</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">ErrorModel</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="n">request</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/APIRequest.html">APIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Model</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">ErrorModel</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -323,7 +350,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">upload</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">fromFileAt</span> <span class="nv">fileURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Model</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">ErrorModel</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="n">upload</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">fromFileAt</span> <span class="nv">fileURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Model</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">ErrorModel</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -385,7 +412,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">upload</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Model</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">ErrorModel</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="n">upload</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Model</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">ErrorModel</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -447,7 +474,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">upload</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">from</span> <span class="nv">stream</span><span class="p">:</span> <span class="kt">InputStream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Model</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">ErrorModel</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="n">upload</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">from</span> <span class="nv">stream</span><span class="p">:</span> <span class="kt">InputStream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Model</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">ErrorModel</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -509,10 +536,10 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">uploadMultipart</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
-                                                                             <span class="nv">encodingMemoryThreshold</span><span class="p">:</span> <span class="kt">UInt64</span> <span class="o">=</span> <span class="kt">MultipartUpload</span><span class="o">.</span><span class="n">encodingMemoryThreshold</span><span class="p">,</span>
-                                                                             <span class="nv">fileManager</span><span class="p">:</span> <span class="kt">FileManager</span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
-                                                                             <span class="nv">formData</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">MultipartFormData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="n">uploadMultipart</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                                                                           <span class="nv">encodingMemoryThreshold</span><span class="p">:</span> <span class="kt">UInt64</span> <span class="o">=</span> <span class="kt">MultipartUpload</span><span class="o">.</span><span class="n">encodingMemoryThreshold</span><span class="p">,</span>
+                                                                           <span class="nv">fileManager</span><span class="p">:</span> <span class="kt">FileManager</span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                                                                           <span class="nv">formData</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">MultipartFormData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -562,7 +589,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-03-12)</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-04-06)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
