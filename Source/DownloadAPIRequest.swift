@@ -47,7 +47,7 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
     public typealias DownloadResponseParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) throws -> Model
 
     /// Serializes received failed response into APIError<ErrorModel> object
-    public typealias DownloadErrorParser = (Model?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> ErrorModel?
+    public typealias DownloadErrorParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ url: URL?, _ error: Error?) -> ErrorModel
 
     /// Serializes received response into Result<Model>
     open var responseParser: DownloadResponseParser
@@ -65,8 +65,8 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
         self.responseParser = { request, response, fileURL, error in
             try responseSerializer.serializeDownload(request: request, response: response, fileURL: fileURL, error: error)
         }
-        self.errorParser = { serializedObject, request, response, fileURL, error in
-            ErrorModel(serializedObject: serializedObject, request: request, response: response, fileURL: fileURL, error: error)
+        self.errorParser = { request, response, fileURL, error in
+            ErrorModel(request: request, response: response, fileURL: fileURL, error: error)
         }
         super.init(path: path, tron: tron)
     }
@@ -125,29 +125,20 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
         return TRONDownloadResponseSerializer { urlRequest, response, url, error in
             self.willProcessResponse((urlRequest, response, nil, error), for: request)
             let parsedModel: Model
-            let parsedError: ErrorModel?
-
             do {
                 parsedModel = try self.responseParser(urlRequest, response, url, error)
-                parsedError = self.errorParser(parsedModel, urlRequest, response, url, error)
             } catch let catchedError {
-                parsedError = self.errorParser(nil, urlRequest, response, url, error)
+                let parsedError = self.errorParser(urlRequest, response, url, catchedError)
                 self.didReceiveError(parsedError, for: (urlRequest, response, url, error), request: request)
-                throw parsedError ?? catchedError
+                throw parsedError
             }
-
-            if let nonNilError = parsedError {
-                self.didReceiveError(nonNilError, for: (urlRequest, response, url, error), request: request)
-                throw nonNilError
-            } else {
-                self.allPlugins.forEach {
-                    $0.didSuccessfullyParseDownloadResponse((urlRequest, response, url, error),
-                                                            creating: parsedModel,
-                                                            forRequest: request,
-                                                            formedFrom: self)
-                }
-                return parsedModel
+            self.allPlugins.forEach {
+                $0.didSuccessfullyParseDownloadResponse((urlRequest, response, url, error),
+                                                        creating: parsedModel,
+                                                        forRequest: request,
+                                                        formedFrom: self)
             }
+            return parsedModel
         }
     }
 

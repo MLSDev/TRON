@@ -68,8 +68,8 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
         self.responseParser = { request, response, data, error in
             try responseSerializer.serialize(request: request, response: response, data: data, error: error)
         }
-        self.errorParser = { object, request, response, data, error in
-            ErrorModel(serializedObject: object, request: request, response: response, data: data, error: error)
+        self.errorParser = { request, response, data, error in
+            ErrorModel(request: request, response: response, data: data, error: error)
         }
         super.init(path: path, tron: tron)
     }
@@ -163,22 +163,15 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
         return TRONDataResponseSerializer { urlRequest, response, data, error in
             self.willProcessResponse((urlRequest, response, data, error), for: request)
             let parsedModel: Model
-            let parsedError: ErrorModel?
             do {
                 parsedModel = try self.responseParser(urlRequest, response, data, error)
-                parsedError = self.errorParser(parsedModel, urlRequest, response, data, error)
             } catch let catchedError {
-                parsedError = self.errorParser(nil, urlRequest, response, data, catchedError)
+                let parsedError = self.errorParser(urlRequest, response, data, catchedError)
                 self.didReceiveError(parsedError, for: (urlRequest, response, data, error), request: request)
-                throw parsedError ?? catchedError
+                throw parsedError
             }
-            if let nonNilError = parsedError {
-                self.didReceiveError(nonNilError, for: (urlRequest, response, data, error), request: request)
-                throw nonNilError
-            } else {
-                self.didSuccessfullyParseResponse((urlRequest, response, data, error), creating: parsedModel, forRequest: request)
-                return parsedModel
-            }
+            self.didSuccessfullyParseResponse((urlRequest, response, data, error), creating: parsedModel, forRequest: request)
+            return parsedModel
         }
     }
 

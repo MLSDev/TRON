@@ -58,7 +58,7 @@ open class BaseRequest<Model, ErrorModel> {
     public typealias ResponseParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) throws -> Model
 
     /// Serializes received failed response into APIError<ErrorModel> object
-    public typealias ErrorParser = (Model?, _ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> ErrorModel?
+    public typealias ErrorParser = (_ request: URLRequest?, _ response: HTTPURLResponse?, _ data: Data?, _ error: Error?) -> ErrorModel
 
     /// Relative path of current request
     public let path: String

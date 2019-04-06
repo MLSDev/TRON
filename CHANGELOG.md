@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+* `ErrorSerializable` protocol changed to have non-optional initializer and to not accept `serializedObject`. It no longer can be used for additional object validation, but behavior should be more predictable and straightforward - `ErrorSerializable` should only be created if somebody (URL loading system, Alamofire or Model serialization) actually reported error.
 * `codable` is now a lazy stored property instead of computed property.
 * `CodableSerializer` API has been made open to allow easy customization in subclasses.
 * `NetworkLoggerPlugin` now has a constructor that allows to easily configure it's behavior.

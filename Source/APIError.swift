@@ -27,12 +27,12 @@ import Foundation
 
 /// Protocol used to serialize errors received from sending `APIRequest` or `UploadAPIRequest`.
 public protocol ErrorSerializable: Error {
-    init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?)
+    init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?)
 }
 
 /// Protocol used to serialize errors received from sending `DownloadAPIRequest`.
 public protocol DownloadErrorSerializable: Error {
-    init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?)
+    init(request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?)
 }
 
 /// `APIError` is used as a generic wrapper for all kinds of API errors.
@@ -53,25 +53,18 @@ open class APIError: Error, LocalizedError, ErrorSerializable, DownloadErrorSeri
     /// Error instance, created by Foundation Loading System or Alamofire.
     public let error: Error?
 
-    /// Serialized object, created by parsing response from API/Download/UploadRequest.
-    public let serializedObject: Any?
-
-    required public init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
-        guard let receivedError = error else { return nil }
-        self.serializedObject = serializedObject
+    required public init(request: URLRequest?, response: HTTPURLResponse?, data: Data?, error: Error?) {
         self.request = request
         self.response = response
         self.data = data
-        self.error = receivedError
+        self.error = error
         fileURL = nil
     }
 
-    required public init?(serializedObject: Any?, request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
-        guard let receivedError = error else { return nil }
-        self.serializedObject = serializedObject
+    required public init(request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) {
         self.request = request
         self.response = response
-        self.error = receivedError
+        self.error = error
         self.fileURL = fileURL
         data = nil
     }
