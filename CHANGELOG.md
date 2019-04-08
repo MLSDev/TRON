@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [4.2.2](https://github.com/MLSDev/TRON/releases/tag/4.2.2)
+
 * Swift 4.2 version is now specified in podspec for users of CocoaPods 1.6.x.
 
 This is the last release that supports Xcode 9 and Swift 3. 
