@@ -3,11 +3,15 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* Swift 4.2 version is now specified in podspec for users of CocoaPods 1.6.x.
+
+This is the last release that supports Xcode 9 and Swift 3. 
+
 ## [4.2.1](https://github.com/MLSDev/TRON/releases/tag/4.2.1)
 
 ### Fixed
 
-* `UploadAPIRequest` now calls `didReceiveDataResponse` plugin methods when sending multipart-form requests. 
+* `UploadAPIRequest` now calls `didReceiveDataResponse` plugin methods when sending multipart-form requests.
 
 ## [4.2.0](https://github.com/MLSDev/TRON/releases/tag/4.2.0)
 
