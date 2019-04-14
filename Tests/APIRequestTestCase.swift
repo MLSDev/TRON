@@ -80,9 +80,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
             XCTAssert(Thread.isMainThread)
             expectation.fulfill()
         }
-        waitForExpectations(timeout: 3) { error in
-            print(error?.localizedDescription ?? "")
-        }
+        waitForExpectations(timeout: 3)
     }
     
     func testSuccessBlockCanBeCalledOnBackgroundThread() {
@@ -146,7 +144,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
                 XCTFail()
             }
         )
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 3, handler: nil)
     }
     
     func testRequestWillStartEvenIfStartAutomaticallyIsFalse()

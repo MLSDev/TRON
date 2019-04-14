@@ -30,9 +30,7 @@ class UploadTestCase: ProtocolStubbedTestCase {
         }, failure: { _ in
             XCTFail()
         })
-        waitForExpectations(timeout: 1) { error in
-            print(error?.localizedDescription ?? "")
-        }
+        waitForExpectations(timeout: 1)
     }
     
     func testUploadData() {
@@ -46,9 +44,7 @@ class UploadTestCase: ProtocolStubbedTestCase {
         }, failure: { _ in
                 XCTFail()
         })
-        waitForExpectations(timeout: 5) { error in
-            print(error?.localizedDescription ?? "")
-        }
+        waitForExpectations(timeout: 5)
     }
     
     func testMultipartUploadWorks() {
