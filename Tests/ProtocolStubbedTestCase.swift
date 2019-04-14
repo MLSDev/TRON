@@ -26,6 +26,7 @@ class ProtocolStubbedTestCase: XCTestCase {
         super.tearDown()
         tron = nil
         URLProtocol.unregisterClass(StubbingURLProtocol.self)
+        StubbingURLProtocol.cleanUp()
     }
 
 }

@@ -49,6 +49,10 @@ class StubbingURLProtocol : URLProtocol {
     
     static var communicators = [UUID:URLProtocolClientCommunicator]()
     
+    static func cleanUp() {
+        communicators = [:]
+    }
+    
     override class func canInit(with request: URLRequest) -> Bool {
         guard let identifier = identifier(from: request) else { return false }
         return communicators[identifier] != nil
