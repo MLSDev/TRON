@@ -140,7 +140,7 @@ open class JSONDecodableSerializer {
      - returns: MultipartAPIRequest instance.
      */
     open func uploadMultipart<Model: JSONDecodable, ErrorModel: ErrorSerializable>(_ path: String,
-                                                                                   encodingMemoryThreshold: UInt64 = MultipartUpload.encodingMemoryThreshold,
+                                                                                   encodingMemoryThreshold: UInt64 = MultipartFormData.encodingMemoryThreshold,
                                                                                    fileManager: FileManager = .default,
                                                                                    formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel> {
         return tron.uploadMultipart(path,

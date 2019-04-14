@@ -152,7 +152,7 @@ open class TRON: TronDelegate {
     open func uploadMultipart<Model, ErrorModel, Serializer>
         (_ path: String,
          responseSerializer: Serializer,
-         encodingMemoryThreshold: UInt64 = MultipartUpload.encodingMemoryThreshold,
+         encodingMemoryThreshold: UInt64 = MultipartFormData.encodingMemoryThreshold,
          fileManager: FileManager = .default,
          formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel>
         where ErrorModel: ErrorSerializable, Serializer: DataResponseSerializerProtocol,

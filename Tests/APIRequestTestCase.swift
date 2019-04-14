@@ -151,7 +151,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     func testRequestWillStartEvenIfStartAutomaticallyIsFalse()
     {
         let configuration = URLSessionConfiguration.default
-        configuration.httpHeaders = .default
+        configuration.headers = .default
         configuration.protocolClasses = [StubbingURLProtocol.self]
         let manager = Session(configuration: configuration, startRequestsImmediately: false)
         let tron = TRON(baseURL: "https://httpbin.org", session: manager)
@@ -169,7 +169,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     
     func testMultipartUploadWillStartEvenIfStartAutomaticallyIsFalse() {
         let configuration = URLSessionConfiguration.default
-        configuration.httpHeaders = .default
+        configuration.headers = .default
         configuration.protocolClasses = [StubbingURLProtocol.self]
         let manager = Session(configuration: configuration, startRequestsImmediately: false)
         let tron = TRON(baseURL: "https://httpbin.org", session: manager)
