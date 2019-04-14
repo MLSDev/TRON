@@ -8,7 +8,6 @@
 
 import XCTest
 import TRON
-import Nimble
 import Alamofire
 
 class TronTestCase: XCTestCase {
@@ -30,6 +29,7 @@ class TronTestCase: XCTestCase {
         
         let tronBuilder = tron.urlBuilder as? URLBuilder
         let requestBuilder = request.urlBuilder as? URLBuilder
-        expect(requestBuilder === tronBuilder).to(beTruthy())
+        
+        XCTAssert(requestBuilder === tronBuilder)
     }
 }

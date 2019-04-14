@@ -8,7 +8,6 @@
 
 import XCTest
 import TRON
-import Nimble
 import Alamofire
 import SwiftyJSON
 

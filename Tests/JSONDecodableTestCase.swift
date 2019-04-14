@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import TRON
-import Nimble
 import SwiftyJSON
 import Alamofire
 
@@ -43,13 +42,13 @@ class Throwable : JSONDecodable {
 
 class JSONDecodableTestCase: ProtocolStubbedTestCase {
  
-    func testVariousJSONDecodableTypes()
+    func testVariousJSONDecodableTypes() throws
     {
         let json = JSON([])
-        expect(Float.init(json: JSON(4.5))).to(beCloseTo(4.5))
-        expect(Double.init(json: JSON(3.5))).to(beCloseTo(3.5))
-        expect(Bool.init(json: JSON(true))) == true
-        expect(try! JSON.init(json: json)) == json
+        XCTAssertEqual(Float(json: JSON(4.5)), 4.5)
+        XCTAssertEqual(Double(json: JSON(3.5)), 3.5)
+        XCTAssertEqual(Bool(json: JSON(true)), true)
+        try XCTAssertEqual(JSON(json: json), json)
         XCTAssertEqual(String(json: JSON("foo")), "foo")
         XCTAssertEqual(Int8(json: JSON(3)), 3)
         XCTAssertEqual(Int16(json: JSON(3)), 3)

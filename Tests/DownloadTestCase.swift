@@ -10,7 +10,6 @@ import Foundation
 import XCTest
 import TRON
 import Alamofire
-import Nimble
 
 class DownloadTestCase: ProtocolStubbedTestCase {
     

@@ -8,7 +8,6 @@
 
 import XCTest
 import TRON
-import Nimble
 import Alamofire
 
 class PluginTestCase: ProtocolStubbedTestCase {
@@ -19,12 +18,16 @@ class PluginTestCase: ProtocolStubbedTestCase {
         request.plugins.append(pluginTester)
         request.stubStatusCode(200)
         
-        request.performCollectingTimeline(withCompletion: {_ in })
+        let waitingForRequest = expectation(description: "wait for request")
+        request.performCollectingTimeline(withCompletion: { result in
+            waitingForRequest.fulfill()
+        })
         
-        expect(pluginTester.willSendCalled).toEventually(equal(true))
-        expect(pluginTester.willSendAlamofireCalled).toEventually(equal(true))
-        expect(pluginTester.didSendAlamofireCalled).toEventually(equal(true))
-        expect(pluginTester.didReceiveResponseCalled).toEventually(equal(true))
+        waitForExpectations(timeout: 1)
+        XCTAssertTrue(pluginTester.willSendCalled)
+        XCTAssertTrue(pluginTester.willSendAlamofireCalled)
+        XCTAssertTrue(pluginTester.didSendAlamofireCalled)
+        XCTAssertTrue(pluginTester.didReceiveResponseCalled)
     }
     
     func testLocalPluginsAreCalledCorrectly() {
@@ -66,12 +69,17 @@ class PluginTestCase: ProtocolStubbedTestCase {
         request.plugins.append(localPluginTester)
         tron.plugins.append(globalPluginTester)
         
-        request.perform(withSuccess: { _ = $0 })
-        
-        expect(localPluginTester.willSendCalled).toEventually(equal(true))
-        expect(globalPluginTester.willSendCalled).toEventually(equal(true))
-        expect(localPluginTester.didReceiveResponseCalled).toEventually(equal(true))
-        expect(globalPluginTester.didReceiveResponseCalled).toEventually(equal(true))
+        let waitForRequest = expectation(description: "waiting for request")
+        request.perform(withSuccess: { _ in
+            waitForRequest.fulfill()
+        }, failure: { error in
+            waitForRequest.fulfill()
+        })
+        waitForExpectations(timeout: 1)
+        XCTAssertTrue(localPluginTester.willSendCalled)
+        XCTAssertTrue(globalPluginTester.willSendCalled)
+        XCTAssertTrue(localPluginTester.didReceiveResponseCalled)
+        XCTAssertTrue(globalPluginTester.didReceiveResponseCalled)
     }
     
 }

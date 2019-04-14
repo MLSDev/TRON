@@ -8,15 +8,14 @@
 
 import XCTest
 import TRON
-import Nimble
 
 class URLBuilderTestCase: XCTestCase {
     
     let tron = TRON(baseURL: "https://github.com")
     
     func testURLBuildableAppendsPathComponent() {
-        expect(self.tron.urlBuilder.url(forPath: "foo").absoluteString) == "https://github.com/foo"
-        expect(self.tron.urlBuilder.url(forPath: "/bar").absoluteString) == "https://github.com/bar"
+        XCTAssertEqual(tron.urlBuilder.url(forPath: "foo").absoluteString, "https://github.com/foo")
+        XCTAssertEqual(tron.urlBuilder.url(forPath: "/bar").absoluteString, "https://github.com/bar")
     }
     
 }

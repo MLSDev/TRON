@@ -8,7 +8,6 @@
 
 import XCTest
 import TRON
-import Nimble
 import Alamofire
 import SwiftyJSON
 
@@ -81,7 +80,9 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
             XCTAssert(Thread.isMainThread)
             expectation.fulfill()
         }
-        waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 3) { error in
+            print(error?.localizedDescription ?? "")
+        }
     }
     
     func testSuccessBlockCanBeCalledOnBackgroundThread() {

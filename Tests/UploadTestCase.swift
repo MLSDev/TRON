@@ -30,7 +30,9 @@ class UploadTestCase: ProtocolStubbedTestCase {
         }, failure: { _ in
             XCTFail()
         })
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 1) { error in
+            print(error?.localizedDescription ?? "")
+        }
     }
     
     func testUploadData() {
@@ -44,7 +46,9 @@ class UploadTestCase: ProtocolStubbedTestCase {
         }, failure: { _ in
                 XCTFail()
         })
-        waitForExpectations(timeout: 5, handler: nil)
+        waitForExpectations(timeout: 5) { error in
+            print(error?.localizedDescription ?? "")
+        }
     }
     
     func testMultipartUploadWorks() {
@@ -58,6 +62,8 @@ class UploadTestCase: ProtocolStubbedTestCase {
         request.perform(withSuccess: { result in
             XCTAssertEqual(result.title, "Foo")
             expectation.fulfill()
+        }, failure: { error in
+            XCTFail(error.localizedDescription)
         })
         waitForExpectations(timeout: 1, handler: nil)
     }

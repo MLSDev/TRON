@@ -8,7 +8,6 @@
 
 import XCTest
 import TRON
-import Nimble
 import Alamofire
 
 class HeaderBuilderTestCase: ProtocolStubbedTestCase {
@@ -17,12 +16,15 @@ class HeaderBuilderTestCase: ProtocolStubbedTestCase {
         let request: APIRequest<Int,APIError> = tron.swiftyJSON.request("status/200")
         request.headers = ["If-Modified-Since":"Sat, 29 Oct 1994 19:43:31 GMT"]
         request.stubStatusCode(200)
-        let alamofireRequest = request.performCollectingTimeline(withCompletion: { _ in })
-        
-        expect(alamofireRequest.request).toEventuallyNot(beNil())
+        let waitingForRequest = expectation(description: "wait for request")
+        let alamofireRequest = request.performCollectingTimeline(withCompletion: { _ in
+            waitingForRequest.fulfill()
+        })
+        waitForExpectations(timeout: 1)
+        XCTAssertNotNil(alamofireRequest.request)
         let headers = alamofireRequest.request?.allHTTPHeaderFields
         
-        expect(headers?["If-Modified-Since"]) == "Sat, 29 Oct 1994 19:43:31 GMT"
+        XCTAssertEqual(headers?["If-Modified-Since"], "Sat, 29 Oct 1994 19:43:31 GMT")
     }
     
 }

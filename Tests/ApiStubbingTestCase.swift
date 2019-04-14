@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import TRON
-import Nimble
 import SwiftyJSON
 import Alamofire
 
@@ -131,7 +130,7 @@ class ApiStubbingTestCase: XCTestCase {
         }
         request.perform(withSuccess: { response in
             intResponse = response
-            expect(response) == 5
+            XCTAssertEqual(response, 5)
             exp.fulfill()
         }) { _ in
             XCTFail()

@@ -508,14 +508,13 @@
 				RxSwift.framework,
 				Alamofire.framework,
 				SwiftyJSON.framework,
-				Nimble.framework,
 			);
 			name = "Copy Carthage frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " exec \"${SRCROOT}/scripts/copy-carthage-frameworks.sh\"";
+			shellScript = " exec \"${SRCROOT}/scripts/copy-carthage-frameworks.sh\"\n";
 		};
 		9A7FA1B71FBCBE6B00C80AED /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
