@@ -20,6 +20,11 @@ class TronTestCase: XCTestCase {
         tron = TRON(baseURL: "https://github.com")
     }
     
+    override func tearDown() {
+        super.tearDown()
+        tron = nil
+    }
+    
     func testTronRequestBuildables() {
         let request: APIRequest<Int,APIError> = tron.swiftyJSON.request("/foo")
         

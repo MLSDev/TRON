@@ -21,5 +21,11 @@ class ProtocolStubbedTestCase: XCTestCase {
         tron = TRON(baseURL: "https://httpbin.org", session: Session(configuration: configuration))
         URLProtocol.registerClass(StubbingURLProtocol.self)
     }
+    
+    override func tearDown() {
+        super.tearDown()
+        tron = nil
+        URLProtocol.unregisterClass(StubbingURLProtocol.self)
+    }
 
 }
