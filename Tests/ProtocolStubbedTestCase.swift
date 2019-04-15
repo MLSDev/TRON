@@ -28,11 +28,4 @@ class ProtocolStubbedTestCase: XCTestCase {
         URLProtocol.unregisterClass(StubbingURLProtocol.self)
         StubbingURLProtocol.cleanUp()
     }
-    
-    override func waitForExpectations(timeout: TimeInterval, handler: XCWaitCompletionHandler? = nil) {
-        super.waitForExpectations(timeout: timeout) { error in
-            print(error?.localizedDescription ?? "")
-        }
-    }
-
 }
