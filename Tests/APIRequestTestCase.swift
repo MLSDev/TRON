@@ -90,7 +90,9 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         request.stubSuccess([:].asData)
         request.perform(withSuccess: { _ in
             XCTAssertFalse(Thread.isMainThread)
-            expectation.fulfill()
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
             }) { _ in
                 XCTFail()
             }
@@ -106,7 +108,9 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
             XCTFail()
             }) { error in
             XCTAssertFalse(Thread.isMainThread)
-            expectation.fulfill()
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
         }
         waitForExpectations(timeout: 10, handler: nil)
     }
@@ -129,7 +133,9 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         request.stubSuccess([:].asData)
         request.performCollectingTimeline { _ in
             XCTAssertFalse(Thread.isMainThread)
-            expectation.fulfill()
+            DispatchQueue.main.async {
+                expectation.fulfill()
+            }
         }
         waitForExpectations(timeout: 2, handler: nil)
     }

@@ -99,9 +99,6 @@ open class BaseRequest<Model, ErrorModel> {
         return plugins + (tronDelegate?.plugins ?? [])
     }
 
-    // FIXME: Intentionally cause retain cycle to prevent request from deallocating
-    var retainedRequest: Any?
-
     /// Creates `BaseRequest` instance, initialized with several `TRON` properties.
     public init(path: String, tron: TRON) {
         self.path = path
@@ -109,7 +106,6 @@ open class BaseRequest<Model, ErrorModel> {
         self.urlBuilder = tron.urlBuilder
         self.resultDeliveryQueue = tron.resultDeliveryQueue
         self.parameterEncoding = tron.parameterEncoding
-        retainedRequest = self
     }
 
     internal func alamofireRequest(from manager: Alamofire.Session) -> Alamofire.Request {
