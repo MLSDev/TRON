@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### Added
+
+* Ability to traverse json to any level when using SwiftyJSONDecodable.
+
 ## [5.0.0-beta.2](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.2)
 
 ### Changed

@@ -27,6 +27,8 @@ import Foundation
 import SwiftyJSON
 import Alamofire
 
+//swiftlint:disable multiple_closure_params
+
 /**
  Protocol for creating model from SwiftyJSON object.
  */
@@ -41,9 +43,13 @@ open class JSONDecodableParser<Model: JSONDecodable> : DataResponseSerializerPro
     /// Reading options to be used when reading JSON from Data, using JSONSerialization.
     public let options: JSONSerialization.ReadingOptions
 
+    /// Defines how JSON should be preprocessed before passing to Model initializer.
+    public let traverseJSON: (JSON) -> JSON
+
     /// Creates `JSONDecodableParser` with `options`.
-    public init(options: JSONSerialization.ReadingOptions) {
+    public init(options: JSONSerialization.ReadingOptions, traversingJSON: @escaping (JSON) -> JSON = { $0 }) {
         self.options = options
+        self.traverseJSON = traversingJSON
     }
 
     /// Method used by response handlers that takes a request, response, data and error and returns a result.
@@ -55,7 +61,7 @@ open class JSONDecodableParser<Model: JSONDecodable> : DataResponseSerializerPro
             return emptyValue
         }
         let json = try JSON(data: data ?? Data(), options: options)
-        return try Model(json: json)
+        return try Model(json: traverseJSON(json))
     }
 }
 
@@ -74,10 +80,14 @@ open class JSONDecodableSerializer {
     /// Reading options to use while calling `JSONSerialization.jsonObject(withData:options:)`
     open var options: JSONSerialization.ReadingOptions
 
+    /// Defines how JSON should be preprocessed before passing to Model initializer.
+    open var traverseJSON: (JSON) -> JSON
+
     /// Creates `JSONDecodableSerializer` with `tron` instance to send requests, and JSON reading `options` to be passed to `JSONSerialization`.
-    public init(tron: TRON, options: JSONSerialization.ReadingOptions = []) {
+    public init(tron: TRON, options: JSONSerialization.ReadingOptions = [], traversingJSON: @escaping (JSON) -> JSON = { $0 }) {
         self.tron = tron
         self.options = options
+        self.traverseJSON = traversingJSON
     }
 
     /**
@@ -88,7 +98,7 @@ open class JSONDecodableSerializer {
      - returns: APIRequest instance.
      */
     open func request<Model: JSONDecodable, ErrorModel: ErrorSerializable>(_ path: String) -> APIRequest<Model, ErrorModel> {
-        return tron.request(path, responseSerializer: JSONDecodableParser(options: options))
+        return tron.request(path, responseSerializer: JSONDecodableParser(options: options, traversingJSON: traverseJSON))
     }
 
     /**
@@ -101,7 +111,7 @@ open class JSONDecodableSerializer {
      - returns: APIRequest instance.
      */
     open func upload<Model: JSONDecodable, ErrorModel: ErrorSerializable>(_ path: String, fromFileAt fileURL: URL) -> UploadAPIRequest<Model, ErrorModel> {
-        return tron.upload(path, fromFileAt: fileURL, responseSerializer: JSONDecodableParser(options: options))
+        return tron.upload(path, fromFileAt: fileURL, responseSerializer: JSONDecodableParser(options: options, traversingJSON: traverseJSON))
     }
 
     /**
@@ -114,7 +124,7 @@ open class JSONDecodableSerializer {
      - returns: APIRequest instance.
      */
     open func upload<Model: JSONDecodable, ErrorModel: ErrorSerializable>(_ path: String, data: Data) -> UploadAPIRequest<Model, ErrorModel> {
-        return tron.upload(path, data: data, responseSerializer: JSONDecodableParser(options: options))
+        return tron.upload(path, data: data, responseSerializer: JSONDecodableParser(options: options, traversingJSON: traverseJSON))
     }
 
     /**
@@ -127,7 +137,7 @@ open class JSONDecodableSerializer {
      - returns: APIRequest instance.
      */
     open func upload<Model: JSONDecodable, ErrorModel: ErrorSerializable>(_ path: String, from stream: InputStream) -> UploadAPIRequest<Model, ErrorModel> {
-        return tron.upload(path, from: stream, responseSerializer: JSONDecodableParser(options: options))
+        return tron.upload(path, from: stream, responseSerializer: JSONDecodableParser(options: options, traversingJSON: traverseJSON))
     }
 
     /**
@@ -144,7 +154,8 @@ open class JSONDecodableSerializer {
                                                                                    fileManager: FileManager = .default,
                                                                                    formData: @escaping (MultipartFormData) -> Void) -> UploadAPIRequest<Model, ErrorModel> {
         return tron.uploadMultipart(path,
-                                    responseSerializer: JSONDecodableParser(options: options),
+                                    responseSerializer: JSONDecodableParser(options: options,
+                                                                            traversingJSON: traverseJSON),
                                     encodingMemoryThreshold: encodingMemoryThreshold,
                                     fileManager: fileManager,
                                     formData: formData)
@@ -158,8 +169,10 @@ extension TRON {
     }
 
     /// Creates `CodableSerializer` with current `TRON` instance and specific `options` for `JSONSerialization`.
-    open func swiftyJSON(readingOptions options: JSONSerialization.ReadingOptions) -> JSONDecodableSerializer {
-        return JSONDecodableSerializer(tron: self, options: options)
+    /// `traversingJSON` closure defines how JSON should be preprocessed before passing to Model initializer.
+    open func swiftyJSON(readingOptions options: JSONSerialization.ReadingOptions = [],
+                         traversingJSON: @escaping (JSON) -> JSON = { $0 }) -> JSONDecodableSerializer {
+        return JSONDecodableSerializer(tron: self, options: options, traversingJSON: traversingJSON)
     }
 }
 

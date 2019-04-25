@@ -20,6 +20,7 @@ disabled_rules:
 - superfluous_disable_command
 - large_tuple
 - identifier_name
+- multiple_closure_params
 
 included:
 - Source

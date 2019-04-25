@@ -85,4 +85,19 @@ class JSONDecodableTestCase: ProtocolStubbedTestCase {
         
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testJSONDecodableCanTraverseJSONForActualModel() {
+        let traverseJSON: (JSON) -> JSON = { $0["root"]["subRoot"] }
+        let request: APIRequest<JSONDecodableResponse,APIError> = tron
+            .swiftyJSON(traversingJSON: traverseJSON)
+            .request("traverse")
+        request.stubSuccess(["root":["subRoot":["title":"Foo"]]].asData)
+        let expectation = self.expectation(description: "Parsing headers response")
+        request.perform(withSuccess:  { response in
+            XCTAssertEqual(response.title, "Foo")
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 1, handler: nil)
+    }
 }
