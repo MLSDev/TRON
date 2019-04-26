@@ -65,8 +65,10 @@ class UploadTestCase: ProtocolStubbedTestCase {
     func testMultipartUploadIsAbleToUploadFile() {
         let path = Bundle(for: type(of: self)).path(forResource: "cat", ofType: "jpg")
         let data = try? Data(contentsOf: URL(fileURLWithPath: path ?? ""))
+        let formDataExpectation = expectation(description: "formData block call")
         let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON.uploadMultipart("post") { formData in
             formData.append(data ?? Data(), withName: "cat", mimeType: "image/jpeg")
+            formDataExpectation.fulfill()
         }
         request.method = .post
         request.stubSuccess(["title":"Foo"].asData)

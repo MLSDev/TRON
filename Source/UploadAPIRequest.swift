@@ -98,11 +98,12 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
         }
     }
 
-    private func appendParametersToMultipartFormDataBlock(_ block: (MultipartFormData) -> Void) -> (MultipartFormData) -> Void {
+    private func appendParametersToMultipartFormDataBlock(_ block: @escaping (MultipartFormData) -> Void) -> (MultipartFormData) -> Void {
         return { formData in
             self.parameters.forEach { key, value in
                 formData.append(String(describing: value).data(using: .utf8) ?? Data(), withName: key)
             }
+            block(formData)
         }
     }
 
