@@ -51,6 +51,7 @@ TRON now requires:
 * `HeaderBuildable` protocol and `HeaderBuilder` types. Please use `BaseRequest.headers` property of type `Alamofire.HTTPHeaders` directly.
 * `ErrorHandlingDataResponseSerializerProtocol` and `ErrorHandlingDownloadResponseSerializer` protocol. Now, `ErrorModel` on all requests conforms to `ErrorSerializable` protocol, that contains initializer that allows to create it directly.
 * `CodableDownloadParser` and `JSONDecodableDownloadParser`, replacement class `DownloadSerializer` has been introduced, it allows to create a data model by implementing `DownloadResponseSerializerProtocol`
+* `UploadAPIRequest.performMultipart` method, because multipart upload is no longer a special case in `Alamofire 5`, please use `UploadAPIRequest.perform` instead.
 
 ### Breaking
 

@@ -136,6 +136,12 @@
 		9A722F541C5A49AE0087908D /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A722F651C5A4A610087908D /* Framework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Framework.plist; path = "Supporting files/Framework.plist"; sourceTree = "<group>"; };
 		9A722F661C5A4A610087908D /* Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Tests.plist; path = "Supporting files/Tests.plist"; sourceTree = "<group>"; };
+		9AB63D2822731CD300544A3E /* 1.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "1.0 Migration Guide.md"; sourceTree = "<group>"; };
+		9AB63D2922731CD300544A3E /* 2.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "2.0 Migration Guide.md"; sourceTree = "<group>"; };
+		9AB63D2A22731CD300544A3E /* 4.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "4.0 Migration Guide.md"; sourceTree = "<group>"; };
+		9AB63D2B22731CD300544A3E /* PluginConcepts.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PluginConcepts.md; sourceTree = "<group>"; };
+		9AB63D2C22731CD300544A3E /* Response serializers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Response serializers.md"; sourceTree = "<group>"; };
+		9AB63D2D22731CFB00544A3E /* 5.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "5.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9AF2FE521F65A51000B22CE1 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		9AFAE4D41CC5210F002739B0 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
@@ -223,13 +229,14 @@
 			isa = PBXGroup;
 			children = (
 				9AF2FE521F65A51000B22CE1 /* Alamofire.framework */,
-				9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */,
 				9AFAE4D31CC520F6002739B0 /* Documentation */,
-				9A90CC221C5FAB3000472DB8 /* Source */,
-				9A90CC231C5FAB3400472DB8 /* Tests */,
-				9A722F641C5A49C70087908D /* Plists */,
 				9A704E501C5D01B300392DE5 /* Example */,
+				9AB63D2222731CA600544A3E /* Guides */,
+				9A722F641C5A49C70087908D /* Plists */,
 				9A722F4B1C5A49AE0087908D /* Products */,
+				9A90CC221C5FAB3000472DB8 /* Source */,
+				9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */,
+				9A90CC231C5FAB3400472DB8 /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -304,6 +311,19 @@
 				9A148D5A1EDB1ABF002E610C /* user.json */,
 			);
 			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		9AB63D2222731CA600544A3E /* Guides */ = {
+			isa = PBXGroup;
+			children = (
+				9AB63D2822731CD300544A3E /* 1.0 Migration Guide.md */,
+				9AB63D2922731CD300544A3E /* 2.0 Migration Guide.md */,
+				9AB63D2A22731CD300544A3E /* 4.0 Migration Guide.md */,
+				9AB63D2D22731CFB00544A3E /* 5.0 Migration Guide.md */,
+				9AB63D2B22731CD300544A3E /* PluginConcepts.md */,
+				9AB63D2C22731CD300544A3E /* Response serializers.md */,
+			);
+			path = Guides;
 			sourceTree = "<group>";
 		};
 		9AFAE4D31CC520F6002739B0 /* Documentation */ = {
