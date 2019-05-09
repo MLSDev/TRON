@@ -19,13 +19,11 @@ class ProtocolStubbedTestCase: XCTestCase {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [StubbingURLProtocol.self]
         tron = TRON(baseURL: "https://httpbin.org", session: Session(configuration: configuration))
-        URLProtocol.registerClass(StubbingURLProtocol.self)
     }
     
     override func tearDown() {
         super.tearDown()
         tron = nil
-        URLProtocol.unregisterClass(StubbingURLProtocol.self)
         StubbingURLProtocol.cleanUp()
     }
 }

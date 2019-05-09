@@ -50,10 +50,6 @@
 		9A704E801C5D01EC00392DE5 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; };
 		9A704E811C5D01EC00392DE5 /* TRON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9A722F551C5A49AE0087908D /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; };
-		9AF2FE541F65A51000B22CE1 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2FE521F65A51000B22CE1 /* Alamofire.framework */; };
-		9AF2FE551F65A51000B22CE1 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2FE521F65A51000B22CE1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9AF2FE561F65A51000B22CE1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */; };
-		9AF2FE571F65A51000B22CE1 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,8 +77,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9A704E811C5D01EC00392DE5 /* TRON.framework in Embed Frameworks */,
-				9AF2FE551F65A51000B22CE1 /* Alamofire.framework in Embed Frameworks */,
-				9AF2FE571F65A51000B22CE1 /* SwiftyJSON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,8 +136,6 @@
 		9AB63D2B22731CD300544A3E /* PluginConcepts.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PluginConcepts.md; sourceTree = "<group>"; };
 		9AB63D2C22731CD300544A3E /* Response serializers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Response serializers.md"; sourceTree = "<group>"; };
 		9AB63D2D22731CFB00544A3E /* 5.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "5.0 Migration Guide.md"; sourceTree = "<group>"; };
-		9AF2FE521F65A51000B22CE1 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		9AFAE4D41CC5210F002739B0 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		9AFAE4D51CC52118002739B0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,8 +146,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A704E801C5D01EC00392DE5 /* TRON.framework in Frameworks */,
-				9AF2FE541F65A51000B22CE1 /* Alamofire.framework in Frameworks */,
-				9AF2FE561F65A51000B22CE1 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,14 +218,12 @@
 		9A722F401C5A49AE0087908D = {
 			isa = PBXGroup;
 			children = (
-				9AF2FE521F65A51000B22CE1 /* Alamofire.framework */,
 				9AFAE4D31CC520F6002739B0 /* Documentation */,
 				9A704E501C5D01B300392DE5 /* Example */,
 				9AB63D2222731CA600544A3E /* Guides */,
 				9A722F641C5A49C70087908D /* Plists */,
 				9A722F4B1C5A49AE0087908D /* Products */,
 				9A90CC221C5FAB3000472DB8 /* Source */,
-				9AF2FE531F65A51000B22CE1 /* SwiftyJSON.framework */,
 				9A90CC231C5FAB3400472DB8 /* Tests */,
 			);
 			sourceTree = "<group>";
@@ -497,7 +485,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " exec \"${SRCROOT}/scripts/copy-carthage-frameworks.sh\"";
+			shellScript = " exec \"${SRCROOT}/scripts/copy-carthage-frameworks.sh\"\n";
 		};
 		9A73E0C01F658CA700BF80F8 /* Copy Carthage frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
