@@ -36,7 +36,7 @@ class CodableTestCase: ProtocolStubbedTestCase {
         let expectation = self.expectation(description: "Teapot")
         request.stubStatusCode(418)
         request.perform(withSuccess: { _ in
-            XCTFail()
+            XCTFail("Failure expected but success was received")
         }) { error in
             XCTAssertEqual(error.response?.statusCode, 418)
             expectation.fulfill()
@@ -50,8 +50,8 @@ class CodableTestCase: ProtocolStubbedTestCase {
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
             expectation.fulfill()
-        }, failure: { _ in
-            XCTFail()
+        }, failure: { error in
+            XCTFail("unexpected network error: \(error)")
             })
         waitForExpectations(timeout: 1, handler: nil)
     }

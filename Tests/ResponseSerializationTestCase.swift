@@ -35,7 +35,7 @@ class ResponseSerializationTestCase: ProtocolStubbedTestCase {
         request.perform(withSuccess: { model in
                 expectation.fulfill()
         }) { error in
-            XCTFail()
+            XCTFail("unexpected network error: \(error)")
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
@@ -48,8 +48,8 @@ class ResponseSerializationTestCase: ProtocolStubbedTestCase {
             if model.first is Apple && model.last is Meat {
                 expectation.fulfill()
             }
-        }) { _ in
-            XCTFail()
+        }) { error in
+            XCTFail("unexpected network error: \(error)")
         }
         waitForExpectations(timeout: 3, handler: nil)
     }

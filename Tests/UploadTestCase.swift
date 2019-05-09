@@ -27,8 +27,8 @@ class UploadTestCase: ProtocolStubbedTestCase {
         request.perform(withSuccess: { result in
             XCTAssertEqual(result.title, "Foo")
             expectation.fulfill()
-        }, failure: { _ in
-            XCTFail()
+        }, failure: { error in
+            XCTFail("unexpected network error: \(error)")
         })
         waitForExpectations(timeout: 1)
     }
@@ -41,8 +41,8 @@ class UploadTestCase: ProtocolStubbedTestCase {
         request.perform(withSuccess: { result in
             XCTAssertEqual(result.title, "Foo")
             expectation.fulfill()
-        }, failure: { _ in
-                XCTFail()
+        }, failure: { error in
+            XCTFail("unexpected network error: \(error)")
         })
         waitForExpectations(timeout: 5)
     }
@@ -59,7 +59,7 @@ class UploadTestCase: ProtocolStubbedTestCase {
             XCTAssertEqual(result.title, "Foo")
             expectation.fulfill()
         }, failure: { error in
-            XCTFail(error.localizedDescription)
+            XCTFail("unexpected network error: \(error)")
         })
         waitForExpectations(timeout: 1, handler: nil)
     }

@@ -18,6 +18,9 @@ class ProtocolStubbedTestCase: XCTestCase {
         super.setUp()
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [StubbingURLProtocol.self]
+        configuration.urlCache = nil
+        configuration.urlCredentialStorage = nil
+        configuration.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         tron = TRON(baseURL: "https://httpbin.org", session: Session(configuration: configuration))
     }
     

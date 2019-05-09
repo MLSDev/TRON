@@ -36,7 +36,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let expectation = self.expectation(description: "Teapot")
         request.stubSuccess("Teapot".asData)
         request.perform(withSuccess: { _ in
-            XCTFail()
+            XCTFail("Failure expected but success was received")
         }) { error in
             XCTAssertEqual(error.data?.asString, "Teapot")
             expectation.fulfill()
@@ -51,8 +51,8 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         request.perform(withSuccess: { _ in
             XCTAssert(Thread.isMainThread)
             expectation.fulfill()
-            }) { _ in
-            XCTFail()
+            }) { error in
+                XCTFail("unexpected network error: \(error)")
         }
         waitForExpectations(timeout: 1, handler: nil)
     }
@@ -62,7 +62,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let expectation = self.expectation(description: "Teapot")
         request.stubFailure()
         request.perform(withSuccess: { _ in
-            XCTFail()
+            XCTFail("Failure expected but success was received")
         }) { error in
             XCTAssert(Thread.isMainThread)
             expectation.fulfill()
@@ -75,7 +75,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let expectation = self.expectation(description: "Parsing failure")
         request.stubFailure()
         request.perform(withSuccess: { _ in
-            XCTFail()
+            XCTFail("Failure expected but success was received")
         }) { error in
             XCTAssert(Thread.isMainThread)
             expectation.fulfill()
@@ -93,8 +93,8 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
             DispatchQueue.main.async {
                 expectation.fulfill()
             }
-            }) { _ in
-                XCTFail()
+            }) { error in
+                XCTFail("unexpected network error: \(error)")
             }
         waitForExpectations(timeout: 10, handler: nil)
     }
@@ -105,7 +105,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let expectation = self.expectation(description: "Parsing failure")
         request.stubFailure()
         request.perform(withSuccess: { _ in
-            XCTFail()
+            XCTFail("Failure expected but success was received")
             }) { error in
             XCTAssertFalse(Thread.isMainThread)
             DispatchQueue.main.async {
@@ -146,8 +146,8 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
                 expectation.fulfill()
-            }, failure: { _ in
-                XCTFail()
+            }, failure: { error in
+                XCTFail("unexpected network error: \(error)")
             }
         )
         waitForExpectations(timeout: 3, handler: nil)
@@ -165,8 +165,8 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
             expectation.fulfill()
-            }, failure: { _ in
-                XCTFail()
+            }, failure: { error in
+                XCTFail("unexpected network error: \(error)")
             }
         )
         waitForExpectations(timeout: 1, handler: nil)
@@ -189,7 +189,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
             XCTAssertEqual(result.title, "not empty")
             expectation.fulfill()
         }, failure: { error in
-            XCTFail("Successful request failed")
+            XCTFail("unexpected network error: \(error)")
         })
         waitForExpectations(timeout: 1, handler: nil)
     }
@@ -200,7 +200,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         request.stubSuccess([:].asData, statusCode: 201)
         let expectation = self.expectation(description: "success")
         request.perform(withSuccess: { _ in
-            XCTFail()
+            XCTFail("Failure expected but success was received")
         }) { error in
             expectation.fulfill()
         }
@@ -215,7 +215,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         request.perform(withSuccess: { _ in
             expectation.fulfill()
         }) { error in
-            XCTFail()
+            XCTFail("unexpected network error: \(error)")
         }
         waitForExpectations(timeout: 1, handler: nil)
     }

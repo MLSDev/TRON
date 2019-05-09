@@ -48,7 +48,7 @@ class ApiStubbingTestCase: XCTestCase {
             XCTAssertEqual(response.name, "Foo")
             exp.fulfill()
             }) { error in
-                XCTFail()
+                XCTFail("unexpected network error: \(error)")
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
@@ -60,7 +60,7 @@ class ApiStubbingTestCase: XCTestCase {
         
         let exp = expectation(description: "Stubs fails")
         request.perform(withSuccess: { response in
-            XCTFail()
+            XCTFail("Failure expected but success was received")
             }) { error in
                 XCTAssertEqual(error.data?.asString, "5")
                 exp.fulfill()
@@ -78,7 +78,7 @@ class ApiStubbingTestCase: XCTestCase {
         request.perform(withSuccess: { model in
             if model.id == 3, model.name == "Bar" { exp.fulfill() }
             }, failure: { error in
-                XCTFail()
+            XCTFail("unexpected network error: \(error)")
         })
         waitForExpectations(timeout: 3, handler: nil)
     }
@@ -132,8 +132,8 @@ class ApiStubbingTestCase: XCTestCase {
             intResponse = response
             XCTAssertEqual(response, 5)
             exp.fulfill()
-        }) { _ in
-            XCTFail()
+        }) { error in
+            XCTFail("unexpected network error: \(error)")
         }
         waitForExpectations(timeout: 3, handler: nil)
     }
