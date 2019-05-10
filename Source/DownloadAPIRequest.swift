@@ -108,17 +108,18 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
             request.tron_apiStub = stub
         }
         willSendAlamofireRequest(request)
+        let downloadRequest = validationClosure(request)
+            .performResponseSerialization(queue: resultDeliveryQueue,
+                                          responseSerializer: downloadResponseSerializer(with: request),
+                                          completionHandler: { downloadResponse in
+                                            self.didReceiveDownloadResponse(downloadResponse, forRequest: request)
+                                            completion(downloadResponse)
+            })
         if !session.startRequestsImmediately {
             request.resume()
         }
         didSendAlamofireRequest(request)
-        return validationClosure(request)
-            .performResponseSerialization(queue: resultDeliveryQueue,
-                                          responseSerializer: downloadResponseSerializer(with: request),
-                                          completionHandler: { downloadResponse in
-            self.didReceiveDownloadResponse(downloadResponse, forRequest: request)
-            completion(downloadResponse)
-        })
+        return downloadRequest
     }
 
     internal func downloadResponseSerializer(with request: DownloadRequest) -> TRONDownloadResponseSerializer<Model> {

@@ -147,17 +147,18 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
             request.tron_apiStub = stub
         }
         willSendAlamofireRequest(request)
+        let uploadRequest = validationClosure(request)
+            .performResponseSerialization(queue: resultDeliveryQueue,
+                                          responseSerializer: dataResponseSerializer(with: request),
+                                          completionHandler: { dataResponse in
+                                            self.didReceiveDataResponse(dataResponse, forRequest: request)
+                                            completion(dataResponse)
+            })
         if !session.startRequestsImmediately {
             request.resume()
         }
         didSendAlamofireRequest(request)
-        return validationClosure(request)
-            .performResponseSerialization(queue: resultDeliveryQueue,
-                                          responseSerializer: dataResponseSerializer(with: request),
-                                          completionHandler: { dataResponse in
-                self.didReceiveDataResponse(dataResponse, forRequest: request)
-                completion(dataResponse)
-        })
+        return uploadRequest
     }
 
     internal func dataResponseSerializer(with request: Request) -> TRONDataResponseSerializer<Model> {
