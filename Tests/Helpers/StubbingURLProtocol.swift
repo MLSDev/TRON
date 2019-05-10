@@ -35,7 +35,7 @@ class URLProtocolClientCommunicator {
             case .error(let error): client?.urlProtocol(protokol, didFailWithError: error)
             case .response(let response): client?.urlProtocol(protokol,
                                                              didReceive: response,
-                                                             cacheStoragePolicy: .allowed)
+                                                             cacheStoragePolicy: .notAllowed)
             case .data(let data): client?.urlProtocol(protokol, didLoad: data)
             }
         }
