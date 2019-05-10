@@ -21,7 +21,8 @@ class ProtocolStubbedTestCase: XCTestCase {
         configuration.urlCache = nil
         configuration.urlCredentialStorage = nil
         configuration.requestCachePolicy = .reloadIgnoringLocalAndRemoteCacheData
-        tron = TRON(baseURL: "https://httpbin.org", session: Session(configuration: configuration))
+        tron = TRON(baseURL: "https://httpbin.org", session: Session(configuration: configuration,
+                                                                     startRequestsImmediately: false))
     }
     
     override func tearDown() {
