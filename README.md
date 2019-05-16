@@ -429,4 +429,4 @@ We are dedicated to building best possible tool for interacting with RESTful web
 Find out more [here][mlsdev] and don't hesitate to [contact us][contact]!
 
 [mlsdev]: https://mlsdev.com
-[contact]: https://mlsdev.com/contact_us
+[contact]: https://mlsdev.com/contact-us
