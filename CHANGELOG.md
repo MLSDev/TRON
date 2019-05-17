@@ -12,7 +12,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 * Improved response serializer behavior for cases where requests were stubbed using URLProtocol.
-* TRON 5 requires RxSwift 5 and SwiftyJSON 5 
+* TRON 5 requires RxSwift 5 and SwiftyJSON 5
 * `Core` is now a default subspec for CocoaPods installation method. To use SwiftyJSON, add following to Podfile:
 
 ```ruby
