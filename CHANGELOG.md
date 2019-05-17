@@ -3,9 +3,21 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.0.0-beta.3](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.3)
+
 ### Added
 
 * Ability to traverse json to any level when using SwiftyJSONDecodable.
+
+### Changed
+
+* Improved response serializer behavior for cases where requests were stubbed using URLProtocol.
+* TRON 5 requires RxSwift 5 and SwiftyJSON 5 
+* `Core` is now a default subspec for CocoaPods installation method. To use SwiftyJSON, add following to Podfile:
+
+```ruby
+pod 'TRON/SwiftyJSON'
+```
 
 ## [5.0.0-beta.2](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.2)
 
@@ -16,7 +28,7 @@ All notable changes to this project will be documented in this file.
 * `CodableSerializer` API has been made open to allow easy customization in subclasses.
 * `NetworkLoggerPlugin` now has a constructor that allows to easily configure it's behavior.
 
-### Breaking 
+### Breaking
 
 * Properties that worked with `Alamofire.SessionManager` have been renamed to `session` to be in line with `Alamofire` renaming of `SessionManager` to `Session`.
 

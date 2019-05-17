@@ -1,75 +1,75 @@
 {
   "warnings": [
     {
-      "file": "/Users/denystelezkin/Developer/TRON/Source/APIError.swift",
+      "file": "/Users/Denys/Projects/TRON/Source/APIError.swift",
       "line": 30,
       "symbol": "ErrorSerializable.init(request:response:data:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/denystelezkin/Developer/TRON/Source/APIError.swift",
+      "file": "/Users/Denys/Projects/TRON/Source/APIError.swift",
       "line": 35,
       "symbol": "DownloadErrorSerializable.init(request:response:fileURL:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/denystelezkin/Developer/TRON/Source/APIError.swift",
+      "file": "/Users/Denys/Projects/TRON/Source/APIError.swift",
       "line": 56,
       "symbol": "APIError.init(request:response:data:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/denystelezkin/Developer/TRON/Source/APIError.swift",
+      "file": "/Users/Denys/Projects/TRON/Source/APIError.swift",
       "line": 64,
       "symbol": "APIError.init(request:response:fileURL:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/denystelezkin/Developer/TRON/Source/APIRequest.swift",
+      "file": "/Users/Denys/Projects/TRON/Source/APIRequest.swift",
       "line": 71,
       "symbol": "APIRequest.perform(withSuccess:failure:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/denystelezkin/Developer/TRON/Source/APIRequest.swift",
+      "file": "/Users/Denys/Projects/TRON/Source/APIRequest.swift",
       "line": 85,
       "symbol": "APIRequest.performCollectingTimeline(withCompletion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/denystelezkin/Developer/TRON/Source/DownloadAPIRequest.swift",
+      "file": "/Users/Denys/Projects/TRON/Source/DownloadAPIRequest.swift",
       "line": 95,
       "symbol": "DownloadAPIRequest.performCollectingTimeline(withCompletion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/denystelezkin/Developer/TRON/Source/UploadAPIRequest.swift",
+      "file": "/Users/Denys/Projects/TRON/Source/UploadAPIRequest.swift",
       "line": 42,
       "symbol": "UploadRequestType.multipartFormData(formData:memoryThreshold:fileManager:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/denystelezkin/Developer/TRON/Source/UploadAPIRequest.swift",
-      "line": 119,
+      "file": "/Users/Denys/Projects/TRON/Source/UploadAPIRequest.swift",
+      "line": 120,
       "symbol": "UploadAPIRequest.perform(withSuccess:failure:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/denystelezkin/Developer/TRON/Source/UploadAPIRequest.swift",
-      "line": 133,
+      "file": "/Users/Denys/Projects/TRON/Source/UploadAPIRequest.swift",
+      "line": 134,
       "symbol": "UploadAPIRequest.performCollectingTimeline(withCompletion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/denystelezkin/Developer/TRON"
+  "source_directory": "/Users/Denys/Projects/TRON"
 }

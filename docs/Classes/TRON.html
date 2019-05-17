@@ -805,7 +805,7 @@ Default value - URLEncoding.default</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="n">uploadMultipart</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="p">,</span> <span class="kt">Serializer</span><span class="o">&gt;</span>
     <span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
      <span class="nv">responseSerializer</span><span class="p">:</span> <span class="kt">Serializer</span><span class="p">,</span>
-     <span class="nv">encodingMemoryThreshold</span><span class="p">:</span> <span class="kt">UInt64</span> <span class="o">=</span> <span class="kt">MultipartUpload</span><span class="o">.</span><span class="n">encodingMemoryThreshold</span><span class="p">,</span>
+     <span class="nv">encodingMemoryThreshold</span><span class="p">:</span> <span class="kt">UInt64</span> <span class="o">=</span> <span class="kt">MultipartFormData</span><span class="o">.</span><span class="n">encodingMemoryThreshold</span><span class="p">,</span>
      <span class="nv">fileManager</span><span class="p">:</span> <span class="kt">FileManager</span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
      <span class="nv">formData</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">MultipartFormData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span>
     <span class="k">where</span> <span class="kt">ErrorModel</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ErrorSerializable.html">ErrorSerializable</a></span><span class="p">,</span> <span class="kt">Serializer</span><span class="p">:</span> <span class="kt">DataResponseSerializerProtocol</span><span class="p">,</span>
@@ -1073,9 +1073,9 @@ Default value - URLEncoding.default</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRONAAC10swiftyJSON14readingOptionsAA23JSONDecodableSerializerCSo013NSJSONReadingE0V_tF"></a>
-                    <a name="//apple_ref/swift/Method/swiftyJSON(readingOptions:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRONAAC10swiftyJSON14readingOptionsAA23JSONDecodableSerializerCSo013NSJSONReadingE0V_tF">swiftyJSON(readingOptions:)</a>
+                    <a name="/s:4TRONAAC10swiftyJSON14readingOptions010traversingC0AA23JSONDecodableSerializerCSo013NSJSONReadingE0V_06SwiftyC00C0VALctF"></a>
+                    <a name="//apple_ref/swift/Method/swiftyJSON(readingOptions:traversingJSON:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRONAAC10swiftyJSON14readingOptions010traversingC0AA23JSONDecodableSerializerCSo013NSJSONReadingE0V_06SwiftyC00C0VALctF">swiftyJSON(readingOptions:traversingJSON:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1083,14 +1083,16 @@ Default value - URLEncoding.default</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Creates <code><a href="../Classes/CodableSerializer.html">CodableSerializer</a></code> with current <code>TRON</code> instance and specific <code>options</code> for <code>JSONSerialization</code>.</p>
+                        <p>Creates <code><a href="../Classes/CodableSerializer.html">CodableSerializer</a></code> with current <code>TRON</code> instance and specific <code>options</code> for <code>JSONSerialization</code>.
+<code>traversingJSON</code> closure defines how JSON should be preprocessed before passing to Model initializer.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">swiftyJSON</span><span class="p">(</span><span class="n">readingOptions</span> <span class="nv">options</span><span class="p">:</span> <span class="kt">JSONSerialization</span><span class="o">.</span><span class="kt">ReadingOptions</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/JSONDecodableSerializer.html">JSONDecodableSerializer</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">swiftyJSON</span><span class="p">(</span><span class="n">readingOptions</span> <span class="nv">options</span><span class="p">:</span> <span class="kt">JSONSerialization</span><span class="o">.</span><span class="kt">ReadingOptions</span> <span class="o">=</span> <span class="p">[],</span>
+                     <span class="nv">traversingJSON</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">JSON</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">JSON</span> <span class="o">=</span> <span class="p">{</span> <span class="nv">$0</span> <span class="p">})</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/JSONDecodableSerializer.html">JSONDecodableSerializer</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1136,7 +1138,7 @@ Default value - URLEncoding.default</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-04-06)</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-05-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
