@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 /// Response serializer, that wraps serialization closure to implement `Alamofire.DataResponseSerializerProtocol`. Is used for `APIRequest` and `UploadAPIRequest`.
-public struct TRONDataResponseSerializer<Model> : DataResponseSerializerProtocol {
+public struct TRONDataResponseSerializer<Model>: DataResponseSerializerProtocol {
 
     /// Serialization closure to execute
     public let closure: ((URLRequest?, HTTPURLResponse?, Data?, Error?) throws -> Model)
@@ -37,7 +37,7 @@ public struct TRONDataResponseSerializer<Model> : DataResponseSerializerProtocol
 }
 
 /// Response serializer, that wraps serialization closure to implement `Alamofire.DownloadResponseSerializerProtocol`. Is used for `DownloadAPIRequest`.
-public struct TRONDownloadResponseSerializer<Model> : DownloadResponseSerializerProtocol {
+public struct TRONDownloadResponseSerializer<Model>: DownloadResponseSerializerProtocol {
 
     /// Serialization closure to execute
     public let closure: ((URLRequest?, HTTPURLResponse?, URL?, Error?) throws -> Model)

@@ -1,3 +1,3 @@
 github "Alamofire/Alamofire" "5.0.0-beta.6"
-github "ReactiveX/RxSwift" "b3e888b4972d9bc76495dd74d30a8c7fad4b9395"
+github "ReactiveX/RxSwift" "5.0.1"
 github "SwiftyJSON/SwiftyJSON" "5.0.0"

@@ -38,7 +38,7 @@ public protocol JSONDecodable {
 }
 
 /// `JSONDecodable` data response parser
-open class JSONDecodableParser<Model: JSONDecodable> : DataResponseSerializerProtocol {
+open class JSONDecodableParser<Model: JSONDecodable>: DataResponseSerializerProtocol {
 
     /// Reading options to be used when reading JSON from Data, using JSONSerialization.
     public let options: JSONSerialization.ReadingOptions

@@ -27,7 +27,7 @@ import Foundation
 import Alamofire
 
 /// `CodableParser` is a wrapper around `modelDecoder` and `errorDecoder` JSONDecoders to be used when decoding JSON response.
-open class CodableParser<Model: Decodable> : DataResponseSerializerProtocol {
+open class CodableParser<Model: Decodable>: DataResponseSerializerProtocol {
 
     /// Decoder used for decoding model object
     public let modelDecoder: JSONDecoder
