@@ -2,4 +2,3 @@ clean true
 output_types ""
 scheme "TRON"
 skip_slack true
-xcargs "IDEBuildOperationMaxNumberOfConcurrentCompileTasks=`sysctl -n hw.ncpu`"
