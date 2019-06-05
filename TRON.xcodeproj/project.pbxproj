@@ -188,7 +188,7 @@
 		9AB63D2922731CD300544A3E /* 2.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "2.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9AB63D2A22731CD300544A3E /* 4.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "4.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9AB63D2B22731CD300544A3E /* PluginConcepts.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PluginConcepts.md; sourceTree = "<group>"; };
-		9AB63D2C22731CD300544A3E /* Response serializers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Response serializers.md"; sourceTree = "<group>"; };
+		9AB63D2C22731CD300544A3E /* ContainerTypesParsing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ContainerTypesParsing.md; sourceTree = "<group>"; };
 		9AB63D2D22731CFB00544A3E /* 5.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "5.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9AFAE4D41CC5210F002739B0 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		9AFAE4D51CC52118002739B0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -386,7 +386,7 @@
 				9AB63D2A22731CD300544A3E /* 4.0 Migration Guide.md */,
 				9AB63D2D22731CFB00544A3E /* 5.0 Migration Guide.md */,
 				9AB63D2B22731CD300544A3E /* PluginConcepts.md */,
-				9AB63D2C22731CD300544A3E /* Response serializers.md */,
+				9AB63D2C22731CD300544A3E /* ContainerTypesParsing.md */,
 			);
 			path = Guides;
 			sourceTree = "<group>";

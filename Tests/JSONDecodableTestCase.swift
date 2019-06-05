@@ -35,6 +35,22 @@ class Throwable : JSONDecodable {
     }
 }
 
+extension Optional : JSONDecodable where Wrapped: JSONDecodable {
+    public init(json: JSON) {
+        do {
+            self = try Wrapped(json: json)
+        } catch {
+            self = nil
+        }
+    }
+}
+
+extension Array : JSONDecodable where Element: JSONDecodable {
+    public init(json: JSON) throws {
+        self = try json.arrayValue.map { try Element(json: $0) }
+    }
+}
+
 class JSONDecodableTestCase: ProtocolStubbedTestCase {
  
     func testVariousJSONDecodableTypes() throws
@@ -89,6 +105,18 @@ class JSONDecodableTestCase: ProtocolStubbedTestCase {
         let expectation = self.expectation(description: "Parsing headers response")
         request.perform(withSuccess:  { response in
             XCTAssertEqual(response.title, "Foo")
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testJSONDecodableCanWorkWithOptionals() {
+        let request: APIRequest<JSONDecodableResponse?,APIError> = tron.swiftyJSON.request("optional")
+        request.stubSuccess(["title":"Foo"].asData)
+        let expectation = self.expectation(description: "Parsing optional response")
+        request.perform(withSuccess:  { response in
+            XCTAssertEqual(response?.title, "Foo")
             expectation.fulfill()
         })
         

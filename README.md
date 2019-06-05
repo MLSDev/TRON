@@ -225,7 +225,7 @@ request.perform(withSuccess: { status in
 
 You can also use `Alamofire.Empty` struct in cases where you don't care about actual response.
 
-Some concepts for response serialization, including array response serializer, are described in [Response Serializers document](https://github.com/MLSDev/TRON/blob/master/Docs/Response%20Serializers.md)
+Some concepts for response serialization, including array response serializer, are described in [Container Types Parsing document](https://github.com/MLSDev/TRON/blob/master/Docs/ContainerTypesParsing.md)
 
 It's possible to customize `JSONSerialization.ReadingOptions`, that are used by `SwiftyJSON.JSON` object while parsing data of the response:
 
@@ -243,8 +243,8 @@ _ = request.rxResult().subscribe(onNext: { result in
 ```
 
 ```swift
-let multipartRequest : UploadAPIREquest<Foo,APIError> = tron.codable.upload("foo", formData: { _ in })
-multipartRequest.rxMultipartResult().subscribe(onNext: { result in
+let multipartRequest : UploadAPIRequest<Foo,APIError> = tron.codable.uploadMultipart("foo", formData: { _ in })
+multipartRequest.rxResult().subscribe(onNext: { result in
     print(result)
 })
 ```
