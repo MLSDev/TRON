@@ -49,6 +49,13 @@ request.perform(withSuccess: { user in
 
 ## Installation
 
+### Swift Package Manager(requires Xcode 11)
+
+* Add package into Project settings -> Swift Packages
+* Select "Branch" rule and set it to master
+
+TRON framework includes Codable implementation. To use SwiftyJSON, `import TRONSwiftyJSON` framework. To use RxSwift wrapper, `import RxTRON`.
+
 ### CocoaPods
 
 ```ruby
