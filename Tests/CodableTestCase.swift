@@ -6,11 +6,6 @@
 //  Copyright © 2017 Denys Telezhkin. All rights reserved.
 //
 
-import XCTest
-@testable import TRON
-import SwiftyJSON
-import Alamofire
-
 private struct CodableResponse : Codable {
     let title: String
 }

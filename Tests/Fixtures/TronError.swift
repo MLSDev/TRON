@@ -9,6 +9,7 @@
 import Foundation
 import TRON
 import SwiftyJSON
+import TRONSwiftyJSON
 
 public class CodableError<ErrorModel: Codable> : APIError {
     let errorModel: ErrorModel?

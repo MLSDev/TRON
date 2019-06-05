@@ -6,9 +6,6 @@
 //  Copyright © 2016 Denys Telezhkin. All rights reserved.
 //
 
-import XCTest
-import TRON
-
 class URLBuilderTestCase: XCTestCase {
     
     let tron = TRON(baseURL: "https://github.com")

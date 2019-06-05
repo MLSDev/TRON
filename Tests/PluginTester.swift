@@ -6,10 +6,6 @@
 //  Copyright © 2016 Denys Telezhkin. All rights reserved.
 //
 
-import Foundation
-import TRON
-import Alamofire
-
 class PluginTester : Plugin
 {
     var willSendCalled = false

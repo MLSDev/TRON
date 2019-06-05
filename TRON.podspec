@@ -18,23 +18,19 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |core|
       core.ios.frameworks = 'UIKit'
-      core.source_files = 'Source/*.swift'
-      core.exclude_files = 'Source/SwiftyJSONDecodable.swift', 'Source/Tron+RxSwift.swift'
-      core.tvos.exclude_files = "Source/NetworkActivityPlugin.swift"
-      core.osx.exclude_files = "Source/NetworkActivityPlugin.swift"
-      core.watchos.exclude_files = "Source/NetworkActivityPlugin.swift"
+      core.source_files = 'Source/TRON/*.swift'
   end
 
   s.subspec 'SwiftyJSON' do |swiftyjson|
       swiftyjson.dependency 'TRON/Core'
       swiftyjson.dependency 'SwiftyJSON', '~> 5.0'
-      swiftyjson.source_files = 'Source/SwiftyJSONDecodable.swift'
+      swiftyjson.source_files = 'Source/TRONSwiftyJSON/SwiftyJSONDecodable.swift'
   end
 
   s.subspec 'RxSwift' do |rxswift|
       rxswift.dependency 'TRON/Core'
       rxswift.dependency 'RxSwift', '~> 5.0'
-      rxswift.source_files = 'Source/Tron+RxSwift.swift'
+      rxswift.source_files = 'Source/RxTRON/Tron+RxSwift.swift'
   end
 
   s.default_subspec = 'Core'

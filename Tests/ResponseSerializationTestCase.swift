@@ -6,11 +6,6 @@
 //  Copyright © 2016 Denys Telezhkin. All rights reserved.
 //
 
-import XCTest
-import TRON
-import Alamofire
-import SwiftyJSON
-
 protocol Food {}
 
 struct Apple : Food {

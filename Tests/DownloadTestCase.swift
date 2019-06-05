@@ -6,11 +6,6 @@
 //  Copyright © 2016 Denys Telezhkin. All rights reserved.
 //
 
-import Foundation
-import XCTest
-import TRON
-import Alamofire
-
 class DownloadTestCase: ProtocolStubbedTestCase {
     
     let searchPathDirectory = FileManager.SearchPathDirectory.cachesDirectory

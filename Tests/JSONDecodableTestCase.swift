@@ -6,11 +6,6 @@
 //  Copyright © 2015 MLSDev. All rights reserved.
 //
 
-import XCTest
-@testable import TRON
-import SwiftyJSON
-import Alamofire
-
 struct JSONDecodableResponse : JSONDecodable {
     let title : String
     

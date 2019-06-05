@@ -6,10 +6,7 @@
 //  Copyright © 2016 Denys Telezhkin. All rights reserved.
 //
 
-import XCTest
-import TRON
 import RxSwift
-import Alamofire
 
 class RxSwiftExtensionTestCase: ProtocolStubbedTestCase {
     

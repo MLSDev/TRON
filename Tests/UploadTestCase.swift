@@ -6,10 +6,6 @@
 //  Copyright © 2016 Denys Telezhkin. All rights reserved.
 //
 
-import Foundation
-import XCTest
-import TRON
-
 extension XCTestCase {
     func URLForResource(_ fileName: String, withExtension: String) -> URL {
         let bundle = Bundle(for: UploadTestCase.self)

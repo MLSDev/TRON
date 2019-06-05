@@ -1,3 +1,5 @@
+// swift-tools-version:5.0
+
 // Package.swift
 //
 // Copyright (c) 2015–present MLSDev (http://mlsdev.org/)
@@ -23,10 +25,37 @@
 import PackageDescription
 
 let package = Package(
-  name: "TRON",
-  dependencies: [
-    .Package(url: "https://github.com/Alamofire/Alamofire.git", majorVersion: 4),
-    .Package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", majorVersion: 3),
-    .Package(url: "https://github.com/ReactiveX/RxSwift.git", majorVersion: 4)
-  ]
+    name: "TRON",
+    platforms: [
+        .iOS(.v10),
+        .tvOS(.v10),
+        .macOS(.v10_12),
+        .watchOS(.v3)
+    ],
+    products: [
+        .library(name: "TRON", targets: ["TRON"]),
+        .library(name: "TRONSwiftyJSON", targets: ["TRONSwiftyJSON"]),
+        .library(name: "RxTRON", targets: ["RxTRON"])
+    ],
+    dependencies: [
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.0.0-beta.6")),
+        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", .upToNextMajor(from: ("5.0.0"))),
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "5.0.0"))
+    ],
+    targets: [
+         .target(
+            name: "TRON",
+            dependencies: [ "Alamofire" ]),
+        .target(
+            name: "RxTRON",
+            dependencies: [
+                "TRON",
+                "RxSwift"
+            ]),
+        .target(
+            name: "TRONSwiftyJSON",
+            dependencies: [
+                "TRON",
+                "SwiftyJSON"])
+    ]
 )

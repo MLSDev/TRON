@@ -6,10 +6,6 @@
 //  Copyright © 2019 Denys Telezhkin. All rights reserved.
 //
 
-import XCTest
-@testable import TRON
-import Alamofire
-
 class ProtocolStubbedTestCase: XCTestCase {
 
     var tron: TRON!

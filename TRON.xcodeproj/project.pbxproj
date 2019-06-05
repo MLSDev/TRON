@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E01C1951F06475200C47CB3 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01C1941F06475200C47CB3 /* TRONCodable.swift */; };
 		3E601DCA21F8BBE40062E095 /* ProtocolStubbedTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E601DC921F8BBE40062E095 /* ProtocolStubbedTestCase.swift */; };
 		3E74A618215F8AEA00091078 /* TronTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A60B215F8AE900091078 /* TronTestCase.swift */; };
 		3E74A619215F8AEA00091078 /* PluginTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A60C215F8AE900091078 /* PluginTestCase.swift */; };
@@ -23,24 +22,31 @@
 		3E74A623215F8AEA00091078 /* JSONDecodableTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A616215F8AEA00091078 /* JSONDecodableTestCase.swift */; };
 		3E74A624215F8AEA00091078 /* ResponseSerializationTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A617215F8AEA00091078 /* ResponseSerializationTestCase.swift */; };
 		3E74A627215F8B5800091078 /* StubbingURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E74A626215F8B5800091078 /* StubbingURLProtocol.swift */; };
-		3E7FB48821CD56D600094CD9 /* Serialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7FB48721CD56D600094CD9 /* Serialization.swift */; };
+		3EC5C88822A7DD9C00B42774 /* RxTRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC5C88122A7DD9C00B42774 /* RxTRON.framework */; };
+		3EC5C88922A7DD9C00B42774 /* RxTRON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC5C88122A7DD9C00B42774 /* RxTRON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3EC5C89F22A7DF0300B42774 /* TRONSwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC5C89822A7DF0300B42774 /* TRONSwiftyJSON.framework */; };
+		3EC5C8A022A7DF0300B42774 /* TRONSwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC5C89822A7DF0300B42774 /* TRONSwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3EC5C8AB22A7DF8C00B42774 /* RxTRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC5C88122A7DD9C00B42774 /* RxTRON.framework */; };
+		3EC5C8AC22A7DF9000B42774 /* TRONSwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC5C89822A7DF0300B42774 /* TRONSwiftyJSON.framework */; };
+		3EC5C8C822A7E78F00B42774 /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8B922A7E78F00B42774 /* APIStub.swift */; };
+		3EC5C8C922A7E78F00B42774 /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8BA22A7E78F00B42774 /* BaseRequest.swift */; };
+		3EC5C8CA22A7E78F00B42774 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8BB22A7E78F00B42774 /* APIError.swift */; };
+		3EC5C8CB22A7E78F00B42774 /* UploadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8BC22A7E78F00B42774 /* UploadAPIRequest.swift */; };
+		3EC5C8CC22A7E78F00B42774 /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8BD22A7E78F00B42774 /* TRON.swift */; };
+		3EC5C8CD22A7E78F00B42774 /* TRONCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8BE22A7E78F00B42774 /* TRONCodable.swift */; };
+		3EC5C8CE22A7E78F00B42774 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8BF22A7E78F00B42774 /* NetworkLoggerPlugin.swift */; };
+		3EC5C8CF22A7E78F00B42774 /* DownloadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8C022A7E78F00B42774 /* DownloadAPIRequest.swift */; };
+		3EC5C8D022A7E78F00B42774 /* NetworkActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8C122A7E78F00B42774 /* NetworkActivityPlugin.swift */; };
+		3EC5C8D122A7E78F00B42774 /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8C222A7E78F00B42774 /* URLBuilder.swift */; };
+		3EC5C8D222A7E78F00B42774 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8C322A7E78F00B42774 /* APIRequest.swift */; };
+		3EC5C8D322A7E78F00B42774 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8C422A7E78F00B42774 /* Plugin.swift */; };
+		3EC5C8D422A7E78F00B42774 /* Serialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8C522A7E78F00B42774 /* Serialization.swift */; };
+		3EC5C8D522A7E79400B42774 /* SwiftyJSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8B522A7E78F00B42774 /* SwiftyJSONDecodable.swift */; };
+		3EC5C8D622A7E79A00B42774 /* Tron+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8B722A7E78F00B42774 /* Tron+RxSwift.swift */; };
 		9A148D5B1EDB1ABF002E610C /* cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9A148D571EDB1ABF002E610C /* cat.jpg */; };
 		9A148D5E1EDB1ABF002E610C /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A148D581EDB1ABF002E610C /* invalid.json */; };
 		9A148D611EDB1ABF002E610C /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D591EDB1ABF002E610C /* TronError.swift */; };
 		9A148D641EDB1ABF002E610C /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A148D5A1EDB1ABF002E610C /* user.json */; };
-		9A148D771EDB1BC5002E610C /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D671EDB1BC5002E610C /* APIError.swift */; };
-		9A148D7B1EDB1BC5002E610C /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D681EDB1BC5002E610C /* APIRequest.swift */; };
-		9A148D7F1EDB1BC5002E610C /* APIStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D691EDB1BC5002E610C /* APIStub.swift */; };
-		9A148D831EDB1BC5002E610C /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6A1EDB1BC5002E610C /* BaseRequest.swift */; };
-		9A148D871EDB1BC5002E610C /* DownloadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6B1EDB1BC5002E610C /* DownloadAPIRequest.swift */; };
-		9A148D931EDB1BC5002E610C /* NetworkActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6E1EDB1BC5002E610C /* NetworkActivityPlugin.swift */; };
-		9A148D971EDB1BC5002E610C /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D6F1EDB1BC5002E610C /* NetworkLoggerPlugin.swift */; };
-		9A148D9B1EDB1BC5002E610C /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D701EDB1BC5002E610C /* Plugin.swift */; };
-		9A148DA31EDB1BC5002E610C /* SwiftyJSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D721EDB1BC5002E610C /* SwiftyJSONDecodable.swift */; };
-		9A148DA71EDB1BC5002E610C /* TRON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D731EDB1BC5002E610C /* TRON.swift */; };
-		9A148DAB1EDB1BC5002E610C /* Tron+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D741EDB1BC5002E610C /* Tron+RxSwift.swift */; };
-		9A148DAF1EDB1BC5002E610C /* UploadAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D751EDB1BC5002E610C /* UploadAPIRequest.swift */; };
-		9A148DB31EDB1BC5002E610C /* URLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D761EDB1BC5002E610C /* URLBuilder.swift */; };
 		9A704E521C5D01B300392DE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E511C5D01B300392DE5 /* AppDelegate.swift */; };
 		9A704E541C5D01B300392DE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E531C5D01B300392DE5 /* ViewController.swift */; };
 		9A704E571C5D01B300392DE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A704E551C5D01B300392DE5 /* Main.storyboard */; };
@@ -53,6 +59,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3EC5C88622A7DD9C00B42774 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A722F411C5A49AE0087908D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3EC5C88022A7DD9C00B42774;
+			remoteInfo = RxTRON;
+		};
+		3EC5C88D22A7DDA200B42774 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A722F411C5A49AE0087908D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A722F491C5A49AE0087908D;
+			remoteInfo = TRON;
+		};
+		3EC5C89122A7DEEB00B42774 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A722F411C5A49AE0087908D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3EC5C88022A7DD9C00B42774;
+			remoteInfo = RxTRON;
+		};
+		3EC5C89D22A7DF0300B42774 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A722F411C5A49AE0087908D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3EC5C89722A7DF0300B42774;
+			remoteInfo = TRONSwiftyJSON;
+		};
+		3EC5C8A422A7DF0D00B42774 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A722F411C5A49AE0087908D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9A722F491C5A49AE0087908D;
+			remoteInfo = TRON;
+		};
+		3EC5C8A822A7DF8100B42774 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9A722F411C5A49AE0087908D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3EC5C89722A7DF0300B42774;
+			remoteInfo = TRONSwiftyJSON;
+		};
 		9A704E821C5D01EC00392DE5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9A722F411C5A49AE0087908D /* Project object */;
@@ -77,6 +125,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				9A704E811C5D01EC00392DE5 /* TRON.framework in Embed Frameworks */,
+				3EC5C8A022A7DF0300B42774 /* TRONSwiftyJSON.framework in Embed Frameworks */,
+				3EC5C88922A7DD9C00B42774 /* RxTRON.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,7 +134,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3E01C1941F06475200C47CB3 /* TRONCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TRONCodable.swift; path = Source/TRONCodable.swift; sourceTree = "<group>"; };
 		3E601DC921F8BBE40062E095 /* ProtocolStubbedTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolStubbedTestCase.swift; sourceTree = "<group>"; };
 		3E74A60B215F8AE900091078 /* TronTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TronTestCase.swift; sourceTree = "<group>"; };
 		3E74A60C215F8AE900091078 /* PluginTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PluginTestCase.swift; sourceTree = "<group>"; };
@@ -100,24 +149,29 @@
 		3E74A616215F8AEA00091078 /* JSONDecodableTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDecodableTestCase.swift; sourceTree = "<group>"; };
 		3E74A617215F8AEA00091078 /* ResponseSerializationTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerializationTestCase.swift; sourceTree = "<group>"; };
 		3E74A626215F8B5800091078 /* StubbingURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbingURLProtocol.swift; sourceTree = "<group>"; };
-		3E7FB48721CD56D600094CD9 /* Serialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Serialization.swift; path = Source/Serialization.swift; sourceTree = "<group>"; };
+		3EC5C88122A7DD9C00B42774 /* RxTRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxTRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EC5C89822A7DF0300B42774 /* TRONSwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRONSwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EC5C8AD22A7E2C000B42774 /* Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Bridging-Header.h"; sourceTree = "<group>"; };
+		3EC5C8B122A7E4BA00B42774 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		3EC5C8B522A7E78F00B42774 /* SwiftyJSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSONDecodable.swift; sourceTree = "<group>"; };
+		3EC5C8B722A7E78F00B42774 /* Tron+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tron+RxSwift.swift"; sourceTree = "<group>"; };
+		3EC5C8B922A7E78F00B42774 /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIStub.swift; sourceTree = "<group>"; };
+		3EC5C8BA22A7E78F00B42774 /* BaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRequest.swift; sourceTree = "<group>"; };
+		3EC5C8BB22A7E78F00B42774 /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		3EC5C8BC22A7E78F00B42774 /* UploadAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadAPIRequest.swift; sourceTree = "<group>"; };
+		3EC5C8BD22A7E78F00B42774 /* TRON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TRON.swift; sourceTree = "<group>"; };
+		3EC5C8BE22A7E78F00B42774 /* TRONCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TRONCodable.swift; sourceTree = "<group>"; };
+		3EC5C8BF22A7E78F00B42774 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
+		3EC5C8C022A7E78F00B42774 /* DownloadAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadAPIRequest.swift; sourceTree = "<group>"; };
+		3EC5C8C122A7E78F00B42774 /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkActivityPlugin.swift; sourceTree = "<group>"; };
+		3EC5C8C222A7E78F00B42774 /* URLBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLBuilder.swift; sourceTree = "<group>"; };
+		3EC5C8C322A7E78F00B42774 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		3EC5C8C422A7E78F00B42774 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
+		3EC5C8C522A7E78F00B42774 /* Serialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serialization.swift; sourceTree = "<group>"; };
 		9A148D571EDB1ABF002E610C /* cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cat.jpg; sourceTree = "<group>"; };
 		9A148D581EDB1ABF002E610C /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = invalid.json; sourceTree = "<group>"; };
 		9A148D591EDB1ABF002E610C /* TronError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TronError.swift; sourceTree = "<group>"; };
 		9A148D5A1EDB1ABF002E610C /* user.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
-		9A148D671EDB1BC5002E610C /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIError.swift; path = Source/APIError.swift; sourceTree = "<group>"; };
-		9A148D681EDB1BC5002E610C /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = Source/APIRequest.swift; sourceTree = "<group>"; };
-		9A148D691EDB1BC5002E610C /* APIStub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIStub.swift; path = Source/APIStub.swift; sourceTree = "<group>"; };
-		9A148D6A1EDB1BC5002E610C /* BaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseRequest.swift; path = Source/BaseRequest.swift; sourceTree = "<group>"; };
-		9A148D6B1EDB1BC5002E610C /* DownloadAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadAPIRequest.swift; path = Source/DownloadAPIRequest.swift; sourceTree = "<group>"; };
-		9A148D6E1EDB1BC5002E610C /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkActivityPlugin.swift; path = Source/NetworkActivityPlugin.swift; sourceTree = "<group>"; };
-		9A148D6F1EDB1BC5002E610C /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPlugin.swift; path = Source/NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
-		9A148D701EDB1BC5002E610C /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plugin.swift; path = Source/Plugin.swift; sourceTree = "<group>"; };
-		9A148D721EDB1BC5002E610C /* SwiftyJSONDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSONDecodable.swift; path = Source/SwiftyJSONDecodable.swift; sourceTree = "<group>"; };
-		9A148D731EDB1BC5002E610C /* TRON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TRON.swift; path = Source/TRON.swift; sourceTree = "<group>"; };
-		9A148D741EDB1BC5002E610C /* Tron+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tron+RxSwift.swift"; path = "Source/Tron+RxSwift.swift"; sourceTree = "<group>"; };
-		9A148D751EDB1BC5002E610C /* UploadAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadAPIRequest.swift; path = Source/UploadAPIRequest.swift; sourceTree = "<group>"; };
-		9A148D761EDB1BC5002E610C /* URLBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLBuilder.swift; path = Source/URLBuilder.swift; sourceTree = "<group>"; };
 		9A704E4F1C5D01B300392DE5 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A704E511C5D01B300392DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A704E531C5D01B300392DE5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -141,18 +195,27 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3EC5C87E22A7DD9C00B42774 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3EC5C89522A7DF0300B42774 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9A704E4C1C5D01B300392DE5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				9A704E801C5D01EC00392DE5 /* TRON.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9A722F461C5A49AE0087908D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				3EC5C89F22A7DF0300B42774 /* TRONSwiftyJSON.framework in Frameworks */,
+				3EC5C88822A7DD9C00B42774 /* RxTRON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +223,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EC5C8AC22A7DF9000B42774 /* TRONSwiftyJSON.framework in Frameworks */,
+				3EC5C8AB22A7DF8C00B42774 /* RxTRON.framework in Frameworks */,
 				9A722F551C5A49AE0087908D /* TRON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,30 +240,57 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		9A148DB71EDB1CCC002E610C /* Plugins */ = {
+		3EC5C8AA22A7DF8C00B42774 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9A148D701EDB1BC5002E610C /* Plugin.swift */,
-				9A148D6E1EDB1BC5002E610C /* NetworkActivityPlugin.swift */,
-				9A148D6F1EDB1BC5002E610C /* NetworkLoggerPlugin.swift */,
 			);
-			name = Plugins;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9A148DB91EDB1CF3002E610C /* SwiftyJSON */ = {
+		3EC5C8B322A7E78F00B42774 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				9A148D721EDB1BC5002E610C /* SwiftyJSONDecodable.swift */,
+				3EC5C8B422A7E78F00B42774 /* TRONSwiftyJSON */,
+				3EC5C8B622A7E78F00B42774 /* RxTRON */,
+				3EC5C8B822A7E78F00B42774 /* TRON */,
 			);
-			name = SwiftyJSON;
+			path = Source;
 			sourceTree = "<group>";
 		};
-		9A148DBA1EDB1CFA002E610C /* Rx */ = {
+		3EC5C8B422A7E78F00B42774 /* TRONSwiftyJSON */ = {
 			isa = PBXGroup;
 			children = (
-				9A148D741EDB1BC5002E610C /* Tron+RxSwift.swift */,
+				3EC5C8B522A7E78F00B42774 /* SwiftyJSONDecodable.swift */,
 			);
-			name = Rx;
+			path = TRONSwiftyJSON;
+			sourceTree = "<group>";
+		};
+		3EC5C8B622A7E78F00B42774 /* RxTRON */ = {
+			isa = PBXGroup;
+			children = (
+				3EC5C8B722A7E78F00B42774 /* Tron+RxSwift.swift */,
+			);
+			path = RxTRON;
+			sourceTree = "<group>";
+		};
+		3EC5C8B822A7E78F00B42774 /* TRON */ = {
+			isa = PBXGroup;
+			children = (
+				3EC5C8B922A7E78F00B42774 /* APIStub.swift */,
+				3EC5C8BA22A7E78F00B42774 /* BaseRequest.swift */,
+				3EC5C8BB22A7E78F00B42774 /* APIError.swift */,
+				3EC5C8BC22A7E78F00B42774 /* UploadAPIRequest.swift */,
+				3EC5C8BD22A7E78F00B42774 /* TRON.swift */,
+				3EC5C8BE22A7E78F00B42774 /* TRONCodable.swift */,
+				3EC5C8BF22A7E78F00B42774 /* NetworkLoggerPlugin.swift */,
+				3EC5C8C022A7E78F00B42774 /* DownloadAPIRequest.swift */,
+				3EC5C8C122A7E78F00B42774 /* NetworkActivityPlugin.swift */,
+				3EC5C8C222A7E78F00B42774 /* URLBuilder.swift */,
+				3EC5C8C322A7E78F00B42774 /* APIRequest.swift */,
+				3EC5C8C422A7E78F00B42774 /* Plugin.swift */,
+				3EC5C8C522A7E78F00B42774 /* Serialization.swift */,
+			);
+			path = TRON;
 			sourceTree = "<group>";
 		};
 		9A704E501C5D01B300392DE5 /* Example */ = {
@@ -218,13 +310,15 @@
 		9A722F401C5A49AE0087908D = {
 			isa = PBXGroup;
 			children = (
+				3EC5C8B122A7E4BA00B42774 /* Package.swift */,
 				9AFAE4D31CC520F6002739B0 /* Documentation */,
 				9A704E501C5D01B300392DE5 /* Example */,
 				9AB63D2222731CA600544A3E /* Guides */,
 				9A722F641C5A49C70087908D /* Plists */,
 				9A722F4B1C5A49AE0087908D /* Products */,
-				9A90CC221C5FAB3000472DB8 /* Source */,
+				3EC5C8B322A7E78F00B42774 /* Source */,
 				9A90CC231C5FAB3400472DB8 /* Tests */,
+				3EC5C8AA22A7DF8C00B42774 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -234,6 +328,8 @@
 				9A722F4A1C5A49AE0087908D /* TRON.framework */,
 				9A722F541C5A49AE0087908D /* Tests.xctest */,
 				9A704E4F1C5D01B300392DE5 /* Example.app */,
+				3EC5C88122A7DD9C00B42774 /* RxTRON.framework */,
+				3EC5C89822A7DF0300B42774 /* TRONSwiftyJSON.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -247,29 +343,10 @@
 			name = Plists;
 			sourceTree = "<group>";
 		};
-		9A90CC221C5FAB3000472DB8 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				9A148D671EDB1BC5002E610C /* APIError.swift */,
-				9A148D681EDB1BC5002E610C /* APIRequest.swift */,
-				9A148D691EDB1BC5002E610C /* APIStub.swift */,
-				9A148D6A1EDB1BC5002E610C /* BaseRequest.swift */,
-				9A148D6B1EDB1BC5002E610C /* DownloadAPIRequest.swift */,
-				9A148DB71EDB1CCC002E610C /* Plugins */,
-				9A148DBA1EDB1CFA002E610C /* Rx */,
-				3E7FB48721CD56D600094CD9 /* Serialization.swift */,
-				9A148DB91EDB1CF3002E610C /* SwiftyJSON */,
-				9A148D731EDB1BC5002E610C /* TRON.swift */,
-				3E01C1941F06475200C47CB3 /* TRONCodable.swift */,
-				9A148D751EDB1BC5002E610C /* UploadAPIRequest.swift */,
-				9A148D761EDB1BC5002E610C /* URLBuilder.swift */,
-			);
-			name = Source;
-			sourceTree = "<group>";
-		};
 		9A90CC231C5FAB3400472DB8 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				3EC5C8AD22A7E2C000B42774 /* Tests-Bridging-Header.h */,
 				3E74A612215F8AEA00091078 /* APIRequestTestCase.swift */,
 				3E74A613215F8AEA00091078 /* ApiStubbingTestCase.swift */,
 				3E74A611215F8AEA00091078 /* CodableTestCase.swift */,
@@ -325,17 +402,43 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		9A722F471C5A49AE0087908D /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
+		3EC5C88022A7DD9C00B42774 /* RxTRON */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3EC5C88C22A7DD9C00B42774 /* Build configuration list for PBXNativeTarget "RxTRON" */;
+			buildPhases = (
+				3EC5C87D22A7DD9C00B42774 /* Sources */,
+				3EC5C87E22A7DD9C00B42774 /* Frameworks */,
+				3EC5C88F22A7DE0600B42774 /* Copy Carthage Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3EC5C88E22A7DDA200B42774 /* PBXTargetDependency */,
+			);
+			name = RxTRON;
+			productName = RxTRON;
+			productReference = 3EC5C88122A7DD9C00B42774 /* RxTRON.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3EC5C89722A7DF0300B42774 /* TRONSwiftyJSON */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3EC5C8A122A7DF0300B42774 /* Build configuration list for PBXNativeTarget "TRONSwiftyJSON" */;
+			buildPhases = (
+				3EC5C89422A7DF0300B42774 /* Sources */,
+				3EC5C89522A7DF0300B42774 /* Frameworks */,
+				3EC5C8A722A7DF3200B42774 /* Copy Carthage frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3EC5C8A522A7DF0D00B42774 /* PBXTargetDependency */,
+			);
+			name = TRONSwiftyJSON;
+			productName = TRONSwiftyJSON;
+			productReference = 3EC5C89822A7DF0300B42774 /* TRONSwiftyJSON.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		9A704E4E1C5D01B300392DE5 /* Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A704E741C5D01B300392DE5 /* Build configuration list for PBXNativeTarget "Example" */;
@@ -349,6 +452,8 @@
 			);
 			dependencies = (
 				9A704E831C5D01EC00392DE5 /* PBXTargetDependency */,
+				3EC5C88722A7DD9C00B42774 /* PBXTargetDependency */,
+				3EC5C89E22A7DF0300B42774 /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
@@ -361,9 +466,6 @@
 			buildPhases = (
 				9A7FA1B71FBCBE6B00C80AED /* SwiftLint */,
 				9A722F451C5A49AE0087908D /* Sources */,
-				9A722F461C5A49AE0087908D /* Frameworks */,
-				9A722F471C5A49AE0087908D /* Headers */,
-				9A722F481C5A49AE0087908D /* Resources */,
 				9A73E0BF1F658C3200BF80F8 /* Copy Carthage Frameworks */,
 			);
 			buildRules = (
@@ -387,6 +489,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				3EC5C8A922A7DF8100B42774 /* PBXTargetDependency */,
+				3EC5C89222A7DEEB00B42774 /* PBXTargetDependency */,
 				9A722F571C5A49AE0087908D /* PBXTargetDependency */,
 			);
 			name = Tests;
@@ -404,6 +508,14 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Denys Telezhkin";
 				TargetAttributes = {
+					3EC5C88022A7DD9C00B42774 = {
+						CreatedOnToolsVersion = 10.2.1;
+						ProvisioningStyle = Manual;
+					};
+					3EC5C89722A7DF0300B42774 = {
+						CreatedOnToolsVersion = 10.2.1;
+						ProvisioningStyle = Manual;
+					};
 					9A704E4E1C5D01B300392DE5 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = L94VC9ZZXC;
@@ -415,7 +527,7 @@
 					};
 					9A722F531C5A49AE0087908D = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -435,6 +547,8 @@
 				9A722F491C5A49AE0087908D /* TRON */,
 				9A722F531C5A49AE0087908D /* Tests */,
 				9A704E4E1C5D01B300392DE5 /* Example */,
+				3EC5C88022A7DD9C00B42774 /* RxTRON */,
+				3EC5C89722A7DF0300B42774 /* TRONSwiftyJSON */,
 			);
 		};
 /* End PBXProject section */
@@ -447,13 +561,6 @@
 				9A704E5C1C5D01B300392DE5 /* LaunchScreen.storyboard in Resources */,
 				9A704E591C5D01B300392DE5 /* Assets.xcassets in Resources */,
 				9A704E571C5D01B300392DE5 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9A722F481C5A49AE0087908D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +577,44 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3EC5C88F22A7DE0600B42774 /* Copy Carthage Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				RxSwift.framework,
+			);
+			name = "Copy Carthage Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = " exec \"${SRCROOT}/scripts/copy-carthage-frameworks.sh\"\n";
+		};
+		3EC5C8A722A7DF3200B42774 /* Copy Carthage frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				SwiftyJSON.framework,
+			);
+			name = "Copy Carthage frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "exec \"${SRCROOT}/scripts/copy-carthage-frameworks.sh\"\n";
+		};
 		9A73E0BF1F658C3200BF80F8 /* Copy Carthage Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -521,6 +666,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3EC5C87D22A7DD9C00B42774 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3EC5C8D622A7E79A00B42774 /* Tron+RxSwift.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3EC5C89422A7DF0300B42774 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3EC5C8D522A7E79400B42774 /* SwiftyJSONDecodable.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9A704E4B1C5D01B300392DE5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -535,21 +696,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A148DA71EDB1BC5002E610C /* TRON.swift in Sources */,
-				3E01C1951F06475200C47CB3 /* TRONCodable.swift in Sources */,
-				9A148D831EDB1BC5002E610C /* BaseRequest.swift in Sources */,
-				9A148D871EDB1BC5002E610C /* DownloadAPIRequest.swift in Sources */,
-				9A148D971EDB1BC5002E610C /* NetworkLoggerPlugin.swift in Sources */,
-				9A148DB31EDB1BC5002E610C /* URLBuilder.swift in Sources */,
-				9A148DAB1EDB1BC5002E610C /* Tron+RxSwift.swift in Sources */,
-				9A148D771EDB1BC5002E610C /* APIError.swift in Sources */,
-				9A148D9B1EDB1BC5002E610C /* Plugin.swift in Sources */,
-				9A148DAF1EDB1BC5002E610C /* UploadAPIRequest.swift in Sources */,
-				9A148DA31EDB1BC5002E610C /* SwiftyJSONDecodable.swift in Sources */,
-				3E7FB48821CD56D600094CD9 /* Serialization.swift in Sources */,
-				9A148D7F1EDB1BC5002E610C /* APIStub.swift in Sources */,
-				9A148D931EDB1BC5002E610C /* NetworkActivityPlugin.swift in Sources */,
-				9A148D7B1EDB1BC5002E610C /* APIRequest.swift in Sources */,
+				3EC5C8C922A7E78F00B42774 /* BaseRequest.swift in Sources */,
+				3EC5C8CE22A7E78F00B42774 /* NetworkLoggerPlugin.swift in Sources */,
+				3EC5C8D322A7E78F00B42774 /* Plugin.swift in Sources */,
+				3EC5C8D222A7E78F00B42774 /* APIRequest.swift in Sources */,
+				3EC5C8CF22A7E78F00B42774 /* DownloadAPIRequest.swift in Sources */,
+				3EC5C8CD22A7E78F00B42774 /* TRONCodable.swift in Sources */,
+				3EC5C8D122A7E78F00B42774 /* URLBuilder.swift in Sources */,
+				3EC5C8D022A7E78F00B42774 /* NetworkActivityPlugin.swift in Sources */,
+				3EC5C8CA22A7E78F00B42774 /* APIError.swift in Sources */,
+				3EC5C8C822A7E78F00B42774 /* APIStub.swift in Sources */,
+				3EC5C8CB22A7E78F00B42774 /* UploadAPIRequest.swift in Sources */,
+				3EC5C8D422A7E78F00B42774 /* Serialization.swift in Sources */,
+				3EC5C8CC22A7E78F00B42774 /* TRON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +738,36 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3EC5C88722A7DD9C00B42774 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3EC5C88022A7DD9C00B42774 /* RxTRON */;
+			targetProxy = 3EC5C88622A7DD9C00B42774 /* PBXContainerItemProxy */;
+		};
+		3EC5C88E22A7DDA200B42774 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9A722F491C5A49AE0087908D /* TRON */;
+			targetProxy = 3EC5C88D22A7DDA200B42774 /* PBXContainerItemProxy */;
+		};
+		3EC5C89222A7DEEB00B42774 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3EC5C88022A7DD9C00B42774 /* RxTRON */;
+			targetProxy = 3EC5C89122A7DEEB00B42774 /* PBXContainerItemProxy */;
+		};
+		3EC5C89E22A7DF0300B42774 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3EC5C89722A7DF0300B42774 /* TRONSwiftyJSON */;
+			targetProxy = 3EC5C89D22A7DF0300B42774 /* PBXContainerItemProxy */;
+		};
+		3EC5C8A522A7DF0D00B42774 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9A722F491C5A49AE0087908D /* TRON */;
+			targetProxy = 3EC5C8A422A7DF0D00B42774 /* PBXContainerItemProxy */;
+		};
+		3EC5C8A922A7DF8100B42774 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3EC5C89722A7DF0300B42774 /* TRONSwiftyJSON */;
+			targetProxy = 3EC5C8A822A7DF8100B42774 /* PBXContainerItemProxy */;
+		};
 		9A704E831C5D01EC00392DE5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9A722F491C5A49AE0087908D /* TRON */;
@@ -611,6 +800,82 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3EC5C88A22A7DD9C00B42774 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.RxTRON;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		3EC5C88B22A7DD9C00B42774 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.RxTRON;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		3EC5C8A222A7DF0300B42774 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRONSwiftyJSON;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		3EC5C8A322A7DF0300B42774 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Framework.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRONSwiftyJSON;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		9A704E5E1C5D01B300392DE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -819,7 +1084,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRON;
 				PRODUCT_NAME = TRON;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -838,13 +1102,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRON;
 				PRODUCT_NAME = TRON;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
 		9A722F621C5A49AE0087908D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
@@ -852,13 +1116,16 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		9A722F631C5A49AE0087908D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
@@ -866,13 +1133,33 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRONTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/Tests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3EC5C88C22A7DD9C00B42774 /* Build configuration list for PBXNativeTarget "RxTRON" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3EC5C88A22A7DD9C00B42774 /* Debug */,
+				3EC5C88B22A7DD9C00B42774 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3EC5C8A122A7DF0300B42774 /* Build configuration list for PBXNativeTarget "TRONSwiftyJSON" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3EC5C8A222A7DF0300B42774 /* Debug */,
+				3EC5C8A322A7DF0300B42774 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9A704E741C5D01B300392DE5 /* Build configuration list for PBXNativeTarget "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
