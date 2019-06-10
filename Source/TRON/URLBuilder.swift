@@ -50,6 +50,6 @@ open class URLBuilder: URLBuildable {
      - returns constructed URL
      */
     open func url(forPath path: String) -> URL {
-        return URL(string: baseURLString)?.appendingPathComponent(path) ?? NSURL() as URL
+        return URL(string: path, relativeTo: URL(string: baseURLString)) ?? NSURL() as URL
     }
 }

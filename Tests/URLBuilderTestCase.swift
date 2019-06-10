@@ -15,4 +15,8 @@ class URLBuilderTestCase: XCTestCase {
         XCTAssertEqual(tron.urlBuilder.url(forPath: "/bar").absoluteString, "https://github.com/bar")
     }
     
+    func testURLBuildableAcceptsAbsolutePath() {
+        XCTAssertEqual(tron.urlBuilder.url(forPath: "https://www.example.com/foo").absoluteString, "https://www.example.com/foo")
+    }
+    
 }

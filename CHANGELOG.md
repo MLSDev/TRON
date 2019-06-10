@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* `URLBuilder` now resolves URL's using `URL(string:relativeTo:)` method, thus allowing more flexible url creation.
+
 ## [5.0.0-beta.3](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.3)
 
 ### Added
