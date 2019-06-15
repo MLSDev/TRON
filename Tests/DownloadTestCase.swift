@@ -19,10 +19,11 @@ class DownloadTestCase: ProtocolStubbedTestCase {
             in: searchPathDomain
         )
         let responseSerializer = TRONDownloadResponseSerializer { _,_, url,_ in url }
-        let request: DownloadAPIRequest<URL?, APIError> = tron.download("/stream/100",
-                                                                                 to: destination,
-                                                                                 responseSerializer: responseSerializer)
-        request.stubSuccess(.init(), statusCode: 200)
+        let request: DownloadAPIRequest<URL?, APIError> = tron
+            .download("/stream/100",
+                      to: destination,
+                      responseSerializer: responseSerializer)
+            .stubSuccess(.init(), statusCode: 200)
         let expectation = self.expectation(description: "Download expectation")
         request.performCollectingTimeline(withCompletion: { result in
             XCTAssertEqual(result.response?.statusCode, 200)

@@ -9,9 +9,10 @@
 class HeaderBuilderTestCase: ProtocolStubbedTestCase {
     
     func testTronRequestHeaderBuilderAppendsHeaders() {
-        let request: APIRequest<Int,APIError> = tron.swiftyJSON.request("status/200")
-        request.headers = ["If-Modified-Since":"Sat, 29 Oct 1994 19:43:31 GMT"]
-        request.stubStatusCode(200)
+        let request: APIRequest<Int,APIError> = tron.swiftyJSON
+            .request("status/200")
+            .headers(["If-Modified-Since":"Sat, 29 Oct 1994 19:43:31 GMT"])
+            .stubStatusCode(200)
         let waitingForRequest = expectation(description: "wait for request")
         let alamofireRequest = request.performCollectingTimeline(withCompletion: { _ in
             waitingForRequest.fulfill()

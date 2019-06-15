@@ -89,7 +89,7 @@ private extension HTTPURLResponse {
 }
 
 extension BaseRequest {
-    func stubSuccess(_ data: Data, statusCode: Int? = nil) {
+    func stubSuccess(_ data: Data, statusCode: Int? = nil) -> Self {
         let identifier = UUID()
         headers.add(name: StubbingURLProtocol.Constants.HeaderIdentifier, value: identifier.uuidString)
         var messages = [URLProtocolClientCommunicator.Message]()
@@ -99,23 +99,26 @@ extension BaseRequest {
         messages.append(.data(data))
         messages.append(.complete)
         StubbingURLProtocol.communicators[identifier] = URLProtocolClientCommunicator(messages)
+        return self
     }
     
-    func stubStatusCode(_ statusCode: Int) {
+    func stubStatusCode(_ statusCode: Int) -> Self {
         let identifier = UUID()
         headers.add(name: StubbingURLProtocol.Constants.HeaderIdentifier, value: identifier.uuidString)
         var messages = [URLProtocolClientCommunicator.Message]()
         messages.append(.response(HTTPURLResponse.withStatus(statusCode)))
         messages.append(.complete)
         StubbingURLProtocol.communicators[identifier] = URLProtocolClientCommunicator(messages)
+        return self
     }
     
-    func stubFailure(_ error: Error = DummyError()) {
+    func stubFailure(_ error: Error = DummyError()) -> Self {
         let identifier = UUID()
         headers.add(name: StubbingURLProtocol.Constants.HeaderIdentifier, value: identifier.uuidString)
         var messages = [URLProtocolClientCommunicator.Message]()
         messages.append(.error(error))
         messages.append(.complete)
         StubbingURLProtocol.communicators[identifier] = URLProtocolClientCommunicator(messages)
+        return self
     }
 }

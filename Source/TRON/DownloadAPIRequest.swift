@@ -58,6 +58,11 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
     /// Closure that is applied to request before it is sent.
     open var validationClosure: (DownloadRequest) -> DownloadRequest = { $0.validate() }
 
+    open func validation(_ validation: @escaping (DownloadRequest) -> DownloadRequest) -> Self {
+        validationClosure = validation
+        return self
+    }
+
     /// Creates `DownloadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
     public init<Serializer: DownloadResponseSerializerProtocol>(type: DownloadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
         where Serializer.SerializedObject == Model {

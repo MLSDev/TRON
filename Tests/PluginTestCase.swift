@@ -10,9 +10,10 @@ class PluginTestCase: ProtocolStubbedTestCase {
     
     func testGlobalPluginsAreCalledCorrectly() {
         let pluginTester = PluginTester()
-        let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("status/200")
-        request.plugins.append(pluginTester)
-        request.stubStatusCode(200)
+        let request : APIRequest<Int,APIError> = tron.swiftyJSON
+            .request("status/200")
+            .with(pluginTester)
+            .stubStatusCode(200)
         
         let waitingForRequest = expectation(description: "wait for request")
         request.performCollectingTimeline(withCompletion: { result in
@@ -28,11 +29,11 @@ class PluginTestCase: ProtocolStubbedTestCase {
     
     func testLocalPluginsAreCalledCorrectly() {
         let pluginTester = PluginTester()
-        let request: APIRequest<String,APIError> = tron.swiftyJSON.request("status/200")
-        request.plugins.append(pluginTester)
-        request.stubStatusCode(200)
+        let request: APIRequest<String,APIError> = tron.swiftyJSON
+            .request("status/200")
+            .with(pluginTester)
+            .stubStatusCode(200)
         let expectation = self.expectation(description: "PluginTester expectation")
-        request.plugins.append(pluginTester)
         request.perform(withSuccess: { _ in
             if pluginTester.didReceiveResponseCalled && pluginTester.willSendCalled {
                 expectation.fulfill()
@@ -60,9 +61,11 @@ class PluginTestCase: ProtocolStubbedTestCase {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [StubbingURLProtocol.self]
         tron = TRON(baseURL: "https://httpbin.org", session: Session(configuration: configuration))
-        let request: UploadAPIRequest<String,APIError> = tron.swiftyJSON.uploadMultipart("status/200") { formData in }
-        request.stubStatusCode(200)
-        request.plugins.append(localPluginTester)
+        let request: UploadAPIRequest<String,APIError> = tron.swiftyJSON
+            .uploadMultipart("status/200") { formData in }
+            .stubStatusCode(200)
+            .with(localPluginTester)
+        
         tron.plugins.append(globalPluginTester)
         
         let waitForRequest = expectation(description: "waiting for request")

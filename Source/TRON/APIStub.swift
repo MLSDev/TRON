@@ -131,7 +131,7 @@ open class APIStub {
     open var fileURL: URL?
 
     /// Delay before stub is executed
-    open var stubDelay: Double = 0
+    open var stubDelay: TimeInterval = 0
 
     /// When this property is set to true, stub will be activated. Defaults to false.
     open var isEnabled: Bool = false

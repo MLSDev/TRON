@@ -165,4 +165,94 @@ open class BaseRequest<Model, ErrorModel> {
             plugin.didReceiveDataResponse(response, forRequest: request, formedFrom: self)
         }
     }
+
+    public func method(_ httpMethod: HTTPMethod) -> Self {
+        self.method = httpMethod
+        return self
+    }
+
+    public func post() -> Self {
+        method = .post
+        return self
+    }
+
+    public func connect() -> Self {
+        method = .connect
+        return self
+    }
+
+    public func delete() -> Self {
+        method = .delete
+        return self
+    }
+
+    public func get() -> Self {
+        method = .get
+        return self
+    }
+
+    public func head() -> Self {
+        method = .head
+        return self
+    }
+
+    public func options() -> Self {
+        method = .options
+        return self
+    }
+
+    public func patch() -> Self {
+        method = .patch
+        return self
+    }
+
+    public func put() -> Self {
+        method = .put
+        return self
+    }
+
+    public func trace() -> Self {
+        method = .trace
+        return self
+    }
+
+    public func parameterEncoding(_ encoding: ParameterEncoding) -> Self {
+        parameterEncoding = encoding
+        return self
+    }
+
+    public func headers(_ headers: HTTPHeaders) -> Self {
+        self.headers = headers
+        return self
+    }
+
+    public func with(_ plugin: Plugin) -> Self {
+        plugins.append(plugin)
+        return self
+    }
+
+    public func parameters(_ parameters: [String: Any]) -> Self {
+        parameters.forEach {
+            self.parameters[$0.key] = $0.value
+        }
+        return self
+    }
+
+    public func optionalParameters(_ parameters: [String: Any?], setNilToNull: Bool = false) -> Self {
+        parameters.forEach {
+            if let value = $0.value {
+                self.parameters[$0.key] = value
+            } else if setNilToNull {
+                self.parameters[$0.key] = NSNull()
+            }
+        }
+        return self
+    }
+
+    public func stub(with stub: APIStub, delay: TimeInterval = 0.0, enabled: Bool = true) -> Self {
+        apiStub = stub
+        apiStub?.isEnabled = enabled
+        apiStub?.stubDelay = delay
+        return self
+    }
 }

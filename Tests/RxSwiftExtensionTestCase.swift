@@ -11,9 +11,8 @@ import RxSwift
 class RxSwiftExtensionTestCase: ProtocolStubbedTestCase {
     
     func testRxResultSuccessfullyCompletes() {
-        let request : APIRequest<String,APIError> = tron.swiftyJSON.request("get")
+        let request : APIRequest<String,APIError> = tron.swiftyJSON.request("get").stubSuccess([:].asData)
         let expectation = self.expectation(description: "200")
-        request.stubSuccess([:].asData)
         _ = request.rxResult().subscribe(onNext: { _ in
             expectation.fulfill()
         })
@@ -21,9 +20,8 @@ class RxSwiftExtensionTestCase: ProtocolStubbedTestCase {
     }
     
     func testRxResultIsClosedAfterSuccessfulResponse() {
-        let request : APIRequest<String,APIError> = tron.swiftyJSON.request("get")
+        let request : APIRequest<String,APIError> = tron.swiftyJSON.request("get").stubSuccess([:].asData)
         let expectation = self.expectation(description: "200")
-        request.stubSuccess([:].asData)
         _ = request.rxResult().subscribe(onCompleted: { 
             expectation.fulfill()
         })
@@ -31,9 +29,8 @@ class RxSwiftExtensionTestCase: ProtocolStubbedTestCase {
     }
     
     func testRxResultCanBeFailed() {
-        let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("status/418")
+        let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("status/418").stubStatusCode(418)
         let expectation = self.expectation(description: "Teapot")
-        request.stubStatusCode(418)
         _ = request.rxResult().subscribe(onError: { _ in
             expectation.fulfill()
         })
@@ -41,11 +38,12 @@ class RxSwiftExtensionTestCase: ProtocolStubbedTestCase {
     }
     
     func testMultipartRxCanBeSuccessful() {
-        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON.uploadMultipart("post") { formData in
-            formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
-        }
-        request.method = .post
-        request.stubSuccess(["title":"Foo"].asData)
+        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON
+            .uploadMultipart("post") { formData in
+                formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
+            }
+            .post()
+            .stubSuccess(["title":"Foo"].asData)
         let expectation = self.expectation(description: "foo")
         
         _ = request.rxResult().subscribe(onNext: { result in
@@ -56,13 +54,13 @@ class RxSwiftExtensionTestCase: ProtocolStubbedTestCase {
     }
     
     func testMultipartRxCanBeFailureful() {
-        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON.uploadMultipart("post") { formData in
-            formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
-        }
-        request.method = .delete
-        request.stubStatusCode(400)
-        let expectation = self.expectation(description: "foo")
-        
+        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON
+            .uploadMultipart("post") { formData in
+                formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
+            }
+            .delete()
+            .stubStatusCode(200)
+        let expectation = self.expectation(description: "foo")        
         _ = request.rxResult().subscribe(onError: { error in
             expectation.fulfill()
         })

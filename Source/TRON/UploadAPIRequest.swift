@@ -61,6 +61,11 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
     /// Closure that is applied to request before it is sent.
     open var validationClosure: (UploadRequest) -> UploadRequest = { $0.validate() }
 
+    open func validation(_ validation: @escaping (UploadRequest) -> UploadRequest) -> Self {
+        validationClosure = validation
+        return self
+    }
+
     /// Creates `UploadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
     public init<Serializer: DataResponseSerializerProtocol>(type: UploadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
         where Serializer.SerializedObject == Model {

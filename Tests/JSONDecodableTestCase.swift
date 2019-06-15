@@ -73,8 +73,9 @@ class JSONDecodableTestCase: ProtocolStubbedTestCase {
     }
 
     func testJSONDecodableParsing() {
-        let request: APIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON.request("response")
-        request.stubSuccess(["title":"Foo"].asData)
+        let request: APIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON
+            .request("response")
+            .stubSuccess(["title":"Foo"].asData)
         let expectation = self.expectation(description: "Parsing headers response")
         request.perform(withSuccess:  { response in
             XCTAssertEqual(response.title, "Foo")
@@ -85,8 +86,7 @@ class JSONDecodableTestCase: ProtocolStubbedTestCase {
     }
     
     func testJSONDecodableWorksWithSiblings() {
-        let request: APIRequest<Sibling,APIError> = tron.swiftyJSON.request("headers")
-        request.stubSuccess([:].asData)
+        let request: APIRequest<Sibling,APIError> = tron.swiftyJSON.request("headers").stubSuccess([:].asData)
         let expectation = self.expectation(description: "Parsing headers response")
         request.perform(withSuccess:  { sibling in
             XCTAssertEqual(sibling.foo, "4")
@@ -101,7 +101,7 @@ class JSONDecodableTestCase: ProtocolStubbedTestCase {
         let request: APIRequest<JSONDecodableResponse,APIError> = tron
             .swiftyJSON(traversingJSON: traverseJSON)
             .request("traverse")
-        request.stubSuccess(["root":["subRoot":["title":"Foo"]]].asData)
+            .stubSuccess(["root":["subRoot":["title":"Foo"]]].asData)
         let expectation = self.expectation(description: "Parsing headers response")
         request.perform(withSuccess:  { response in
             XCTAssertEqual(response.title, "Foo")
@@ -112,8 +112,9 @@ class JSONDecodableTestCase: ProtocolStubbedTestCase {
     }
     
     func testJSONDecodableCanWorkWithOptionals() {
-        let request: APIRequest<JSONDecodableResponse?,APIError> = tron.swiftyJSON.request("optional")
-        request.stubSuccess(["title":"Foo"].asData)
+        let request: APIRequest<JSONDecodableResponse?,APIError> = tron.swiftyJSON
+            .request("optional")
+            .stubSuccess(["title":"Foo"].asData)
         let expectation = self.expectation(description: "Parsing optional response")
         request.perform(withSuccess:  { response in
             XCTAssertEqual(response?.title, "Foo")

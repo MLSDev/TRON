@@ -24,9 +24,10 @@ class ResponseSerializationTestCase: ProtocolStubbedTestCase {
     
     func testAlamofireStringResponseSerializerIsAcceptedByTRON() {
         let serializer = StringResponseSerializer(encoding: .utf8, emptyResponseCodes: [200], emptyRequestMethods: [.get])
-        let request : APIRequest<String, APIError> = tron.request("status/200", responseSerializer: serializer)
+        let request : APIRequest<String, APIError> = tron
+            .request("status/200", responseSerializer: serializer)
+            .stubStatusCode(200)
         let expectation = self.expectation(description: "200")
-        request.stubStatusCode(200)
         request.perform(withSuccess: { model in
                 expectation.fulfill()
         }) { error in
@@ -36,9 +37,10 @@ class ResponseSerializationTestCase: ProtocolStubbedTestCase {
     }
     
     func testProtocolIsAcceptedWithCustomResponseSerializer() {
-        let request : APIRequest<[Food], APIError> = tron.request("status/200", responseSerializer: FoodResponseSerializer())
+        let request : APIRequest<[Food], APIError> = tron
+            .request("status/200", responseSerializer: FoodResponseSerializer())
+        .stubStatusCode(200)
         let expectation = self.expectation(description: "200")
-        request.stubStatusCode(200)
         request.perform(withSuccess: { model in
             if model.first is Apple && model.last is Meat {
                 expectation.fulfill()

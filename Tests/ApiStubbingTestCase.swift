@@ -33,9 +33,9 @@ class ApiStubbingTestCase: XCTestCase {
     let tron = TRON(baseURL: "https://github.com")
     
     func testStubsSuccessWork() {
-        let request: APIRequest<TestUser,APIError> = tron.swiftyJSON.request("f00")
-        request.apiStub = APIStub(data: userData(id: 5, name: "Foo"))
-        request.apiStub?.isEnabled = true
+        let request: APIRequest<TestUser,APIError> = tron.swiftyJSON
+            .request("f00")
+            .stub(with: .init(data: userData(id: 5, name: "Foo")))
         
         let exp = expectation(description: "Stubs success")
         request.perform(withSuccess: { response in
@@ -49,10 +49,9 @@ class ApiStubbingTestCase: XCTestCase {
     }
 
     func testStubsFailureWorks() {
-        let request : APIRequest<ThrowingJSONDecodable,APIError> = tron.swiftyJSON.request("f00")
-        request.apiStub = APIStub(data: String(5).data(using:  .utf8))
-        request.apiStub?.isEnabled = true
-        
+        let request : APIRequest<ThrowingJSONDecodable,APIError> = tron.swiftyJSON
+            .request("f00")
+            .stub(with: .init(data: String(5).data(using:  .utf8)))
         let exp = expectation(description: "Stubs fails")
         request.perform(withSuccess: { response in
             XCTFail("Failure expected but success was received")
@@ -64,10 +63,10 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testMultipartStubbingSuccessWorks() {
-        let request: UploadAPIRequest<TestUser,APIError> = tron.swiftyJSON.uploadMultipart("f00") { formData in
-        }
-        request.apiStub = APIStub(data: userData(id: 3, name: "Bar"))
-        request.apiStub?.isEnabled = true
+        let request: UploadAPIRequest<TestUser,APIError> = tron.swiftyJSON
+            .uploadMultipart("f00") { formData in
+            }
+            .stub(with: APIStub(data: userData(id: 3, name: "Bar")))
         
         let exp = expectation(description: "multipart stubbing success")
         request.perform(withSuccess: { model in
@@ -84,9 +83,9 @@ class ApiStubbingTestCase: XCTestCase {
             if url?.absoluteString == "expected.pkg" { return 0 }
             return 1
         }
-        let request: DownloadAPIRequest<Int, APIError> = tron.download("path", to: destination, responseSerializer: serializer)
-        request.apiStub = APIStub(fileURL: URL(string: "expected.pkg"))
-        request.apiStub?.isEnabled = true
+        let request: DownloadAPIRequest<Int, APIError> = tron
+            .download("path", to: destination, responseSerializer: serializer)
+            .stub(with: APIStub(fileURL: URL(string: "expected.pkg")))
         let exp = expectation(description: "stub with completion handler")
         request.performCollectingTimeline(withCompletion: { response in
             XCTAssertEqual(try? response.result.get(), 0)
@@ -96,11 +95,10 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testStubbingSuccessfullyWorksWithCompletionHandler() {
-        let parser = tron.swiftyJSON
-        parser.options = .allowFragments
-        let request: APIRequest<Int,JSONDecodableError<Int>> = parser.request("f00")
-        request.apiStub = APIStub(data: String(5).data(using: .utf8))
-        request.apiStub?.isEnabled = true
+        let request: APIRequest<Int,JSONDecodableError<Int>> = tron
+            .swiftyJSON(readingOptions: .allowFragments)
+            .request("f00")
+            .stub(with: APIStub(data: String(5).data(using: .utf8)))
         
         let exp = expectation(description: "stub with completion handler")
         request.performCollectingTimeline(withCompletion: { response in
@@ -112,12 +110,10 @@ class ApiStubbingTestCase: XCTestCase {
     }
     
     func testStubbingWorksAsynchronously() {
-        let parser = tron.swiftyJSON
-        parser.options = .allowFragments
-        let request: APIRequest<Int,APIError> = parser.request("f00")
-        request.apiStub = APIStub(data: String(5).data(using: .utf8))
-        request.apiStub?.isEnabled = true
-        request.apiStub?.stubDelay = 0.2
+        let request: APIRequest<Int,APIError> = tron
+            .swiftyJSON(readingOptions: .allowFragments)
+            .request("f00")
+            .stub(with: APIStub(data: String(5).data(using: .utf8)), delay: 0.2)
         var intResponse: Int? = nil
         let exp = expectation(description: "Stubs success")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

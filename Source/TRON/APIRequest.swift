@@ -40,6 +40,11 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
     /// Closure that is applied to request before it is sent.
     open var validationClosure: (DataRequest) -> DataRequest = { $0.validate() }
 
+    open func validation(_ validation: @escaping (DataRequest) -> DataRequest) -> Self {
+        validationClosure = validation
+        return self
+    }
+
     /// Creates `APIRequest`, filling `responseParser` and `errorParser` properties
     public init<Serializer: DataResponseSerializerProtocol>(path: String, tron: TRON, responseSerializer: Serializer)
         where Serializer.SerializedObject == Model {

@@ -30,7 +30,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let request: APIRequest<Int,APIError> = tron.swiftyJSON.request("status/418")
         let expectation = self.expectation(description: "Teapot")
         request.stubSuccess("Teapot".asData)
-        request.perform(withSuccess: { _ in
+            .perform(withSuccess: { _ in
             XCTFail("Failure expected but success was received")
         }) { error in
             XCTAssertEqual(error.data?.asString, "Teapot")
@@ -42,10 +42,11 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     func testSuccessCallBackIsCalledOnMainThread() {
         let request : APIRequest<String,APIError> = tron.swiftyJSON.request("get")
         let expectation = self.expectation(description: "200")
-        request.stubSuccess([:].asData)
-        request.perform(withSuccess: { _ in
-            XCTAssert(Thread.isMainThread)
-            expectation.fulfill()
+        request
+            .stubSuccess([:].asData)
+            .perform(withSuccess: { _ in
+                XCTAssert(Thread.isMainThread)
+                expectation.fulfill()
             }) { error in
                 XCTFail("unexpected network error: \(error)")
         }
@@ -55,8 +56,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     func testFailureCallbackIsCalledOnMainThread() {
         let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("status/418")
         let expectation = self.expectation(description: "Teapot")
-        request.stubFailure()
-        request.perform(withSuccess: { _ in
+        request.stubFailure().perform(withSuccess: { _ in
             XCTFail("Failure expected but success was received")
         }) { error in
             XCTAssert(Thread.isMainThread)
@@ -68,8 +68,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     func testParsingFailureCallbackIsCalledOnMainThread() {
         let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("html")
         let expectation = self.expectation(description: "Parsing failure")
-        request.stubFailure()
-        request.perform(withSuccess: { _ in
+        request.stubFailure().perform(withSuccess: { _ in
             XCTFail("Failure expected but success was received")
         }) { error in
             XCTAssert(Thread.isMainThread)
@@ -82,8 +81,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         tron.resultDeliveryQueue = DispatchQueue.global(qos: .background)
         let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("get")
         let expectation = self.expectation(description: "200")
-        request.stubSuccess([:].asData)
-        request.perform(withSuccess: { _ in
+        request.stubSuccess([:].asData).perform(withSuccess: { _ in
             XCTAssertFalse(Thread.isMainThread)
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -98,8 +96,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         tron.resultDeliveryQueue = DispatchQueue.global(qos: .background)
         let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("html")
         let expectation = self.expectation(description: "Parsing failure")
-        request.stubFailure()
-        request.perform(withSuccess: { _ in
+        request.stubFailure().perform(withSuccess: { _ in
             XCTFail("Failure expected but success was received")
             }) { error in
             XCTAssertFalse(Thread.isMainThread)
@@ -113,8 +110,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     func testRequestWithCompletionIsCalledOnMainThread() {
         let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("get")
         let expectation = self.expectation(description: "200")
-        request.stubSuccess([:].asData)
-        request.performCollectingTimeline { _ in
+        request.stubSuccess([:].asData).performCollectingTimeline { _ in
             XCTAssert(Thread.isMainThread)
             expectation.fulfill()
         }
@@ -125,8 +121,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("get")
         request.resultDeliveryQueue = DispatchQueue.global(qos: .background)
         let expectation = self.expectation(description: "200")
-        request.stubSuccess([:].asData)
-        request.performCollectingTimeline { _ in
+        request.stubSuccess([:].asData).performCollectingTimeline { _ in
             XCTAssertFalse(Thread.isMainThread)
             DispatchQueue.main.async {
                 expectation.fulfill()
@@ -136,8 +131,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     }
     
     func testEmptyResponseStillCallsSuccessBlock() {
-        let request : APIRequest<Empty, APIError> = tron.swiftyJSON.request("headers")
-        request.stubSuccess(.init())
+        let request : APIRequest<Empty, APIError> = tron.swiftyJSON.request("headers").stubSuccess(.init())
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
                 expectation.fulfill()
@@ -155,8 +149,7 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         configuration.protocolClasses = [StubbingURLProtocol.self]
         let manager = Session(configuration: configuration, startRequestsImmediately: false)
         let tron = TRON(baseURL: "https://httpbin.org", session: manager)
-        let request : APIRequest<Empty, APIError> = tron.swiftyJSON.request("headers")
-        request.stubSuccess(.init())
+        let request : APIRequest<Empty, APIError> = tron.swiftyJSON.request("headers").stubSuccess(.init())
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
             expectation.fulfill()
@@ -175,9 +168,8 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let tron = TRON(baseURL: "https://httpbin.org", session: manager)
         let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON.uploadMultipart("post") { formData in
             formData.append("bar".data(using: String.Encoding.utf8) ?? Data(), withName: "foo")
-        }
-        request.method = .post
-        request.stubSuccess(["title":"not empty"].asData)
+        }.post().stubSuccess(["title":"not empty"].asData)
+        
         let expectation = self.expectation(description: "foo")
         
         request.perform(withSuccess: { result in
@@ -191,8 +183,9 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     
     func testCustomValidationClosure() {
         let request : APIRequest<Int,APIError> = tron.swiftyJSON.request("status/201")
-        request.validationClosure = { $0.validate(statusCode: (202..<203)) }
-        request.stubSuccess([:].asData, statusCode: 201)
+        _ = request
+            .validation { $0.validate(statusCode: (202..<203))}
+            .stubSuccess([:].asData, statusCode: 201)
         let expectation = self.expectation(description: "success")
         request.perform(withSuccess: { _ in
             XCTFail("Failure expected but success was received")
@@ -204,9 +197,8 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
     
     func testCustomValidationClosureOverridesError() {
         let request : APIRequest<Empty,APIError> = tron.swiftyJSON.request("status/418")
-        request.validationClosure = { $0.validate(statusCode: (418...420)) }
+        _ = request.validation { $0.validate(statusCode: (418...420)) }.stubSuccess([:].asData, statusCode: 418)
         let expectation = self.expectation(description: "We like tea from this teapot")
-        request.stubSuccess([:].asData, statusCode: 418)
         request.perform(withSuccess: { _ in
             expectation.fulfill()
         }) { error in
