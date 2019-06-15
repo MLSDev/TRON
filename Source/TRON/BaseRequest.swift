@@ -231,19 +231,39 @@ open class BaseRequest<Model, ErrorModel> {
         return self
     }
 
-    public func parameters(_ parameters: [String: Any]) -> Self {
-        parameters.forEach {
-            self.parameters[$0.key] = $0.value
+    public func parameters(_ parameters: [String: Any], rootKey: String? = nil) -> Self {
+        if let rootKey = rootKey {
+            var wrappedParameters: [String: Any] = [:]
+            parameters.forEach {
+                wrappedParameters[$0.key] = $0.value
+            }
+            self.parameters[rootKey] = wrappedParameters
+        } else {
+            parameters.forEach {
+                self.parameters[$0.key] = $0.value
+            }
         }
         return self
     }
 
-    public func optionalParameters(_ parameters: [String: Any?], setNilToNull: Bool = false) -> Self {
-        parameters.forEach {
-            if let value = $0.value {
-                self.parameters[$0.key] = value
-            } else if setNilToNull {
-                self.parameters[$0.key] = NSNull()
+    public func optionalParameters(_ parameters: [String: Any?], setNilToNull: Bool = false, rootKey: String? = nil) -> Self {
+        if let rootKey = rootKey {
+            var wrappedParameters: [String: Any] = [:]
+            parameters.forEach {
+                if let value = $0.value {
+                    wrappedParameters[$0.key] = value
+                } else if setNilToNull {
+                    wrappedParameters[$0.key] = NSNull()
+                }
+            }
+            self.parameters[rootKey] = wrappedParameters
+        } else {
+            parameters.forEach {
+                if let value = $0.value {
+                    self.parameters[$0.key] = value
+                } else if setNilToNull {
+                    self.parameters[$0.key] = NSNull()
+                }
             }
         }
         return self

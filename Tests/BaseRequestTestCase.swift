@@ -58,4 +58,32 @@ class BaseRequestTestCase: ProtocolStubbedTestCase {
         XCTAssertEqual((jsonObject as? [String: Any])?["empty"] as? NSNull, NSNull())
         XCTAssertEqual((jsonObject as? [String: Any])?["filled"] as? Int, 3)
     }
+    
+    func testParametersCanBeWrappedInRootKey() {
+        let request : APIRequest<Int,APIError> = tron.swiftyJSON
+            .request("status/200")
+            .parameters([
+                "foo":"bar",
+                "1":"2"
+                ], rootKey: "wrapper")
+        
+        XCTAssertEqual(request.parameters["wrapper"] as? [String:String], [
+            "foo":"bar",
+            "1":"2"
+            ])
+    }
+    
+    func testOptionalParametersCanBeWrappedInRootKey() {
+        let request : APIRequest<Int,APIError> = tron.swiftyJSON
+            .request("status/200")
+            .optionalParameters([
+                "foo":"bar",
+                "1":"2"
+                ], rootKey: "wrapper")
+        
+        XCTAssertEqual(request.parameters["wrapper"] as? [String:String], [
+            "foo":"bar",
+            "1":"2"
+            ])
+    }
 }
