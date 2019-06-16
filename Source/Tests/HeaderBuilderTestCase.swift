@@ -6,12 +6,15 @@
 //  Copyright © 2016 Denys Telezhkin. All rights reserved.
 //
 
+import TRON
+import XCTest
+
 class HeaderBuilderTestCase: ProtocolStubbedTestCase {
-    
+
     func testTronRequestHeaderBuilderAppendsHeaders() {
-        let request: APIRequest<Int,APIError> = tron.swiftyJSON
+        let request: APIRequest<Int, APIError> = tron.swiftyJSON
             .request("status/200")
-            .headers(["If-Modified-Since":"Sat, 29 Oct 1994 19:43:31 GMT"])
+            .headers(["If-Modified-Since": "Sat, 29 Oct 1994 19:43:31 GMT"])
             .stubStatusCode(200)
         let waitingForRequest = expectation(description: "wait for request")
         let alamofireRequest = request.performCollectingTimeline(withCompletion: { _ in
@@ -20,8 +23,8 @@ class HeaderBuilderTestCase: ProtocolStubbedTestCase {
         waitForExpectations(timeout: 1)
         XCTAssertNotNil(alamofireRequest.request)
         let headers = alamofireRequest.request?.allHTTPHeaderFields
-        
+
         XCTAssertEqual(headers?["If-Modified-Since"], "Sat, 29 Oct 1994 19:43:31 GMT")
     }
-    
+
 }

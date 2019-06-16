@@ -6,10 +6,14 @@
 //  Copyright © 2019 Denys Telezhkin. All rights reserved.
 //
 
+import TRON
+import XCTest
+import Alamofire
+
 class ProtocolStubbedTestCase: XCTestCase {
 
     var tron: TRON!
-    
+
     override func setUp() {
         super.setUp()
         let configuration = URLSessionConfiguration.default
@@ -20,7 +24,7 @@ class ProtocolStubbedTestCase: XCTestCase {
         tron = TRON(baseURL: "https://httpbin.org", session: Session(configuration: configuration,
                                                                      startRequestsImmediately: false))
     }
-    
+
     override func tearDown() {
         super.tearDown()
         tron = nil

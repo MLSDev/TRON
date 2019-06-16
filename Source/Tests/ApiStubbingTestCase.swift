@@ -6,10 +6,16 @@
 //  Copyright © 2015 MLSDev. All rights reserved.
 //
 
-struct TestUser : JSONDecodable {
+import TRON
+import TRONSwiftyJSON
+import XCTest
+import SwiftyJSON
+import Alamofire
+
+struct TestUser: JSONDecodable {
     let name: String
     let id: Int
-    
+
     init(json: JSON) {
         id = json["id"].intValue
         name = json["name"].stringValue
@@ -17,26 +23,26 @@ struct TestUser : JSONDecodable {
 }
 
 private func userData(id: Int, name: String) -> Data {
-    return try! JSONSerialization.data(withJSONObject: ["id": id, "name": name], options: [.prettyPrinted])
+    return (try? JSONSerialization.data(withJSONObject: ["id": id, "name": name], options: [.prettyPrinted])) ?? .init()
 }
 
-fileprivate struct ErrorThrow: Error {}
+private struct ErrorThrow: Error {}
 
-fileprivate class ThrowingJSONDecodable : JSONDecodable {
+private class ThrowingJSONDecodable: JSONDecodable {
     required init(json: JSON) throws {
         throw ErrorThrow()
     }
 }
 
 class ApiStubbingTestCase: XCTestCase {
-    
+
     let tron = TRON(baseURL: "https://github.com")
-    
+
     func testStubsSuccessWork() {
-        let request: APIRequest<TestUser,APIError> = tron.swiftyJSON
+        let request: APIRequest<TestUser, APIError> = tron.swiftyJSON
             .request("f00")
             .stub(with: .init(data: userData(id: 5, name: "Foo")))
-        
+
         let exp = expectation(description: "Stubs success")
         request.perform(withSuccess: { response in
             XCTAssertEqual(response.id, 5)
@@ -49,11 +55,11 @@ class ApiStubbingTestCase: XCTestCase {
     }
 
     func testStubsFailureWorks() {
-        let request : APIRequest<ThrowingJSONDecodable,APIError> = tron.swiftyJSON
+        let request: APIRequest<ThrowingJSONDecodable, APIError> = tron.swiftyJSON
             .request("f00")
-            .stub(with: .init(data: String(5).data(using:  .utf8)))
+            .stub(with: .init(data: String(5).data(using: .utf8)))
         let exp = expectation(description: "Stubs fails")
-        request.perform(withSuccess: { response in
+        request.perform(withSuccess: { _ in
             XCTFail("Failure expected but success was received")
             }) { error in
                 XCTAssertEqual(error.data?.asString, "5")
@@ -61,13 +67,13 @@ class ApiStubbingTestCase: XCTestCase {
         }
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
     func testMultipartStubbingSuccessWorks() {
-        let request: UploadAPIRequest<TestUser,APIError> = tron.swiftyJSON
-            .uploadMultipart("f00") { formData in
+        let request: UploadAPIRequest<TestUser, APIError> = tron.swiftyJSON
+            .uploadMultipart("f00") { _ in
             }
             .stub(with: APIStub(data: userData(id: 3, name: "Bar")))
-        
+
         let exp = expectation(description: "multipart stubbing success")
         request.perform(withSuccess: { model in
             if model.id == 3, model.name == "Bar" { exp.fulfill() }
@@ -76,10 +82,10 @@ class ApiStubbingTestCase: XCTestCase {
         })
         waitForExpectations(timeout: 3, handler: nil)
     }
-    
+
     func testDownloadStubbingWorks() throws {
         let destination = Alamofire.DownloadRequest.suggestedDownloadDestination()
-        let serializer = TRONDownloadResponseSerializer { (_, _, url, _) -> Int in
+        let serializer = TRONDownloadResponseSerializer { _, _, url, _ -> Int in
             if url?.absoluteString == "expected.pkg" { return 0 }
             return 1
         }
@@ -93,13 +99,13 @@ class ApiStubbingTestCase: XCTestCase {
         })
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
     func testStubbingSuccessfullyWorksWithCompletionHandler() {
-        let request: APIRequest<Int,JSONDecodableError<Int>> = tron
+        let request: APIRequest<Int, JSONDecodableError<Int>> = tron
             .swiftyJSON(readingOptions: .allowFragments)
             .request("f00")
             .stub(with: APIStub(data: String(5).data(using: .utf8)))
-        
+
         let exp = expectation(description: "stub with completion handler")
         request.performCollectingTimeline(withCompletion: { response in
             if (try? response.result.get()) == 5 {
@@ -108,13 +114,13 @@ class ApiStubbingTestCase: XCTestCase {
         })
         waitForExpectations(timeout: 3, handler: nil)
     }
-    
+
     func testStubbingWorksAsynchronously() {
-        let request: APIRequest<Int,APIError> = tron
+        let request: APIRequest<Int, APIError> = tron
             .swiftyJSON(readingOptions: .allowFragments)
             .request("f00")
             .stub(with: APIStub(data: String(5).data(using: .utf8)), delay: 0.2)
-        var intResponse: Int? = nil
+        var intResponse: Int?
         let exp = expectation(description: "Stubs success")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             XCTAssertNil(intResponse)

@@ -26,6 +26,7 @@ included:
 - Source
 
 excluded:
+- Source/Tests
 - Carthage
 
 line_length:

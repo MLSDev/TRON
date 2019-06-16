@@ -6,20 +6,25 @@
 //  Copyright © 2016 Denys Telezhkin. All rights reserved.
 //
 
+import XCTest
+import TRON
+import Foundation
+import TRONSwiftyJSON
+
 extension XCTestCase {
     func URLForResource(_ fileName: String, withExtension: String) -> URL {
         let bundle = Bundle(for: UploadTestCase.self)
-        return bundle.url(forResource:fileName, withExtension: withExtension)!
+        return bundle.url(forResource: fileName, withExtension: withExtension) ?? URL(fileURLWithPath: "file:///")
     }
 }
 
 class UploadTestCase: ProtocolStubbedTestCase {
-    
+
     func testUploadFromFile() {
-        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON
+        let request: UploadAPIRequest<JSONDecodableResponse, APIError> = tron.swiftyJSON
             .upload("/post", fromFileAt: URLForResource("cat", withExtension: "jpg"))
             .method(.post)
-            .stubSuccess(["title":"Foo"].asData)
+            .stubSuccess(["title": "Foo"].asData)
         let expectation = self.expectation(description: "Upload from file")
         request.perform(withSuccess: { result in
             XCTAssertEqual(result.title, "Foo")
@@ -29,12 +34,12 @@ class UploadTestCase: ProtocolStubbedTestCase {
         })
         waitForExpectations(timeout: 1)
     }
-    
+
     func testUploadData() {
-        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON
+        let request: UploadAPIRequest<JSONDecodableResponse, APIError> = tron.swiftyJSON
             .upload("/post", data: "foo".asData)
             .post()
-            .stubSuccess(["title":"Foo"].asData)
+            .stubSuccess(["title": "Foo"].asData)
         let expectation = self.expectation(description: "Upload data")
         request.perform(withSuccess: { result in
             XCTAssertEqual(result.title, "Foo")
@@ -44,16 +49,16 @@ class UploadTestCase: ProtocolStubbedTestCase {
         })
         waitForExpectations(timeout: 5)
     }
-    
+
     func testMultipartUploadWorks() {
-        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON
+        let request: UploadAPIRequest<JSONDecodableResponse, APIError> = tron.swiftyJSON
             .uploadMultipart("post") { formData in
                 formData.append("bar".data(using: .utf8) ?? Data(), withName: "foo")
             }
             .post()
-            .stubSuccess(["title":"Foo"].asData)
+            .stubSuccess(["title": "Foo"].asData)
         let expectation = self.expectation(description: "foo")
-        
+
         request.perform(withSuccess: { result in
             XCTAssertEqual(result.title, "Foo")
             expectation.fulfill()
@@ -62,33 +67,33 @@ class UploadTestCase: ProtocolStubbedTestCase {
         })
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
     func testMultipartUploadIsAbleToUploadFile() {
         let path = Bundle(for: type(of: self)).path(forResource: "cat", ofType: "jpg")
         let data = try? Data(contentsOf: URL(fileURLWithPath: path ?? ""))
         let formDataExpectation = expectation(description: "formData block call")
-        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON
+        let request: UploadAPIRequest<JSONDecodableResponse, APIError> = tron.swiftyJSON
             .uploadMultipart("post") { formData in
                 formData.append(data ?? Data(), withName: "cat", mimeType: "image/jpeg")
                 formDataExpectation.fulfill()
             }
             .post()
-            .stubSuccess(["title":"Foo"].asData)
+            .stubSuccess(["title": "Foo"].asData)
         let catExpectation = expectation(description: "meau!")
-        
+
         request.perform(withSuccess: { result in
             XCTAssertEqual(result.title, "Foo")
             catExpectation.fulfill()
         })
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
     func testIntParametersAreAcceptedAsMultipartParameters() {
-        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON
+        let request: UploadAPIRequest<JSONDecodableResponse, APIError> = tron.swiftyJSON
             .uploadMultipart("post") { _ in }
             .post()
-            .parameters(["foo":1])
-            .stubSuccess(["title":"Foo"].asData)
+            .parameters(["foo": 1])
+            .stubSuccess(["title": "Foo"].asData)
         let expectation = self.expectation(description: "Int expectation")
         request.perform(withSuccess: { result in
             XCTAssertEqual(result.title, "Foo")
@@ -96,13 +101,13 @@ class UploadTestCase: ProtocolStubbedTestCase {
         })
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
     func testBoolParametersAreAcceptedAsMultipartParameters() {
-        let request: UploadAPIRequest<JSONDecodableResponse,APIError> = tron.swiftyJSON
+        let request: UploadAPIRequest<JSONDecodableResponse, APIError> = tron.swiftyJSON
             .uploadMultipart("post") { _ in }
             .post()
-            .parameters(["foo":true])
-            .stubSuccess(["title":"Foo"].asData)
+            .parameters(["foo": true])
+            .stubSuccess(["title": "Foo"].asData)
         let expectation = self.expectation(description: "Int expectation")
         request.perform(withSuccess: { result in
             XCTAssertEqual(result.title, "Foo")

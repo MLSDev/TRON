@@ -56,6 +56,7 @@ let package = Package(
             name: "TRONSwiftyJSON",
             dependencies: [
                 "TRON",
-                "SwiftyJSON"])
+                "SwiftyJSON"]),
+        .testTarget(name: "Tests", dependencies: ["TRON", "TRONSwiftyJSON", "RxTRON"])
     ]
 )
