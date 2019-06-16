@@ -3,7 +3,27 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* Support for Swift Package Manager in Xcode 11
 * `URLBuilder` now resolves URL's using `URL(string:relativeTo:)` method, thus allowing more flexible url creation.
+* New convenient DSL, that allows to convert this code:
+
+```swift
+func deleteSession() -> APIRequest<Empty, UnknownError> {
+    let request : APIRequest<Empty, UnknownError> = tron.codable.request("session")
+    request.method = .delete
+    return request
+}
+```
+
+into:
+
+```swift
+func deleteSession() -> APIRequest<Empty, UnknownError> {
+    return tron.codable.request("session").delete()
+}
+```
+
+Read more about other DSL improvements in [5.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/5.0%20Migration%20Guide.md)
 
 ## [5.0.0-beta.3](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.3)
 

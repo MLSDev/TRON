@@ -52,32 +52,31 @@ request.perform(withSuccess: { user in
 ### Swift Package Manager(requires Xcode 11)
 
 * Add package into Project settings -> Swift Packages
-* Select "Branch" rule and set it to master
 
 TRON framework includes Codable implementation. To use SwiftyJSON, `import TRONSwiftyJSON` framework. To use RxSwift wrapper, `import RxTRON`.
 
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 5.0.0-beta.1'
+pod 'TRON', '~> 5.0.0-beta.4'
 ```
 
 Only Core subspec, without SwiftyJSON dependency:
 
 ```ruby
-pod 'TRON/Core', '~> 5.0.0-beta.1'
+pod 'TRON/Core', '~> 5.0.0-beta.4'
 ```
 
 RxSwift extension for TRON:
 
 ```ruby
-pod 'TRON/RxSwift', '~> 5.0.0-beta.1'
+pod 'TRON/RxSwift', '~> 5.0.0-beta.4'
 ```
 
 ### Carthage
 
 ```ruby
-github "MLSDev/TRON", ~> 5.0.0-beta.1
+github "MLSDev/TRON", ~> 5.0.0-beta.4
 ```
 
 ## Migration Guides
@@ -272,9 +271,7 @@ struct Users
     static let tron = TRON(baseURL: "https://api.myapp.com")
 
     static func create() -> APIRequest<User,APIError> {
-        let request: APIRequest<User,MyAppError> = tron.codable.request("users")
-        request.method = .post
-        return request
+      return tron.codable.request("users").post()
     }
 
     static func read(id: Int) -> APIRequest<User, APIError> {
@@ -282,16 +279,11 @@ struct Users
     }
 
     static func update(id: Int, parameters: [String:Any]) -> APIRequest<User, APIError> {
-        let request: APIRequest<User,MyAppError> = tron.codable.request("users/\(id)")
-        request.method = .put
-        request.parameters = parameters
-        return request
+      return tron.codable.request("users/\(id)").put().parameters(parameters)
     }
 
     static func delete(id: Int) -> APIRequest<User,APIError> {
-        let request: APIRequest<User,MyAppError> = tron.codable.request("users/\(id)")
-        request.method = .delete
-        return request
+      return tron.codable.request("users/\(id)").delete()
     }
 }
 ```
@@ -328,21 +320,20 @@ API.Users.delete(56).perform(withSuccess: { user in
 Stubbing is built right into `APIRequest` itself. All you need to stub a successful request is to set apiStub property and turn stubbingEnabled on:
 
 ```swift
-let request = API.Users.get(56)
-request.apiStub = APIStub(data: User.fixture().asData)
-request.apiStub.isEnabled = true
-
-request.perform(withSuccess: { stubbedUser in
-  print("received stubbed User model: \(stubbedUser)")
+API.Users.get(56)
+         .stub(with: APIStub(data: User.fixture().asData))
+         .perform(withSuccess: { stubbedUser in
+           print("received stubbed User model: \(stubbedUser)")
 })
 ```
 
 Stubbing can be enabled globally on `TRON` object or locally for a single `APIRequest`. Stubbing unsuccessful requests is easy as well:
 
 ```swift
-let request = API.Users.get(56)
-request.apiStub = APIStub(error: CustomError())
-request.perform(withSuccess: { _ in }, failure: { error in
+API.Users.get(56)
+         .stub(with: APIStub(error: CustomError()))
+         .perform(withSuccess: { _ in },
+                  failure: { error in
   print("received stubbed api error")
 })
 ```
