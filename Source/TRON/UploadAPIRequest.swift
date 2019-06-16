@@ -61,6 +61,10 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
     /// Closure that is applied to request before it is sent.
     open var validationClosure: (UploadRequest) -> UploadRequest = { $0.validate() }
 
+    /// Sets `validationClosure` to `validation` parameter and returns configured request
+    ///
+    /// - Parameter validation: validation to perform.
+    /// - Returns: configured request.
     open func validation(_ validation: @escaping (UploadRequest) -> UploadRequest) -> Self {
         validationClosure = validation
         return self

@@ -37,9 +37,13 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
     /// Serializes received error into APIError<ErrorModel>
     open var errorParser: ErrorParser
 
-    /// Closure that is applied to request before it is sent.
+    /// Closure that is applied to request before it is sent. Defaults to `{  $0.validate() }`
     open var validationClosure: (DataRequest) -> DataRequest = { $0.validate() }
 
+    /// Sets `validationClosure` to `validation` parameter and returns configured request
+    ///
+    /// - Parameter validation: validation to perform.
+    /// - Returns: configured request.
     open func validation(_ validation: @escaping (DataRequest) -> DataRequest) -> Self {
         validationClosure = validation
         return self

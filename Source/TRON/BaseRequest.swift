@@ -166,72 +166,121 @@ open class BaseRequest<Model, ErrorModel> {
         }
     }
 
-    public func method(_ httpMethod: HTTPMethod) -> Self {
+    /// Sets `method` variable to `httpMethod` and returns.
+    ///
+    /// - Parameter httpMethod: http method to set on Request.
+    /// - Returns: configured request.
+    open func method(_ httpMethod: HTTPMethod) -> Self {
         self.method = httpMethod
         return self
     }
 
-    public func post() -> Self {
+    /// Sets `method` variable to `.post` and returns.
+    ///
+    /// - Returns: configured request.
+    open func post() -> Self {
         method = .post
         return self
     }
 
-    public func connect() -> Self {
+    /// Sets `method` variable to `.connect` and returns.
+    ///
+    /// - Returns: configured request.
+    open func connect() -> Self {
         method = .connect
         return self
     }
 
-    public func delete() -> Self {
+    /// Sets `method` variable to `.delete` and returns.
+    ///
+    /// - Returns: configured request.
+    open func delete() -> Self {
         method = .delete
         return self
     }
 
-    public func get() -> Self {
+    /// Sets `method` variable to `.get` and returns.
+    ///
+    /// - Returns: configured request.
+    open func get() -> Self {
         method = .get
         return self
     }
 
-    public func head() -> Self {
+    /// Sets `method` variable to `.head` and returns.
+    ///
+    /// - Returns: configured request.
+    open func head() -> Self {
         method = .head
         return self
     }
 
-    public func options() -> Self {
+    /// Sets `method` variable to `.options` and returns.
+    ///
+    /// - Returns: configured request.
+    open func options() -> Self {
         method = .options
         return self
     }
 
-    public func patch() -> Self {
+    /// Sets `method` variable to `.patch` and returns.
+    ///
+    /// - Returns: configured request.
+    open func patch() -> Self {
         method = .patch
         return self
     }
 
-    public func put() -> Self {
+    /// Sets `method` variable to `.put` and returns.
+    ///
+    /// - Returns: configured request.
+    open func put() -> Self {
         method = .put
         return self
     }
 
-    public func trace() -> Self {
+    /// Sets `method` variable to `.trace` and returns.
+    ///
+    /// - Returns: configured request.
+    open func trace() -> Self {
         method = .trace
         return self
     }
 
-    public func parameterEncoding(_ encoding: ParameterEncoding) -> Self {
+    /// Sets `parameterEncoding` variable to `encoding` and returns configured request.
+    ///
+    /// - Parameter encoding: Alamofire.ParameterEncoding value. Common values are: JSONEncoding.default, URLEncoding.default.
+    /// - Returns: configured request
+    open func parameterEncoding(_ encoding: ParameterEncoding) -> Self {
         parameterEncoding = encoding
         return self
     }
 
-    public func headers(_ headers: HTTPHeaders) -> Self {
+    /// Sets `headers` variable to `headers` and returns configured request.
+    ///
+    /// - Parameter headers: Alamofire.HTTPHeaders value.
+    /// - Returns: confiured request
+    open func headers(_ headers: HTTPHeaders) -> Self {
         self.headers = headers
         return self
     }
 
-    public func with(_ plugin: Plugin) -> Self {
+    /// Appends `plugin` to `plugins` variable and returns configured request.
+    ///
+    /// - Parameter plugin: Plugin implementation
+    /// - Returns: configured request
+    open func with(_ plugin: Plugin) -> Self {
         plugins.append(plugin)
         return self
     }
 
-    public func parameters(_ parameters: [String: Any], rootKey: String? = nil) -> Self {
+    /// Sets `parameters` into `parameters` variable on request. If `rootKey` is non-nil, parameters are wrapped in external dictionary and set into `parameters` using `rootKey` as a single key.
+    ///
+    /// - Parameters:
+    ///   - parameters: parameters to set for request
+    ///   - rootKey: Key to use in a wrapper dictionary to wrap passed parameters. Defaults to nil.
+    /// - Returns: configured request
+    open func parameters(_ parameters: [String: Any], rootKey: String? = nil) -> Self {
         if let rootKey = rootKey {
             var wrappedParameters: [String: Any] = [:]
             parameters.forEach {
@@ -246,7 +295,15 @@ open class BaseRequest<Model, ErrorModel> {
         return self
     }
 
-    public func optionalParameters(_ parameters: [String: Any?], setNilToNull: Bool = false, rootKey: String? = nil) -> Self {
+    /// Sets `parameters` into `parameters` variable on request. If `rootKey` is non-nil, parameters are wrapped in external dictionary and set into `parameters` using `rootKey` as a single key.
+    /// If `setNilToNull` is set to true, every nil value will be converted to `NSNull` instance.
+    ///
+    /// - Parameters:
+    ///   - parameters: parameters to set for request
+    ///   - setNilToNull: If true, converts nil values into NSNull instance to be presented as `null` when converted to JSON. Defaults to false.
+    ///   - rootKey: Key to use in a wrapper dictionary to wrap passed parameters. Defaults to nil.
+    /// - Returns: configured request
+    open func optionalParameters(_ parameters: [String: Any?], setNilToNull: Bool = false, rootKey: String? = nil) -> Self {
         if let rootKey = rootKey {
             var wrappedParameters: [String: Any] = [:]
             parameters.forEach {
@@ -269,7 +326,14 @@ open class BaseRequest<Model, ErrorModel> {
         return self
     }
 
-    public func stub(with stub: APIStub, delay: TimeInterval = 0.0, enabled: Bool = true) -> Self {
+    /// Sets `stub` into `apiStub` property, `delay` into `apiStub.stubDelay` property. Also `enabled` is set to `apiStub.isEnabled` property.
+    ///
+    /// - Parameters:
+    ///   - stub: stub to use when stubbing the request
+    ///   - delay: Stub delay after which stub will return results. Defaults to 0.
+    ///   - enabled: Specifies, if `apiStub` needs to be enabled. Defaults to true.
+    /// - Returns: configured request
+    open func stub(with stub: APIStub, delay: TimeInterval = 0.0, enabled: Bool = true) -> Self {
         apiStub = stub
         apiStub?.isEnabled = enabled
         apiStub?.stubDelay = delay
