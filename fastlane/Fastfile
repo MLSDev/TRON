@@ -107,6 +107,6 @@ lane :release do |params|
     puts "Attaching Carthage prebuilt binary to release."
     releases = client.releases('MLSDev/TRON')
     client.upload_asset(releases[0].url, 'TRON.framework.zip')
-    sh "rm -rf ../TRON.framework.zip"
+    sh "rm -rf TRON.framework.zip"
   end
 end

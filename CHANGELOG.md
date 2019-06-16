@@ -3,8 +3,11 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.0.0-beta.4](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.4)
+
+### Added
+
 * Support for Swift Package Manager in Xcode 11
-* `URLBuilder` now resolves URL's using `URL(string:relativeTo:)` method, thus allowing more flexible url creation.
 * New convenient DSL, that allows to convert this code:
 
 ```swift
@@ -24,6 +27,10 @@ func deleteSession() -> APIRequest<Empty, UnknownError> {
 ```
 
 Read more about other DSL improvements in [5.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/5.0%20Migration%20Guide.md)
+
+### Changed
+
+* `URLBuilder` now resolves URL's using `URL(string:relativeTo:)` method, thus allowing more flexible url creation.
 
 ## [5.0.0-beta.3](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.3)
 
