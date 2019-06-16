@@ -81,8 +81,8 @@ github "MLSDev/TRON", ~> 5.0.0-beta.4
 
 ## Migration Guides
 
-- [TRON 5.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/5.0%20Migration%20Guide.md)
-- [TRON 4.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/4.0%20Migration%20Guide.md)
+- [TRON 5.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Guides/5.0%20Migration%20Guide.md)
+- [TRON 4.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Guides/4.0%20Migration%20Guide.md)
 
 ## Project status
 
