@@ -65,7 +65,7 @@ extension UploadAPIRequest {
                 observer.onError(error)
             })
             return Disposables.create {
-                token?.cancel()
+                token.cancel()
             }
         })
     }

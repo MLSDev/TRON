@@ -16,7 +16,7 @@ class PluginTestCase: ProtocolStubbedTestCase {
         let pluginTester = PluginTester()
         let request: APIRequest<Int, APIError> = tron.swiftyJSON
             .request("status/200")
-            .with(pluginTester)
+            .usingPlugin(pluginTester)
             .stubStatusCode(200)
 
         let waitingForRequest = expectation(description: "wait for request")
@@ -35,7 +35,7 @@ class PluginTestCase: ProtocolStubbedTestCase {
         let pluginTester = PluginTester()
         let request: APIRequest<String, APIError> = tron.swiftyJSON
             .request("status/200")
-            .with(pluginTester)
+            .usingPlugin(pluginTester)
             .stubStatusCode(200)
         let expectation = self.expectation(description: "PluginTester expectation")
         request.perform(withSuccess: { _ in
@@ -68,7 +68,7 @@ class PluginTestCase: ProtocolStubbedTestCase {
         let request: UploadAPIRequest<String, APIError> = tron.swiftyJSON
             .uploadMultipart("status/200") { _ in }
             .stubStatusCode(200)
-            .with(localPluginTester)
+            .usingPlugin(localPluginTester)
 
         tron.plugins.append(globalPluginTester)
 

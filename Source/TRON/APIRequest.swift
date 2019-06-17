@@ -65,7 +65,8 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
         return session.request(urlBuilder.url(forPath: path), method: method,
                                parameters: parameters,
                                encoding: parameterEncoding,
-                               headers: headers)
+                               headers: headers,
+                               interceptor: interceptor)
     }
 
     @discardableResult

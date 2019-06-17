@@ -115,4 +115,21 @@ class UploadTestCase: ProtocolStubbedTestCase {
         })
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testUploadRequestCanBeAdapted() {
+        let request: UploadAPIRequest<JSONDecodableResponse, APIError> = tron.swiftyJSON
+            .upload("/post", fromFileAt: URLForResource("cat", withExtension: "jpg"))
+            .method(.post)
+            .intercept(using: TimeoutInterceptor(timeoutInterval: 3))
+            .stubSuccess(["title": "Foo"].asData)
+        let expectation = self.expectation(description: "Upload from file")
+        let resultingRequest = request.perform(withSuccess: { result in
+            XCTAssertEqual(result.title, "Foo")
+            expectation.fulfill()
+        }, failure: { error in
+            XCTFail("unexpected network error: \(error)")
+        })
+        waitForExpectations(timeout: 1)
+        XCTAssertEqual(resultingRequest.task?.currentRequest?.timeoutInterval, 3)
+    }
 }

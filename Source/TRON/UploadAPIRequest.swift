@@ -87,15 +87,15 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
         switch type {
         case .uploadFromFile(let url):
             return session.upload(url, to: urlBuilder.url(forPath: path), method: method,
-                                  headers: headers)
+                                  headers: headers, interceptor: interceptor)
 
         case .uploadData(let data):
             return session.upload(data, to: urlBuilder.url(forPath: path), method: method,
-                                  headers: headers)
+                                  headers: headers, interceptor: interceptor)
 
         case .uploadStream(let stream):
             return session.upload(stream, to: urlBuilder.url(forPath: path), method: method,
-                                  headers: headers)
+                                  headers: headers, interceptor: interceptor)
 
         case .multipartFormData(let constructionBlock, let memoryThreshold, let fileManager):
             return session.upload(multipartFormData: appendParametersToMultipartFormDataBlock(constructionBlock),
@@ -103,7 +103,8 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
                                   fileManager: fileManager,
                                   to: urlBuilder.url(forPath: path),
                                   method: method,
-                                  headers: headers)
+                                  headers: headers,
+                                  interceptor: interceptor)
         }
     }
 
@@ -126,7 +127,7 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((ErrorModel) -> Void)? = nil) -> UploadRequest? {
+    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((ErrorModel) -> Void)? = nil) -> UploadRequest {
         return performAlamofireRequest {
             self.callSuccessFailureBlocks(successBlock, failure: failureBlock, response: $0)
         }
@@ -140,7 +141,7 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> UploadRequest? {
+    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model>) -> Void)) -> UploadRequest {
         return performAlamofireRequest(completion)
     }
 

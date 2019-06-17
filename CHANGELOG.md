@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* Added support for per-request Interceptors.
+
 ## [5.0.0-beta.4](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.4)
 
 ### Added

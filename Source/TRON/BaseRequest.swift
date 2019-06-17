@@ -86,6 +86,9 @@ open class BaseRequest<Model, ErrorModel> {
         }
     }
 
+    /// Request interceptor that allows to adapt and retry requests.
+    open var interceptor: RequestInterceptor?
+
     /// Queue, used to deliver result completion blocks. Defaults to TRON.resultDeliveryQueue queue.
     open var resultDeliveryQueue: DispatchQueue
 
@@ -269,8 +272,17 @@ open class BaseRequest<Model, ErrorModel> {
     ///
     /// - Parameter plugin: Plugin implementation
     /// - Returns: configured request
-    open func with(_ plugin: Plugin) -> Self {
+    open func usingPlugin(_ plugin: Plugin) -> Self {
         plugins.append(plugin)
+        return self
+    }
+
+    /// Sets per-request Interceptor for current request and returns.
+    ///
+    /// - Parameter interceptor: request interceptor
+    /// - Returns: configured request
+    open func intercept(using interceptor: RequestInterceptor) -> Self {
+        self.interceptor = interceptor
         return self
     }
 

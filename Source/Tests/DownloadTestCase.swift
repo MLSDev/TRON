@@ -36,4 +36,25 @@ class DownloadTestCase: ProtocolStubbedTestCase {
         })
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testRequestCanAdapt() {
+        let destination = Alamofire.DownloadRequest.suggestedDownloadDestination(
+            for: searchPathDirectory,
+            in: searchPathDomain
+        )
+        let responseSerializer = TRONDownloadResponseSerializer { _, _, url, _ in url }
+        let request: DownloadAPIRequest<URL?, APIError> = tron
+            .download("/stream/100",
+                      to: destination,
+                      responseSerializer: responseSerializer)
+            .intercept(using: TimeoutInterceptor(timeoutInterval: 3))
+            .stubSuccess(.init(), statusCode: 200)
+        let expectation = self.expectation(description: "Download expectation")
+        let resultingRequest = request.performCollectingTimeline(withCompletion: { result in
+            XCTAssertEqual(result.response?.statusCode, 200)
+            expectation.fulfill()
+        })
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(resultingRequest.task?.currentRequest?.timeoutInterval, 3)
+    }
 }

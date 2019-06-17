@@ -29,6 +29,16 @@ extension Dictionary {
     }
 }
 
+struct TimeoutInterceptor: RequestInterceptor {
+    let timeoutInterval: TimeInterval
+    
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
+        var urlRequest = urlRequest
+        urlRequest.timeoutInterval = timeoutInterval
+        completion(.success(urlRequest))
+    }
+}
+
 class APIRequestTestCase: ProtocolStubbedTestCase {
 
     func testErrorBuilding() {
@@ -209,5 +219,20 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
             XCTFail("unexpected network error: \(error)")
         }
         waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testRequestCanAdapt() {
+        let request: APIRequest<Empty, APIError> = tron.swiftyJSON
+            .request("status/200")
+            .intercept(using: TimeoutInterceptor(timeoutInterval: 3))
+            .stubStatusCode(200)
+        let expectation = self.expectation(description: "Success request")
+        let resultingRequest = request.perform(withSuccess: { _ in
+            expectation.fulfill()
+        }) { error in
+            XCTFail("unexpected network error: \(error)")
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(resultingRequest.task?.currentRequest?.timeoutInterval, 3)
     }
 }
