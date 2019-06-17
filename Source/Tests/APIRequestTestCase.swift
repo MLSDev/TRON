@@ -151,8 +151,8 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let configuration = URLSessionConfiguration.default
         configuration.headers = .default
         configuration.protocolClasses = [StubbingURLProtocol.self]
-        let manager = Session(configuration: configuration, startRequestsImmediately: false)
-        let tron = TRON(baseURL: "https://httpbin.org", session: manager)
+        let session = Session(configuration: configuration, startRequestsImmediately: false)
+        let tron = TRON(baseURL: "https://httpbin.org", session: session)
         let request: APIRequest<Empty, APIError> = tron.swiftyJSON.request("headers").stubSuccess(.init())
         let expectation = self.expectation(description: "Empty response")
         request.perform(withSuccess: { _ in
@@ -168,8 +168,8 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         let configuration = URLSessionConfiguration.default
         configuration.headers = .default
         configuration.protocolClasses = [StubbingURLProtocol.self]
-        let manager = Session(configuration: configuration, startRequestsImmediately: false)
-        let tron = TRON(baseURL: "https://httpbin.org", session: manager)
+        let session = Session(configuration: configuration, startRequestsImmediately: false)
+        let tron = TRON(baseURL: "https://httpbin.org", session: session)
         let request: UploadAPIRequest<JSONDecodableResponse, APIError> = tron.swiftyJSON.uploadMultipart("post") { formData in
             formData.append("bar".data(using: String.Encoding.utf8) ?? Data(), withName: "foo")
         }.post().stubSuccess(["title": "not empty"].asData)

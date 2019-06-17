@@ -52,15 +52,15 @@ open class TRON: TronDelegate {
     /// `CodableSerializer` for current `TRON` instance.
     open lazy var codable: CodableSerializer = { CodableSerializer(self) }()
 
-    /// Alamofire.Manager instance used to send network requests
+    /// Alamofire.Session instance used to send network requests
     public let session: Alamofire.Session
 
     /**
-     Initializes `TRON` with given base URL, Alamofire.Manager instance, and array of global plugins.
+     Initializes `TRON` with given base URL, Alamofire.Session instance, and array of global plugins.
 
      - parameter baseURL: Base URL to be used
 
-     - parameter manager: Alamofire.Manager instance that will send requests created by current `TRON`
+     - parameter session: Alamofire.Session instance that will send requests created by current `TRON`
 
      - parameter plugins: Array of plugins, that will receive events from requests, created and managed by current `TRON` instance.
      */

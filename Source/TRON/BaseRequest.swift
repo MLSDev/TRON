@@ -44,7 +44,7 @@ public protocol URLBuildable {
 /// Protocol used to allow `APIRequest` to communicate with `TRON` instance.
 public protocol TronDelegate: class {
 
-    /// Alamofire.Manager used to send requests
+    /// Alamofire.Session used to send requests
     var session: Alamofire.Session { get }
 
     /// Global array of plugins on `TRON` instance
@@ -73,7 +73,7 @@ open class BaseRequest<Model, ErrorModel> {
     open var parameterEncoding: Alamofire.ParameterEncoding
 
     /// Headers, that should be used for current request.
-    /// - Note: Resulting headers may include global headers from `TRON` instance and `Alamofire.Manager` defaultHTTPHeaders.
+    /// - Note: Resulting headers may include global headers from `TRON` instance and `Alamofire.Session` defaultHTTPHeaders.
     open var headers: HTTPHeaders = .init()
 
     /// URL builder for current request
@@ -108,7 +108,7 @@ open class BaseRequest<Model, ErrorModel> {
         self.parameterEncoding = tron.parameterEncoding
     }
 
-    internal func alamofireRequest(from manager: Alamofire.Session) -> Alamofire.Request {
+    internal func alamofireRequest(from session: Alamofire.Session) -> Alamofire.Request {
         fatalError("Needs to be implemented in subclasses")
     }
 

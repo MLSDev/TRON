@@ -80,16 +80,16 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
         super.init(path: path, tron: tron)
     }
 
-    override func alamofireRequest(from manager: Session) -> Request {
+    override func alamofireRequest(from session: Session) -> Request {
         switch type {
         case .download(let destination):
-            return manager.download(urlBuilder.url(forPath: path), method: method, parameters: parameters,
+            return session.download(urlBuilder.url(forPath: path), method: method, parameters: parameters,
                                     encoding: parameterEncoding,
                                     headers: headers,
                                     to: destination)
 
         case .downloadResuming(let data, let destination):
-            return manager.download(resumingWith: data, to: destination)
+            return session.download(resumingWith: data, to: destination)
         }
     }
 

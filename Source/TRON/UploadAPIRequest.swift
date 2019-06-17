@@ -83,22 +83,22 @@ open class UploadAPIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<M
         super.init(path: path, tron: tron)
     }
 
-    override func alamofireRequest(from manager: Session) -> Request {
+    override func alamofireRequest(from session: Session) -> Request {
         switch type {
         case .uploadFromFile(let url):
-            return manager.upload(url, to: urlBuilder.url(forPath: path), method: method,
+            return session.upload(url, to: urlBuilder.url(forPath: path), method: method,
                                   headers: headers)
 
         case .uploadData(let data):
-            return manager.upload(data, to: urlBuilder.url(forPath: path), method: method,
+            return session.upload(data, to: urlBuilder.url(forPath: path), method: method,
                                   headers: headers)
 
         case .uploadStream(let stream):
-            return manager.upload(stream, to: urlBuilder.url(forPath: path), method: method,
+            return session.upload(stream, to: urlBuilder.url(forPath: path), method: method,
                                   headers: headers)
 
         case .multipartFormData(let constructionBlock, let memoryThreshold, let fileManager):
-            return manager.upload(multipartFormData: appendParametersToMultipartFormDataBlock(constructionBlock),
+            return session.upload(multipartFormData: appendParametersToMultipartFormDataBlock(constructionBlock),
                                   usingThreshold: memoryThreshold,
                                   fileManager: fileManager,
                                   to: urlBuilder.url(forPath: path),

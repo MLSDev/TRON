@@ -61,8 +61,8 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
         super.init(path: path, tron: tron)
     }
 
-    override func alamofireRequest(from manager: Session) -> Request {
-        return manager.request(urlBuilder.url(forPath: path), method: method,
+    override func alamofireRequest(from session: Session) -> Request {
+        return session.request(urlBuilder.url(forPath: path), method: method,
                                parameters: parameters,
                                encoding: parameterEncoding,
                                headers: headers)
