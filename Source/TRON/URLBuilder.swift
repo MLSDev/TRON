@@ -28,18 +28,33 @@ import Foundation
 /**
  `URLBuilder` constructs resulting URL by calling `URLByAppendingPathComponent` method on baseURL.
  */
-open class URLBuilder: URLBuildable {
+open class URLBuilder {
+
+    /// Different behaviors to build URLs from base URL string and path.
+    ///
+    /// - appendingPathComponent: Construct URL by calling .appendingPathComponent method on URL formed from baseURL string.
+    /// - relativeToBaseURL: Construct URL, using `URL(string:relativeTo:)` method
+    /// - custom->URL: Construct URL using custom closure that was passed.
+    public enum Behavior {
+        case appendingPathComponent
+        case relativeToBaseURL
+        case custom((_ baseURL: String, _ path: String) -> URL)
+    }
 
     /// Base URL string
     public let baseURLString: String
+
+    /// Behavior to build URL
+    public let behavior: Behavior
 
     /**
      Initialize URL builder with Base URL String
      
      - parameter baseURL: base URL string
      */
-    public init(baseURL: String) {
+    public init(baseURL: String, behavior: Behavior = .appendingPathComponent) {
         self.baseURLString = baseURL
+        self.behavior = behavior
     }
 
     /**
@@ -50,6 +65,12 @@ open class URLBuilder: URLBuildable {
      - returns constructed URL
      */
     open func url(forPath path: String) -> URL {
-        return URL(string: path, relativeTo: URL(string: baseURLString)) ?? NSURL() as URL
+        let url: URL?
+        switch behavior {
+        case .appendingPathComponent: url = URL(string: baseURLString)?.appendingPathComponent(path)
+        case .relativeToBaseURL: url = URL(string: path, relativeTo: URL(string: baseURLString))
+        case .custom(let closure): url = closure(baseURLString, path)
+        }
+        return url ?? NSURL() as URL
     }
 }

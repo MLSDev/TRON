@@ -26,8 +26,8 @@ class TronTestCase: XCTestCase {
     func testTronRequestBuildables() {
         let request: APIRequest<Int, APIError> = tron.swiftyJSON.request("/foo")
 
-        let tronBuilder = tron.urlBuilder as? URLBuilder
-        let requestBuilder = request.urlBuilder as? URLBuilder
+        let tronBuilder = tron.urlBuilder
+        let requestBuilder = request.urlBuilder
 
         XCTAssert(requestBuilder === tronBuilder)
     }

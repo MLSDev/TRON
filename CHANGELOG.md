@@ -3,7 +3,27 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
-* Added support for per-request Interceptors.
+### Added
+
+* Support for per-request Interceptors.
+* Three different behaviors for building URLs: `.appendingPathComponent`, `.relativeToBaseURL` and `.custom`. Those can be set in TRON initializer: 
+
+```swift
+let tron = TRON(baseURL: "https://www.example.com/", buildingURL: .relativeToBaseURL)
+```
+
+Or you can change `URLBuilder.Behavior` on per-request basis, using the new DSL:
+```swift
+let request: APIRequest<Int,APIError> = tron.swiftyJSON
+    .request("status/200")
+    .buildURL(.relativeToBaseURL)
+```
+
+Default behavior for TRON is `.appendingPathComponent`.
+
+### Removed
+
+* `URLBuildable` protocol. Please use different behaviors for `URLBuilder` instead.
 
 ## [5.0.0-beta.4](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.4)
 

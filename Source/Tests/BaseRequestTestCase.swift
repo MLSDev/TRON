@@ -87,4 +87,15 @@ class BaseRequestTestCase: ProtocolStubbedTestCase {
             "1": "2",
             ])
     }
+    
+    func testURLBuildingConvenienceMethod() {
+        let request: APIRequest<Int,APIError> = tron.swiftyJSON
+            .request("status/200")
+            .buildURL(.custom({ baseURL, path -> URL in
+                return URL(string: "\(baseURL)/api/\(path)") ?? URL(fileURLWithPath: "")
+            }))
+            
+        
+        XCTAssertEqual(request.urlBuilder.url(forPath: request.path).absoluteString, "https://httpbin.org/api/status/200")
+    }
 }

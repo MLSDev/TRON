@@ -26,21 +26,6 @@
 import Foundation
 import Alamofire
 
-/**
- Protocol, that defines how URL is constructed by consumer.
- */
-public protocol URLBuildable {
-
-    /**
-     Construct URL with given path
-     
-     - parameter path: relative path
-     
-     - returns constructed URL
-     */
-    func url(forPath path: String) -> URL
-}
-
 /// Protocol used to allow `APIRequest` to communicate with `TRON` instance.
 public protocol TronDelegate: class {
 
@@ -77,7 +62,7 @@ open class BaseRequest<Model, ErrorModel> {
     open var headers: HTTPHeaders = .init()
 
     /// URL builder for current request
-    open var urlBuilder: URLBuildable
+    open var urlBuilder: URLBuilder
 
     /// API stub to be used when stubbing this request
     open var apiStub: APIStub? {
@@ -274,6 +259,15 @@ open class BaseRequest<Model, ErrorModel> {
     /// - Returns: configured request
     open func usingPlugin(_ plugin: Plugin) -> Self {
         plugins.append(plugin)
+        return self
+    }
+
+    /// Replaces `urlBuilder` with `URLBuilder` with the same baseURL string and `behavior`.
+    ///
+    /// - Parameter behavior: URL building behavior to use when constructing request.
+    /// - Returns: configured request.
+    open func buildURL(_ behavior: URLBuilder.Behavior) -> Self {
+        urlBuilder = URLBuilder(baseURL: urlBuilder.baseURLString, behavior: behavior)
         return self
     }
 

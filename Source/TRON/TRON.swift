@@ -34,7 +34,7 @@ import Alamofire
 open class TRON: TronDelegate {
 
     /// URL builder to be used by default in all requests. Can be overridden for specific requests.
-    open var urlBuilder: URLBuildable
+    open var urlBuilder: URLBuilder
 
     /// Global property, that defines whether stubbing is enabled. It is simply set on each `APIRequest` instance and can be reset.
     open var stubbingEnabled = false
@@ -59,15 +59,18 @@ open class TRON: TronDelegate {
      Initializes `TRON` with given base URL, Alamofire.Session instance, and array of global plugins.
 
      - parameter baseURL: Base URL to be used
+     
+     - parameter buildingURL: Behavior to use while building URLs. Defaults to .appendingPathComponent.
 
      - parameter session: Alamofire.Session instance that will send requests created by current `TRON`
 
      - parameter plugins: Array of plugins, that will receive events from requests, created and managed by current `TRON` instance.
      */
     public init(baseURL: String,
+                buildingURL: URLBuilder.Behavior = .appendingPathComponent,
                 session: Alamofire.Session = .default,
                 plugins: [Plugin] = []) {
-        self.urlBuilder = URLBuilder(baseURL: baseURL)
+        self.urlBuilder = URLBuilder(baseURL: baseURL, behavior: buildingURL)
         self.plugins = plugins
         self.session = session
     }
