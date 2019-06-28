@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           TRON Docs
         </a>
-         (93% documented)
+         (92% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -93,6 +93,9 @@
                 <a class="nav-group-task-link" href="../Classes/URLBuilder.html">URLBuilder</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/URLBuilder/Behavior.html">– Behavior</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a>
               </li>
             </ul>
@@ -123,9 +126,6 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/TronDelegate.html">TronDelegate</a>
               </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/URLBuildable.html">URLBuildable</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -148,7 +148,7 @@
             <h1>URLBuilder</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">URLBuilder</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/URLBuildable.html">URLBuildable</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">URLBuilder</span></code></pre>
 
                 </div>
               </div>
@@ -161,6 +161,40 @@
           <div class="section-content">
             <div class="task-group">
               <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4TRON10URLBuilderC8BehaviorO"></a>
+                    <a name="//apple_ref/swift/Enum/Behavior" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON10URLBuilderC8BehaviorO">Behavior</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Different behaviors to build URLs from base URL string and path.</p>
+
+<ul>
+<li>appendingPathComponent: Construct URL by calling .appendingPathComponent method on URL formed from baseURL string.</li>
+<li>relativeToBaseURL: Construct URL, using <code>URL(string:relativeTo:)</code> method</li>
+<li>custom-&gt;URL: Construct URL using custom closure that was passed.</li>
+</ul>
+
+                        <a href="../Classes/URLBuilder/Behavior.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Behavior</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -191,9 +225,36 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON10URLBuilderC7baseURLACSS_tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(baseURL:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON10URLBuilderC7baseURLACSS_tcfc">init(baseURL:)</a>
+                    <a name="/s:4TRON10URLBuilderC8behaviorAC8BehaviorOvp"></a>
+                    <a name="//apple_ref/swift/Property/behavior" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON10URLBuilderC8behaviorAC8BehaviorOvp">behavior</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Behavior to build URL</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">behavior</span><span class="p">:</span> <span class="kt"><a href="../Classes/URLBuilder/Behavior.html">Behavior</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4TRON10URLBuilderC7baseURL8behaviorACSS_AC8BehaviorOtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(baseURL:behavior:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON10URLBuilderC7baseURL8behaviorACSS_AC8BehaviorOtcfc">init(baseURL:behavior:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -208,7 +269,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">behavior</span><span class="p">:</span> <span class="kt"><a href="../Classes/URLBuilder/Behavior.html">Behavior</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">appendingPathComponent</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -288,7 +349,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-06-16)</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-06-28)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           TRON Docs
         </a>
-         (93% documented)
+         (92% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -93,6 +93,9 @@
                 <a class="nav-group-task-link" href="../Classes/URLBuilder.html">URLBuilder</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/URLBuilder/Behavior.html">– Behavior</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/UploadAPIRequest.html">UploadAPIRequest</a>
               </li>
             </ul>
@@ -122,9 +125,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/TronDelegate.html">TronDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/URLBuildable.html">URLBuildable</a>
               </li>
             </ul>
           </li>
@@ -245,9 +245,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON11BaseRequestC6methodXevp"></a>
+                    <a name="/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp"></a>
                     <a name="//apple_ref/swift/Property/method" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON11BaseRequestC6methodXevp">method</a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -262,7 +262,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">method</span><span class="p">:</span> <span class="kt">Alamofire</span><span class="o">.</span><span class="kt">HTTPMethod</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">method</span><span class="p">:</span> <span class="kt">HTTPMethod</span></code></pre>
 
                         </div>
                       </div>
@@ -299,9 +299,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON11BaseRequestC17parameterEncodingXevp"></a>
+                    <a name="/s:4TRON11BaseRequestC17parameterEncoding9Alamofire09ParameterE0_pvp"></a>
                     <a name="//apple_ref/swift/Property/parameterEncoding" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON11BaseRequestC17parameterEncodingXevp">parameterEncoding</a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC17parameterEncoding9Alamofire09ParameterE0_pvp">parameterEncoding</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -326,9 +326,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON11BaseRequestC7headersXevp"></a>
+                    <a name="/s:4TRON11BaseRequestC7headers9Alamofire11HTTPHeadersVvp"></a>
                     <a name="//apple_ref/swift/Property/headers" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON11BaseRequestC7headersXevp">headers</a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC7headers9Alamofire11HTTPHeadersVvp">headers</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -339,7 +339,7 @@
                         <p>Headers, that should be used for current request.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
-    Resulting headers may include global headers from <code><a href="../Classes/TRON.html">TRON</a></code> instance and <code>Alamofire.Manager</code> defaultHTTPHeaders.
+    Resulting headers may include global headers from <code><a href="../Classes/TRON.html">TRON</a></code> instance and <code>Alamofire.Session</code> defaultHTTPHeaders.
 
 </div>
 
@@ -358,9 +358,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON11BaseRequestC10urlBuilderAA12URLBuildable_pvp"></a>
+                    <a name="/s:4TRON11BaseRequestC10urlBuilderAA10URLBuilderCvp"></a>
                     <a name="//apple_ref/swift/Property/urlBuilder" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON11BaseRequestC10urlBuilderAA12URLBuildable_pvp">urlBuilder</a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC10urlBuilderAA10URLBuilderCvp">urlBuilder</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -375,7 +375,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">urlBuilder</span><span class="p">:</span> <span class="kt"><a href="../Protocols/URLBuildable.html">URLBuildable</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">urlBuilder</span><span class="p">:</span> <span class="kt"><a href="../Classes/URLBuilder.html">URLBuilder</a></span></code></pre>
 
                         </div>
                       </div>
@@ -403,6 +403,33 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">apiStub</span><span class="p">:</span> <span class="kt"><a href="../Classes/APIStub.html">APIStub</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4TRON11BaseRequestC11interceptor9Alamofire0C11Interceptor_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/interceptor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC11interceptor9Alamofire0C11Interceptor_pSgvp">interceptor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Request interceptor that allows to adapt and retry requests.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">interceptor</span><span class="p">:</span> <span class="kt">RequestInterceptor</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -493,9 +520,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON11BaseRequestC6methodyACyxq_GXDXecAEr0_lF"></a>
+                    <a name="/s:4TRON11BaseRequestC6methodyACyxq_GXD9Alamofire10HTTPMethodOF"></a>
                     <a name="//apple_ref/swift/Method/method(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON11BaseRequestC6methodyACyxq_GXDXecAEr0_lF">method(_:)</a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC6methodyACyxq_GXD9Alamofire10HTTPMethodOF">method(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -503,7 +530,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6methodXevp">method</a></code> variable to <code>httpMethod</code> and returns.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a></code> variable to <code>httpMethod</code> and returns.</p>
 
                       </div>
                       <div class="declaration">
@@ -553,7 +580,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6methodXevp">method</a></code> variable to <code>.post</code> and returns.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a></code> variable to <code>.post</code> and returns.</p>
 
                       </div>
                       <div class="declaration">
@@ -584,7 +611,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6methodXevp">method</a></code> variable to <code>.connect</code> and returns.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a></code> variable to <code>.connect</code> and returns.</p>
 
                       </div>
                       <div class="declaration">
@@ -615,7 +642,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6methodXevp">method</a></code> variable to <code>.delete</code> and returns.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a></code> variable to <code>.delete</code> and returns.</p>
 
                       </div>
                       <div class="declaration">
@@ -646,7 +673,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6methodXevp">method</a></code> variable to <code>.get</code> and returns.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a></code> variable to <code>.get</code> and returns.</p>
 
                       </div>
                       <div class="declaration">
@@ -677,7 +704,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6methodXevp">method</a></code> variable to <code>.head</code> and returns.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a></code> variable to <code>.head</code> and returns.</p>
 
                       </div>
                       <div class="declaration">
@@ -708,7 +735,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6methodXevp">method</a></code> variable to <code>.options</code> and returns.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a></code> variable to <code>.options</code> and returns.</p>
 
                       </div>
                       <div class="declaration">
@@ -739,7 +766,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6methodXevp">method</a></code> variable to <code>.patch</code> and returns.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a></code> variable to <code>.patch</code> and returns.</p>
 
                       </div>
                       <div class="declaration">
@@ -770,7 +797,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6methodXevp">method</a></code> variable to <code>.put</code> and returns.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a></code> variable to <code>.put</code> and returns.</p>
 
                       </div>
                       <div class="declaration">
@@ -801,7 +828,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6methodXevp">method</a></code> variable to <code>.trace</code> and returns.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC6method9Alamofire10HTTPMethodOvp">method</a></code> variable to <code>.trace</code> and returns.</p>
 
                       </div>
                       <div class="declaration">
@@ -822,9 +849,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON11BaseRequestC17parameterEncodingyACyxq_GXDXecAEr0_lF"></a>
+                    <a name="/s:4TRON11BaseRequestC17parameterEncodingyACyxq_GXD9Alamofire09ParameterE0_pF"></a>
                     <a name="//apple_ref/swift/Method/parameterEncoding(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON11BaseRequestC17parameterEncodingyACyxq_GXDXecAEr0_lF">parameterEncoding(_:)</a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC17parameterEncodingyACyxq_GXD9Alamofire09ParameterE0_pF">parameterEncoding(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -832,7 +859,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC17parameterEncodingXevp">parameterEncoding</a></code> variable to <code>encoding</code> and returns configured request.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC17parameterEncoding9Alamofire09ParameterE0_pvp">parameterEncoding</a></code> variable to <code>encoding</code> and returns configured request.</p>
 
                       </div>
                       <div class="declaration">
@@ -872,9 +899,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON11BaseRequestC7headersyACyxq_GXDXecAEr0_lF"></a>
+                    <a name="/s:4TRON11BaseRequestC7headersyACyxq_GXD9Alamofire11HTTPHeadersVF"></a>
                     <a name="//apple_ref/swift/Method/headers(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON11BaseRequestC7headersyACyxq_GXDXecAEr0_lF">headers(_:)</a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC7headersyACyxq_GXD9Alamofire11HTTPHeadersVF">headers(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -882,7 +909,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC7headersXevp">headers</a></code> variable to <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC7headersXevp">headers</a></code> and returns configured request.</p>
+                        <p>Sets <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC7headers9Alamofire11HTTPHeadersVvp">headers</a></code> variable to <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC7headers9Alamofire11HTTPHeadersVvp">headers</a></code> and returns configured request.</p>
 
                       </div>
                       <div class="declaration">
@@ -922,9 +949,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON11BaseRequestC4withyACyxq_GXDAA6Plugin_pF"></a>
-                    <a name="//apple_ref/swift/Method/with(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON11BaseRequestC4withyACyxq_GXDAA6Plugin_pF">with(_:)</a>
+                    <a name="/s:4TRON11BaseRequestC11usingPluginyACyxq_GXDAA0E0_pF"></a>
+                    <a name="//apple_ref/swift/Method/usingPlugin(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC11usingPluginyACyxq_GXDAA0E0_pF">usingPlugin(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -939,7 +966,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">with</span><span class="p">(</span><span class="n">_</span> <span class="nv">plugin</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Plugin.html">Plugin</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">usingPlugin</span><span class="p">(</span><span class="n">_</span> <span class="nv">plugin</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Plugin.html">Plugin</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
                         </div>
                       </div>
@@ -956,6 +983,106 @@
                               <td>
                                 <div>
                                   <p>Plugin implementation</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>configured request</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4TRON11BaseRequestC8buildURLyACyxq_GXDAA10URLBuilderC8BehaviorOF"></a>
+                    <a name="//apple_ref/swift/Method/buildURL(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC8buildURLyACyxq_GXDAA10URLBuilderC8BehaviorOF">buildURL(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Replaces <code><a href="../Classes/BaseRequest.html#/s:4TRON11BaseRequestC10urlBuilderAA10URLBuilderCvp">urlBuilder</a></code> with <code><a href="../Classes/URLBuilder.html">URLBuilder</a></code> with the same baseURL string and <code>behavior</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">buildURL</span><span class="p">(</span><span class="n">_</span> <span class="nv">behavior</span><span class="p">:</span> <span class="kt"><a href="../Classes/URLBuilder.html">URLBuilder</a></span><span class="o">.</span><span class="kt">Behavior</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>behavior</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>URL building behavior to use when constructing request.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>configured request.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4TRON11BaseRequestC9intercept5usingACyxq_GXD9Alamofire0C11Interceptor_p_tF"></a>
+                    <a name="//apple_ref/swift/Method/intercept(using:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC9intercept5usingACyxq_GXD9Alamofire0C11Interceptor_p_tF">intercept(using:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets per-request Interceptor for current request and returns.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">intercept</span><span class="p">(</span><span class="n">using</span> <span class="nv">interceptor</span><span class="p">:</span> <span class="kt">RequestInterceptor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>interceptor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>request interceptor</p>
                                 </div>
                               </td>
                             </tr>
@@ -1188,7 +1315,7 @@ If <code>setNilToNull</code> is set to true, every nil value will be converted t
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-06-16)</p>
+      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-06-28)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
