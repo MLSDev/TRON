@@ -98,4 +98,15 @@ class BaseRequestTestCase: ProtocolStubbedTestCase {
         
         XCTAssertEqual(request.urlBuilder.url(forPath: request.path).absoluteString, "https://httpbin.org/api/status/200")
     }
+    
+    func testConfigureMethod() {
+        let request : APIRequest<Int, APIError> = tron.swiftyJSON
+            .request("status/200")
+            .configure {
+                $0.method = .post
+                $0.headers.add(.authorization(bearerToken: "foo"))
+        }
+        
+        XCTAssertEqual(request.headers["Authorization"], "Bearer foo")
+    }
 }

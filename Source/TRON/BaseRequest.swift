@@ -280,6 +280,15 @@ open class BaseRequest<Model, ErrorModel> {
         return self
     }
 
+    /// Configures current given request by executing `closure` and returning.
+    ///
+    /// - Parameter closure: configuration closure to run
+    /// - Returns: configured request
+    open func configure(_ closure: (BaseRequest) -> Void) -> Self {
+        closure(self)
+        return self
+    }
+
     /// Sets `parameters` into `parameters` variable on request. If `rootKey` is non-nil, parameters are wrapped in external dictionary and set into `parameters` using `rootKey` as a single key.
     ///
     /// - Parameters:
