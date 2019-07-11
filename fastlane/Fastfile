@@ -1,28 +1,28 @@
 fastlane_version "1.98.0"
 
-lane :test_ios12 do
-  scan(devices: ["iPhone X (12.2)"])
+lane :test_ios13 do
+  scan(devices: ["iPhone Xs (13.0)"])
   sh "bash ../codecov.sh"
 end
 
-lane :test_ios11 do
-  scan(devices: ["iPhone X (11.4)"])
+lane :test_ios12 do
+  scan(devices: ["iPhone X (12.1)"])
+end
+
+lane :test_tvos13 do
+  scan(device: "Apple TV 4K (13.0)")
 end
 
 lane :test_tvos12 do
-  scan(device: "Apple TV")
-end
-
-lane :test_tvos11 do
-  scan(device: "Apple TV")
+  scan(device: "Apple TV 4K (12.1)")
 end
 
 lane :test_ios_swift4 do
-  scan(devices: ["iPhone X (12.2)"], xcargs: "SWIFT_VERSION=4.2")
+  scan(devices: ["iPhone Xs (13.0)"], xcargs: "SWIFT_VERSION=4.2")
 end
 
 lane :test_tvos_swift4 do
-  scan(devices: ["Apple TV"], xcargs: "SWIFT_VERSION=4.2")
+  scan(devices: ["Apple TV 4K (13.0)"], xcargs: "SWIFT_VERSION=4.2")
 end
 
 lane :test_macos do
@@ -33,7 +33,7 @@ end
 lane :build_watchos do
   xcodebuild(
     build: true,
-    destination: "OS=5.1,name=Apple Watch Series 4 - 44mm",
+    destination: "OS=6.0,name=Apple Watch Series 2 - 42mm",
     scheme: 'TRON'
   )
 end
@@ -44,6 +44,7 @@ lane :pod_lint do
 end
 
 lane :carthage_build do
+  sh "brew outdated carthage || brew upgrade carthage"
   carthage(command: "build", no_skip_current: true, verbose: false, platform: "iOS")
 end
 

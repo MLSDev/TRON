@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyJSON
 import TRON
+import TRONSwiftyJSON
 
 class User: JSONDecodable {
     required init(json: JSON) {
