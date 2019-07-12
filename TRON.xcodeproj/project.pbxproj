@@ -1024,8 +1024,13 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				"OTHER_LDFLAGS[sdk=watch*]" = (
+					"-framework",
+					CFNetwork,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRON;
 				PRODUCT_NAME = TRON;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -1046,8 +1051,13 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				"OTHER_LDFLAGS[sdk=watch*]" = (
+					"-framework",
+					CFNetwork,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mlsdev.TRON;
 				PRODUCT_NAME = TRON;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
