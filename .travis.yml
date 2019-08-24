@@ -5,8 +5,6 @@ osx_image: xcode11
 matrix:
   include:
     - env: ACTION=test_ios13
-    - osx_image: xcode10.3
-      env: ACTION=test_ios12
     - env: ACTION=test_ios12
     - env: ACTION=test_tvos13
     - env: ACTION=test_tvos12
