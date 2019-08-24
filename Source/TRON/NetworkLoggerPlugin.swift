@@ -65,9 +65,10 @@ open class NetworkLoggerPlugin: Plugin {
             if (error as NSError?)?.code == NSURLErrorCancelled, !logCancelledRequests {
                 return
             }
-            debugPrint(request)
             print("❗️ Request errored, gathered debug information: ")
-            print("⚠️ Status code - \(response.1?.statusCode ?? 0)")
+            debugPrint(request)
+
+            print("⚠️ Response status code - \(response.1?.statusCode ?? 0)")
             if let responseData = response.2 {
                 print("⚠️ HTTP Body contents: ")
                 if let json = try? JSONSerialization.jsonObject(with: responseData, options: .allowFragments) {
@@ -75,6 +76,9 @@ open class NetworkLoggerPlugin: Plugin {
                 } else if let string = String(data: responseData, encoding: .utf8) {
                     print("\(string)")
                 }
+            }
+            if let underlyingError = (error as? APIError)?.error {
+                print("⚠️ Received error: \n", underlyingError)
             }
         }
     }

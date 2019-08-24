@@ -36,7 +36,7 @@ public protocol DownloadErrorSerializable: Error {
 }
 
 /// `APIError` is used as a generic wrapper for all kinds of API errors.
-open class APIError: Error, LocalizedError, ErrorSerializable, DownloadErrorSerializable, CustomStringConvertible {
+open class APIError: Error, LocalizedError, ErrorSerializable, DownloadErrorSerializable {
 
     /// URLRequest that was unsuccessful
     public let request: URLRequest?
@@ -72,10 +72,5 @@ open class APIError: Error, LocalizedError, ErrorSerializable, DownloadErrorSeri
     /// Prints localized description of error inside
     open var errorDescription: String? {
         return error?.localizedDescription
-    }
-
-    /// Description of underlying error.
-    open var description: String {
-        return errorDescription ?? ""
     }
 }

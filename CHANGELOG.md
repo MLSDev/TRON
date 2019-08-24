@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+* Better debug prints for `NetworkLoggerPlugin` when decoding using `Codable` protocol.
 * `configure(_:)` method for `BaseRequest` DSL to allow configuring request with several changes at once.
 
 ## [5.0.0-beta.5](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.5)
