@@ -38,7 +38,7 @@ extension DataRequest: DataRequestResponseSerialization {}
 extension DataRequestResponseSerialization {
     func performResponseSerialization<Serializer>(queue: DispatchQueue,
                                                   responseSerializer: Serializer,
-                                                  completionHandler: @escaping (DataResponse<Serializer.SerializedObject>) -> Void) -> Self
+                                                  completionHandler: @escaping (DataResponse<Serializer.SerializedObject, Error>) -> Void) -> Self
         where Serializer: DataResponseSerializerProtocol {
             if let stubbedRequest = self as? DataRequest, let stub = stubbedRequest.tron_apiStub, stub.isEnabled {
                 let start = CFAbsoluteTimeGetCurrent()
@@ -71,7 +71,7 @@ extension DataRequestResponseSerialization {
 extension DownloadRequest {
     func performResponseSerialization<Serializer>(queue: DispatchQueue,
                                                   responseSerializer: Serializer,
-                                                  completionHandler: @escaping (DownloadResponse<Serializer.SerializedObject>) -> Void) -> Self
+                                                  completionHandler: @escaping (DownloadResponse<Serializer.SerializedObject, Error>) -> Void) -> Self
         where Serializer: DownloadResponseSerializerProtocol {
         if let stub = tron_apiStub, stub.isEnabled {
             let start = CFAbsoluteTimeGetCurrent()
