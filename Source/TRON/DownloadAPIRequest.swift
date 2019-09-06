@@ -106,11 +106,11 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DownloadResponse<Model, Error>) -> Void)) -> DownloadRequest {
+    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DownloadResponse<Model, AFError>) -> Void)) -> DownloadRequest {
         return performAlamofireRequest(completion)
     }
 
-    private func performAlamofireRequest(_ completion : @escaping (DownloadResponse<Model, Error>) -> Void) -> DownloadRequest {
+    private func performAlamofireRequest(_ completion : @escaping (DownloadResponse<Model, AFError>) -> Void) -> DownloadRequest {
         guard let session = tronDelegate?.session else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
@@ -163,7 +163,7 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
         }
     }
 
-    internal func didReceiveDownloadResponse(_ response: DownloadResponse<Model, Error>, forRequest request: Alamofire.DownloadRequest) {
+    internal func didReceiveDownloadResponse(_ response: DownloadResponse<Model, AFError>, forRequest request: Alamofire.DownloadRequest) {
         allPlugins.forEach { plugin in
             plugin.didReceiveDownloadResponse(response, forRequest: request, formedFrom: self)
         }

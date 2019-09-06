@@ -8,6 +8,11 @@ All notable changes to this project will be documented in this file.
 * Better debug prints for `NetworkLoggerPlugin` when decoding using `Codable` protocol.
 * `configure(_:)` method for `BaseRequest` DSL to allow configuring request with several changes at once.
 
+### Breaking
+
+* Plugin API that previously was called with `Alamofire.Data/DownloadResponse<Model, Error>` is now called with `Alamofire.Data/DownloadResponse<Model, AFError>` due to Alamofire changes to error handling.
+* `performCollectingTimeline(withCompletion:)` method is now called also with `AFError` instead of `Error`.
+
 ## [5.0.0-beta.5](https://github.com/MLSDev/TRON/releases/tag/5.0.0-beta.5)
 
 ### Added

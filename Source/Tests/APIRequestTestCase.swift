@@ -32,7 +32,7 @@ extension Dictionary {
 struct TimeoutInterceptor: RequestInterceptor {
     let timeoutInterval: TimeInterval
     
-    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         var urlRequest = urlRequest
         urlRequest.timeoutInterval = timeoutInterval
         completion(.success(urlRequest))

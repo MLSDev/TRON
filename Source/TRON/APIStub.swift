@@ -38,12 +38,14 @@ extension DataRequest: DataRequestResponseSerialization {}
 extension DataRequestResponseSerialization {
     func performResponseSerialization<Serializer>(queue: DispatchQueue,
                                                   responseSerializer: Serializer,
-                                                  completionHandler: @escaping (DataResponse<Serializer.SerializedObject, Error>) -> Void) -> Self
+                                                  completionHandler: @escaping (DataResponse<Serializer.SerializedObject, AFError>) -> Void) -> Self
         where Serializer: DataResponseSerializerProtocol {
             if let stubbedRequest = self as? DataRequest, let stub = stubbedRequest.tron_apiStub, stub.isEnabled {
                 let start = CFAbsoluteTimeGetCurrent()
                 let result = Result {
                     try responseSerializer.serialize(request: stub.request, response: stub.response, data: stub.data, error: stub.error)
+                }.mapError { error in
+                    error as? AFError ?? AFError.responseSerializationFailed(reason: AFError.ResponseSerializationFailureReason.decodingFailed(error: error))
                 }
                 let end = CFAbsoluteTimeGetCurrent()
                 let response = DataResponse(request: stub.request,
@@ -71,12 +73,14 @@ extension DataRequestResponseSerialization {
 extension DownloadRequest {
     func performResponseSerialization<Serializer>(queue: DispatchQueue,
                                                   responseSerializer: Serializer,
-                                                  completionHandler: @escaping (DownloadResponse<Serializer.SerializedObject, Error>) -> Void) -> Self
+                                                  completionHandler: @escaping (DownloadResponse<Serializer.SerializedObject, AFError>) -> Void) -> Self
         where Serializer: DownloadResponseSerializerProtocol {
         if let stub = tron_apiStub, stub.isEnabled {
             let start = CFAbsoluteTimeGetCurrent()
             let result = Result {
                 try responseSerializer.serializeDownload(request: stub.request, response: stub.response, fileURL: stub.fileURL, error: stub.error)
+            }.mapError { error in
+                error as? AFError ?? AFError.responseSerializationFailed(reason: AFError.ResponseSerializationFailureReason.decodingFailed(error: error))
             }
             let end = CFAbsoluteTimeGetCurrent()
             let response = DownloadResponse(request: stub.request,

@@ -102,7 +102,7 @@ open class BaseRequest<Model, ErrorModel> {
 
     internal func callSuccessFailureBlocks(_ success: ((Model) -> Void)?,
                                            failure: ((ErrorModel) -> Void)?,
-                                           response: Alamofire.DataResponse<Model, Error>) {
+                                           response: Alamofire.DataResponse<Model, AFError>) {
         switch response.result {
         case .success(let value):
             resultDeliveryQueue.async {
@@ -110,7 +110,7 @@ open class BaseRequest<Model, ErrorModel> {
             }
         case .failure(let error):
             resultDeliveryQueue.async {
-                guard let error = error as? ErrorModel else {
+                guard let error = error.underlyingError as? ErrorModel else {
                     return
                 }
                 failure?(error)
@@ -148,7 +148,7 @@ open class BaseRequest<Model, ErrorModel> {
         }
     }
 
-    internal func didReceiveDataResponse(_ response: DataResponse<Model, Error>, forRequest request: Alamofire.Request) {
+    internal func didReceiveDataResponse(_ response: DataResponse<Model, AFError>, forRequest request: Alamofire.Request) {
         allPlugins.forEach { plugin in
             plugin.didReceiveDataResponse(response, forRequest: request, formedFrom: self)
         }

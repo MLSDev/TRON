@@ -93,11 +93,11 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
      
      - returns: Alamofire.Request or nil if request was stubbed.
      */
-    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model, Error>) -> Void)) -> Alamofire.DataRequest {
+    open func performCollectingTimeline(withCompletion completion: @escaping ((Alamofire.DataResponse<Model, AFError>) -> Void)) -> Alamofire.DataRequest {
         return performAlamofireRequest(completion)
     }
 
-    private func performAlamofireRequest(_ completion : @escaping (DataResponse<Model, Error>) -> Void) -> DataRequest {
+    private func performAlamofireRequest(_ completion : @escaping (DataResponse<Model, AFError>) -> Void) -> DataRequest {
         guard let session = tronDelegate?.session else {
             fatalError("Manager cannot be nil while performing APIRequest")
         }
