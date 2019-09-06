@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.0.0-rc.1](https://github.com/MLSDev/TRON/releases/tag/5.0.0-rc.1)
+
 ### Added
 
 * Better debug prints for `NetworkLoggerPlugin` when decoding using `Codable` protocol.
