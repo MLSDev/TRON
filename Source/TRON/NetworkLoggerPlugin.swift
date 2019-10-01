@@ -54,7 +54,7 @@ open class NetworkLoggerPlugin: Plugin {
     /// Called, when response was successfully parsed. If `logSuccess` property has been turned on, prints cURL representation of request.
     open func didSuccessfullyParseResponse<Model, ErrorModel>(_ response: (URLRequest?, HTTPURLResponse?, Data?, Error?), creating result: Model, forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
         if logSuccess {
-            debugPrint(request)
+            print(request.cURLDescription())
             print("Request success ✅")
         }
     }
@@ -66,7 +66,7 @@ open class NetworkLoggerPlugin: Plugin {
                 return
             }
             print("❗️ Request errored, gathered debug information: ")
-            debugPrint(request)
+            print(request.cURLDescription())
 
             print("⚠️ Response status code - \(response.1?.statusCode ?? 0)")
             if let responseData = response.2 {
