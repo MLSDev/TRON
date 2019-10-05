@@ -33,7 +33,7 @@ end
 lane :build_watchos do
   xcodebuild(
     build: true,
-    destination: "OS=6.0,name=Apple Watch Series 2 - 42mm",
+    destination: "OS=6.0,name=Apple Watch Series 4 - 44mm",
     scheme: 'TRON'
   )
 end
