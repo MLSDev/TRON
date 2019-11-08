@@ -1,13 +1,13 @@
 sudo: false
 language: objective-c
 os: osx
-osx_image: xcode11
+osx_image: xcode11.1
 matrix:
   include:
     - env: ACTION=test_ios13
-    - env: ACTION=test_ios12
+    # - env: ACTION=test_ios12
     - env: ACTION=test_tvos13
-    - env: ACTION=test_tvos12
+    # - env: ACTION=test_tvos12
     - env: ACTION=test_ios_swift4
     - env: ACTION=test_tvos_swift4
     - env: ACTION=test_macos
