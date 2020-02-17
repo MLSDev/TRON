@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           TRON Docs
         </a>
-         (92% documented)
+         (91% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -144,8 +144,14 @@
       <article class="main-content">
 
         <section class="section">
-          <div class="section-content">
+          <div class="section-content top-matter">
             <h1>NetworkActivityPlugin</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">NetworkActivityPlugin</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/Plugin.html">Plugin</a></span></code></pre>
+
+                </div>
+              </div>
             <p>Plugin, that monitors sent api requests, and automatically sets UIApplication networkActivityIndicatorVisible property.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
@@ -163,9 +169,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/"></a>
+                    <a name="/s:4TRON21NetworkActivityPluginC11applicationACSo13UIApplicationC_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(application:)" class="dashAnchor"></a>
-                    <a class="token" href="#/">init(application:)</a>
+                    <a class="token" href="#/s:4TRON21NetworkActivityPluginC11applicationACSo13UIApplicationC_tcfc">init(application:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -173,7 +179,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -181,9 +196,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/"></a>
+                    <a name="/s:4TRON21NetworkActivityPluginC23didSendAlamofireRequestyyXe_AA04BaseH0Cyxq_GtcACr0_lF"></a>
                     <a name="//apple_ref/swift/Method/didSendAlamofireRequest(_:formedFrom:)" class="dashAnchor"></a>
-                    <a class="token" href="#/">didSendAlamofireRequest(_:formedFrom:)</a>
+                    <a class="token" href="#/s:4TRON21NetworkActivityPluginC23didSendAlamofireRequestyyXe_AA04BaseH0Cyxq_GtcACr0_lF">didSendAlamofireRequest(_:formedFrom:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -194,15 +209,23 @@
                         <p>Called when network request was sent, increases networkActivityCount by 1</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="n">didSendAlamofireRequest</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">Request</span><span class="p">,</span> <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt"><a href="../Classes/BaseRequest.html">BaseRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/"></a>
+                    <a name="/s:4TRON21NetworkActivityPluginC19willProcessResponseyy10Foundation10URLRequestVSg_So17NSHTTPURLResponseCSgAE4DataVSgs5Error_pSgt_XeAA11BaseRequestCyxq_GtcACr0_lF"></a>
                     <a name="//apple_ref/swift/Method/willProcessResponse(response:forRequest:formedFrom:)" class="dashAnchor"></a>
-                    <a class="token" href="#/">willProcessResponse(response:forRequest:formedFrom:)</a>
+                    <a class="token" href="#/s:4TRON21NetworkActivityPluginC19willProcessResponseyy10Foundation10URLRequestVSg_So17NSHTTPURLResponseCSgAE4DataVSgs5Error_pSgt_XeAA11BaseRequestCyxq_GtcACr0_lF">willProcessResponse(response:forRequest:formedFrom:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -212,6 +235,14 @@
                       <div class="abstract">
                         <p>Called when response for request was received, decreases networkActivityCount by 1</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="n">willProcessResponse</span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span> <span class="p">(</span><span class="kt">URLRequest</span><span class="p">?,</span> <span class="kt">HTTPURLResponse</span><span class="p">?,</span> <span class="kt">Data</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?),</span> <span class="n">forRequest</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">Request</span><span class="p">,</span> <span class="n">formedFrom</span> <span class="nv">tronRequest</span><span class="p">:</span> <span class="kt"><a href="../Classes/BaseRequest.html">BaseRequest</a></span><span class="o">&lt;</span><span class="kt">Model</span><span class="p">,</span> <span class="kt">ErrorModel</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -224,8 +255,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2019-06-28)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2020 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2020-02-17)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
