@@ -234,8 +234,9 @@ DEPENDENCIES
   fastlane
   fastlane-plugin-versioning
   jazzy
+  mime-types
   netrc
   octokit
 
 BUNDLED WITH
-   2.0.1
+   2.1.4
