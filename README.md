@@ -58,25 +58,25 @@ TRON framework includes Codable implementation. To use SwiftyJSON, `import TRONS
 ### CocoaPods
 
 ```ruby
-pod 'TRON', '~> 5.0.0-beta.4'
+pod 'TRON', '~> 5.0.0'
 ```
 
 Only Core subspec, without SwiftyJSON dependency:
 
 ```ruby
-pod 'TRON/Core', '~> 5.0.0-beta.4'
+pod 'TRON/Core', '~> 5.0.0'
 ```
 
 RxSwift extension for TRON:
 
 ```ruby
-pod 'TRON/RxSwift', '~> 5.0.0-beta.4'
+pod 'TRON/RxSwift', '~> 5.0.0'
 ```
 
 ### Carthage
 
 ```ruby
-github "MLSDev/TRON", ~> 5.0.0-beta.4
+github "MLSDev/TRON", ~> 5.0.0
 ```
 
 ## Migration Guides

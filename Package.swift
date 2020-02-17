@@ -38,7 +38,7 @@ let package = Package(
         .library(name: "RxTRON", targets: ["RxTRON"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.0.0-rc.3")),
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.0.0")),
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", .upToNextMajor(from: ("5.0.0"))),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "5.0.0"))
     ],
