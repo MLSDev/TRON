@@ -57,9 +57,8 @@ open class BaseRequest<Model, ErrorModel> {
     /// Defines how parameters are encoded.
     open var parameterEncoding: Alamofire.ParameterEncoding
 
-    /// Headers, that should be used for current request.
-    /// - Note: Resulting headers may include global headers from `TRON` instance and `Alamofire.Session` defaultHTTPHeaders.
-    open var headers: HTTPHeaders = .init()
+    /// Headers, that should be used for current request. Defaults to HTTPHeaders.default
+    open var headers: HTTPHeaders = .default
 
     /// URL builder for current request
     open var urlBuilder: URLBuilder
