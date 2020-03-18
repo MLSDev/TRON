@@ -97,6 +97,28 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
                                     to: destination)
         }
     }
+    
+    @discardableResult
+    /**
+     Send current request.
+     
+     - parameter successBlock: Success block to be executed when request finished
+     
+     - parameter failureBlock: Failure block to be executed if request fails. Nil by default.
+     
+     - returns: Alamofire.Request or nil if request was stubbed.
+     */
+    open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((ErrorModel) -> Void)? = nil) -> DownloadRequest {
+        self.performCollectingTimeline { response in
+            switch response.result {
+            case .success(let model): successBlock?(model)
+            case .failure(let error):
+                if let error = error.underlyingError as? ErrorModel {
+                    failureBlock?(error)
+                }
+            }
+        }
+    }
 
     @discardableResult
     /**
