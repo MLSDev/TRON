@@ -92,9 +92,9 @@ lane :release do |params|
     puts "Pushing to CocoaPods trunk."
     sh "bundle exec pod trunk push TRON.podspec --allow-warnings"
 
-    puts "Preparing Carthage binary framework."
-    sh "carthage build --no-skip-current"
-    sh "carthage archive TRON"
+    # puts "Preparing Carthage binary framework."
+    # sh "carthage build --no-skip-current"
+    # sh "carthage archive TRON"
 
     puts "Pushing as a GitHub Release."
     fastlane_require 'octokit'
@@ -105,9 +105,9 @@ lane :release do |params|
                      name: version,
                      body: stripped_changelog)
 
-    puts "Attaching Carthage prebuilt binary to release."
-    releases = client.releases('MLSDev/TRON')
-    client.upload_asset(releases[0].url, 'TRON.framework.zip')
-    sh "rm -rf TRON.framework.zip"
+    # puts "Attaching Carthage prebuilt binary to release."
+    # releases = client.releases('MLSDev/TRON')
+    # client.upload_asset(releases[0].url, 'TRON.framework.zip')
+    # sh "rm -rf TRON.framework.zip"
   end
 end
