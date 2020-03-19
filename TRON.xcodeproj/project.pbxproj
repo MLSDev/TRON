@@ -1176,7 +1176,7 @@
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.1;
+				minimumVersion = 5.1.0;
 			};
 		};
 		9A9803F222D789A3008CB92C /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
@@ -1191,7 +1191,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
-				kind = upToNextMinorVersion;
+				kind = upToNextMajorVersion;
 				minimumVersion = 5.0.0;
 			};
 		};

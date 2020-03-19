@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.12'
   s.watchos.deployment_target = '3.0'
 
-  s.dependency 'Alamofire' , '~> 5.0.0'
+  s.dependency 'Alamofire' , '~> 5.0'
 
   s.subspec 'Core' do |core|
       core.ios.frameworks = 'UIKit'
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'RxSwift' do |rxswift|
       rxswift.dependency 'TRON/Core'
-      rxswift.dependency 'RxSwift', '~> 5.0'
+      rxswift.dependency 'RxSwift', '~> 5.1'
       rxswift.source_files = 'Source/RxTRON/Tron+RxSwift.swift'
   end
 
