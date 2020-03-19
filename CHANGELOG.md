@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.0.2](https://github.com/MLSDev/TRON/releases/tag/5.0.2)
+
 * Added `DownloadAPIRequest.perform(withSuccess:failure:)` method, similar to `APIRequest` and `UploadAPIRequest` methods.
 
 ## [5.0.1](https://github.com/MLSDev/TRON/releases/tag/5.0.1)
