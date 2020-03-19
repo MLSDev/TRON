@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+* Added `DownloadAPIRequest.perform(withSuccess:failure:)` method, similar to `APIRequest` and `UploadAPIRequest` methods.
+
 ## [5.0.1](https://github.com/MLSDev/TRON/releases/tag/5.0.1)
 
 * `BaseRequest.headers` now default to `HTTPHeaders.default` to allow sending Alamofire default headers such as "Accept-Language", "Accept-Encoding", "User-Agent".

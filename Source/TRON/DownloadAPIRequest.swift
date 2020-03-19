@@ -97,7 +97,7 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
                                     to: destination)
         }
     }
-    
+
     @discardableResult
     /**
      Send current request.
@@ -109,12 +109,17 @@ open class DownloadAPIRequest<Model, ErrorModel: DownloadErrorSerializable>: Bas
      - returns: Alamofire.Request or nil if request was stubbed.
      */
     open func perform(withSuccess successBlock: ((Model) -> Void)? = nil, failure failureBlock: ((ErrorModel) -> Void)? = nil) -> DownloadRequest {
-        self.performCollectingTimeline { response in
+        self.performCollectingTimeline { [weak self] response in
             switch response.result {
-            case .success(let model): successBlock?(model)
+            case .success(let model):
+                self?.resultDeliveryQueue.async {
+                    successBlock?(model)
+                }
             case .failure(let error):
                 if let error = error.underlyingError as? ErrorModel {
-                    failureBlock?(error)
+                    self?.resultDeliveryQueue.async {
+                        failureBlock?(error)
+                    }
                 }
             }
         }
