@@ -4,10 +4,10 @@
   <img src="https://github.com/MLSDev/TRON/raw/master/TRON.png" />
 </p>
 
-![Build Status](https://travis-ci.org/MLSDev/TRON.svg?branch=master) &nbsp;
+![CI](https://github.com/MLSDev/TRON/workflows/CI/badge.svg)
 [![codecov.io](https://codecov.io/github/MLSDev/TRON/coverage.svg?branch=master)](https://codecov.io/github/MLSDev/TRON?branch=master)
-[![Platform](https://img.shields.io/cocoapods/p/TRON.svg?style=flat)](https://mlsdev.github.io/TRON)
-[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/TRON.svg)](https://img.shields.io/cocoapods/v/TRON.svg)
+![CocoaPod platform](https://cocoapod-badges.herokuapp.com/p/TRON/badge.svg)
+![CocoaPod version](https://cocoapod-badges.herokuapp.com/v/TRON/badge.svg)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
 
@@ -24,7 +24,7 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 - [x] Stubbing of network requests
 - [x] Modular architecture
 - [x] Support for iOS/Mac OS X/tvOS/watchOS/Linux
-- [x] Support for CocoaPods/Carthage/Swift Package Manager
+- [x] Support for CocoaPods/Swift Package Manager
 - [x] RxSwift extension
 - [x] [Complete documentation](https://mlsdev.github.io/TRON/)
 
@@ -71,12 +71,6 @@ RxSwift extension for TRON:
 
 ```ruby
 pod 'TRON/RxSwift', '~> 5.0.0'
-```
-
-### Carthage
-
-```ruby
-github "MLSDev/TRON", ~> 5.0.0
 ```
 
 ## Migration Guides

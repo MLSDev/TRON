@@ -1,0 +1,83 @@
+name: "CI"
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  macOS:
+    name: Test macOS
+    runs-on: macOS-latest
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_11.3.1.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install gems
+        run: bundle install
+      - name: macOS
+        run: bundle exec fastlane test_macos
+  iOS:
+    name: Test iOS
+    runs-on: macOS-latest
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_11.3.1.app/Contents/Developer
+    strategy:
+      matrix:
+        destination: ["test_ios13"] #,"test_ios12"]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install gems
+        run: bundle install
+      - name: List simulators
+        run: instruments -s devices
+      - name: iOS - ${{ matrix.destination }}
+        run: bundle exec fastlane ${{ matrix.destination }}
+  tvOS:
+    name: Test tvOS
+    runs-on: macOS-latest
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_11.3.1.app/Contents/Developer
+    strategy:
+      matrix:
+        destination: ["test_tvos13"] #,"test_tvos12"]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install gems
+        run: bundle install
+      - name: tvOS - ${{ matrix.destination }}
+        run: bundle exec fastlane ${{ matrix.destination }}
+  watchOS:
+    name: Build watchOS
+    runs-on: macOS-latest
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_11.3.1.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install gems
+        run: bundle install
+      - name: watchOS - ${{ matrix.destination }}
+        run: bundle exec fastlane build_watchos
+  cocoapods:
+    name: Lint podspec
+    runs-on: macOS-latest
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_11.3.1.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install gems
+        run: bundle install
+      - name: CocoaPods spec lint
+        run: bundle exec fastlane pod_lint
+  # spm:
+  #   name: Test with SPM
+  #   runs-on: macOS-latest
+  #   env:
+  #     DEVELOPER_DIR: /Applications/Xcode_11.3.1.app/Contents/Developer
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: SPM Test
+  #       run: swift test -c debug
