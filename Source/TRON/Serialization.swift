@@ -25,7 +25,7 @@ public struct TRONDataResponseSerializer<Model>: DataResponseSerializerProtocol 
     /// Serializes received response into model object
     ///
     /// - Parameters:
-    ///   - request: `URLRequest` that was sent te receive response.
+    ///   - request: `URLRequest` that was sent to receive response.
     ///   - response: HTTP response object that was received
     ///   - data: Data object that was received.
     ///   - error: Error, received by URL loading system or Alamofire.
@@ -52,7 +52,7 @@ public struct TRONDownloadResponseSerializer<Model>: DownloadResponseSerializerP
     /// Serializes received response into model object
     ///
     /// - Parameters:
-    ///   - request: `URLRequest` that was sent te receive response.
+    ///   - request: `URLRequest` that was sent to receive response.
     ///   - response: HTTP response object that was received
     ///   - fileURL: File URL where downloaded file was placed after successful download.
     ///   - error: Error, received by URL loading system or Alamofire.
@@ -60,5 +60,31 @@ public struct TRONDownloadResponseSerializer<Model>: DownloadResponseSerializerP
     /// - Throws: serialization errors.
     public func serializeDownload(request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) throws -> Model {
         return try closure(request, response, fileURL, error)
+    }
+}
+
+/// Response serializer, that returns file URL upon successful download. Is used for `DownloadAPIRequest`.
+public struct FileURLPassthroughResponseSerializer: DownloadResponseSerializerProtocol {
+
+    /// Error returned when received fileURL is nil
+    public struct MissingURLError: Error { }
+
+    /// Extracts file URL from received response
+    ///
+    /// - Parameters:
+    ///   - request: `URLRequest` that was sent to receive response.
+    ///   - response: HTTP response object that was received.
+    ///   - fileURL: File URL where downloaded file was placed after successful download.
+    ///   - error: Error, received by URL loading system or Alamofire.
+    /// - Returns: File URL
+    /// - Throws: serialization errors.
+    public func serializeDownload(request: URLRequest?, response: HTTPURLResponse?, fileURL: URL?, error: Error?) throws -> URL {
+        if let error = error {
+            throw error
+        }
+        if let url = fileURL {
+            return url
+        }
+        throw MissingURLError()
     }
 }
