@@ -5,8 +5,6 @@ All notable changes to this project will be documented in this file.
 
 ## [5.0.3](https://github.com/MLSDev/TRON/releases/tag/5.0.3)
 
-## [5.0.3](https://github.com/MLSDev/TRON/releases/tag/5.0.3)
-
 ### Added
 
 * `FileURLPassthroughResponseSerializer`, which can be used as a response serializer for `DownloadAPIRequest` when you are only interested in URL of downloaded file.  
