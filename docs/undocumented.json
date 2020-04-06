@@ -43,6 +43,27 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/Denys/Projects/TRON/Source/TRON/APIStub.swift",
+      "line": 39,
+      "symbol": "DataRequestResponseSerialization.performResponseSerialization(queue:responseSerializer:completionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Denys/Projects/TRON/Source/TRON/APIStub.swift",
+      "line": 74,
+      "symbol": "DownloadRequest.performResponseSerialization(queue:responseSerializer:completionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Denys/Projects/TRON/Source/TRON/APIStub.swift",
+      "line": 105,
+      "symbol": "Request.tron_apiStub",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/DownloadAPIRequest.swift",
       "line": 111,
       "symbol": "DownloadAPIRequest.perform(withSuccess:failure:)",

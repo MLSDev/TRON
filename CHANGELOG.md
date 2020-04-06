@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 
 ## [5.0.3](https://github.com/MLSDev/TRON/releases/tag/5.0.3)
 
-* Added `FileURLPassthroughResponseSerializer`. Can be used as a response serializer for `DownloadAPIRequest` when you are only interested in URL of downloaded file.  
+## [5.0.3](https://github.com/MLSDev/TRON/releases/tag/5.0.3)
+
+### Added
+
+* `FileURLPassthroughResponseSerializer`, which can be used as a response serializer for `DownloadAPIRequest` when you are only interested in URL of downloaded file.  
+
+### Fixed
+
+* `NetworkLoggerPlugin` now correctly skips cancelled requests
 
 ## [5.0.2](https://github.com/MLSDev/TRON/releases/tag/5.0.2)
 
@@ -34,7 +42,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 * Support for per-request Interceptors.
-* Three different behaviors for building URLs: `.appendingPathComponent`, `.relativeToBaseURL` and `.custom`. Those can be set in TRON initializer: 
+* Three different behaviors for building URLs: `.appendingPathComponent`, `.relativeToBaseURL` and `.custom`. Those can be set in TRON initializer:
 
 ```swift
 let tron = TRON(baseURL: "https://www.example.com/", buildingURL: .relativeToBaseURL)
