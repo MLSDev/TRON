@@ -10,7 +10,6 @@ import TRON
 import TRONSwiftyJSON
 import XCTest
 import SwiftyJSON
-import Alamofire
 
 struct TestUser: JSONDecodable {
     let name: String

@@ -8,7 +8,6 @@
 
 import TRON
 import XCTest
-import Alamofire
 
 class PluginTestCase: ProtocolStubbedTestCase {
 

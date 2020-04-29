@@ -9,7 +9,6 @@
 import TRON
 import Foundation
 import XCTest
-import Alamofire
 
 private struct CodableResponse: Codable {
     let title: String

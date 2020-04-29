@@ -60,6 +60,7 @@
 		9A9803F122D78987008CB92C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9A9803F022D78987008CB92C /* RxSwift */; };
 		9A9803F422D789A4008CB92C /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 9A9803F322D789A4008CB92C /* SwiftyJSON */; };
 		9A9803FB22D78CAD008CB92C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9A9803FA22D78CAD008CB92C /* Alamofire */; };
+		9ABE13FD2459A2BB008874D2 /* Exports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE13FC2459A2BB008874D2 /* Exports.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +195,7 @@
 		9AB63D2B22731CD300544A3E /* PluginConcepts.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PluginConcepts.md; sourceTree = "<group>"; };
 		9AB63D2C22731CD300544A3E /* ContainerTypesParsing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ContainerTypesParsing.md; sourceTree = "<group>"; };
 		9AB63D2D22731CFB00544A3E /* 5.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "5.0 Migration Guide.md"; sourceTree = "<group>"; };
+		9ABE13FC2459A2BB008874D2 /* Exports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exports.swift; sourceTree = "<group>"; };
 		9AFAE4D41CC5210F002739B0 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		9AFAE4D51CC52118002739B0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -297,6 +299,7 @@
 				3EC5C8C322A7E78F00B42774 /* APIRequest.swift */,
 				3EC5C8C422A7E78F00B42774 /* Plugin.swift */,
 				3EC5C8C522A7E78F00B42774 /* Serialization.swift */,
+				9ABE13FC2459A2BB008874D2 /* Exports.swift */,
 			);
 			path = TRON;
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 				3EC5C8CF22A7E78F00B42774 /* DownloadAPIRequest.swift in Sources */,
 				3EC5C8CD22A7E78F00B42774 /* TRONCodable.swift in Sources */,
 				3EC5C8D122A7E78F00B42774 /* URLBuilder.swift in Sources */,
+				9ABE13FD2459A2BB008874D2 /* Exports.swift in Sources */,
 				3EC5C8D022A7E78F00B42774 /* NetworkActivityPlugin.swift in Sources */,
 				3EC5C8CA22A7E78F00B42774 /* APIError.swift in Sources */,
 				3EC5C8C822A7E78F00B42774 /* APIStub.swift in Sources */,
