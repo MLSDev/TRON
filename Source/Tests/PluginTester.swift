@@ -7,7 +7,6 @@
 //
 
 import TRON
-import Alamofire
 import Foundation
 
 class PluginTester: Plugin {

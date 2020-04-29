@@ -9,7 +9,6 @@
 import Foundation
 import XCTest
 import TRON
-import Alamofire
 
 class DownloadTestCase: ProtocolStubbedTestCase {
 

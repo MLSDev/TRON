@@ -9,7 +9,6 @@
 import Foundation
 import TRON
 import XCTest
-import Alamofire
 
 extension Data {
     var asString: String {

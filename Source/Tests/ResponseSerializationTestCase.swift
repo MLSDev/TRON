@@ -6,9 +6,10 @@
 //  Copyright © 2016 Denys Telezhkin. All rights reserved.
 //
 
-import Alamofire
 import TRON
 import XCTest
+import protocol Alamofire.DataResponseSerializerProtocol
+import class Alamofire.StringResponseSerializer
 
 protocol Food {}
 
