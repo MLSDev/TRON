@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.1.0](https://github.com/MLSDev/TRON/releases/tag/5.1.0)
+
 ### Changed
 
 * Several `Alamofire` types that are exposed through TRON API's are now implicitly exported to allow using them without needing to write `import Alamofire`. See `Exports.swift` file for a list of them.

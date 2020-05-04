@@ -82,7 +82,7 @@ lane :release do |params|
 
     puts "Comitting, tagging, and pushing."
     message = "Releasing version #{version}."
-    sh "git commit -am '#{message}'"
+    sh "git add --all && git commit -m '#{message}'"
     sh "git tag #{version} -m '#{message}'"
     sh "git push --follow-tags"
 
