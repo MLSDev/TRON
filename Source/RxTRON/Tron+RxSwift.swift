@@ -71,21 +71,6 @@ extension UploadAPIRequest {
     }
 }
 
-/// Error that is created in case `DownloadAPIRequest` errors out, but Alamofire and URL loading system report error as nil.
-/// Practically, this should never happen ¯\_(ツ)_/¯ .
-public struct DownloadError<T, Failure: Error>: Error {
-
-    /// Reported `DownloadResponse`
-    public let response: DownloadResponse<T, Failure>
-
-    /// Creates `DownloadError` for `DownloadAPIRequest`.
-    ///
-    /// - Parameter response: response created by `Alamofire`.
-    public init(_ response: DownloadResponse<T, Failure>) {
-        self.response = response
-    }
-}
-
 extension DownloadAPIRequest {
     /**
      Creates on Observable of success Model type. It starts a request each time it's subscribed to.

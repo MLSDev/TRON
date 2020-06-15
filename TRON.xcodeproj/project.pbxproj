@@ -56,7 +56,9 @@
 		9A704E761C5D01D300392DE5 /* CRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A704E751C5D01D300392DE5 /* CRUD.swift */; };
 		9A704E801C5D01EC00392DE5 /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; };
 		9A704E811C5D01EC00392DE5 /* TRON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9A71B8EC2497CA5000FB5CD6 /* CombineTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A71B8EB2497CA5000FB5CD6 /* CombineTestCase.swift */; };
 		9A722F551C5A49AE0087908D /* TRON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A722F4A1C5A49AE0087908D /* TRON.framework */; };
+		9A82444F2497B805002CC575 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A82444E2497B805002CC575 /* Combine.swift */; };
 		9A9803F122D78987008CB92C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9A9803F022D78987008CB92C /* RxSwift */; };
 		9A9803F422D789A4008CB92C /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 9A9803F322D789A4008CB92C /* SwiftyJSON */; };
 		9A9803FB22D78CAD008CB92C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 9A9803FA22D78CAD008CB92C /* Alamofire */; };
@@ -185,10 +187,12 @@
 		9A704E5B1C5D01B300392DE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9A704E5D1C5D01B300392DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A704E751C5D01D300392DE5 /* CRUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CRUD.swift; sourceTree = "<group>"; };
+		9A71B8EB2497CA5000FB5CD6 /* CombineTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineTestCase.swift; sourceTree = "<group>"; };
 		9A722F4A1C5A49AE0087908D /* TRON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TRON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A722F541C5A49AE0087908D /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A722F651C5A4A610087908D /* Framework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Framework.plist; path = "Supporting files/Framework.plist"; sourceTree = "<group>"; };
 		9A722F661C5A4A610087908D /* Tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Tests.plist; path = "Supporting files/Tests.plist"; sourceTree = "<group>"; };
+		9A82444E2497B805002CC575 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
 		9AB63D2822731CD300544A3E /* 1.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "1.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9AB63D2922731CD300544A3E /* 2.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "2.0 Migration Guide.md"; sourceTree = "<group>"; };
 		9AB63D2A22731CD300544A3E /* 4.0 Migration Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "4.0 Migration Guide.md"; sourceTree = "<group>"; };
@@ -286,20 +290,21 @@
 		3EC5C8B822A7E78F00B42774 /* TRON */ = {
 			isa = PBXGroup;
 			children = (
+				3EC5C8BB22A7E78F00B42774 /* APIError.swift */,
+				3EC5C8C322A7E78F00B42774 /* APIRequest.swift */,
 				3EC5C8B922A7E78F00B42774 /* APIStub.swift */,
 				3EC5C8BA22A7E78F00B42774 /* BaseRequest.swift */,
-				3EC5C8BB22A7E78F00B42774 /* APIError.swift */,
-				3EC5C8BC22A7E78F00B42774 /* UploadAPIRequest.swift */,
-				3EC5C8BD22A7E78F00B42774 /* TRON.swift */,
-				3EC5C8BE22A7E78F00B42774 /* TRONCodable.swift */,
-				3EC5C8BF22A7E78F00B42774 /* NetworkLoggerPlugin.swift */,
+				9A82444E2497B805002CC575 /* Combine.swift */,
 				3EC5C8C022A7E78F00B42774 /* DownloadAPIRequest.swift */,
+				9ABE13FC2459A2BB008874D2 /* Exports.swift */,
 				3EC5C8C122A7E78F00B42774 /* NetworkActivityPlugin.swift */,
-				3EC5C8C222A7E78F00B42774 /* URLBuilder.swift */,
-				3EC5C8C322A7E78F00B42774 /* APIRequest.swift */,
+				3EC5C8BF22A7E78F00B42774 /* NetworkLoggerPlugin.swift */,
 				3EC5C8C422A7E78F00B42774 /* Plugin.swift */,
 				3EC5C8C522A7E78F00B42774 /* Serialization.swift */,
-				9ABE13FC2459A2BB008874D2 /* Exports.swift */,
+				3EC5C8BD22A7E78F00B42774 /* TRON.swift */,
+				3EC5C8BE22A7E78F00B42774 /* TRONCodable.swift */,
+				3EC5C8BC22A7E78F00B42774 /* UploadAPIRequest.swift */,
+				3EC5C8C222A7E78F00B42774 /* URLBuilder.swift */,
 			);
 			path = TRON;
 			sourceTree = "<group>";
@@ -373,6 +378,7 @@
 				3E74A60B215F8AE900091078 /* TronTestCase.swift */,
 				3E74A60F215F8AE900091078 /* UploadTestCase.swift */,
 				3E74A615215F8AEA00091078 /* URLBuilderTestCase.swift */,
+				9A71B8EB2497CA5000FB5CD6 /* CombineTestCase.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -657,6 +663,7 @@
 				3EC5C8C922A7E78F00B42774 /* BaseRequest.swift in Sources */,
 				3EC5C8CE22A7E78F00B42774 /* NetworkLoggerPlugin.swift in Sources */,
 				3EC5C8D322A7E78F00B42774 /* Plugin.swift in Sources */,
+				9A82444F2497B805002CC575 /* Combine.swift in Sources */,
 				3EC5C8D222A7E78F00B42774 /* APIRequest.swift in Sources */,
 				3EC5C8CF22A7E78F00B42774 /* DownloadAPIRequest.swift in Sources */,
 				3EC5C8CD22A7E78F00B42774 /* TRONCodable.swift in Sources */,
@@ -690,6 +697,7 @@
 				3E74A61B215F8AEA00091078 /* HeaderBuilderTestCase.swift in Sources */,
 				3E74A621215F8AEA00091078 /* PluginTester.swift in Sources */,
 				3E74A623215F8AEA00091078 /* JSONDecodableTestCase.swift in Sources */,
+				9A71B8EC2497CA5000FB5CD6 /* CombineTestCase.swift in Sources */,
 				3ED4051622B5667A0055ED5B /* BaseRequestTestCase.swift in Sources */,
 				3E601DCA21F8BBE40062E095 /* ProtocolStubbedTestCase.swift in Sources */,
 			);
