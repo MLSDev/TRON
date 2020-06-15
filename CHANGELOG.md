@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### Changed
+
+* `Alamofire.ParameterEncoding`, `JSONEncoding` and `URLEncoding` are now exposed through TRON API.
+
 ## [5.1.0](https://github.com/MLSDev/TRON/releases/tag/5.1.0)
 
 ### Changed
