@@ -65,8 +65,8 @@ import Combine
 public extension APIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func publisher() -> AnyPublisher<Model, ErrorModel> {
-        TronPublisher { [weak self] subscriber in
-            self?.perform(withSuccess: { model in
+        TronPublisher { subscriber in
+            self.perform(withSuccess: { model in
                 _ = subscriber.receive(model)
                 subscriber.receive(completion: .finished)
             }, failure: { error in
@@ -79,8 +79,8 @@ public extension APIRequest {
 public extension UploadAPIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func publisher() -> AnyPublisher<Model, ErrorModel> {
-        TronPublisher { [weak self] subscriber in
-            self?.perform(withSuccess: { model in
+        TronPublisher { subscriber in
+            self.perform(withSuccess: { model in
                 _ = subscriber.receive(model)
                 subscriber.receive(completion: .finished)
             }, failure: { error in
@@ -93,8 +93,8 @@ public extension UploadAPIRequest {
 public extension DownloadAPIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func publisher() -> AnyPublisher<Model, ErrorModel> {
-        TronPublisher { [weak self] subscriber in
-            self?.perform(withSuccess: { success in
+        TronPublisher { subscriber in
+            self.perform(withSuccess: { success in
                 _ = subscriber.receive(success)
                 subscriber.receive(completion: .finished)
             }, failure: { error in
