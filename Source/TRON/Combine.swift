@@ -26,11 +26,41 @@
 import Foundation
 import Alamofire
 
+//swiftlint:disable all
+
+/// Error that is created in case `DownloadAPIRequest` errors out, but Alamofire and URL loading system report error as nil.
+/// Practically, this should never happen ¯\_(ツ)_/¯ .
+public struct DownloadError<T, Failure: Error>: Error {
+
+    /// Reported `DownloadResponse`
+    public let response: DownloadResponse<T, Failure>
+
+    /// Creates `DownloadError` for `DownloadAPIRequest`.
+    ///
+    /// - Parameter response: response created by `Alamofire`.
+    public init(_ response: DownloadResponse<T, Failure>) {
+        self.response = response
+    }
+}
+
+public protocol RequestCancellable {
+    func cancelRequest()
+}
+
+extension DataRequest: RequestCancellable {
+    public func cancelRequest() {
+         _ = cancel()
+    }
+}
+
+extension DownloadRequest: RequestCancellable {
+    public func cancelRequest() {
+        _ = cancel()
+    }
+}
+
 #if canImport(Combine)
 import Combine
-#endif
-
-//swiftlint:disable all
 
 public extension APIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
@@ -60,21 +90,6 @@ public extension UploadAPIRequest {
     }
 }
 
-/// Error that is created in case `DownloadAPIRequest` errors out, but Alamofire and URL loading system report error as nil.
-/// Practically, this should never happen ¯\_(ツ)_/¯ .
-public struct DownloadError<T, Failure: Error>: Error {
-
-    /// Reported `DownloadResponse`
-    public let response: DownloadResponse<T, Failure>
-
-    /// Creates `DownloadError` for `DownloadAPIRequest`.
-    ///
-    /// - Parameter response: response created by `Alamofire`.
-    public init(_ response: DownloadResponse<T, Failure>) {
-        self.response = response
-    }
-}
-
 public extension DownloadAPIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func publisher() -> AnyPublisher<Model, ErrorModel> {
@@ -88,27 +103,6 @@ public extension DownloadAPIRequest {
         }.eraseToAnyPublisher()
     }
 }
-
-public protocol RequestCancellable {
-    func cancelRequest()
-}
-
-extension DataRequest: RequestCancellable {
-    public func cancelRequest() {
-         _ = cancel()
-    }
-}
-
-extension DownloadRequest: RequestCancellable {
-    public func cancelRequest() {
-        _ = cancel()
-    }
-}
-
-
-#if canImport(Combine)
-
-import Combine
 
 // This should be already provided in Combine, but it's not.
 // Adapted from https://github.com/Moya/Moya/blob/development/Sources/CombineMoya/MoyaPublisher.swift
