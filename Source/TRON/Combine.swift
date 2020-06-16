@@ -65,7 +65,7 @@ import Combine
 public extension APIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func publisher() -> AnyPublisher<Model, ErrorModel> {
-        TronPublisher { subscriber in
+        TRONPublisher { subscriber in
             self.perform(withSuccess: { model in
                 _ = subscriber.receive(model)
                 subscriber.receive(completion: .finished)
@@ -79,7 +79,7 @@ public extension APIRequest {
 public extension UploadAPIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func publisher() -> AnyPublisher<Model, ErrorModel> {
-        TronPublisher { subscriber in
+        TRONPublisher { subscriber in
             self.perform(withSuccess: { model in
                 _ = subscriber.receive(model)
                 subscriber.receive(completion: .finished)
@@ -93,7 +93,7 @@ public extension UploadAPIRequest {
 public extension DownloadAPIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func publisher() -> AnyPublisher<Model, ErrorModel> {
-        TronPublisher { subscriber in
+        TRONPublisher { subscriber in
             self.perform(withSuccess: { success in
                 _ = subscriber.receive(success)
                 subscriber.receive(completion: .finished)
@@ -108,7 +108,7 @@ public extension DownloadAPIRequest {
 // Adapted from https://github.com/Moya/Moya/blob/development/Sources/CombineMoya/MoyaPublisher.swift
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-internal class TronPublisher<Model, ErrorModel: Error>: Publisher {
+internal class TRONPublisher<Model, ErrorModel: Error>: Publisher {
     typealias Failure = ErrorModel
     typealias Output = Model
     
