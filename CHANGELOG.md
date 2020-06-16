@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### Added 
+
+* Combine support on supported platforms through `publisher()` method on `APIRequest`, `UploadAPIRequest`, `DownloadAPIRequest`.
+* `APIError.isCancelled` property, that tells, whether request, that errored, was cancelled by sender.
+
 ### Changed
 
-* `Alamofire.ParameterEncoding`, `JSONEncoding` and `URLEncoding` are now exposed through TRON API.
+* `Alamofire.ParameterEncoding`, `JSONEncoding` and `URLEncoding` are now exposed through TRON API and don't require importing Alamofire to use.
 
 ## [5.1.0](https://github.com/MLSDev/TRON/releases/tag/5.1.0)
 
