@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
 
 * `Alamofire.ParameterEncoding`, `JSONEncoding` and `URLEncoding` are now exposed through TRON API and don't require importing Alamofire to use.
 
+### Deprecated
+
+* `NetworkActivityPlugin` is deprecated on iOS 13 and higher, because `UIApplication.isNetworkActivityIndicatorVisible` property it has been switching is deprecated on iOS 13 and higher.
+
 ## [5.1.0](https://github.com/MLSDev/TRON/releases/tag/5.1.0)
 
 ### Changed
