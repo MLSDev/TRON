@@ -2,28 +2,28 @@
   "warnings": [
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/APIError.swift",
-      "line": 30,
+      "line": 31,
       "symbol": "ErrorSerializable.init(request:response:data:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/APIError.swift",
-      "line": 35,
+      "line": 36,
       "symbol": "DownloadErrorSerializable.init(request:response:fileURL:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/APIError.swift",
-      "line": 56,
+      "line": 57,
       "symbol": "APIError.init(request:response:data:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/APIError.swift",
-      "line": 64,
+      "line": 65,
       "symbol": "APIError.init(request:response:fileURL:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -79,7 +79,14 @@
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/NetworkActivityPlugin.swift",
-      "line": 41,
+      "line": 38,
+      "symbol": "NetworkActivityPlugin",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Denys/Projects/TRON/Source/TRON/NetworkActivityPlugin.swift",
+      "line": 42,
       "symbol": "NetworkActivityPlugin.init(application:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

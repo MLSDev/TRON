@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DownloadRequestType Enumeration Reference</title>
+    <title>DataRequest Extension Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Enum/DownloadRequestType" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Extension/DataRequest" class="dashAnchor"></a>
 
-    <a title="DownloadRequestType Enumeration Reference"></a>
+    <a title="DataRequest Extension Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -50,7 +50,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">TRON Reference</a>
       <img class="carat" src="../img/carat.png" />
-      DownloadRequestType Enumeration Reference
+      DataRequest Extension Reference
     </p>
 
     <div class="content-wrapper">
@@ -171,15 +171,8 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>DownloadRequestType</h1>
-              <div class="declaration">
-                <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DownloadRequestType</span></code></pre>
-
-                </div>
-              </div>
-            <p>Types of <code><a href="../Classes/DownloadAPIRequest.html">DownloadAPIRequest</a></code>.</p>
-
+            <h1>DataRequest</h1>
+            
           </div>
         </section>
 
@@ -190,9 +183,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON19DownloadRequestTypeO8download33_685444C9D89FA38BC220D4CC4412F9CELLXeF"></a>
-                    <a name="//apple_ref/swift/Element/download(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON19DownloadRequestTypeO8download33_685444C9D89FA38BC220D4CC4412F9CELLXeF">download(_:)</a>
+                    <a name="/s:4TRON13cancelRequestyXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/cancelRequest()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON13cancelRequestyXeXeF">cancelRequest()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -200,41 +193,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Will create <code>NSURLSessionDownloadTask</code> using <code>downloadTaskWithRequest(_)</code> method</p>
+                        <p>Cancel DataRequest</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">download</span><span class="p">(</span><span class="kt">DownloadRequest</span><span class="o">.</span><span class="kt">Destination</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:4TRON19DownloadRequestTypeO16downloadResuming33_685444C9D89FA38BC220D4CC4412F9CELLXeF"></a>
-                    <a name="//apple_ref/swift/Element/downloadResuming(data:destination:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON19DownloadRequestTypeO16downloadResuming33_685444C9D89FA38BC220D4CC4412F9CELLXeF">downloadResuming(data:destination:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Will create <code>NSURLSessionDownloadTask</code> using <code>downloadTaskWithResumeData(_)</code> method</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">downloadResuming</span><span class="p">(</span><span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span><span class="p">,</span> <span class="nv">destination</span><span class="p">:</span> <span class="kt">DownloadRequest</span><span class="o">.</span><span class="kt">Destination</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">cancelRequest</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>

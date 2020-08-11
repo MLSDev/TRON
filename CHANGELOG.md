@@ -3,7 +3,9 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
-### Added 
+## [5.2.0](https://github.com/MLSDev/TRON/releases/tag/5.2.0)
+
+### Added
 
 * Combine support on supported platforms through `publisher()` method on `APIRequest`, `UploadAPIRequest`, `DownloadAPIRequest`.
 * `APIError.isCancelled` property, that tells, whether request, that errored, was cancelled by sender.
