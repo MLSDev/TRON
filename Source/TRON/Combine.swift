@@ -41,17 +41,24 @@ public struct DownloadError<T, Failure: Error>: Error {
     }
 }
 
+/// Type-erased cancellation token.
 public protocol RequestCancellable {
+
+    /// Cancel current request
     func cancelRequest()
 }
 
 extension DataRequest: RequestCancellable {
+
+    /// Cancel DataRequest
     public func cancelRequest() {
          _ = cancel()
     }
 }
 
 extension DownloadRequest: RequestCancellable {
+
+    /// Cancel DownloadRequest
     public func cancelRequest() {
         _ = cancel()
     }
@@ -60,8 +67,11 @@ extension DownloadRequest: RequestCancellable {
 #if canImport(Combine)
 import Combine
 
+/// Provides Combine.Publisher for APIRequest
 public extension APIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    /// A Combine `Publisher` that publishes the `AnyPublisher<Model, ErrorModel>` of `APIRequest`.
+    /// - Returns: type-erased publisher
     func publisher() -> AnyPublisher<Model, ErrorModel> {
         TRONPublisher { subscriber in
             self.perform(withSuccess: { model in
@@ -74,8 +84,11 @@ public extension APIRequest {
     }
 }
 
+/// Provides Combine.Publisher for UploadAPIRequest
 public extension UploadAPIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    /// A Combine `Publisher` that publishes the `AnyPublisher<Model, ErrorModel>` of `UploadAPIRequest`.
+    /// - Returns: type-erased publisher
     func publisher() -> AnyPublisher<Model, ErrorModel> {
         TRONPublisher { subscriber in
             self.perform(withSuccess: { model in
@@ -88,8 +101,11 @@ public extension UploadAPIRequest {
     }
 }
 
+/// Provides Combine.Publisher for DownloadAPIRequest
 public extension DownloadAPIRequest {
     @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    /// A Combine `Publisher` that publishes the `AnyPublisher<Model, ErrorModel>` of `DownloadAPIRequest`.
+    /// - Returns: type-erased publisher
     func publisher() -> AnyPublisher<Model, ErrorModel> {
         TRONPublisher { subscriber in
             self.perform(withSuccess: { success in
@@ -109,7 +125,7 @@ public extension DownloadAPIRequest {
 internal class TRONPublisher<Model, ErrorModel: Error>: Publisher {
     typealias Failure = ErrorModel
     typealias Output = Model
-    
+
     private class Subscription: Combine.Subscription {
 
         private let cancellable: RequestCancellable?
