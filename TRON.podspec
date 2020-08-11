@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/MLSDevCom'
   s.source   = { :git => 'https://github.com/MLSDev/TRON.git', :tag => s.version.to_s }
   s.requires_arc = true
-  s.swift_versions = ['4.0', '4.2', '5.0']
+  s.swift_versions = ['4.0', '4.2', '5.0', '5.1', '5.2', '5.3']
   s.ios.deployment_target = '10.0'
   s.tvos.deployment_target = '10.0'
   s.osx.deployment_target = '10.12'

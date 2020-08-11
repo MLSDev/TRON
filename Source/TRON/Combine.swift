@@ -26,8 +26,6 @@
 import Foundation
 import Alamofire
 
-//swiftlint:disable all
-
 /// Error that is created in case `DownloadAPIRequest` errors out, but Alamofire and URL loading system report error as nil.
 /// Practically, this should never happen ¯\_(ツ)_/¯ .
 public struct DownloadError<T, Failure: Error>: Error {
