@@ -33,6 +33,8 @@ jobs:
         run: instruments -s devices
       - name: ${{ matrix.destination }}
         run: bundle exec fastlane ${{ matrix.destination }}
+      - name: Codecov
+        uses: codecov/codecov-action@v1.0.13
   Xcode-11:
     name: Xcode 11
     runs-on: macOS-latest
@@ -57,6 +59,8 @@ jobs:
         run: instruments -s devices
       - name: ${{ matrix.destination }}
         run: bundle exec fastlane ${{ matrix.destination }}
+      - name: Codecov
+        uses: codecov/codecov-action@v1.0.13
   cocoapods:
     name: Lint podspec
     runs-on: macOS-latest
