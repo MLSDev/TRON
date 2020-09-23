@@ -13,7 +13,7 @@ jobs:
     name: Xcode 12
     runs-on: macOS-latest
     env:
-      DEVELOPER_DIR: /Applications/Xcode_12_beta.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
     strategy:
       matrix:
         destination: ["test_ios14", "test_tvos14","test_macos", "build_watchos_xcode12"]
@@ -39,7 +39,7 @@ jobs:
     name: Xcode 11
     runs-on: macOS-latest
     env:
-      DEVELOPER_DIR: /Applications/Xcode_11.5.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_11.7.app/Contents/Developer
     strategy:
       matrix:
         destination: ["test_ios13", "test_tvos13","test_macos", "build_watchos"]
@@ -65,7 +65,7 @@ jobs:
     name: Lint podspec
     runs-on: macOS-latest
     env:
-      DEVELOPER_DIR: /Applications/Xcode_11.5.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
