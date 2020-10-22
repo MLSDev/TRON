@@ -1,7 +1,7 @@
 fastlane_version "1.98.0"
 
 lane :test_ios14 do
-  scan(devices: ["iPhone 11 Pro (14.0)"])
+  scan(devices: ["iPhone 11 Pro (14.1)"])
 end
 
 lane :test_ios13 do
