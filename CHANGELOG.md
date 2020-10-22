@@ -3,6 +3,25 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### Added
+
+* Ability to modify `URLRequests` before it's adapted and sent:
+
+```swift
+tron.codable
+    .request("status")
+    .modifyRequest { $0.httpShouldHandleCookies = false }
+```
+
+This feature uses Alamofire.RequestModifier closure, that can also be set without DSL on request instance directly:
+
+```swift
+let request : APIRequest<Post,Empty> = tron.codable.request("posts")
+request.requestModifier = { urlRequest in
+    urlRequest.httpShouldHandleCookies = false
+}
+```
+
 ## [5.2.0](https://github.com/MLSDev/TRON/releases/tag/5.2.0)
 
 ### Added

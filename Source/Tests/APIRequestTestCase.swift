@@ -234,4 +234,19 @@ class APIRequestTestCase: ProtocolStubbedTestCase {
         waitForExpectations(timeout: 1, handler: nil)
         XCTAssertEqual(resultingRequest.task?.currentRequest?.timeoutInterval, 3)
     }
+    
+    func testRequestCanBeModifiedUsingClosure() {
+        let request: APIRequest<Empty, APIError> = tron.swiftyJSON
+            .request("status/200")
+            .modifyRequest { $0.httpShouldHandleCookies = false }
+            .stubStatusCode(200)
+        let expectation = self.expectation(description: "Success request")
+        let resultingRequest = request.perform(withSuccess: { _ in
+            expectation.fulfill()
+        }) { error in
+            XCTFail("unexpected network error: \(error)")
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertEqual(resultingRequest.task?.currentRequest?.httpShouldHandleCookies, false)
+    }
 }
