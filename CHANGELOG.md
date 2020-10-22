@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.3.0](https://github.com/MLSDev/TRON/releases/tag/5.3.0)
+
 ### Added
 
 * Ability to modify `URLRequests` before it's adapted and sent:

@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           TRON Docs
         </a>
-         (89% documented)
+         (88% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -450,7 +450,34 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">interceptor</span><span class="p">:</span> <span class="kt">RequestInterceptor</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">interceptor</span><span class="p">:</span> <span class="kt">RequestInterceptor</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4TRON11BaseRequestC15requestModifierXevp"></a>
+                    <a name="//apple_ref/swift/Property/requestModifier" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC15requestModifierXevp">requestModifier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Closure which provides a <code>URLRequest</code> for mutation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">requestModifier</span><span class="p">:</span> <span class="kt">Session</span><span class="o">.</span><span class="kt">RequestModifier</span></code></pre>
 
                         </div>
                       </div>
@@ -1120,6 +1147,56 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:4TRON11BaseRequestC06modifyC0yXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/modifyRequest(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4TRON11BaseRequestC06modifyC0yXeXeF">modifyRequest(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets per-request modifier to configure URLRequest, that will be created.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">modifyRequest</span><span class="p">(</span><span class="n">_</span> <span class="nv">closure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">Session</span><span class="o">.</span><span class="kt">RequestModifier</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>request modifier closure</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>configured request</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:4TRON11BaseRequestC9configureyACyxq_GXDyAEXEF"></a>
                     <a name="//apple_ref/swift/Method/configure(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:4TRON11BaseRequestC9configureyACyxq_GXDyAEXEF">configure(_:)</a>
@@ -1386,7 +1463,7 @@ If <code>setNilToNull</code> is set to true, every nil value will be converted t
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2020-08-11)</p>
+      <p>&copy; 2020 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2020-10-22)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

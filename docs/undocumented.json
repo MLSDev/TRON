@@ -30,14 +30,14 @@
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/APIRequest.swift",
-      "line": 82,
+      "line": 83,
       "symbol": "APIRequest.perform(withSuccess:failure:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/APIRequest.swift",
-      "line": 96,
+      "line": 97,
       "symbol": "APIRequest.performCollectingTimeline(withCompletion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -64,29 +64,50 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/Denys/Projects/TRON/Source/TRON/Combine.swift",
+      "line": 75,
+      "symbol": "APIRequest.publisher()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Denys/Projects/TRON/Source/TRON/Combine.swift",
+      "line": 92,
+      "symbol": "UploadAPIRequest.publisher()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Denys/Projects/TRON/Source/TRON/Combine.swift",
+      "line": 109,
+      "symbol": "DownloadAPIRequest.publisher()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/DownloadAPIRequest.swift",
-      "line": 111,
+      "line": 112,
       "symbol": "DownloadAPIRequest.perform(withSuccess:failure:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/DownloadAPIRequest.swift",
-      "line": 136,
+      "line": 137,
       "symbol": "DownloadAPIRequest.performCollectingTimeline(withCompletion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/NetworkActivityPlugin.swift",
-      "line": 38,
+      "line": 39,
       "symbol": "NetworkActivityPlugin",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/NetworkActivityPlugin.swift",
-      "line": 42,
+      "line": 43,
       "symbol": "NetworkActivityPlugin.init(application:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -121,14 +142,14 @@
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/UploadAPIRequest.swift",
-      "line": 130,
+      "line": 131,
       "symbol": "UploadAPIRequest.perform(withSuccess:failure:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/UploadAPIRequest.swift",
-      "line": 144,
+      "line": 145,
       "symbol": "UploadAPIRequest.performCollectingTimeline(withCompletion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
