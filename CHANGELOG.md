@@ -124,7 +124,7 @@ func deleteSession() -> APIRequest<Empty, UnknownError> {
 }
 ```
 
-Read more about other DSL improvements in [5.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/5.0%20Migration%20Guide.md)
+Read more about other DSL improvements in [5.0 Migration Guide](https://github.com/MLSDev/TRON/blob/main/Docs/5.0%20Migration%20Guide.md)
 
 ### Changed
 
@@ -246,7 +246,7 @@ let request = tron.swiftyJSON(readingOptions: .allowFragments).request("path")
 
 ## [4.0.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/4.0.0-beta.1)
 
-**This is major release, containing breaking API changes, please read [TRON 4.0 Migration Guide](https://github.com/MLSDev/TRON/blob/master/Docs/4.0%20Migration%20Guide.md)**
+**This is major release, containing breaking API changes, please read [TRON 4.0 Migration Guide](https://github.com/MLSDev/TRON/blob/main/Docs/4.0%20Migration%20Guide.md)**
 
 * Implemented support for `Codable` protocol.
 * `APIError` now takes it's localizedDescription from underlying `errorModel` if that model is `LocalizedError`, and from `error.localizedDescription` if not.
@@ -508,7 +508,7 @@ Add support for any custom mapper to be used with TRON. Defaulting to `SwiftyJSO
 
 Examples:
 
-[Argo](https://github.com/MLSDev/TRON/blob/master/Custom%20mappers/Argo.playground/Contents.swift), [ObjectMapper](https://github.com/MLSDev/TRON/blob/support_custom_mappers/Custom%20mappers/ObjectMapper.playground/Contents.swift)
+[Argo](https://github.com/MLSDev/TRON/blob/main/Custom%20mappers/Argo.playground/Contents.swift), [ObjectMapper](https://github.com/MLSDev/TRON/blob/support_custom_mappers/Custom%20mappers/ObjectMapper.playground/Contents.swift)
 
 ### Limitations
 
