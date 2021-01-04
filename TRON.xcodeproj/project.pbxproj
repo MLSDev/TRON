@@ -536,7 +536,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 1210;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "Denys Telezhkin";
 				TargetAttributes = {
 					3EC5C88022A7DD9C00B42774 = {
@@ -1169,7 +1169,7 @@
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.0;
+				minimumVersion = 6.0.0;
 			};
 		};
 		9A9803F222D789A3008CB92C /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
