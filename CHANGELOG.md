@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.4.0](https://github.com/MLSDev/TRON/releases/tag/5.4.0)
+
 ### Changed
 
 * RxSwift dependency bumped to 6.0 and higher

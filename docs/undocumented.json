@@ -64,27 +64,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/Denys/Projects/TRON/Source/TRON/Combine.swift",
-      "line": 75,
-      "symbol": "APIRequest.publisher()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Denys/Projects/TRON/Source/TRON/Combine.swift",
-      "line": 92,
-      "symbol": "UploadAPIRequest.publisher()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Denys/Projects/TRON/Source/TRON/Combine.swift",
-      "line": 109,
-      "symbol": "DownloadAPIRequest.publisher()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/Denys/Projects/TRON/Source/TRON/DownloadAPIRequest.swift",
       "line": 112,
       "symbol": "DownloadAPIRequest.perform(withSuccess:failure:)",
