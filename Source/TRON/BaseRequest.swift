@@ -27,7 +27,7 @@ import Foundation
 import Alamofire
 
 /// Protocol used to allow `APIRequest` to communicate with `TRON` instance.
-public protocol TronDelegate: class {
+public protocol TronDelegate: AnyObject {
 
     /// Alamofire.Session used to send requests
     var session: Alamofire.Session { get }

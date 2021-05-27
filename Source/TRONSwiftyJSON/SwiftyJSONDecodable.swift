@@ -28,7 +28,7 @@ import SwiftyJSON
 import Alamofire
 import TRON
 
-//swiftlint:disable multiple_closure_params
+// swiftlint:disable multiple_closure_params
 
 /**
  Protocol for creating model from SwiftyJSON object.

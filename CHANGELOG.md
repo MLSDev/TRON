@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### Fixed
+
+* Swift 5.4 warnings
+
 ## [5.4.0](https://github.com/MLSDev/TRON/releases/tag/5.4.0)
 
 ### Changed
