@@ -118,9 +118,9 @@ class CombineTestCase: ProtocolStubbedTestCase {
             .stub(with: .init(data: userData(id: 5, name: "Foo")))
 
         let exp = expectation(description: "Stubs success")
-        request.publisher().sink { completion in
+        request.publisher().sink(receiveCompletion: { completion in
             exp.fulfill()
-        } receiveValue: { user in
+        }) { user in
             XCTAssertEqual(user.id, 5)
             XCTAssertEqual(user.name, "Foo")
         }.store(in: &tokens)
