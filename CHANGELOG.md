@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### Changed
+
+* Improve Combine extensions to work better with stubs, that return synchronously.
+
 ### Fixed
 
 * Swift 5.4 warnings

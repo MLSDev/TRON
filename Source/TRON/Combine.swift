@@ -127,18 +127,28 @@ internal class TRONPublisher<Model, ErrorModel: Error>: Publisher {
     typealias Output = Model
 
     private class Subscription: Combine.Subscription {
-
-        private let cancellable: RequestCancellable?
+        private let performCall: () -> RequestCancellable?
+        private var cancellable: RequestCancellable?
+        private var wasCancelled: Bool = false
+        private var subscriber: AnySubscriber<Output, Failure>
 
         init(subscriber: AnySubscriber<Output, Failure>, callback: @escaping (AnySubscriber<Output, Failure>) -> RequestCancellable?) {
-            self.cancellable = callback(subscriber)
+            performCall = { callback(subscriber) }
+            self.subscriber = subscriber
         }
 
         func request(_ demand: Subscribers.Demand) {
-            // We don't care for the demand right now
+            guard demand > .none else { return }
+
+            if !wasCancelled {
+                cancellable = performCall()
+            } else {
+                subscriber.receive(completion: .finished)
+            }
         }
 
         func cancel() {
+            wasCancelled = true
             cancellable?.cancelRequest()
         }
     }

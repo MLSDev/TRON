@@ -111,5 +111,19 @@ class CombineTestCase: ProtocolStubbedTestCase {
         }.store(in: &tokens)
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testCombineStubs() {
+        let request: APIRequest<TestUser, APIError> = tron.swiftyJSON
+            .request("f00")
+            .stub(with: .init(data: userData(id: 5, name: "Foo")))
 
+        let exp = expectation(description: "Stubs success")
+        request.publisher().sink { completion in
+            exp.fulfill()
+        } receiveValue: { user in
+            XCTAssertEqual(user.id, 5)
+            XCTAssertEqual(user.name, "Foo")
+        }.store(in: &tokens)
+        waitForExpectations(timeout: 3, handler: nil)
+    }
 }

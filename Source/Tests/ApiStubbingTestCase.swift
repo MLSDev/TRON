@@ -21,7 +21,7 @@ struct TestUser: JSONDecodable {
     }
 }
 
-private func userData(id: Int, name: String) -> Data {
+func userData(id: Int, name: String) -> Data {
     return (try? JSONSerialization.data(withJSONObject: ["id": id, "name": name], options: [.prettyPrinted])) ?? .init()
 }
 
