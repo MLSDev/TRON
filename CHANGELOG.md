@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.4.1](https://github.com/MLSDev/TRON/releases/tag/5.4.1)
+
 ### Changed
 
 * Improve Combine extensions to work better with stubs, that return synchronously.
