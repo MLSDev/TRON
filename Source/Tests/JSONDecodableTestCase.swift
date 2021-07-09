@@ -11,7 +11,7 @@ import TRON
 import TRONSwiftyJSON
 import XCTest
 
-struct JSONDecodableResponse: JSONDecodable {
+struct JSONDecodableResponse: JSONDecodable, Codable {
     let title: String
 
     init(json: JSON) throws {
