@@ -44,6 +44,8 @@
 		3EC5C8D522A7E79400B42774 /* SwiftyJSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8B522A7E78F00B42774 /* SwiftyJSONDecodable.swift */; };
 		3EC5C8D622A7E79A00B42774 /* Tron+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8B722A7E78F00B42774 /* Tron+RxSwift.swift */; };
 		3ED4051622B5667A0055ED5B /* BaseRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4051522B5667A0055ED5B /* BaseRequestTestCase.swift */; };
+		412E6D322698648D006981C3 /* AsyncTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412E6D312698648D006981C3 /* AsyncTestCase.swift */; };
+		41BAE4EC26738941000D314D /* TRON+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BAE4EB26738941000D314D /* TRON+Async.swift */; };
 		9A148D5B1EDB1ABF002E610C /* cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9A148D571EDB1ABF002E610C /* cat.jpg */; };
 		9A148D5E1EDB1ABF002E610C /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A148D581EDB1ABF002E610C /* invalid.json */; };
 		9A148D611EDB1ABF002E610C /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D591EDB1ABF002E610C /* TronError.swift */; };
@@ -175,6 +177,8 @@
 		3EC5C8C422A7E78F00B42774 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
 		3EC5C8C522A7E78F00B42774 /* Serialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serialization.swift; sourceTree = "<group>"; };
 		3ED4051522B5667A0055ED5B /* BaseRequestTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRequestTestCase.swift; sourceTree = "<group>"; };
+		412E6D312698648D006981C3 /* AsyncTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTestCase.swift; sourceTree = "<group>"; };
+		41BAE4EB26738941000D314D /* TRON+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TRON+Async.swift"; sourceTree = "<group>"; };
 		9A148D571EDB1ABF002E610C /* cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cat.jpg; sourceTree = "<group>"; };
 		9A148D581EDB1ABF002E610C /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = invalid.json; sourceTree = "<group>"; };
 		9A148D591EDB1ABF002E610C /* TronError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TronError.swift; sourceTree = "<group>"; };
@@ -295,6 +299,7 @@
 				3EC5C8B922A7E78F00B42774 /* APIStub.swift */,
 				3EC5C8BA22A7E78F00B42774 /* BaseRequest.swift */,
 				9A82444E2497B805002CC575 /* Combine.swift */,
+				41BAE4EB26738941000D314D /* TRON+Async.swift */,
 				3EC5C8C022A7E78F00B42774 /* DownloadAPIRequest.swift */,
 				9ABE13FC2459A2BB008874D2 /* Exports.swift */,
 				3EC5C8C122A7E78F00B42774 /* NetworkActivityPlugin.swift */,
@@ -379,6 +384,7 @@
 				3E74A60F215F8AE900091078 /* UploadTestCase.swift */,
 				3E74A615215F8AEA00091078 /* URLBuilderTestCase.swift */,
 				9A71B8EB2497CA5000FB5CD6 /* CombineTestCase.swift */,
+				412E6D312698648D006981C3 /* AsyncTestCase.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -667,6 +673,7 @@
 				3EC5C8D222A7E78F00B42774 /* APIRequest.swift in Sources */,
 				3EC5C8CF22A7E78F00B42774 /* DownloadAPIRequest.swift in Sources */,
 				3EC5C8CD22A7E78F00B42774 /* TRONCodable.swift in Sources */,
+				41BAE4EC26738941000D314D /* TRON+Async.swift in Sources */,
 				3EC5C8D122A7E78F00B42774 /* URLBuilder.swift in Sources */,
 				9ABE13FD2459A2BB008874D2 /* Exports.swift in Sources */,
 				3EC5C8D022A7E78F00B42774 /* NetworkActivityPlugin.swift in Sources */,
@@ -692,6 +699,7 @@
 				3E74A61D215F8AEA00091078 /* RxSwiftExtensionTestCase.swift in Sources */,
 				3E74A61A215F8AEA00091078 /* DownloadTestCase.swift in Sources */,
 				3E74A619215F8AEA00091078 /* PluginTestCase.swift in Sources */,
+				412E6D322698648D006981C3 /* AsyncTestCase.swift in Sources */,
 				9A148D611EDB1ABF002E610C /* TronError.swift in Sources */,
 				3E74A61E215F8AEA00091078 /* CodableTestCase.swift in Sources */,
 				3E74A61B215F8AEA00091078 /* HeaderBuilderTestCase.swift in Sources */,
