@@ -3,6 +3,40 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### Added
+
+* `download(_:to:)` and `download(_:to:resumingFrom:)` methods that create `DownloadAPIRequest` with <URL?, ErrorModel> generic constraints to simplify requests creation, where you need only URL from resulting operation.
+* Structured Concurrency support for Swift 5.5 and higher:
+
+```swift
+let request: APIRequest<Int,APIError> = tron.codable
+    .request("status/200")
+let result = try await request.response()
+```
+
+Same method added to UploadAPIRequest and DownloadAPIRequest. DownloadAPIRequest also has additional method for getting URL, where file was downloaded:
+
+```swift
+let request: DownloadAPIRequest<URL?, APIError> = ...
+let url = try await request.responseURL
+print("File downloaded at url: \(url)")
+``` 
+
+If you want the ability to cancel requests mid-flight, there are several additional methods, that return Task.Handle, that may be cancelled: 
+
+```swift
+let request: APIRequest<Int,APIError> = tron.codable
+    .request("status/200")
+let handle = request.responseTaskHandle()
+
+let result = await handle.get()
+// ... later
+
+handle.cancel()
+```
+
+Cancellation of the handle will also cancel request mid-flight, if it was sent.
+
 ## [5.4.1](https://github.com/MLSDev/TRON/releases/tag/5.4.1)
 
 ### Changed
