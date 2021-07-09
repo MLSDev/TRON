@@ -18,7 +18,7 @@ Same method added to UploadAPIRequest and DownloadAPIRequest. DownloadAPIRequest
 
 ```swift
 let request: DownloadAPIRequest<URL?, APIError> = ...
-let url = try await request.responseURL
+let url = try await request.responseURL()
 print("File downloaded at url: \(url)")
 ``` 
 
