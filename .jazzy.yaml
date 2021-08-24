@@ -5,3 +5,4 @@ root_url: https://mlsdev.github.io/TRON/
 module: TRON
 output: docs
 theme: fullwidth
+xcodebuild_arguments: [-scheme, 'TRON']
