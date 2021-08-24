@@ -25,10 +25,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: ruby versions
-         run: |
-           ruby --version
-           gem --version
-           bundler --version
+        run: |
+          ruby --version
+          gem --version
+          bundler --version
       - name: ruby setup
         uses: ruby/setup-ruby@v1
         with:
@@ -36,4 +36,4 @@ jobs:
           bundler-cache: true
 
       - name: pod lint
-         run: bundle exec fastlane pod_lint
+        run: bundle exec fastlane pod_lint
