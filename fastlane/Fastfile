@@ -1,7 +1,7 @@
 fastlane_version "1.98.0"
 
 lane :test_ios14 do
-  scan(devices: ["iPhone 11 Pro (14.5)"])
+  scan(devices: ["iPhone 12 Pro (14.5)"])
 end
 
 lane :test_ios15 do
@@ -23,7 +23,7 @@ end
 lane :build_watchos do
   xcodebuild(
     build: true,
-    destination: "OS=8.0,name=Apple Watch Series 4 - 44mm",
+    destination: "OS=8.0,name=Apple Watch Series 6 - 44mm",
     scheme: 'TRON'
   )
 end
@@ -31,7 +31,7 @@ end
 lane :build_watchos_xcode12 do
   xcodebuild(
     build: true,
-    destination: "OS=7.4,name=Apple Watch Series 4 - 44mm",
+    destination: "OS=7.4,name=Apple Watch Series 6 - 44mm",
     scheme: 'TRON'
   )
 end

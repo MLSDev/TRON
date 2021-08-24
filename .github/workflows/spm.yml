@@ -3,14 +3,14 @@ name: SwiftPM Integration
 on:
   push:
     branches:
-      - main
+      - '*'
     paths:
       - '.github/workflows/spm-macos.yml'
       - 'Package*'
       - 'Source/**/*.*'
   pull_request:
     branches:
-      - main
+      - '*'
     paths:
       - '.github/workflows/spm.yml'
       - 'Package*'
