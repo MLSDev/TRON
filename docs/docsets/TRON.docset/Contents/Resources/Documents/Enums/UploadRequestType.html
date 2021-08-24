@@ -21,9 +21,9 @@
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
-          TRON Docs
+          TRON 5.4.1 Docs
         </a>
-         (89% documented)
+         (91% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -40,7 +40,7 @@
         </p>
     
         <p class="header-col header-col--secondary">
-          <a class="header-link" href="dash-feed://https%3A%2F%2Fmlsdev%2Egithub%2Eio%2FTRON%2Fdocsets%2FTRON%2Exml">
+          <a class="header-link" href="dash-feed://https%3A%2F%2Fmlsdev.github.io%2FTRON%2Fdocsets%2FTRON.xml">
             <img class="header-icon" src="../img/dash.png"/>
             Install in Dash
           </a>
@@ -81,9 +81,6 @@
                 <a class="nav-group-task-link" href="../Classes/DownloadAPIRequest.html">DownloadAPIRequest</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/NetworkActivityPlugin.html">NetworkActivityPlugin</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/NetworkLoggerPlugin.html">NetworkLoggerPlugin</a>
               </li>
               <li class="nav-group-task">
@@ -119,9 +116,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Extensions/DownloadRequest.html">DownloadRequest</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Extensions/Request.html">Request</a>
               </li>
             </ul>
           </li>
@@ -174,6 +168,7 @@
             <h1>UploadRequestType</h1>
               <div class="declaration">
                 <div class="language">
+                  
                   <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">UploadRequestType</span></code></pre>
 
                 </div>
@@ -192,7 +187,7 @@
                     <code>
                     <a name="/s:4TRON17UploadRequestTypeO14uploadFromFileyAC10Foundation3URLVcACmF"></a>
                     <a name="//apple_ref/swift/Element/uploadFromFile(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON17UploadRequestTypeO14uploadFromFileyAC10Foundation3URLVcACmF">uploadFromFile(_:)</a>
+                    <a class="token" href="#/s:4TRON17UploadRequestTypeO14uploadFromFileyAC10Foundation3URLVcACmF">uploadFromFile(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -219,7 +214,7 @@
                     <code>
                     <a name="/s:4TRON17UploadRequestTypeO10uploadDatayAC10Foundation0F0VcACmF"></a>
                     <a name="//apple_ref/swift/Element/uploadData(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON17UploadRequestTypeO10uploadDatayAC10Foundation0F0VcACmF">uploadData(_:)</a>
+                    <a class="token" href="#/s:4TRON17UploadRequestTypeO10uploadDatayAC10Foundation0F0VcACmF">uploadData(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -246,7 +241,7 @@
                     <code>
                     <a name="/s:4TRON17UploadRequestTypeO12uploadStreamyACSo07NSInputF0CcACmF"></a>
                     <a name="//apple_ref/swift/Element/uploadStream(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON17UploadRequestTypeO12uploadStreamyACSo07NSInputF0CcACmF">uploadStream(_:)</a>
+                    <a class="token" href="#/s:4TRON17UploadRequestTypeO12uploadStreamyACSo07NSInputF0CcACmF">uploadStream(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -271,9 +266,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:4TRON17UploadRequestTypeO17multipartFormData33_E020FFCAC445A24427FDF8E87B038D43LLXeF"></a>
+                    <a name="/s:4TRON17UploadRequestTypeO17multipartFormDatayACy9Alamofire09MultipartfG0Cc_s6UInt64VSo13NSFileManagerCtcACmF"></a>
                     <a name="//apple_ref/swift/Element/multipartFormData(formData:memoryThreshold:fileManager:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:4TRON17UploadRequestTypeO17multipartFormData33_E020FFCAC445A24427FDF8E87B038D43LLXeF">multipartFormData(formData:memoryThreshold:fileManager:)</a>
+                    <a class="token" href="#/s:4TRON17UploadRequestTypeO17multipartFormDatayACy9Alamofire09MultipartfG0Cc_s6UInt64VSo13NSFileManagerCtcACmF">multipartFormData(formData:<wbr>memoryThreshold:<wbr>fileManager:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -288,7 +283,9 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">multipartFormData</span><span class="p">(</span><span class="nv">formData</span><span class="p">:</span> <span class="p">(</span><span class="kt">MultipartFormData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span> <span class="nv">memoryThreshold</span><span class="p">:</span> <span class="kt">UInt64</span><span class="p">,</span> <span class="nv">fileManager</span><span class="p">:</span> <span class="kt">FileManager</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">multipartFormData</span><span class="p">(</span><span class="nv">formData</span><span class="p">:</span> <span class="p">(</span><span class="kt">MultipartFormData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">,</span>
+                       <span class="nv">memoryThreshold</span><span class="p">:</span> <span class="kt">UInt64</span><span class="p">,</span>
+                       <span class="nv">fileManager</span><span class="p">:</span> <span class="kt">FileManager</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -303,8 +300,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2021-05-28)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/DenTelezhkin" target="_blank" rel="noopener" rel="external">Denys Telezhkin</a>. All rights reserved. (Last updated: 2021-08-24)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="noopener" rel="external">jazzy ♪♫ v0.14.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="noopener" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
