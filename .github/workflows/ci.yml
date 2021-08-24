@@ -10,7 +10,7 @@ on:
 
 jobs:
   env-details-Xcode-13:
-    name: Environment details
+    name: Environment details Xcode 13
     runs-on: macOS-11
     env:
       DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
@@ -23,7 +23,7 @@ jobs:
           xcrun simctl delete unavailable
           xcrun simctl list
   env-details-Xcode-12:
-    name: Environment details
+    name: Environment details Xcode 12
     runs-on: macOS-11
     env:
       DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
