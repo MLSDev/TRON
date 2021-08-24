@@ -9,9 +9,24 @@ on:
       - '*'
 
 jobs:
-  env-details:
+  env-details-Xcode-13:
     name: Environment details
     runs-on: macOS-11
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+    steps:
+      - name: xcode version
+        run: xcodebuild -version -sdk
+
+      - name: list simulators
+        run: |
+          xcrun simctl delete unavailable
+          xcrun simctl list
+  env-details-Xcode-12:
+    name: Environment details
+    runs-on: macOS-11
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
     steps:
       - name: xcode version
         run: xcodebuild -version -sdk

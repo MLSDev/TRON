@@ -41,6 +41,10 @@ lane :pod_lint do
   pod_lib_lint(allow_warnings: true, verbose: true)
 end
 
+lane :generate_code_coverage do
+  # slather()
+end
+
 lane :release do |params|
   version = params[:version]
 
