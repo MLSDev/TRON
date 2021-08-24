@@ -1,0 +1,39 @@
+name: Pod Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/pod-lint.yml'
+      - '*.podspec'
+      - 'Gemfile*'
+      - 'Source/**/*.*'
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
+
+jobs:
+  main:
+    name: Pod Lint
+    runs-on: macOS-11
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v2
+
+      - name: ruby versions
+        run: |
+          ruby --version
+          gem --version
+          bundler --version
+      - name: ruby setup
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+
+      - name: pod lint
+        run: bundle exec fastlane pod_lint

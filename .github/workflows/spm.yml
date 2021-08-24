@@ -1,0 +1,34 @@
+name: SwiftPM Integration
+
+on:
+  push:
+    branches:
+      - '*'
+    paths:
+      - '.github/workflows/spm-macos.yml'
+      - 'Package*'
+      - 'Source/**/*.*'
+  pull_request:
+    branches:
+      - '*'
+    paths:
+      - '.github/workflows/spm.yml'
+      - 'Package*'
+      - 'Source/**/*.*'
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
+
+jobs:
+  main:
+    name: SwiftPM Build
+    runs-on: macOS-11
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v2
+
+      - name: xcode version
+        run: xcodebuild -version -sdk
+
+      - name: swift build
+        run: swift build
