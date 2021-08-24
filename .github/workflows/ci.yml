@@ -10,16 +10,16 @@ on:
 
 jobs:
   env-details:
-  name: Environment details
-  runs-on: macOS-11
-  steps:
-    - name: xcode version
-      run: xcodebuild -version -sdk
+    name: Environment details
+    runs-on: macOS-11
+    steps:
+      - name: xcode version
+        run: xcodebuild -version -sdk
 
-    - name: list simulators
-      run: |
-        xcrun simctl delete unavailable
-        xcrun simctl list
+      - name: list simulators
+        run: |
+          xcrun simctl delete unavailable
+          xcrun simctl list
 
   Xcode-13:
     name: Xcode 13
