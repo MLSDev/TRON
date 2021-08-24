@@ -1,0 +1,16 @@
+current directory: /Users/runner/work/TRON/TRON/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.7.7/ext/unf_ext
+/Users/runner/hostedtoolcache/Ruby/2.7.4/x64/bin/ruby -I /Users/runner/hostedtoolcache/Ruby/2.7.4/x64/lib/ruby/2.7.0 -r ./siteconf20210824-1053-1tmvcsa.rb extconf.rb
+checking for -lstdc++... yes
+creating Makefile
+
+current directory: /Users/runner/work/TRON/TRON/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.7.7/ext/unf_ext
+make "DESTDIR=" clean
+
+current directory: /Users/runner/work/TRON/TRON/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.7.7/ext/unf_ext
+make "DESTDIR="
+compiling unf.cc
+linking shared-object unf_ext.bundle
+
+current directory: /Users/runner/work/TRON/TRON/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.7.7/ext/unf_ext
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 unf_ext.bundle ./.gem.20210824-1053-1e1jn1s

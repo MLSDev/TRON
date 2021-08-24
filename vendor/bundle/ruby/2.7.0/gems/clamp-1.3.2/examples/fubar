@@ -1,0 +1,22 @@
+#! /usr/bin/env ruby
+# frozen_string_literal: true
+
+# An example of nested subcommands
+
+require "clamp"
+
+Clamp do
+
+  subcommand "foo", "Foo!" do
+
+    subcommand ["bar", "bah", "baa"], "Baaaa!" do
+
+      def execute
+        puts "FUBAR"
+      end
+
+    end
+
+  end
+
+end

@@ -1,0 +1,67 @@
+AllCops:
+  TargetRubyVersion: 2.1
+
+Eval:
+  Exclude:
+    - "Rakefile"
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines
+
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 30
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - "bin/*"
+
+Naming/PredicateName:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested
+  Exclude:
+    - "spec/**/*"
+
+Style/Documentation:
+  Exclude:
+    - "lib/**/version.rb"
+    - "examples/*"
+    - "spec/**/*"
+
+Style/Encoding:
+  Enabled: true
+
+Style/Lambda:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/StderrPuts:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/WordArray:
+  Enabled: false

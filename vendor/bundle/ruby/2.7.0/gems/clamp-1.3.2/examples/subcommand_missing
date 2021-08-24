@@ -1,0 +1,21 @@
+#! /usr/bin/env ruby
+# frozen_string_literal: true
+
+# Demonstrate subcommand_missing
+
+require "clamp"
+
+Clamp do
+
+  subcommand "hello", "Say hello" do
+    def execute
+      puts "Hello"
+    end
+  end
+
+  def subcommand_missing(name)
+    abort "Install bye plugin first" if name == "bye"
+    super
+  end
+
+end

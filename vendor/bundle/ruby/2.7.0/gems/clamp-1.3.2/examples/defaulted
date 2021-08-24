@@ -1,0 +1,32 @@
+#! /usr/bin/env ruby
+# frozen_string_literal: true
+
+# An example of default values and methods
+
+require "clamp"
+require "highline"
+
+Clamp do
+
+  option ["-U", "--user"], "USER", "user name",
+         environment_variable: "THE_USER",
+         default: "bob"
+  option ["-P", "--password"], "PASSWORD", "password",
+         environment_variable: "THE_PASSWORD"
+
+  def execute
+    puts "User: #{user}, Password: #{password}"
+  end
+
+  private
+
+  def default_password
+    terminal.ask("Password [#{user}]: ") { |q| q.echo = "*" }
+  end
+
+  def terminal
+    tty = open("/dev/tty", "w+")
+    HighLine.new(tty, tty)
+  end
+
+end

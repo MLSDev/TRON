@@ -1,0 +1,28 @@
+#! /usr/bin/env ruby
+# frozen_string_literal: true
+
+# Demonstrate "restful" style; parameters precede subcommands
+
+require "clamp"
+
+Clamp do
+
+  banner %(
+    Word ops.
+  )
+
+  parameter "WORD", "the word in question"
+
+  subcommand "say", "Say it" do
+    def execute
+      puts word
+    end
+  end
+
+  subcommand "shout", "Say it loud" do
+    def execute
+      puts word.upcase
+    end
+  end
+
+end
