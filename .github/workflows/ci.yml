@@ -9,74 +9,56 @@ on:
       - '*'
 
 jobs:
+  env-details:
+  name: Environment details
+  runs-on: macOS-11
+  steps:
+    - name: xcode version
+      run: xcodebuild -version -sdk
+
+    - name: list simulators
+      run: |
+        xcrun simctl delete unavailable
+        xcrun simctl list
+
+  Xcode-13:
+    name: Xcode 13
+    runs-on: macOS-11
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
+    strategy:
+      matrix:
+        destination: ["test_ios15", "test_tvos15","test_macos", "build_watchos"]
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v2
+      - name: ruby setup
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+      - name: ${{ matrix.destination }}
+        run: bundle exec fastlane ${{ matrix.destination }}
+      - name: Codecov
+      - uses: codecov/codecov-action@v2
+
   Xcode-12:
     name: Xcode 12
-    runs-on: macOS-latest
+    runs-on: macOS-11
     env:
-      DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
     strategy:
       matrix:
         destination: ["test_ios14", "test_tvos14","test_macos", "build_watchos_xcode12"]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - name: git checkout
+        uses: actions/checkout@v2
+      - name: ruby setup
+        uses: ruby/setup-ruby@v1
         with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name: Bundle install
-        run: |
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
-      - name: List simulators
-        run: xcrun simctl list
+          ruby-version: 2.7
+          bundler-cache: true
       - name: ${{ matrix.destination }}
         run: bundle exec fastlane ${{ matrix.destination }}
       - name: Codecov
-        uses: codecov/codecov-action@v1.0.13
-  Xcode-11:
-    name: Xcode 11
-    runs-on: macOS-latest
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_11.7.app/Contents/Developer
-    strategy:
-      matrix:
-        destination: ["test_ios13", "test_tvos13","test_macos", "build_watchos"]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name: Bundle install
-        run: |
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
-      - name: List simulators
-        run: xcrun simctl list
-      - name: ${{ matrix.destination }}
-        run: bundle exec fastlane ${{ matrix.destination }}
-      - name: Codecov
-        uses: codecov/codecov-action@v1.0.13
-  cocoapods:
-    name: Lint podspec
-    runs-on: macOS-latest
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name: Bundle install
-        run: |
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
-      - name: CocoaPods spec lint
-        run: bundle exec fastlane pod_lint
+      - uses: codecov/codecov-action@v2

@@ -1,19 +1,19 @@
 fastlane_version "1.98.0"
 
 lane :test_ios14 do
-  scan(devices: ["iPhone 11 Pro (14.0)"])
+  scan(devices: ["iPhone 11 Pro (14.5)"])
 end
 
-lane :test_ios13 do
-  scan(devices: ["iPad Pro (12.9-inch) (3rd generation) (13.5)"])
+lane :test_ios15 do
+  scan(devices: ["iPad Pro (12.9-inch) (3rd generation) (15.0)"])
 end
 
 lane :test_tvos14 do
-  scan(device: "Apple TV 4K (14.0)")
+  scan(device: "Apple TV 4K (14.5)")
 end
 
-lane :test_tvos13 do
-  scan(device: "Apple TV 4K (13.3)")
+lane :test_tvos15 do
+  scan(device: "Apple TV 4K (15.0)")
 end
 
 lane :test_macos do
@@ -23,7 +23,7 @@ end
 lane :build_watchos do
   xcodebuild(
     build: true,
-    destination: "OS=6.2.1,name=Apple Watch Series 4 - 44mm",
+    destination: "OS=8.0,name=Apple Watch Series 4 - 44mm",
     scheme: 'TRON'
   )
 end
@@ -31,7 +31,7 @@ end
 lane :build_watchos_xcode12 do
   xcodebuild(
     build: true,
-    destination: "OS=7.0,name=Apple Watch Series 4 - 44mm",
+    destination: "OS=7.4,name=Apple Watch Series 4 - 44mm",
     scheme: 'TRON'
   )
 end
@@ -65,9 +65,6 @@ lane :release do |params|
     changelog = File.read(changelog_filename)
     changelog.gsub!(/# Next/, "# Next\n\n## [#{version}](https://github.com/MLSDev/TRON/releases/tag/#{version})")
     File.open(changelog_filename, 'w') { |file| file.puts changelog }
-
-    puts "Updating docs"
-    sh "bundle exec jazzy"
 
     puts "Comitting, tagging, and pushing."
     message = "Releasing version #{version}."
