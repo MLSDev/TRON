@@ -1,9 +1,7 @@
 name: Generate Documentation
 
 on:
-  push:
-    branches:
-      - main
+  - workflow_dispatch
 
 env:
   DEVELOPER_DIR: /Applications/Xcode_12.5.1.app/Contents/Developer
