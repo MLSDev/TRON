@@ -38,9 +38,9 @@ jobs:
           ruby-version: 2.7
           bundler-cache: true
       - name: ${{ matrix.destination }}
-        run: bundle exec fastlane ${{ matrix.destination }}
+         run: bundle exec fastlane ${{ matrix.destination }}
       - name: Codecov
-      - uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v2
 
   Xcode-12:
     name: Xcode 12
@@ -61,4 +61,4 @@ jobs:
       - name: ${{ matrix.destination }}
         run: bundle exec fastlane ${{ matrix.destination }}
       - name: Codecov
-      - uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v2
