@@ -2,7 +2,6 @@ comment:
   layout: header, changes, diff
 coverage:
   ignore:
-  - Tests
-  - TestFixtures
+  - Source/Tests
   status:
     patch: false

@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/spm-macos.yml'
+      - '.github/workflows/spm.yml'
       - 'Package*'
       - 'Source/**/*.*'
   pull_request:

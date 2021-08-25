@@ -42,7 +42,13 @@ lane :pod_lint do
 end
 
 lane :generate_code_coverage do
-  # slather()
+  slather(
+    proj: "TRON.xcodeproj",
+    scheme: "TRON",
+    # arch: "x86_64",
+    verbose: true,
+    cobertura_xml: true
+  )
 end
 
 lane :release do |params|
