@@ -63,3 +63,4 @@ fastlane/screenshots
 
 # Ignore Ruby CI setup
 vendor/bundle
+.bundle/config
