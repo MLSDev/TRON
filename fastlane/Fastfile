@@ -5,7 +5,7 @@ lane :test_ios14 do
 end
 
 lane :test_ios15 do
-  scan(devices: ["iPad Pro (12.9-inch) (3rd generation) (15.0)"])
+  scan(devices: ["iPhone 13 Pro Max (15.1)"])
 end
 
 lane :test_tvos14 do
@@ -13,17 +13,17 @@ lane :test_tvos14 do
 end
 
 lane :test_tvos15 do
-  scan(device: "Apple TV 4K (15.0)")
+  scan(device: "Apple TV 4K (15.1)")
 end
 
 lane :test_macos do
-  scan(destination: "arch=x86_64")
+  scan(destination: "platform=macOS", disable_slide_to_type: true)
 end
 
 lane :build_watchos do
   xcodebuild(
     build: true,
-    destination: "OS=8.0,name=Apple Watch Series 6 - 44mm",
+    destination: "OS=8.1,name=Apple Watch Series 6 - 44mm",
     scheme: 'TRON'
   )
 end
