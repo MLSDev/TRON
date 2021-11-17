@@ -17,7 +17,7 @@ lane :test_tvos15 do
 end
 
 lane :test_macos do
-  scan(destination: "platform=macOS", disable_slide_to_type: true)
+  scan(destination: "platform=macOS", disable_slide_to_type: false)
 end
 
 lane :build_watchos do
