@@ -46,7 +46,7 @@ jobs:
         destination: ["test_ios15", "test_tvos15","test_macos", "build_watchos"]
     steps:
       - name: git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: ruby setup
         uses: ruby/setup-ruby@v1
         with:
@@ -70,7 +70,7 @@ jobs:
         destination: ["test_ios14", "test_tvos14","test_macos", "build_watchos_xcode12"]
     steps:
       - name: git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: ruby setup
         uses: ruby/setup-ruby@v1
         with:
