@@ -35,7 +35,7 @@ extension APIRequest {
 
      - returns: Observable<Model>
      */
-    open func rxResult() -> Observable<Model> {
+    public func rxResult() -> Observable<Model> {
         return Observable.create({ observer in
             let token = self.perform(withSuccess: { result in
                 observer.onNext(result)
@@ -56,7 +56,7 @@ extension UploadAPIRequest {
      
      - returns: Observable<Model>
      */
-    open func rxResult() -> Observable<Model> {
+    public func rxResult() -> Observable<Model> {
         return Observable.create({ observer in
             let token = self.perform(withSuccess: { result in
                 observer.onNext(result)
@@ -77,7 +77,7 @@ extension DownloadAPIRequest {
      
      - returns: Observable<Model>
      */
-    open func rxResult() -> Observable<URL> {
+    public func rxResult() -> Observable<URL> {
         return Observable.create({ observer in
             let token = self.performCollectingTimeline(withCompletion: { response in
                 if let url = response.fileURL {

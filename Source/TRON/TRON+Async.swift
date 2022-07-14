@@ -28,7 +28,7 @@ import Alamofire
 
 // swiftlint:disable all
 
-#if swift(>=5.5)
+#if compiler(>=5.6.0) && canImport(_Concurrency)
 
 @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
 final class RequestSender<Model, ErrorModel: ErrorSerializable> {
@@ -198,4 +198,5 @@ public extension DownloadAPIRequest {
         DownloadRequestSender(self).sendURLHandle()
     }
 }
+
 #endif

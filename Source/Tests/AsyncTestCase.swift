@@ -27,12 +27,13 @@ class AsyncTestCase: ProtocolStubbedTestCase {
     func testHandleCancellation() async throws {
         let request: APIRequest<String, APIError> = tron.codable.request("get").stubSuccess([:].asData)
         let handle = request.responseTaskHandle()
+        
         handle.cancel()
         do {
             let _ = try await handle.get()
             XCTFail("should not receive response")
         } catch {
-            XCTAssertEqual(error.localizedDescription, URLError(.cancelled).localizedDescription)
+            XCTAssertEqual(error as? URLError, URLError(.cancelled))
         }
     }
     
@@ -80,7 +81,16 @@ class AsyncTestCase: ProtocolStubbedTestCase {
             let _ = try await request.response()
             XCTFail("Unexpected success")
         } catch {
-            XCTAssertEqual(error.localizedDescription, "The data couldn’t be read because it isn’t in the correct format.")
+            guard let decodingError = (error as? APIError)?.error as? DecodingError else {
+                XCTFail("unexpected error type")
+                return
+            }
+            switch decodingError {
+            case .typeMismatch, .valueNotFound, .keyNotFound:
+                XCTFail("unexpected error type")
+            case .dataCorrupted: ()
+            @unknown default: XCTFail("unexpected error type")
+            }
         }
     }
 
