@@ -34,15 +34,21 @@ import Alamofire
 final class RequestSender<Model, ErrorModel: ErrorSerializable> {
     
     var cancellableToken: RequestCancellable?
-    var sendRequest: ((CheckedContinuation<Model,Error>) -> RequestCancellable)?
+    var sendRequest: ((CheckedContinuation<Result<Model,ErrorModel>, Never>) -> RequestCancellable)?
+    var sendRequestWithAlamofireResponse: ((CheckedContinuation<AFDataResponse<Model>, Never>) -> RequestCancellable)?
     var isCancelled : Bool = false
     
     init(_ request: APIRequest<Model, ErrorModel>) {
         self.sendRequest = { continuation in
             request.perform { model in
-                continuation.resume(returning: model)
+                continuation.resume(returning: .success(model))
             } failure: { error in
-                continuation.resume(throwing: error)
+                continuation.resume(returning: .failure(error))
+            }
+        }
+        self.sendRequestWithAlamofireResponse = { continuation in
+            request.performCollectingTimeline { response in
+                continuation.resume(returning: response)
             }
         }
     }
@@ -50,30 +56,49 @@ final class RequestSender<Model, ErrorModel: ErrorSerializable> {
     init(_ request: UploadAPIRequest<Model,ErrorModel>) {
         self.sendRequest = { continuation in
             request.perform { model in
-                continuation.resume(returning: model)
+                continuation.resume(returning: .success(model))
             } failure: { error in
-                continuation.resume(throwing: error)
+                continuation.resume(returning: .failure(error))
+            }
+        }
+        self.sendRequestWithAlamofireResponse = { continuation in
+            request.performCollectingTimeline { response in
+                continuation.resume(returning: response)
             }
         }
     }
     
-    func send() async throws -> Model {
-        try await withTaskCancellationHandler(handler: {
-            self.cancel()
-        }, operation: {
-            if isCancelled {
-                throw URLError(.cancelled)
-            } else {
-                return try await withCheckedThrowingContinuation { continuation in
-                    self.cancellableToken = self.sendRequest?(continuation)
+    var result : Result<Model, ErrorModel> {
+        get async {
+            await withTaskCancellationHandler(handler: {
+                self.cancel()
+            }, operation: {
+                if isCancelled {
+                    return .failure(ErrorModel(request: nil, response: nil, data: nil, error: URLError(.cancelled)))
+                } else {
+                    return await withCheckedContinuation { continuation in
+                        self.cancellableToken = self.sendRequest?(continuation)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
     
-    func sendHandle() -> Task.Handle<Model, Error> {
-        async {
-            return try await send()
+    var value: Model {
+        get async throws {
+            try await result.get()
+        }
+    }
+    
+    var response: AFDataResponse<Model> {
+        get async {
+            await withTaskCancellationHandler(handler: {
+                self.cancel()
+            }, operation: {
+                await withCheckedContinuation { continuation in
+                    self.cancellableToken = self.sendRequestWithAlamofireResponse?(continuation)
+                }
+            })
         }
     }
     
@@ -138,18 +163,6 @@ final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> 
         })
     }
     
-    func sendHandle() -> Task.Handle<Model, Error> {
-        async {
-            return try await send()
-        }
-    }
-    
-    func sendURLHandle() -> Task.Handle<URL, Error> {
-        async {
-            return try await send()
-        }
-    }
-    
     func cancel() {
         cancellableToken?.cancelRequest()
         isCancelled = true
@@ -160,43 +173,59 @@ final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> 
 
 @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
 public extension APIRequest {
-    func response() async throws -> Model {
-        try await RequestSender(self).send()
+    var value : Model {
+        get async throws {
+            try await RequestSender(self).value
+        }
     }
     
-    func responseTaskHandle() -> Task.Handle<Model, Error> {
-        RequestSender(self).sendHandle()
+    var result: Result<Model,ErrorModel> {
+        get async {
+            await RequestSender(self).result
+        }
+    }
+
+    var response: AFDataResponse<Model> {
+        get async {
+            await RequestSender(self).response
+        }
     }
 }
 
 @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
 public extension UploadAPIRequest {
-    func response() async throws -> Model {
-        try await RequestSender(self).send()
+    var value : Model {
+        get async throws {
+            try await RequestSender(self).value
+        }
     }
     
-    func responseTaskHandle() -> Task.Handle<Model, Error> {
-        RequestSender(self).sendHandle()
+    var result: Result<Model,ErrorModel> {
+        get async {
+            await RequestSender(self).result
+        }
+    }
+
+    var response: AFDataResponse<Model> {
+        get async {
+            await RequestSender(self).response
+        }
     }
 }
 
 @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
 public extension DownloadAPIRequest {
-    func response() async throws -> Model {
+    func value() async throws -> Model {
         try await DownloadRequestSender(self).send()
-    }
-    
-    func responseTaskHandle() -> Task.Handle<Model, Error> {
-        DownloadRequestSender(self).sendHandle()
     }
     
     func responseURL() async throws -> URL {
         try await DownloadRequestSender(self).send()
     }
-    
-    func responseURLTaskHandle() -> Task.Handle<URL, Error> {
-        DownloadRequestSender(self).sendURLHandle()
-    }
+
+//    func downloadResponse() async -> Alamofire.DownloadResponse<Model,AFError> {
+//
+//    }
 }
 
 #endif
