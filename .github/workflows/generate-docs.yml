@@ -4,12 +4,12 @@ on:
   - workflow_dispatch
 
 env:
-  DEVELOPER_DIR: /Applications/Xcode_13.1.app/Contents/Developer
+  DEVELOPER_DIR: /Applications/Xcode_13.4.1.app/Contents/Developer
 
 jobs:
   main:
     name: Create docs PR
-    runs-on: macOS-11
+    runs-on: macOS-12
     steps:
       - name: git checkout
         uses: actions/checkout@v3
@@ -17,7 +17,7 @@ jobs:
       - name: ruby setup
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 3.1.2
           bundler-cache: true
 
       - name: generate docs
