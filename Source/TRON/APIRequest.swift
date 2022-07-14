@@ -117,7 +117,7 @@ open class APIRequest<Model, ErrorModel: ErrorSerializable>: BaseRequest<Model, 
                                             self.didReceiveDataResponse(dataResponse, forRequest: request)
                                             completion(dataResponse)
             })
-        if !session.startRequestsImmediately {
+        if !session.startRequestsImmediately && request.tron_apiStub == nil {
             request.resume()
         }
         didSendAlamofireRequest(request)
