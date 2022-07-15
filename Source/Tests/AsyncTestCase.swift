@@ -138,7 +138,7 @@ class AsyncTestCase: ProtocolStubbedTestCase {
                       to: destination)
             .stubSuccess(.init(), statusCode: 200)
         
-        _ = try await request.value()
+        _ = try await request.value
     }
     
     func testDownloadAsyncFailure() async throws {
@@ -153,7 +153,7 @@ class AsyncTestCase: ProtocolStubbedTestCase {
                       responseSerializer: responseSerializer)
             .stubSuccess(.init(), statusCode: 200)
         do {
-            _ = try await request.value()
+            _ = try await request.value
             XCTFail("Unexpected success")
         } catch {
             XCTAssertEqual((error as? APIError)?.error as? String, "Fail")
