@@ -25,8 +25,8 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 - [x] Modular architecture
 - [x] Support for iOS/Mac OS X/tvOS/watchOS/Linux
 - [x] Support for CocoaPods/Swift Package Manager
-- [x] RxSwift /Combine extensions
-- [x] Support for Swift Concurrency
+- [x] [RxSwift](https://github.com/MLSDev/TRON#rxswift) / Combine extensions
+- [x] Support for [Swift Concurrency](https://github.com/MLSDev/TRON#swift-concurrency)
 - [x] [Complete documentation](https://mlsdev.github.io/TRON/)
 
 ## Overview

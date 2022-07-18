@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+## [5.5.0-beta.1](https://github.com/MLSDev/TRON/releases/tag/5.5.0-beta.1)
+
 ### *Introducing support for Swift Concurrency*
 
 ```swift
