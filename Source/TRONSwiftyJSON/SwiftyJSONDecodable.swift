@@ -165,14 +165,14 @@ open class JSONDecodableSerializer {
 
 extension TRON {
     /// Creates `JSONDecodableSerializer` with current `TRON` instance.
-    open var swiftyJSON: JSONDecodableSerializer {
+    public var swiftyJSON: JSONDecodableSerializer {
         return JSONDecodableSerializer(tron: self)
     }
 
     /// Creates `CodableSerializer` with current `TRON` instance and specific `options` for `JSONSerialization`.
     /// `traversingJSON` closure defines how JSON should be preprocessed before passing to Model initializer.
-    open func swiftyJSON(readingOptions options: JSONSerialization.ReadingOptions = [],
-                         traversingJSON: @escaping (JSON) -> JSON = { $0 }) -> JSONDecodableSerializer {
+    public func swiftyJSON(readingOptions options: JSONSerialization.ReadingOptions = [],
+                           traversingJSON: @escaping (JSON) -> JSON = { $0 }) -> JSONDecodableSerializer {
         return JSONDecodableSerializer(tron: self, options: options, traversingJSON: traversingJSON)
     }
 }

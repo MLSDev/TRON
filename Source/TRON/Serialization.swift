@@ -86,6 +86,9 @@ public struct FileURLPassthroughResponseSerializer: DownloadResponseSerializerPr
     /// Error returned when received fileURL is nil
     public struct MissingURLError: Error { }
 
+    /// Creates FileURLPassthroughResponseSerializer
+    public init() {}
+
     /// Extracts file URL from received response
     ///
     /// - Parameters:

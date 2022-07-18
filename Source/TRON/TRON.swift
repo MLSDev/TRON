@@ -169,7 +169,7 @@ open class TRON: TronDelegate {
     }
 
     /**
-     Creates APIRequest with specified relative path and type RequestType.Download.
+     Creates DownloadAPIRequest with specified relative path and type RequestType.Download.
 
      - parameter path: Path, that will be appended to current `baseURL`.
 
@@ -188,7 +188,7 @@ open class TRON: TronDelegate {
     }
 
     /**
-     Creates APIRequest with specified relative path and type RequestType.DownloadResuming.
+     Creates DownloadAPIRequest with specified relative path and type RequestType.DownloadResuming.
 
      - parameter path: Path, that will be appended to current `baseURL`.
 
@@ -208,5 +208,51 @@ open class TRON: TronDelegate {
          resumingFrom: Data, responseSerializer: Serializer) -> DownloadAPIRequest<Model, ErrorModel>
         where Serializer.SerializedObject == Model {
         return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self, responseSerializer: responseSerializer)
+    }
+
+    /**
+     Creates DownloadAPIRequest with specified relative path and type RequestType.Download.
+
+     - parameter path: Path, that will be appended to current `baseURL`.
+
+     - parameter destination: Destination for downloading.
+
+     - parameter responseSerializer: object used to serialize response.
+
+     - returns: APIRequest instance.
+
+     - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
+     */
+    open func download<ErrorModel: DownloadErrorSerializable>
+        (_ path: String, to destination: @escaping DownloadRequest.Destination) -> DownloadAPIRequest<URL, ErrorModel> {
+        DownloadAPIRequest(type: .download(destination),
+                           path: path,
+                           tron: self,
+                           responseSerializer: FileURLPassthroughResponseSerializer())
+    }
+
+    /**
+     Creates DownloadAPIRequest with specified relative path and type RequestType.DownloadResuming.
+
+     - parameter path: Path, that will be appended to current `baseURL`.
+
+     - parameter destination: Destination to download to.
+
+     - parameter resumingFrom: Resume data for current request.
+
+     - parameter responseSerializer: object used to serialize response.
+
+     - returns: APIRequest instance.
+
+     - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
+     */
+    open func download<ErrorModel: DownloadErrorSerializable>
+        (_ path: String,
+         to destination: @escaping DownloadRequest.Destination,
+         resumingFrom: Data) -> DownloadAPIRequest<URL, ErrorModel> {
+         DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination),
+                            path: path,
+                            tron: self,
+                            responseSerializer: FileURLPassthroughResponseSerializer())
     }
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -44,6 +44,8 @@
 		3EC5C8D522A7E79400B42774 /* SwiftyJSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8B522A7E78F00B42774 /* SwiftyJSONDecodable.swift */; };
 		3EC5C8D622A7E79A00B42774 /* Tron+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC5C8B722A7E78F00B42774 /* Tron+RxSwift.swift */; };
 		3ED4051622B5667A0055ED5B /* BaseRequestTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4051522B5667A0055ED5B /* BaseRequestTestCase.swift */; };
+		412E6D322698648D006981C3 /* ConcurrencyTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412E6D312698648D006981C3 /* ConcurrencyTestCase.swift */; };
+		41BAE4EC26738941000D314D /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BAE4EB26738941000D314D /* Concurrency.swift */; };
 		9A148D5B1EDB1ABF002E610C /* cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9A148D571EDB1ABF002E610C /* cat.jpg */; };
 		9A148D5E1EDB1ABF002E610C /* invalid.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A148D581EDB1ABF002E610C /* invalid.json */; };
 		9A148D611EDB1ABF002E610C /* TronError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A148D591EDB1ABF002E610C /* TronError.swift */; };
@@ -175,6 +177,8 @@
 		3EC5C8C422A7E78F00B42774 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
 		3EC5C8C522A7E78F00B42774 /* Serialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serialization.swift; sourceTree = "<group>"; };
 		3ED4051522B5667A0055ED5B /* BaseRequestTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRequestTestCase.swift; sourceTree = "<group>"; };
+		412E6D312698648D006981C3 /* ConcurrencyTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrencyTestCase.swift; sourceTree = "<group>"; };
+		41BAE4EB26738941000D314D /* Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concurrency.swift; sourceTree = "<group>"; };
 		9A148D571EDB1ABF002E610C /* cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cat.jpg; sourceTree = "<group>"; };
 		9A148D581EDB1ABF002E610C /* invalid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = invalid.json; sourceTree = "<group>"; };
 		9A148D591EDB1ABF002E610C /* TronError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TronError.swift; sourceTree = "<group>"; };
@@ -295,6 +299,7 @@
 				3EC5C8B922A7E78F00B42774 /* APIStub.swift */,
 				3EC5C8BA22A7E78F00B42774 /* BaseRequest.swift */,
 				9A82444E2497B805002CC575 /* Combine.swift */,
+				41BAE4EB26738941000D314D /* Concurrency.swift */,
 				3EC5C8C022A7E78F00B42774 /* DownloadAPIRequest.swift */,
 				9ABE13FC2459A2BB008874D2 /* Exports.swift */,
 				3EC5C8C122A7E78F00B42774 /* NetworkActivityPlugin.swift */,
@@ -379,6 +384,7 @@
 				3E74A60F215F8AE900091078 /* UploadTestCase.swift */,
 				3E74A615215F8AEA00091078 /* URLBuilderTestCase.swift */,
 				9A71B8EB2497CA5000FB5CD6 /* CombineTestCase.swift */,
+				412E6D312698648D006981C3 /* ConcurrencyTestCase.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -536,7 +542,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = "Denys Telezhkin";
 				TargetAttributes = {
 					3EC5C88022A7DD9C00B42774 = {
@@ -615,6 +621,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		9A7FA1B71FBCBE6B00C80AED /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -667,6 +674,7 @@
 				3EC5C8D222A7E78F00B42774 /* APIRequest.swift in Sources */,
 				3EC5C8CF22A7E78F00B42774 /* DownloadAPIRequest.swift in Sources */,
 				3EC5C8CD22A7E78F00B42774 /* TRONCodable.swift in Sources */,
+				41BAE4EC26738941000D314D /* Concurrency.swift in Sources */,
 				3EC5C8D122A7E78F00B42774 /* URLBuilder.swift in Sources */,
 				9ABE13FD2459A2BB008874D2 /* Exports.swift in Sources */,
 				3EC5C8D022A7E78F00B42774 /* NetworkActivityPlugin.swift in Sources */,
@@ -692,6 +700,7 @@
 				3E74A61D215F8AEA00091078 /* RxSwiftExtensionTestCase.swift in Sources */,
 				3E74A61A215F8AEA00091078 /* DownloadTestCase.swift in Sources */,
 				3E74A619215F8AEA00091078 /* PluginTestCase.swift in Sources */,
+				412E6D322698648D006981C3 /* ConcurrencyTestCase.swift in Sources */,
 				9A148D611EDB1ABF002E610C /* TronError.swift in Sources */,
 				3E74A61E215F8AEA00091078 /* CodableTestCase.swift in Sources */,
 				3E74A61B215F8AEA00091078 /* HeaderBuilderTestCase.swift in Sources */,
@@ -772,6 +781,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -794,6 +804,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -816,6 +827,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -838,6 +850,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -865,15 +878,19 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L94VC9ZZXC;
 				INFOPLIST_FILE = Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = MLSDev.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
 			};
 			name = Debug;
 		};
@@ -886,15 +903,19 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L94VC9ZZXC;
 				INFOPLIST_FILE = Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = MLSDev.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TVOS_DEPLOYMENT_TARGET = 13.0;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
 			};
 			name = Release;
 		};
@@ -928,6 +949,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -939,18 +961,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 5.0;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Debug;
 		};
@@ -984,6 +1006,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -995,18 +1018,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos macosx";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 5.0;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
 			name = Release;
 		};
@@ -1065,6 +1088,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1088,6 +1112,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APPLICATION_EXTENSION_API_ONLY = NO;
+				DEAD_CODE_STRIPPING = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting files/Tests.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

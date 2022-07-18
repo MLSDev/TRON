@@ -3,6 +3,32 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### *Introducing support for Swift Concurrency*
+
+```swift
+let request: APIRequest<Int,APIError> = tron.codable
+    .request("status/200")
+
+let result = try await request.sender().value
+```
+
+Swift Concurrency methods require Swift 5.5 / Xcode 13.2 / iOS 13 / tvOS 13 / macOS 10.15 / watchOS 6.
+
+Read more usage examples in [README](https://github.com/MLSDev/TRON#swift-concurrency)
+
+### Added
+
+* `download(_:to:)` and `download(_:to:resumingFrom:)` methods that create `DownloadAPIRequest` with <URL, ErrorModel> generic constraints to simplify requests creation, where you need only URL from resulting operation.
+* Structured Concurrency support for Swift 5.5 and higher: `RequestSender`, `DownloadRequestSender` types.
+
+### Fixed
+
+* Issue, that could lead to sending network request with api stubs enabled, but Session.startRequestsImmediately property was set to false.
+
+### Breaking
+
+* New deployment targets: iOS 11 / tvOS 11 / macOS 10.13 / watchOS 4 / Xcode 13. OS deployment targets now match minimum deployment targets, supported by Xcode 14.
+
 ## [5.4.1](https://github.com/MLSDev/TRON/releases/tag/5.4.1)
 
 ### Changed

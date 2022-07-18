@@ -17,12 +17,12 @@ on:
       - 'Source/**/*.*'
 
 env:
-  DEVELOPER_DIR: /Applications/Xcode_13.1.app/Contents/Developer
+  DEVELOPER_DIR: /Applications/Xcode_13.4.1.app/Contents/Developer
 
 jobs:
   main:
     name: SwiftPM Build
-    runs-on: macOS-11
+    runs-on: macOS-12
     steps:
       - name: git checkout
         uses: actions/checkout@v3
