@@ -30,22 +30,14 @@ import Alamofire
 
 #if compiler(>=5.6.0) && canImport(_Concurrency)
 
-@available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 final class RequestSender<Model, ErrorModel: ErrorSerializable> {
     
     var cancellableToken: RequestCancellable?
-    var sendRequest: ((CheckedContinuation<Result<Model,ErrorModel>, Never>) -> RequestCancellable)?
     var sendRequestWithAlamofireResponse: ((CheckedContinuation<AFDataResponse<Model>, Never>) -> RequestCancellable)?
     var isCancelled : Bool = false
     
     init(_ request: APIRequest<Model, ErrorModel>) {
-        self.sendRequest = { continuation in
-            request.perform { model in
-                continuation.resume(returning: .success(model))
-            } failure: { error in
-                continuation.resume(returning: .failure(error))
-            }
-        }
         self.sendRequestWithAlamofireResponse = { continuation in
             request.performCollectingTimeline { response in
                 continuation.resume(returning: response)
@@ -54,13 +46,6 @@ final class RequestSender<Model, ErrorModel: ErrorSerializable> {
     }
     
     init(_ request: UploadAPIRequest<Model,ErrorModel>) {
-        self.sendRequest = { continuation in
-            request.perform { model in
-                continuation.resume(returning: .success(model))
-            } failure: { error in
-                continuation.resume(returning: .failure(error))
-            }
-        }
         self.sendRequestWithAlamofireResponse = { continuation in
             request.performCollectingTimeline { response in
                 continuation.resume(returning: response)
@@ -76,8 +61,12 @@ final class RequestSender<Model, ErrorModel: ErrorSerializable> {
                 if isCancelled {
                     return .failure(ErrorModel(request: nil, response: nil, data: nil, error: URLError(.cancelled)))
                 } else {
-                    return await withCheckedContinuation { continuation in
-                        self.cancellableToken = self.sendRequest?(continuation)
+                    let asyncResponse = await response
+                    switch asyncResponse.result {
+                    case .success(let model):
+                        return .success(model)
+                    case .failure(let error):
+                        return .failure(error.underlyingError as? ErrorModel ?? ErrorModel(request: asyncResponse.request, response: asyncResponse.response, data: asyncResponse.data, error: asyncResponse.error))
                     }
                 }
             })
@@ -96,7 +85,11 @@ final class RequestSender<Model, ErrorModel: ErrorSerializable> {
                 self.cancel()
             }, operation: {
                 await withCheckedContinuation { continuation in
-                    self.cancellableToken = self.sendRequestWithAlamofireResponse?(continuation)
+                    if let sendRequest = self.sendRequestWithAlamofireResponse {
+                        self.cancellableToken = sendRequest(continuation)
+                    } else {
+                        continuation.resume(with: .success(.init(request: nil, response: nil, data: nil, metrics: nil, serializationDuration: 0, result: .failure(.explicitlyCancelled))))
+                    }
                 }
             })
         }
@@ -105,27 +98,18 @@ final class RequestSender<Model, ErrorModel: ErrorSerializable> {
     func cancel() {
         cancellableToken?.cancelRequest()
         isCancelled = true
-        sendRequest = nil
         sendRequestWithAlamofireResponse = nil
     }
 }
 
-@available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> {
     
     var cancellableToken: RequestCancellable?
-    var sendRequest: ((CheckedContinuation<Result<Model,ErrorModel>, Never>) -> RequestCancellable)?
     var sendRequestWithAlamofireResponse: ((CheckedContinuation<AFDownloadResponse<Model>, Never>) -> RequestCancellable)?
     var isCancelled : Bool = false
     
     init(_ request: DownloadAPIRequest<Model, ErrorModel>) {
-        sendRequest = { continuation in
-            request.perform { model in
-                continuation.resume(returning: .success(model))
-            } failure: { error in
-                continuation.resume(returning: .failure(error))
-            }
-        }
         sendRequestWithAlamofireResponse = { continuation in
             request.performCollectingTimeline { response in
                 continuation.resume(returning: response)
@@ -147,8 +131,12 @@ final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> 
                 if isCancelled {
                     return .failure(ErrorModel(request: nil, response: nil, fileURL: nil, error: URLError(.cancelled)))
                 } else {
-                    return await withCheckedContinuation { continuation in
-                        self.cancellableToken = self.sendRequest?(continuation)
+                    let asyncResponse = await response
+                    switch asyncResponse.result {
+                    case .success(let model):
+                        return .success(model)
+                    case .failure(let error):
+                        return .failure(error.underlyingError as? ErrorModel ?? ErrorModel(request: asyncResponse.request, response: asyncResponse.response, fileURL: asyncResponse.fileURL, error: asyncResponse.error))
                     }
                 }
             })
@@ -161,7 +149,11 @@ final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> 
                 self.cancel()
             }, operation: {
                 await withCheckedContinuation { continuation in
-                    self.cancellableToken = self.sendRequestWithAlamofireResponse?(continuation)
+                    if let sendRequest = self.sendRequestWithAlamofireResponse {
+                        self.cancellableToken = sendRequest(continuation)
+                    } else {
+                        continuation.resume(with: .success(.init(request: nil, response: nil, fileURL: nil, resumeData: nil, metrics: nil, serializationDuration: 0, result: .failure(.explicitlyCancelled))))
+                    }
                 }
             })
         }
@@ -170,12 +162,11 @@ final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> 
     func cancel() {
         cancellableToken?.cancelRequest()
         isCancelled = true
-        sendRequest = nil
         sendRequestWithAlamofireResponse = nil
     }
 }
 
-@available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public extension APIRequest {
     var value : Model {
         get async throws {
@@ -196,7 +187,7 @@ public extension APIRequest {
     }
 }
 
-@available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public extension UploadAPIRequest {
     var value : Model {
         get async throws {
@@ -217,7 +208,7 @@ public extension UploadAPIRequest {
     }
 }
 
-@available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public extension DownloadAPIRequest {
     var value : Model {
         get async throws {
