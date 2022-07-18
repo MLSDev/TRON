@@ -36,12 +36,12 @@ class AsyncTestCase: ProtocolStubbedTestCase {
             let _ = try await handle.value
             XCTFail("should not receive response")
         } catch {
-            if (error as? APIError)?.isCancelled == false {
-                print(error)
-                print(error as? APIError)
-                print((error as? APIError)?.error)
-            }
+            XCTAssertNotNil(error as? APIError)
             XCTAssertTrue((error as? APIError)?.isCancelled ?? false)
+            if !((error as? APIError)?.isCancelled ?? true) {
+                XCTFail("received wrong error: \(error)")
+                XCTFail("underlying error: \(error.localizedDescription)")
+            }
         }
     }
     
