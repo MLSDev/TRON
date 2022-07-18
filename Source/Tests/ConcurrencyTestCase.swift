@@ -138,13 +138,17 @@ class AsyncTestCase: ProtocolStubbedTestCase {
             for: searchPathDirectory,
             in: searchPathDomain
         )
-        let request: DownloadAPIRequest<URL?, APIError> = tron
+        let request: DownloadAPIRequest<URL, APIError> = tron
             .download("/stream/100",
                       to: destination)
             .stubSuccess(.init(), statusCode: 200)
         
         let sender = request.sender()
-        _ = try await sender.value
+        let result = await sender.result
+        switch result {
+        case .failure: ()
+        case .success: ()
+        }
     }
     
     func testDownloadAsyncFailure() async throws {

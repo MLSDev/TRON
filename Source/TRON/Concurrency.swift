@@ -26,8 +26,6 @@
 import Foundation
 import Alamofire
 
-// swiftlint:disable all
-
 #if compiler(>=5.6.0) && canImport(_Concurrency)
 
 extension DispatchQueue {
@@ -36,17 +34,21 @@ extension DispatchQueue {
 }
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+/// Object, responsible for sending APIRequest or UploadAPIRequest when using Swift Concurrency.
 public final class RequestSender<Model, ErrorModel: ErrorSerializable> {
-    
-    public var isCancelled : Bool = false
-    
+
+    /// Whether request was explicitly cancelled
+    public var isCancelled: Bool = false
+
+    /// Asynchronous stream of uploadProgress events.
     public private(set) lazy var uploadProgress: AsyncStream<Progress> = .init(bufferingPolicy: .unbounded) { continuation in
         self.uploadProgressContinuation = continuation
     }
+
     private var uploadProgressContinuation: AsyncStream<Progress>.Continuation?
     private var cancellableToken: RequestCancellable?
     private var sendRequestWithAlamofireResponse: ((CheckedContinuation<AFDataResponse<Model>, Never>) -> RequestCancellable)?
-    
+
     internal init(_ request: APIRequest<Model, ErrorModel>) {
         self.sendRequestWithAlamofireResponse = { continuation in
             request.performCollectingTimeline { response in
@@ -60,16 +62,17 @@ public final class RequestSender<Model, ErrorModel: ErrorSerializable> {
             }
         }
     }
-    
-    internal init(_ request: UploadAPIRequest<Model,ErrorModel>) {
+
+    internal init(_ request: UploadAPIRequest<Model, ErrorModel>) {
         self.sendRequestWithAlamofireResponse = { continuation in
             request.performCollectingTimeline { response in
                 continuation.resume(returning: response)
             }
         }
     }
-    
-    public var result : Result<Model, ErrorModel> {
+
+    /// `Result` of sent request
+    public var result: Result<Model, ErrorModel> {
         get async {
             await withTaskCancellationHandler(handler: {
                 self.cancel()
@@ -82,19 +85,24 @@ public final class RequestSender<Model, ErrorModel: ErrorSerializable> {
                     case .success(let model):
                         return .success(model)
                     case .failure(let error):
-                        return .failure(error.underlyingError as? ErrorModel ?? ErrorModel(request: asyncResponse.request, response: asyncResponse.response, data: asyncResponse.data, error: asyncResponse.error))
+                        return .failure(error.underlyingError as? ErrorModel ?? ErrorModel(request: asyncResponse.request,
+                                                                                           response: asyncResponse.response,
+                                                                                           data: asyncResponse.data,
+                                                                                           error: asyncResponse.error))
                     }
                 }
             })
         }
     }
-    
+
+    /// `Model` returned by request or `ErrorModel` thrown as error.
     public var value: Model {
         get async throws {
             try await result.get()
         }
     }
-    
+
+    /// `DataResponse` produced by the `DataRequest` and its response handler.
     public var response: AFDataResponse<Model> {
         get async {
             await withTaskCancellationHandler(handler: {
@@ -104,13 +112,19 @@ public final class RequestSender<Model, ErrorModel: ErrorSerializable> {
                     if let sendRequest = self.sendRequestWithAlamofireResponse {
                         self.cancellableToken = sendRequest(continuation)
                     } else {
-                        continuation.resume(with: .success(.init(request: nil, response: nil, data: nil, metrics: nil, serializationDuration: 0, result: .failure(.explicitlyCancelled))))
+                        continuation.resume(with: .success(.init(request: nil,
+                                                                 response: nil,
+                                                                 data: nil,
+                                                                 metrics: nil,
+                                                                 serializationDuration: 0,
+                                                                 result: .failure(.explicitlyCancelled))))
                     }
                 }
             })
         }
     }
-    
+
+    /// Cancel request
     public func cancel() {
         cancellableToken?.cancelRequest()
         isCancelled = true
@@ -119,19 +133,23 @@ public final class RequestSender<Model, ErrorModel: ErrorSerializable> {
 }
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+/// Object, responsible for sending DownloadAPIRequest when using Swift Concurrency.
 public final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> {
-    
-    public var isCancelled : Bool = false
-    
+
+    /// Whether request was explicitly cancelled
+    public var isCancelled: Bool = false
+
+    /// Asynchronous stream of downloadProgress events.
     public private(set) lazy var downloadProgress: AsyncStream<Progress> = .init(bufferingPolicy: .unbounded) { continuation in
         self.downloadProgressContinuation = continuation
     }
+
     private var downloadProgressContinuation: AsyncStream<Progress>.Continuation?
-    
+
     private var cancellableToken: RequestCancellable?
-    
+
     private var sendRequestWithAlamofireResponse: ((CheckedContinuation<AFDownloadResponse<Model>, Never>) -> RequestCancellable)?
-    
+
     internal init(_ request: DownloadAPIRequest<Model, ErrorModel>) {
         sendRequestWithAlamofireResponse = { continuation in
             request.performCollectingTimeline { response in
@@ -145,14 +163,16 @@ public final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSeriali
             }
         }
     }
-    
+
+    /// `Model` returned by request or `ErrorModel` thrown as error.
     public var value: Model {
         get async throws {
             try await result.get()
         }
     }
-    
-    public var result : Result<Model, ErrorModel> {
+
+    /// `Result` of sent request
+    public var result: Result<Model, ErrorModel> {
         get async {
             await withTaskCancellationHandler(handler: {
                 self.cancel()
@@ -165,13 +185,17 @@ public final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSeriali
                     case .success(let model):
                         return .success(model)
                     case .failure(let error):
-                        return .failure(error.underlyingError as? ErrorModel ?? ErrorModel(request: asyncResponse.request, response: asyncResponse.response, fileURL: asyncResponse.fileURL, error: asyncResponse.error))
+                        return .failure(error.underlyingError as? ErrorModel ?? ErrorModel(request: asyncResponse.request,
+                                                                                           response: asyncResponse.response,
+                                                                                           fileURL: asyncResponse.fileURL,
+                                                                                           error: asyncResponse.error))
                     }
                 }
             })
         }
     }
-    
+
+    /// `DownloadResponse` produced by the `DownloadRequest` and its response handler.
     public var response: AFDownloadResponse<Model> {
         get async {
             await withTaskCancellationHandler(handler: {
@@ -181,17 +205,19 @@ public final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSeriali
                     if let sendRequest = self.sendRequestWithAlamofireResponse {
                         self.cancellableToken = sendRequest(continuation)
                     } else {
-                        continuation.resume(with: .success(.init(request: nil, response: nil, fileURL: nil, resumeData: nil, metrics: nil, serializationDuration: 0, result: .failure(.explicitlyCancelled))))
+                        continuation.resume(with: .success(.init(request: nil, response: nil, fileURL: nil, resumeData: nil, metrics: nil,
+                                                                 serializationDuration: 0, result: .failure(.explicitlyCancelled))))
                     }
                 }
             })
         }
     }
-    
+
+    /// Returns downloaded file url if successful or throws ErrorModel if not.
     public var responseURL: URL {
         get async throws {
             let response = await response
-            
+
             if let fileURL = response.fileURL {
                 return fileURL
             } else {
@@ -199,7 +225,8 @@ public final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSeriali
             }
         }
     }
-    
+
+    /// Cancel request
     public func cancel() {
         cancellableToken?.cancelRequest()
         isCancelled = true
@@ -208,22 +235,29 @@ public final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSeriali
 }
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+/// `APIRequest` extension for Swift Concurrency
 public extension APIRequest {
-    func sender() -> RequestSender<Model,ErrorModel> {
+
+    /// Creates request sender to send request using Swift Concurrency
+    func sender() -> RequestSender<Model, ErrorModel> {
         RequestSender(self)
     }
 }
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+/// `UploadAPIRequest` extension for Swift Concurrency
 public extension UploadAPIRequest {
-    func sender() -> RequestSender<Model,ErrorModel> {
+    /// Creates request sender to send request using Swift Concurrency
+    func sender() -> RequestSender<Model, ErrorModel> {
         RequestSender(self)
     }
 }
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+/// `DownloadAPIRequest` extension for Swift Concurrency
 public extension DownloadAPIRequest {
-    func sender() -> DownloadRequestSender<Model,ErrorModel> {
+    /// Creates request sender to send request using Swift Concurrency
+    func sender() -> DownloadRequestSender<Model, ErrorModel> {
         DownloadRequestSender(self)
     }
 }

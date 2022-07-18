@@ -224,11 +224,11 @@ open class TRON: TronDelegate {
      - seealso: `Alamofire.Request.suggestedDownloadDestination(directory:domain:)` method.
      */
     open func download<ErrorModel: DownloadErrorSerializable>
-        (_ path: String, to destination: @escaping DownloadRequest.Destination) -> DownloadAPIRequest<URL?, ErrorModel> {
-        let serializer = TRONDownloadResponseSerializer { _, _, url, _ in
-            url
-        }
-        return DownloadAPIRequest(type: .download(destination), path: path, tron: self, responseSerializer: serializer)
+        (_ path: String, to destination: @escaping DownloadRequest.Destination) -> DownloadAPIRequest<URL, ErrorModel> {
+        DownloadAPIRequest(type: .download(destination),
+                           path: path,
+                           tron: self,
+                           responseSerializer: FileURLPassthroughResponseSerializer())
     }
 
     /**
@@ -249,10 +249,10 @@ open class TRON: TronDelegate {
     open func download<ErrorModel: DownloadErrorSerializable>
         (_ path: String,
          to destination: @escaping DownloadRequest.Destination,
-         resumingFrom: Data) -> DownloadAPIRequest<URL?, ErrorModel> {
-        let serializer = TRONDownloadResponseSerializer { _, _, url, _ in
-            url
-        }
-        return DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination), path: path, tron: self, responseSerializer: serializer)
+         resumingFrom: Data) -> DownloadAPIRequest<URL, ErrorModel> {
+         DownloadAPIRequest(type: .downloadResuming(data: resumingFrom, destination: destination),
+                            path: path,
+                            tron: self,
+                            responseSerializer: FileURLPassthroughResponseSerializer())
     }
 }

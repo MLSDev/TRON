@@ -25,7 +25,8 @@ TRON is a lightweight network abstraction layer, built on top of [Alamofire](htt
 - [x] Modular architecture
 - [x] Support for iOS/Mac OS X/tvOS/watchOS/Linux
 - [x] Support for CocoaPods/Swift Package Manager
-- [x] RxSwift extension
+- [x] RxSwift /Combine extensions
+- [x] Support for Swift Concurrency
 - [x] [Complete documentation](https://mlsdev.github.io/TRON/)
 
 ## Overview
@@ -43,13 +44,13 @@ request.perform(withSuccess: { user in
 
 ## Requirements
 
-- Xcode 10 and higher
-- Swift 4 and higher
-- iOS 10 / macOS 10.12 / tvOS 10.0 / watchOS 3.0
+- Xcode 13 and higher
+- Swift 5.3 and higher
+- iOS 11 / macOS 10.13 / tvOS 11.0 / watchOS 4.0
 
 ## Installation
 
-### Swift Package Manager(requires Xcode 11)
+### Swift Package Manager
 
 * Add package into Project settings -> Swift Packages
 
@@ -225,6 +226,81 @@ It's possible to customize `JSONSerialization.ReadingOptions`, that are used by 
 let request : APIRequest<String, APIError> = tron.swiftyJSON(readingOptions: .allowFragments).request("status")
 ```
 
+## Swift Concurrency
+
+Sending requests using Swift Concurrency is done via a proxy object `RequestSender`(or `DownloadRequestSender` for download requests). Simple usage example:
+
+```swift
+let request : APIRequest<User, APIError> = tron.codable.request("/me")
+do {
+ let user = try await request.sender().value
+  // user variable contains User type
+} catch {
+  // Network request failed
+}
+```
+
+If you prefer to receive result, containing either successful Model, or ErrorModel, you can do that too:
+
+```swift
+let request : APIRequest<User, APIError> = tron.codable.request("/me")
+let result = await request.sender().result
+// result is Result<User,APIError>
+```
+
+There is also `response` async property, containing all request information, if you need it:
+
+```swift
+let request : APIRequest<User, APIError> = tron.codable.request("/me")
+let response = await request.sender().response
+// response: AFDataResponse<Model>
+```
+
+### Upload request
+
+For upload requests, it's useful to monitor upload progress, and show it to the user:
+
+```swift
+let request : APIRequest<User, APIError> = tron.codable.request("/me/profile_picture")
+  .upload("/post", fromFileAt: urlForResource("cat", withExtension: "jpg"))
+  .method(.post)  
+
+let sender = request.sender()
+Task {
+    for await progress in sender.uploadProgress {
+      // Update progress view, progress: Progress
+    }
+}
+let result = await sender.result
+```
+
+### Download request
+
+Similarly to upload requests, download requests have downloadProgress property implemented as async sequence:
+
+```swift
+Task {
+    for await progress in sender.downloadProgress {
+      // Update download view, progress: Progress
+    }
+}
+```
+
+If you only care about downloaded file URL, and not parsed data model, you can await responseURL property on request sender:
+
+```swift
+let destination = Alamofire.DownloadRequest.suggestedDownloadDestination()
+let request: DownloadAPIRequest<URL, APIError> = tron
+            .download("/download",
+                      to: destination,
+                      responseSerializer: FileURLPassthroughResponseSerializer())
+do {
+  let fileURL = try await request.sender().responseURL 
+} catch {
+  // Handle error
+}
+```
+
 ## RxSwift
 
 ```swift
@@ -264,19 +340,19 @@ struct Users
     static let tron = TRON(baseURL: "https://api.myapp.com")
 
     static func create() -> APIRequest<User,APIError> {
-      return tron.codable.request("users").post()
+      tron.codable.request("users").post()
     }
 
     static func read(id: Int) -> APIRequest<User, APIError> {
-        return tron.codable.request("users/\(id)")
+        tron.codable.request("users/\(id)")
     }
 
     static func update(id: Int, parameters: [String:Any]) -> APIRequest<User, APIError> {
-      return tron.codable.request("users/\(id)").put().parameters(parameters)
+      tron.codable.request("users/\(id)").put().parameters(parameters)
     }
 
     static func delete(id: Int) -> APIRequest<User,APIError> {
-      return tron.codable.request("users/\(id)").delete()
+      tron.codable.request("users/\(id)").delete()
     }
 }
 ```
