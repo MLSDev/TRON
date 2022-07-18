@@ -3,39 +3,31 @@ All notable changes to this project will be documented in this file.
 
 # Next
 
+### *Introducing support for Swift Concurrency*
+
+```swift
+let request: APIRequest<Int,APIError> = tron.codable
+    .request("status/200")
+
+let result = try await request.sender().value
+```
+
+Swift Concurrency methods require Swift 5.5 / Xcode 13.2 / iOS 13 / tvOS 13 / macOS 10.15 / watchOS 6.
+
+Read more usage examples in [README](https://github.com/MLSDev/TRON#swift-concurrency)
+
 ### Added
 
-* `download(_:to:)` and `download(_:to:resumingFrom:)` methods that create `DownloadAPIRequest` with <URL?, ErrorModel> generic constraints to simplify requests creation, where you need only URL from resulting operation.
-* Structured Concurrency support for Swift 5.5 and higher:
+* `download(_:to:)` and `download(_:to:resumingFrom:)` methods that create `DownloadAPIRequest` with <URL, ErrorModel> generic constraints to simplify requests creation, where you need only URL from resulting operation.
+* Structured Concurrency support for Swift 5.5 and higher: `RequestSender`, `DownloadRequestSender` types.
 
-```swift
-let request: APIRequest<Int,APIError> = tron.codable
-    .request("status/200")
-let result = try await request.response()
-```
+### Fixed
 
-Same method added to UploadAPIRequest and DownloadAPIRequest. DownloadAPIRequest also has additional method for getting URL, where file was downloaded:
+* Issue, that could lead to sending network request with api stubs enabled, but Session.startRequestsImmediately property was set to false.
 
-```swift
-let request: DownloadAPIRequest<URL?, APIError> = ...
-let url = try await request.responseURL()
-print("File downloaded at url: \(url)")
-``` 
+### Breaking
 
-If you want the ability to cancel requests mid-flight, there are several additional methods, that return Task.Handle, that may be cancelled: 
-
-```swift
-let request: APIRequest<Int,APIError> = tron.codable
-    .request("status/200")
-let handle = request.responseTaskHandle()
-
-let result = await handle.get()
-// ... later
-
-handle.cancel()
-```
-
-Cancellation of the handle will also cancel request mid-flight, if it was sent.
+* New deployment targets: iOS 11 / tvOS 11 / macOS 10.13 / watchOS 4 / Xcode 13. OS deployment targets now match minimum deployment targets, supported by Xcode 14.
 
 ## [5.4.1](https://github.com/MLSDev/TRON/releases/tag/5.4.1)
 
