@@ -21,14 +21,14 @@ class AsyncTestCase: ProtocolStubbedTestCase {
 
     func testAsyncSuccessfullyCompletes() async throws {
         let request: APIRequest<TestResponse, APIError> = tron.codable.request("get").stubSuccess(["value":3].asData)
-        let response = try await request.value
+        let response = try await request.sender().value
         XCTAssertEqual(response.value, 3)
     }
     
     func testHandleCancellation() async throws {
         let request: APIRequest<String, APIError> = tron.codable.request("get").stubSuccess([:].asData)
         let handle = Task {
-            try await request.value
+            try await request.sender().value
         }
         
         handle.cancel()
@@ -48,7 +48,7 @@ class AsyncTestCase: ProtocolStubbedTestCase {
     func testAsyncResultSuccess() async {
         let request: APIRequest<TestResponse, APIError> = tron.codable.request("get").stubSuccess(["value":3].asData)
         
-        let result = await request.result
+        let result = await request.sender().result
         
         XCTAssertEqual(result.success?.value, 3)
     }
@@ -56,7 +56,7 @@ class AsyncTestCase: ProtocolStubbedTestCase {
     func testAsyncResultFailure() async {
         let request: APIRequest<TestResponse, APIError> = tron.codable.request("get").stubFailure(URLError(.badURL))
         
-        let result = await request.result
+        let result = await request.sender().result
         let afError = result.failure?.error as? AFError
         switch afError {
         case .sessionTaskFailed(error: let urlError):
@@ -68,7 +68,7 @@ class AsyncTestCase: ProtocolStubbedTestCase {
     
     func testAsyncResponse() async {
         let request: APIRequest<TestResponse, APIError> = tron.codable.request("get").stubSuccess(["value":3].asData)
-        let response = await request.response
+        let response = await request.sender().response
         
         XCTAssertEqual(response.value?.value, 3)
     }
@@ -78,7 +78,7 @@ class AsyncTestCase: ProtocolStubbedTestCase {
         let request2: APIRequest<TestResponse, APIError> = tron.codable.request("get").stubSuccess(["value":2].asData)
         let request3: APIRequest<TestResponse, APIError> = tron.codable.request("get").stubSuccess(["value":3].asData)
         
-        let values = try await [request1.value, request2.value, request3.value].compactMap { $0.value }
+        let values = try await [request1.sender().value, request2.sender().value, request3.sender().value].compactMap { $0.value }
         
         XCTAssertEqual(values, [1,2,3])
     }
@@ -87,7 +87,7 @@ class AsyncTestCase: ProtocolStubbedTestCase {
         let request: APIRequest<Int, APIError> = tron.codable.request("status/418").stubStatusCode(URLError.resourceUnavailable.rawValue)
         
         do {
-            try await _ = request.value
+            try await _ = request.sender().value
             XCTFail("unexpected success")
         } catch {
             XCTAssertEqual(error.localizedDescription, "Response status code was unacceptable: 16.")
@@ -102,7 +102,7 @@ class AsyncTestCase: ProtocolStubbedTestCase {
            .post()
            .stubSuccess(["title": "Foo"].asData)
         
-        let response = try await request.value
+        let response = try await request.sender().value
         XCTAssertEqual(response.title, "Foo")
     }
 
@@ -114,7 +114,7 @@ class AsyncTestCase: ProtocolStubbedTestCase {
            .delete()
            .stubStatusCode(200)
         do {
-            let _ = try await request.value
+            let _ = try await request.sender().value
             XCTFail("Unexpected success")
         } catch {
             guard let decodingError = (error as? APIError)?.error as? DecodingError else {
@@ -143,7 +143,8 @@ class AsyncTestCase: ProtocolStubbedTestCase {
                       to: destination)
             .stubSuccess(.init(), statusCode: 200)
         
-        _ = try await request.value
+        let sender = request.sender()
+        _ = try await sender.value
     }
     
     func testDownloadAsyncFailure() async throws {
@@ -158,7 +159,7 @@ class AsyncTestCase: ProtocolStubbedTestCase {
                       responseSerializer: responseSerializer)
             .stubSuccess(.init(), statusCode: 200)
         do {
-            _ = try await request.value
+            _ = try await request.sender().value
             XCTFail("Unexpected success")
         } catch {
             XCTAssertEqual((error as? APIError)?.error as? String, "Fail")

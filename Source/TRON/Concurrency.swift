@@ -30,14 +30,38 @@ import Alamofire
 
 #if compiler(>=5.6.0) && canImport(_Concurrency)
 
+extension DispatchQueue {
+    fileprivate static let singleEventQueue = DispatchQueue(label: "org.MLSDev.TRON.concurrencySingleEventQueue",
+                                                            attributes: .concurrent)
+}
+
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-final class RequestSender<Model, ErrorModel: ErrorSerializable> {
+public final class RequestSender<Model, ErrorModel: ErrorSerializable> {
     
-    var cancellableToken: RequestCancellable?
-    var sendRequestWithAlamofireResponse: ((CheckedContinuation<AFDataResponse<Model>, Never>) -> RequestCancellable)?
-    var isCancelled : Bool = false
+    public var isCancelled : Bool = false
     
-    init(_ request: APIRequest<Model, ErrorModel>) {
+    public private(set) lazy var uploadProgress: AsyncStream<Progress> = .init(bufferingPolicy: .unbounded) { continuation in
+        self.uploadProgressContinuation = continuation
+    }
+    private var uploadProgressContinuation: AsyncStream<Progress>.Continuation?
+    private var cancellableToken: RequestCancellable?
+    private var sendRequestWithAlamofireResponse: ((CheckedContinuation<AFDataResponse<Model>, Never>) -> RequestCancellable)?
+    
+    internal init(_ request: APIRequest<Model, ErrorModel>) {
+        self.sendRequestWithAlamofireResponse = { continuation in
+            request.performCollectingTimeline { response in
+                continuation.resume(returning: response)
+            }.uploadProgress(queue: .singleEventQueue) { [weak self] progress in
+                self?.uploadProgressContinuation?.yield(progress)
+                if progress.isFinished {
+                    self?.uploadProgressContinuation?.finish()
+                    self?.uploadProgressContinuation = nil
+                }
+            }
+        }
+    }
+    
+    internal init(_ request: UploadAPIRequest<Model,ErrorModel>) {
         self.sendRequestWithAlamofireResponse = { continuation in
             request.performCollectingTimeline { response in
                 continuation.resume(returning: response)
@@ -45,15 +69,7 @@ final class RequestSender<Model, ErrorModel: ErrorSerializable> {
         }
     }
     
-    init(_ request: UploadAPIRequest<Model,ErrorModel>) {
-        self.sendRequestWithAlamofireResponse = { continuation in
-            request.performCollectingTimeline { response in
-                continuation.resume(returning: response)
-            }
-        }
-    }
-    
-    var result : Result<Model, ErrorModel> {
+    public var result : Result<Model, ErrorModel> {
         get async {
             await withTaskCancellationHandler(handler: {
                 self.cancel()
@@ -73,13 +89,13 @@ final class RequestSender<Model, ErrorModel: ErrorSerializable> {
         }
     }
     
-    var value: Model {
+    public var value: Model {
         get async throws {
             try await result.get()
         }
     }
     
-    var response: AFDataResponse<Model> {
+    public var response: AFDataResponse<Model> {
         get async {
             await withTaskCancellationHandler(handler: {
                 self.cancel()
@@ -95,7 +111,7 @@ final class RequestSender<Model, ErrorModel: ErrorSerializable> {
         }
     }
     
-    func cancel() {
+    public func cancel() {
         cancellableToken?.cancelRequest()
         isCancelled = true
         sendRequestWithAlamofireResponse = nil
@@ -103,27 +119,40 @@ final class RequestSender<Model, ErrorModel: ErrorSerializable> {
 }
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> {
+public final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> {
     
-    var cancellableToken: RequestCancellable?
-    var sendRequestWithAlamofireResponse: ((CheckedContinuation<AFDownloadResponse<Model>, Never>) -> RequestCancellable)?
-    var isCancelled : Bool = false
+    public var isCancelled : Bool = false
     
-    init(_ request: DownloadAPIRequest<Model, ErrorModel>) {
+    public private(set) lazy var downloadProgress: AsyncStream<Progress> = .init(bufferingPolicy: .unbounded) { continuation in
+        self.downloadProgressContinuation = continuation
+    }
+    private var downloadProgressContinuation: AsyncStream<Progress>.Continuation?
+    
+    private var cancellableToken: RequestCancellable?
+    
+    private var sendRequestWithAlamofireResponse: ((CheckedContinuation<AFDownloadResponse<Model>, Never>) -> RequestCancellable)?
+    
+    internal init(_ request: DownloadAPIRequest<Model, ErrorModel>) {
         sendRequestWithAlamofireResponse = { continuation in
             request.performCollectingTimeline { response in
                 continuation.resume(returning: response)
+            }.downloadProgress(queue: .singleEventQueue) { [weak self] progress in
+                self?.downloadProgressContinuation?.yield(progress)
+                if progress.isFinished {
+                    self?.downloadProgressContinuation?.finish()
+                    self?.downloadProgressContinuation = nil
+                }
             }
         }
     }
     
-    var value: Model {
+    public var value: Model {
         get async throws {
             try await result.get()
         }
     }
     
-    var result : Result<Model, ErrorModel> {
+    public var result : Result<Model, ErrorModel> {
         get async {
             await withTaskCancellationHandler(handler: {
                 self.cancel()
@@ -143,7 +172,7 @@ final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> 
         }
     }
     
-    var response: AFDownloadResponse<Model> {
+    public var response: AFDownloadResponse<Model> {
         get async {
             await withTaskCancellationHandler(handler: {
                 self.cancel()
@@ -159,76 +188,7 @@ final class DownloadRequestSender<Model, ErrorModel: DownloadErrorSerializable> 
         }
     }
     
-    func cancel() {
-        cancellableToken?.cancelRequest()
-        isCancelled = true
-        sendRequestWithAlamofireResponse = nil
-    }
-}
-
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-public extension APIRequest {
-    var value : Model {
-        get async throws {
-            try await RequestSender(self).value
-        }
-    }
-    
-    var result: Result<Model,ErrorModel> {
-        get async {
-            await RequestSender(self).result
-        }
-    }
-
-    var response: AFDataResponse<Model> {
-        get async {
-            await RequestSender(self).response
-        }
-    }
-}
-
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-public extension UploadAPIRequest {
-    var value : Model {
-        get async throws {
-            try await RequestSender(self).value
-        }
-    }
-    
-    var result: Result<Model,ErrorModel> {
-        get async {
-            await RequestSender(self).result
-        }
-    }
-
-    var response: AFDataResponse<Model> {
-        get async {
-            await RequestSender(self).response
-        }
-    }
-}
-
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-public extension DownloadAPIRequest {
-    var value : Model {
-        get async throws {
-            try await DownloadRequestSender(self).value
-        }
-    }
-    
-    var result: Result<Model,ErrorModel> {
-        get async {
-            await DownloadRequestSender(self).result
-        }
-    }
-    
-    var response: AFDownloadResponse<Model> {
-        get async {
-            await DownloadRequestSender(self).response
-        }
-    }
-    
-    var responseURL: URL {
+    public var responseURL: URL {
         get async throws {
             let response = await response
             
@@ -238,6 +198,33 @@ public extension DownloadAPIRequest {
                 throw DownloadError(response)
             }
         }
+    }
+    
+    public func cancel() {
+        cancellableToken?.cancelRequest()
+        isCancelled = true
+        sendRequestWithAlamofireResponse = nil
+    }
+}
+
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+public extension APIRequest {
+    func sender() -> RequestSender<Model,ErrorModel> {
+        RequestSender(self)
+    }
+}
+
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+public extension UploadAPIRequest {
+    func sender() -> RequestSender<Model,ErrorModel> {
+        RequestSender(self)
+    }
+}
+
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+public extension DownloadAPIRequest {
+    func sender() -> DownloadRequestSender<Model,ErrorModel> {
+        DownloadRequestSender(self)
     }
 }
 
