@@ -24,7 +24,7 @@ jobs:
         run: bundle exec jazzy
 
       - name: create pull request
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v6
         with:
           commit-message: "[automated] generate docs"
           title: "[automated] generate docs"
