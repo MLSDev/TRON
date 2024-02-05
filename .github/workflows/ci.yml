@@ -58,7 +58,7 @@ jobs:
         if: matrix.destination != 'build_watchos'
         run: bundle exec fastlane generate_code_coverage
       - name: Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
 
   # Xcode-12:
   #   name: Xcode 12
@@ -82,4 +82,4 @@ jobs:
   #       if: matrix.destination != 'build_watchos_xcode12'
   #       run: bundle exec fastlane generate_code_coverage
   #     - name: Codecov
-  #       uses: codecov/codecov-action@v3
+  #       uses: codecov/codecov-action@v4
